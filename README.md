@@ -1,0 +1,3 @@
+# Aplikácia
+
+Zdrojový kód aplikácie
