@@ -15,17 +15,13 @@ export default function TaskSelector(props: any) {
       <input type={"checkbox"} id={"products"} name={"checkbox"}/>
       <label htmlFor={"products"}>ANALÝZA NÁKLADOV NA ZÁKLADE ŠTRUKTÚRY NÁKLADOV</label>
       <br/>
-      <button type={"submit"} onClick={() => {
+      <button onClick={() => {
         const naklady = document.getElementById('naklady');
         const products = document.getElementById('products');
-
-        // @ts-ignore
-        //console.log({first: naklady.checked, second: products.checked })
         // @ts-ignore
         props.action({first: naklady.checked, second: products.checked})
-      }
-      }><Link to={"/inputs"}
-              className="btn btn-sm btn-info">Results</Link></button>
+        }
+      }><Link to={"/inputs"}>Start</Link></button>
     </div>
   );
 }

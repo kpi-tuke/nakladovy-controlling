@@ -4,8 +4,6 @@ import {Link} from "react-router-dom";
 
 export default function TableDynamic(props: any) {
 
-  //const header = []
-  //const data = []
   const [getState, setState] = useState({rows: props.rows, cols: props.cols})
 
   const handleChangeData = function (event: any, row: number, col: number) {
@@ -17,9 +15,9 @@ export default function TableDynamic(props: any) {
   }
 
   const addColumn = () => {
-    props.header.push("2004")
+    props.header.push((parseInt(props.header[props.header.length-1])+1).toString())
     props.data.map((value: any) => {
-      value.push('00000')
+      value.push('0')
     })
     setState({cols: getState.cols + 1, rows: getState.rows})
 
@@ -28,7 +26,7 @@ export default function TableDynamic(props: any) {
   const addRow = () => {
     let arr = []
     for (let i = 0; i < props.data[0].length; i++) {
-      arr.push('00000')
+      arr.push('0')
     }
     props.data.push(arr)
     setState({cols: getState.cols, rows: getState.rows + 1})
@@ -39,10 +37,11 @@ export default function TableDynamic(props: any) {
     <div className="card mb-3">
       <div className="card-header">
         <h3 className="caption">{props.title}</h3>
-        <button className="btn btn-sm btn-primary tools" onClick={() => {
-          props.proceed(props.data)
-        }}><Link to={"/results"}
-                 className="btn btn-sm btn-info">Results</Link></button>
+        <button onClick={
+          () => {
+            props.proceed({inputs:props.inputs, header:props.header, data:props.data}, props.handler)
+          }
+        }><Link to={"/results"}>Results</Link></button>
       </div>
       <table className="table table-bordered table-responsive">
         <thead className="thead-light">
@@ -63,7 +62,7 @@ export default function TableDynamic(props: any) {
           console.log(value)
           return (
             <tr>
-              <td>Naklad</td>
+              <td>{props.inputs[row]}</td>
 
               {props.data[row].map((value: string, col: number) => {
                 return (
@@ -71,14 +70,18 @@ export default function TableDynamic(props: any) {
                              onChange={() => (handleChangeData(event, row, col))}/></td>
                 )
               })}
-              {row === 0 ? <td rowSpan={props.data.length} onClick={addColumn}>+</td> : console.log('else')}
+              {row === 0 && props.dynCols
+                ? <td rowSpan={props.data.length} onClick={addColumn}>+</td>
+                : console.log('else')}
             </tr>)
         })
         }
-
-        <tr>
-          <td colSpan={props.header.length + 1} onClick={addRow}>+</td>
-        </tr>
+        {props.dynRows
+          ? <tr>
+              <td colSpan={props.header.length + 1} onClick={addRow}>+</td>
+            </tr>
+          : console.log("dynamic rows disabled")
+        }
         </tbody>
       </table>
     </div>

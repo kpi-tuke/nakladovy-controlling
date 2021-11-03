@@ -2,19 +2,35 @@ import {MemoryRouter as Router, Redirect, Route, Switch} from 'react-router-dom'
 import './App.css';
 import TableDynamic from "./components/TableDynamic";
 import TaskSelector from "./components/TaskSelector";
+import ResultEficience from "./components/ResultEficience";
+import ResultStructure from "./components/ResultStructure";
 
-let profit: number = 0;
-let selection: object;
+let profit: any
+let selection: object
 
-const proceed = (data: any) => {
-  console.log(data)
-  data.map((row: string[], idxrow: any) => {
-    row.map((value) => {
-      idxrow === 0
-        ? profit = profit + parseInt(value)
-        : profit = profit - parseInt(value)
+const eficiency = (data: any, callback:any) => {
+  let cost:number = 0
+  let income:number = 0
+  data.data[0].map((value: string) => {income+=parseInt(value)})
+  data.data[1].map((value: string) => {cost+=parseInt(value)})
+  let result={cost:cost, income:income}
+  console.log(result)
+  callback(result)
+}
+
+const structure = (data: any, callback: any) => {
+  let arr:any = [0,0,0,0,0,0];
+  data.data.map((value:any, row:number) => {
+    value.map((x:string) => {
+      arr[row]=arr[row]+parseInt(x)
     })
   })
+  console.log(arr)
+  callback({inputs:data.inputs, data:arr})
+}
+
+const handler = (result:any) => {
+  profit=result
   console.log(profit)
 }
 
@@ -39,26 +55,38 @@ const Inputs = () => {
         // @ts-ignore
         selection.first
           ? <TableDynamic title={"Table first"}
+                          header={["2000"]}
+                          inputs={["Vynos", "Naklad"]}
                           data={[
-                            [],
-                            []
+                            ["4"],
+                            ["3"]
                           ]}
-                          header={[]}
-                          rows={0} cols={0}
-                          proceed={proceed}/>
+
+                          rows={2} cols={1}
+                          dynRows={false} dynCols={true}
+                          proceed={eficiency}
+                          handler={handler}/>
+
           : console.log("first")
       }
       {
         // @ts-ignore
         selection.second
           ? <TableDynamic title={"Table second"}
+                          header={["priame materialy", "priame mzdy", "vyrobna rezia", "spravna rezia"]}
+                          inputs={["materiálové náklady", "služby", "mzdové a ostatné osobné náklady", "zákonne sociálne poistenie", "odpisy", "daň z nehnuteľnosti"]}
                           data={[
-                            [],
-                            []
+                            ["584", "0", "52", "6"],
+                            ["0", "0", "60", "10"],
+                            ["0", "45", "42", "29"],
+                            ["0", "17", "16", "11"],
+                            ["0", "0", "40", "10"],
+                            ["0", "0", "10", "68"]
                           ]}
-                          header={[]}
                           rows={0} cols={0}
-                          proceed={proceed}/>
+                          dynRows={true} dynCols={true}
+                          proceed={structure}
+                          handler={handler}/>
           : console.log("second")
       }
 
@@ -68,8 +96,22 @@ const Inputs = () => {
 };
 
 const Results = () => {
+
   return (
-    <p>results: {profit} </p>
+    <>
+      {
+        // @ts-ignore
+        selection.first
+          ? <ResultEficience result={profit}/>
+          : console.log("first")
+      }
+      {
+        // @ts-ignore
+        selection.second
+          ? <ResultStructure result={profit}/>
+          : console.log("second")
+      }
+    </>
   )
 }
 
