@@ -14,10 +14,14 @@ export default function TableDynamic(props: any) {
     props.header[idx] = event.target.value
   }
 
+  const handleChangeInput = function (event: any, idx: number,) {
+    props.inputs[idx] = event.target.value
+  }
+
   const addColumn = () => {
-    props.header.push((parseInt(props.header[props.header.length-1])+1).toString())
+    props.header.push((parseInt(props.header[props.header.length - 1]) + 1).toString())
     props.data.map((value: any) => {
-      value.push('0')
+      value.push("0")
     })
     setState({cols: getState.cols + 1, rows: getState.rows})
 
@@ -25,8 +29,9 @@ export default function TableDynamic(props: any) {
 
   const addRow = () => {
     let arr = []
+    props.inputs.push("naklad")
     for (let i = 0; i < props.data[0].length; i++) {
-      arr.push('0')
+      arr.push("0")
     }
     props.data.push(arr)
     setState({cols: getState.cols, rows: getState.rows + 1})
@@ -36,10 +41,10 @@ export default function TableDynamic(props: any) {
   return (
     <div className="card mb-3">
       <div className="card-header">
-        <h3 className="caption">{props.title}</h3>
+        <h3 className="caption">{props.taskName}</h3>
         <button onClick={
           () => {
-            props.proceed({inputs:props.inputs, header:props.header, data:props.data}, props.handler)
+            props.proceed({inputs: props.inputs, header: props.header, data: props.data}, props.handler)
           }
         }><Link to={"/results"}>Results</Link></button>
       </div>
@@ -62,7 +67,10 @@ export default function TableDynamic(props: any) {
           console.log(value)
           return (
             <tr>
-              <td>{props.inputs[row]}</td>
+              <td>
+                <input type="text" style={{border: 0}} defaultValue={props.inputs[row]}
+                       onChange={() => (handleChangeInput(event, row))}/>
+              </td>
 
               {props.data[row].map((value: string, col: number) => {
                 return (

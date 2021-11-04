@@ -5,7 +5,7 @@ import TaskSelector from "./components/TaskSelector";
 import ResultEficience from "./components/ResultEficience";
 import ResultStructure from "./components/ResultStructure";
 
-let profit: any
+let solution: any = {first: {}, second: {}}
 let selection: object
 
 const eficiency = (data: any, callback:any) => {
@@ -15,23 +15,47 @@ const eficiency = (data: any, callback:any) => {
   data.data[1].map((value: string) => {cost+=parseInt(value)})
   let result={cost:cost, income:income}
   console.log(result)
-  callback(result)
+  callback(result, "Hospodarenie")
 }
 
 const structure = (data: any, callback: any) => {
-  let arr:any = [0,0,0,0,0,0];
-  data.data.map((value:any, row:number) => {
-    value.map((x:string) => {
-      arr[row]=arr[row]+parseInt(x)
+  let rowSums: any = []
+  let colSums: any = []
+  console.log(data)
+  for (let i = 0; i < data.inputs.length; i++) {
+    rowSums.push(0)
+  }
+  for (let i = 0; i < data.header.length; i++) {
+    colSums.push(0)
+  }
+
+  data.data.map((value: any, row: number) => {
+    value.map((x: string) => {
+      rowSums[row] = rowSums[row] + parseInt(x)
     })
   })
-  console.log(arr)
-  callback({inputs:data.inputs, data:arr})
+  data.data.map((row: any) => {
+    row.map((value: any, colIdx: number) => {
+      colSums[colIdx] = colSums[colIdx] + parseInt(value)
+    })
+  })
+  callback({inputs: data.inputs, header: data.header, rowSums: rowSums, colSums: colSums}, "Štruktura")
 }
 
-const handler = (result:any) => {
-  profit=result
-  console.log(profit)
+const handler = (result: any, taskName: string) => {
+  switch (taskName) {
+    case "Hospodarenie":
+      solution.first = result
+      break;
+    case "Štruktura":
+      solution.second = result
+      break;
+    default:
+      solution.first = "not provided"
+      solution.second = "not provided"
+      break;
+  }
+  console.log(solution)
 }
 
 const select = (selected: object) => {
@@ -54,7 +78,7 @@ const Inputs = () => {
       {
         // @ts-ignore
         selection.first
-          ? <TableDynamic title={"Table first"}
+          ? <TableDynamic taskName={"Hospodarenie"}
                           header={["2000"]}
                           inputs={["Vynos", "Naklad"]}
                           data={[
@@ -72,7 +96,7 @@ const Inputs = () => {
       {
         // @ts-ignore
         selection.second
-          ? <TableDynamic title={"Table second"}
+          ? <TableDynamic taskName={"Štruktura"}
                           header={["priame materialy", "priame mzdy", "vyrobna rezia", "spravna rezia"]}
                           inputs={["materiálové náklady", "služby", "mzdové a ostatné osobné náklady", "zákonne sociálne poistenie", "odpisy", "daň z nehnuteľnosti"]}
                           data={[
@@ -98,20 +122,23 @@ const Inputs = () => {
 const Results = () => {
 
   return (
-    <>
+    <div>
+
       {
         // @ts-ignore
         selection.first
-          ? <ResultEficience result={profit}/>
+          ? <div><ResultEficience result={solution.first}/></div>
           : console.log("first")
       }
+
       {
         // @ts-ignore
         selection.second
-          ? <ResultStructure result={profit}/>
+          ? <div><ResultStructure result={solution.second}/></div>
           : console.log("second")
       }
-    </>
+
+    </div>
   )
 }
 

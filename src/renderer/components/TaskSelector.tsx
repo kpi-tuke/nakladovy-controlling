@@ -10,10 +10,10 @@ export default function TaskSelector(props: any) {
   return (
     <div id={"form"}>
       <input type={"checkbox"} id={"naklady"} name={"checkbox"}/>
-      <label htmlFor={"naklady"}>ANALÝZA EKONOMICKÝCH UKAZOVATEĽOV V OBLASTI NÁKLADOVÉHO RIADENIA</label>
+      <label htmlFor={"naklady"}>ANALÝZA HOSPODARENIA</label>
       <br/>
       <input type={"checkbox"} id={"products"} name={"checkbox"}/>
-      <label htmlFor={"products"}>ANALÝZA NÁKLADOV NA ZÁKLADE ŠTRUKTÚRY NÁKLADOV</label>
+      <label htmlFor={"products"}>ANALÝZA ŠTRUKTÚRY NÁKLADOV</label>
       <br/>
       <button onClick={() => {
         const naklady = document.getElementById('naklady');
