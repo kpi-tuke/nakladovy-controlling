@@ -1,21 +1,23 @@
 import '../App.css';
 import {useState} from "react";
-import {Link} from "react-router-dom";
 
 export default function TableDynamic(props: any) {
 
   const [getState, setState] = useState({rows: props.rows, cols: props.cols})
 
   const handleChangeData = function (event: any, row: number, col: number) {
-    props.data[row][col] = event.target.value
+    props.data[row][col] = event.target.value === '' ? "0" : event.target.value
+    props.proceed()
   }
 
   const handleChangeHeader = function (event: any, idx: number,) {
     props.header[idx] = event.target.value
+
   }
 
   const handleChangeInput = function (event: any, idx: number,) {
     props.inputs[idx] = event.target.value
+
   }
 
   const addColumn = () => {
@@ -28,7 +30,7 @@ export default function TableDynamic(props: any) {
   }
 
   const addRow = () => {
-    let arr = []
+    let arr: string[] = []
     props.inputs.push("naklad")
     for (let i = 0; i < props.data[0].length; i++) {
       arr.push("0")
@@ -40,42 +42,39 @@ export default function TableDynamic(props: any) {
 
   return (
     <div className="card mb-3">
+
       <div className="card-header">
         <h3 className="caption">{props.taskName}</h3>
-        <button onClick={
-          () => {
-            props.proceed({inputs: props.inputs, header: props.header, data: props.data}, props.handler)
-          }
-        }><Link to={"/results"}>Results</Link></button>
       </div>
+
       <table className="table table-bordered table-responsive">
         <thead className="thead-light">
         <tr>
           <th className="sorting">
-            Ukazovatel
+            Ekonomická položka
           </th>
-          {props.header.map((x: string, idx: number) => {
-            // @ts-ignore
-            return <th><input type="text" className="input-group-text" style={{border: 0}} defaultValue={x}
-                              onChange={() => (handleChangeHeader(event, idx))}/></th>
+          {props.header.map((value: string, idx: number) => {
+            return <th key={value}><input type="text" className="input-group-text" style={{border: 0}}
+                                          defaultValue={value}
+                                          onChange={() => (handleChangeHeader(event, idx))}/></th>
           })}
         </tr>
 
         </thead>
         <tbody>
-        {props.data.map((value: any, row: number) => {
-          console.log(value)
+        {props.inputs.map((value: string, row: number) => {
           return (
-            <tr>
-              <td>
-                <input type="text" style={{border: 0}} defaultValue={props.inputs[row]}
+            <tr key={row}>
+              <td key={value}>
+                <input type="text" style={{border: 0}} defaultValue={value}
                        onChange={() => (handleChangeInput(event, row))}/>
               </td>
 
               {props.data[row].map((value: string, col: number) => {
                 return (
-                  <td><input type="text" style={{border: 0, textAlign: "center"}} defaultValue={value}
-                             onChange={() => (handleChangeData(event, row, col))}/></td>
+                  <td key={row + ":" + col}><input type="text" style={{border: 0, textAlign: "center"}}
+                                                   defaultValue={value}
+                                                   onBlur={() => (handleChangeData(event, row, col))}/></td>
                 )
               })}
               {row === 0 && props.dynCols
@@ -92,6 +91,7 @@ export default function TableDynamic(props: any) {
         }
         </tbody>
       </table>
+
     </div>
   );
 };
