@@ -21,16 +21,16 @@ export default function TableStatic(props: any) {
 
         </thead>
         <tbody>
-        {props.inputs.map((value: string, row: number) => {
+        {props.inputs.map((value: number, row: number) => {
           return (
-            <tr key={row}>
-              <td key={value}>
-                {value}
+            <tr key={row.toString()}>
+              <td key={value.toString()}>
+                {value.toString()}
               </td>
 
-              {props.data[row].map((value: string, col: number) => {
+              {props.data[row].map((value: number, col: number) => {
                 return (
-                  <td key={row + ":" + col}>{value}</td>
+                  <td key={row.toString() + ":" + col.toString()}>{value.toString()}</td>
                 )
               })}
             </tr>)

@@ -1,6 +1,6 @@
 import '../../App.css';
 import TableDynamic from "../TableDynamic";
-import ResultEficience from "../results/ResultEficience";
+import Result1 from "../results/Result1";
 import {useEffect, useState} from "react";
 
 export default function Task1() {
@@ -8,7 +8,9 @@ export default function Task1() {
   let [getResult, setResult] = useState({cost: 0, income: 0, costData: [], incomeData: [], header: []})
 
   let state = useState({
-    header: ["2000", "2001"], inputs: ["Vynos", "Naklad"], data: [
+    header: ["2000", "2001"],
+    inputs: ["Vynos", "Naklad"],
+    data: [
       ["2", "4"],
       ["1", "3"]
     ]
@@ -16,10 +18,12 @@ export default function Task1() {
 
 
   const task1 = function () {
+
     let totalCost: number = 0
     let totalIncome: number = 0
     let costData: number[] = []
     let incomeData: number[] = []
+
     state[0].data[0].map((value: string) => {
       totalIncome += parseInt(value)
       incomeData.push(parseInt(value))
@@ -28,6 +32,7 @@ export default function Task1() {
       totalCost += parseInt(value)
       costData.push(parseInt(value))
     })
+
     // @ts-ignore
     setResult({
       cost: totalCost,
@@ -41,7 +46,7 @@ export default function Task1() {
   useEffect(task1, [])
 
   return (
-    <div>
+    <div className={"scrollbox-lg"} style={{height: "100vh"}}>
       <TableDynamic taskName={"Hospodarenie"}
                     header={state[0].header}
                     inputs={state[0].inputs}
@@ -50,10 +55,8 @@ export default function Task1() {
                     dynRows={false} dynCols={true}
                     proceed={task1}
       />
+      <Result1 result={getResult}/>
 
-      <button onClick={task1}>Sync</button>
-
-      <ResultEficience result={getResult}/>
     </div>
   )
 }

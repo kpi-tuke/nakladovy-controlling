@@ -12,11 +12,13 @@ export default function TableDynamic(props: any) {
 
   const handleChangeHeader = function (event: any, idx: number,) {
     props.header[idx] = event.target.value
+    props.proceed()
 
   }
 
   const handleChangeInput = function (event: any, idx: number,) {
     props.inputs[idx] = event.target.value
+    props.proceed()
 
   }
 
@@ -54,9 +56,10 @@ export default function TableDynamic(props: any) {
             Ekonomická položka
           </th>
           {props.header.map((value: string, idx: number) => {
-            return <th key={value}><input type="text" className="input-group-text" style={{border: 0}}
+            return <th key={value}><input type="text" className="input-group-text"
+                                          style={{border: 0, margin: 0, padding: 0, width: 60}}
                                           defaultValue={value}
-                                          onChange={() => (handleChangeHeader(event, idx))}/></th>
+                                          onBlur={() => (handleChangeHeader(event, idx))}/></th>
           })}
         </tr>
 
@@ -67,12 +70,18 @@ export default function TableDynamic(props: any) {
             <tr key={row}>
               <td key={value}>
                 <input type="text" style={{border: 0}} defaultValue={value}
-                       onChange={() => (handleChangeInput(event, row))}/>
+                       onBlur={() => (handleChangeInput(event, row))}/>
               </td>
 
               {props.data[row].map((value: string, col: number) => {
                 return (
-                  <td key={row + ":" + col}><input type="text" style={{border: 0, textAlign: "center"}}
+                  <td key={row + ":" + col}><input type="text" style={{
+                    border: 0,
+                    margin: 0,
+                    padding: 0,
+                    width: 60,
+                    textAlign: "center"
+                  }}
                                                    defaultValue={value}
                                                    onBlur={() => (handleChangeData(event, row, col))}/></td>
                 )
