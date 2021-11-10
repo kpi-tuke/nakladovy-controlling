@@ -23,17 +23,17 @@ export default function TableDynamic(props: any) {
   const addColumn = () => {
     props.header.push((parseInt(props.header[props.header.length - 1]) + 1).toString())
     props.data.map((value: any) => {
-      value.push("0")
+      value.push(0)
     })
     setState({cols: getState.cols + 1, rows: getState.rows})
 
   }
 
   const addRow = () => {
-    let arr: string[] = []
+    let arr: number[] = []
     props.inputs.push("naklad")
     for (let i = 0; i < props.data[0].length; i++) {
-      arr.push("0")
+      arr.push(0)
     }
     props.data.push(arr)
     setState({cols: getState.cols, rows: getState.rows + 1})

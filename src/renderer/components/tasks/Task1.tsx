@@ -5,27 +5,37 @@ import {useEffect, useState} from "react";
 
 export default function Task1() {
 
-  let [getResult, setResult] = useState({cost: 0, income: 0})
+  let [getResult, setResult] = useState({cost: 0, income: 0, costData: [], incomeData: [], header: []})
 
   let state = useState({
     header: ["2000", "2001"], inputs: ["Vynos", "Naklad"], data: [
-      ["3", "3"],
-      ["2", "1"]
+      ["2", "4"],
+      ["1", "3"]
     ]
   })
 
 
   const task1 = function () {
-    let cost: number = 0
-    let income: number = 0
-
+    let totalCost: number = 0
+    let totalIncome: number = 0
+    let costData: number[] = []
+    let incomeData: number[] = []
     state[0].data[0].map((value: string) => {
-      income += parseInt(value)
+      totalIncome += parseInt(value)
+      incomeData.push(parseInt(value))
     })
     state[0].data[1].map((value: string) => {
-      cost += parseInt(value)
+      totalCost += parseInt(value)
+      costData.push(parseInt(value))
     })
-    setResult({cost: cost, income: income})
+    // @ts-ignore
+    setResult({
+      cost: totalCost,
+      income: totalIncome,
+      costData: costData,
+      incomeData: incomeData,
+      header: state[0].header
+    })
   }
 
   useEffect(task1, [])
