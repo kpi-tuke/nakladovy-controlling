@@ -75,15 +75,18 @@ export default function TableDynamic(props: any) {
 
               {props.data[row].map((value: string, col: number) => {
                 return (
-                  <td key={row + ":" + col}><input type="text" style={{
-                    border: 0,
-                    margin: 0,
-                    padding: 0,
-                    width: 60,
-                    textAlign: "center"
-                  }}
-                                                   defaultValue={value}
-                                                   onBlur={() => (handleChangeData(event, row, col))}/></td>
+                  <td key={row + ":" + col}>
+                    <input type="text"
+                           style={{
+                             border: 0,
+                             margin: 0,
+                             padding: 0,
+                             width: 60,
+                             textAlign: "center"
+                           }}
+                           defaultValue={value}
+                           onBlur={() => (handleChangeData(event, row, col))}/>
+                  </td>
                 )
               })}
               {row === 0 && props.dynCols

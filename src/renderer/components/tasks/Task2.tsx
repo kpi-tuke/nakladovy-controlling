@@ -1,13 +1,14 @@
 import '../../App.css';
 import TableDynamic from "../TableDynamic";
 import {useEffect, useState} from "react";
-import ResultStructure from "../results/ResultStructure";
+import Result2 from "../results/Result2";
 
 export default function Task2() {
 
   let state = useState({
-    header: ["mzdy"], inputs: ["naklad"], data: [
-      ["1"]
+    header: ["mzdy", "rezia"], inputs: ["naklad", "material"], data: [
+      ["1", "4"],
+      ["5", "10"]
     ]
   })
 
@@ -29,11 +30,13 @@ export default function Task2() {
         rowSums[row] = rowSums[row] + parseInt(x)
       })
     })
+
     state[0].data.map((rowData: string[]) => {
       rowData.map((value: string, idx: number) => {
         colSums[idx] = colSums[idx] + parseInt(value)
       })
     })
+
     // @ts-ignore
     setResult({inputs: state[0].inputs, header: state[0].header, rowSums: rowSums, colSums: colSums})
   }
@@ -41,19 +44,19 @@ export default function Task2() {
   useEffect(task2, [])
 
   return (
-    <div>
+    <div className={"scrollbox-lg"} style={{height: "100vh"}}>
+
       <TableDynamic taskName={"Štruktúra"}
                     header={state[0].header}
                     inputs={state[0].inputs}
                     data={state[0].data}
-                    rows={2} cols={0}
+                    rows={2} cols={2}
                     dynRows={true} dynCols={true}
                     proceed={task2}
       />
 
-      <button onClick={task2}>Sync</button>
+      <Result2 result={getResult}/>
 
-      <ResultStructure result={getResult}/>
     </div>
   )
 }

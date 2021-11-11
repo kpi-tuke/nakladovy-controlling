@@ -8,11 +8,38 @@ export default function TaskSelector() {
   //použit tlacidla
 
   return (
-    <div id={"form"}>
+    <div style={{padding: 30}}>
+      <div className={"row"}>
+        <div className={"col"}>
+          <div className={"card card-outline-primary"}>
+            <div className={"card-header"}>
+              <h1>Task1</h1>
+            </div>
+            <div className={"card-body"}>
+              <p>Lorem ipsum</p>
+            </div>
+            <div className={"card-footer"}>
+              <button><Link to={"/task1"}>Task1</Link></button>
+            </div>
+          </div>
+        </div>
 
-      <button><Link to={"/task1"}>Task1</Link></button>
-      <button><Link to={"/task2"}>Task2</Link></button>
-
+        <div className={"col"}>
+          <div className={"col"}>
+            <div className={"card card-outline-primary"}>
+              <div className={"card-header"}>
+                <h1>Task2</h1>
+              </div>
+              <div className={"card-body"}>
+                <p>Lorem ipsum</p>
+              </div>
+              <div className={"card-footer"}>
+                <button><Link to={"/task2"}>Task2</Link></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

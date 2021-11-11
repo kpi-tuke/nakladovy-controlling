@@ -33,12 +33,14 @@ export default function Task1() {
       costData.push(parseInt(value))
     })
 
-    // @ts-ignore
     setResult({
       cost: totalCost,
       income: totalIncome,
+      // @ts-ignore
       costData: costData,
+      // @ts-ignore
       incomeData: incomeData,
+      // @ts-ignore
       header: state[0].header
     })
   }
@@ -47,15 +49,20 @@ export default function Task1() {
 
   return (
     <div className={"scrollbox-lg"} style={{height: "100vh"}}>
-      <TableDynamic taskName={"Hospodarenie"}
-                    header={state[0].header}
-                    inputs={state[0].inputs}
-                    data={state[0].data}
-                    rows={2} cols={0}
-                    dynRows={false} dynCols={true}
-                    proceed={task1}
-      />
-      <Result1 result={getResult}/>
+
+      <div>
+        <TableDynamic taskName={"Hospodarenie"}
+                      header={state[0].header}
+                      inputs={state[0].inputs}
+                      data={state[0].data}
+                      rows={2} cols={2}
+                      dynRows={false} dynCols={true}
+                      proceed={task1}
+        />
+      </div>
+      <div>
+        <Result1 result={getResult}/>
+      </div>
 
     </div>
   )

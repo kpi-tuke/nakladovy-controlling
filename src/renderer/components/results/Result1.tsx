@@ -15,11 +15,9 @@ export default function Result1(props: any) {
     return arr
   }
 
-
   let profitData: number[] = []
   for (let i = 0; i < props.result.header.length; i++) {
     profitData.push(props.result.incomeData[i] - props.result.costData[i])
-
   }
 
   let rentIncomeData: number[] = makeArray(profitData, props.result.incomeData);
@@ -195,6 +193,10 @@ export default function Result1(props: any) {
           endingShape: 'rounded'
         },
       },
+      title: {
+        text: 'Ekonomické ukazovatele',
+        align: 'center'
+      },
       dataLabels: {
         enabled: false
       },
@@ -206,55 +208,195 @@ export default function Result1(props: any) {
       xaxis: {
         categories: props.result.header,
       },
-      yaxis: {
-        title: {
-          text: '$ (thousands)'
-        },
-      },
       fill: {
         opacity: 1
       },
-      tooltip: {
-        y: {
-          formatter: function (val: string) {
-            return "$ " + val + " thousands"
-          }
-        }
-      }
     },
-  };
+  }
 
   return (
-    <div>
+    <div style={{paddingLeft: 10, paddingRight: 10}}>
 
-      <h2>Ekonomická analýza ukazovateľov</h2>
-      <p>VÝNOSY CELKOM: {props.result.income}</p>
-      <p>Náklady celkom: {props.result.cost}</p>
+      <div className={"card-body"}>
+        <h2>Ekonomická analýza ukazovateľov</h2>
 
-      <TableStatic taskName={"Zisky"}
-                   header={[...props.result.header, "Celkovo"]}
-                   inputs={["Zisk", "Rentabilita výnosov", "Rentabilita nákladov", "Nákladová účinnosť", "Nákladovosť"]}
-                   data={[
-                     [...profitData, props.result.income - props.result.cost],
-                     [...rentIncomeData, Math.round((props.result.income - props.result.cost) * 100 / props.result.income) / 100],
-                     [...rentCostData, Math.round((props.result.income - props.result.cost) * 100 / props.result.cost) / 100],
-                     [...costEff, Math.round(props.result.income * 100 / props.result.cost) / 100],
-                     [...costIndicator, Math.round(props.result.cost * 100 / props.result.income) / 100]
-                   ]}
-      />
+        <div className={"row"}>
+          <div className={"col"}>
+            <div className={"card card-outline-primary mb-3"}>
+              <div className={"card-body"}>
+                <div className={"number-left"}>
+                  <h6 className={"bold"}>VÝNOSY CELKOM</h6>
+                  <h3 className={"card-title bold text-success"}>{props.result.income}</h3>
+                </div>
+                <div className={"icon-right"}>
+                  <i className={"fa fa-line-chart"}/>
+                </div>
+              </div>
+            </div>
+          </div>
 
-      <h3>Dashboarding</h3>
+          <div className={"col"}>
+            <div className={"card card-outline-primary mb-3"}>
+              <div className={"card-body"}>
+                <div className={"number-left"}>
+                  <h6 className={"bold"}>NÁKLADY CELKOM</h6>
+                  <h3 className={"card-title bold text-primary"}>{props.result.cost}</h3>
+                </div>
+                <div className={"icon-right"}>
+                  <i className={"fa fa-shopping-cart"}/>
+                </div>
+              </div>
+            </div>
+          </div>
 
-      {   // @ts-ignore
-        <ReactApexChart options={lineGraph.options} series={lineGraph.series} type="line" height={350}/>
-      }
-      {   // @ts-ignore
-        <ReactApexChart options={totalGraph.options} series={totalGraph.series} type="area" height={350}/>
-      }
-      {   // @ts-ignore
-        <ReactApexChart options={colGraph.options} series={colGraph.series} type="bar" height={350}/>
-      }
+          <div className={"col"}>
+            <div className={"card card-outline-primary mb-3"}>
+              <div className={"card-body"}>
+                <div className={"number-left"}>
+                  <h6 className={"bold"}>ZISK CELKOM</h6>
+                  <h3 className={"card-title bold text-warning"}>{props.result.income - props.result.cost}</h3>
+                </div>
+                <div className={"icon-right"}>
+                  <i className={"fa fa-money"}/>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
+
+      <div className={"card"}>
+
+        <h1 className={"bold text-primary"} style={{textAlign: "center", margin: 20}}>Ukazovatele</h1>
+
+
+        <div className={"row"}>
+
+          <div className={"col-7"}>
+            <TableStatic header={[...props.result.header, "Celkovo"]}
+                         inputs={["Zisk", "Rentabilita výnosov", "Rentabilita nákladov", "Nákladová účinnosť", "Nákladovosť"]}
+                         data={[
+                           [...profitData, props.result.income - props.result.cost],
+                           [...rentIncomeData, Math.round((props.result.income - props.result.cost) * 100 / props.result.income) / 100],
+                           [...rentCostData, Math.round((props.result.income - props.result.cost) * 100 / props.result.cost) / 100],
+                           [...costEff, Math.round(props.result.income * 100 / props.result.cost) / 100],
+                           [...costIndicator, Math.round(props.result.cost * 100 / props.result.income) / 100]
+                         ]}
+            />
+          </div>
+
+          <div className={"col-5"}>
+
+            <div className={"row"}>
+
+              <div className={"col"}>
+                <div className={"card card-outline-primary mb-3"}>
+                  <div className={"card-body"}>
+                    <div className={"number-left"}>
+                      <h6 className={"bold"}>Rentabilita výnosov</h6>
+                      <h3
+                        className={"card-title bold text-primary"}>{Math.round((props.result.income - props.result.cost) * 100 / props.result.income) / 100}</h3>
+                    </div>
+                    <div className={"icon-right"}>
+                      <i className={"fa fa-pie-chart"}/>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className={"col"}>
+                <div className={"card card-outline-primary mb-3"}>
+                  <div className={"card-body"}>
+                    <div className={"number-left"}>
+                      <h6 className={"bold"}>Rentabilita nákladov</h6>
+                      <h3
+                        className={"card-title bold text-success"}>{Math.round((props.result.income - props.result.cost) * 100 / props.result.cost) / 100}</h3>
+                    </div>
+                    <div className={"icon-right"}>
+                      <i className={"fa fa-calculator"}/>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <div className={"row"}>
+
+              <div className={"col"}>
+                <div className={"card card-outline-primary mb-3"}>
+                  <div className={"card-body"}>
+                    <div className={"number-left"}>
+                      <h6 className={"bold"}>Nákladová účinnosť</h6>
+                      <h3
+                        className={"card-title bold text-warning"}>{Math.round(props.result.income * 100 / props.result.cost) / 100}</h3>
+                    </div>
+                    <div className={"icon-right"}>
+                      <i className={"fa fa-dashboard"}/>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className={"col"}>
+                <div className={"card card-outline-primary mb-3"}>
+                  <div className={"card-body"}>
+                    <div className={"number-left"}>
+                      <h6 className={"bold"}>Nákladovosť</h6>
+                      <h3
+                        className={"card-title bold text-danger"}>{Math.round(props.result.cost * 100 / props.result.income) / 100}</h3>
+                    </div>
+                    <div className={"icon-right"}>
+                      <i className={"fa fa-area-chart"}/>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <h1 className={"bold text-primary"} style={{textAlign: "center", margin: 50}}>Dashboarding</h1>
+
+      <div className={"row"}>
+
+        <div className={"col-lg-6 col-sm-12"}>
+          <div className={"card mb-3"}>
+            <div className={"card-body"}>
+              {
+                // @ts-ignore
+                <ReactApexChart options={lineGraph.options} series={lineGraph.series} type="line" height={400}/>
+              }
+            </div>
+          </div>
+        </div>
+
+
+        <div className={"col-lg-6 col-sm-12"}>
+          <div className={"card mb-3"}>
+            <div className={"card-body"}>
+              {   // @ts-ignore
+                <ReactApexChart options={totalGraph.options} series={totalGraph.series} type="area" height={400}/>
+              }
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div>
+        <div className={"card mb-3"}>
+          <div className={"card-body"}>
+            {   // @ts-ignore
+              <ReactApexChart options={colGraph.options} series={colGraph.series} type="bar" height={400}/>
+            }
+          </div>
+        </div>
+      </div>
 
       <button><Link to={"/taskselect"}>Back</Link></button>
     </div>
