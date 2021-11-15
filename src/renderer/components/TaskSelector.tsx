@@ -10,6 +10,7 @@ export default function TaskSelector() {
   return (
     <div style={{padding: 30}}>
       <div className={"row"}>
+
         <div className={"col"}>
           <div className={"card card-outline-primary"}>
             <div className={"card-header"}>
@@ -24,7 +25,6 @@ export default function TaskSelector() {
           </div>
         </div>
 
-        <div className={"col"}>
           <div className={"col"}>
             <div className={"card card-outline-primary"}>
               <div className={"card-header"}>
@@ -38,7 +38,55 @@ export default function TaskSelector() {
               </div>
             </div>
           </div>
+
+
+        <div className={"col"}>
+          <div className={"card card-outline-primary"}>
+            <div className={"card-header"}>
+              <h1>Task3</h1>
+            </div>
+            <div className={"card-body"}>
+              <p>Lorem ipsum</p>
+            </div>
+            <div className={"card-footer"}>
+              <button><Link to={"/task3"}>Task3</Link></button>
+            </div>
+          </div>
         </div>
+
+      </div>
+
+      <div className={"row"}>
+
+
+        <div className={"col-4"}>
+          <div className={"card card-outline-primary"}>
+            <div className={"card-header"}>
+              <h1>Task4</h1>
+            </div>
+            <div className={"card-body"}>
+              <p>Lorem ipsum</p>
+            </div>
+            <div className={"card-footer"}>
+              <button><Link to={"/task4"}>Task4</Link></button>
+            </div>
+          </div>
+        </div>
+
+        <div className={"col-4"}>
+          <div className={"card card-outline-primary"}>
+            <div className={"card-header"}>
+              <h1>Task5</h1>
+            </div>
+            <div className={"card-body"}>
+              <p>Lorem ipsum</p>
+            </div>
+            <div className={"card-footer"}>
+              <button><Link to={"/task5"}>Task5</Link></button>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   );

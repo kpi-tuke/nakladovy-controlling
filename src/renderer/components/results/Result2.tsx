@@ -26,6 +26,17 @@ export default function Result2(props: any) {
           distributed: true,
         }
       },
+      grid: {
+        borderColor: '#e7e7e7',
+        row: {
+          colors: ['#f3f3f3', 'transparent'],
+          opacity: 0.5
+        },
+      },
+      title: {
+        text: 'Druhové členenie nákladov',
+        align: 'center'
+      },
       xaxis: {
         categories: props.result.inputs,
       }
@@ -46,11 +57,22 @@ export default function Result2(props: any) {
       legend: {
         show: false
       },
+      grid: {
+        borderColor: '#e7e7e7',
+        row: {
+          colors: ['#f3f3f3', 'transparent'],
+          opacity: 0.5
+        },
+      },
       plotOptions: {
         bar: {
           columnWidth: '45%',
           distributed: true,
         }
+      },
+      title: {
+        text: 'Kalkulačné členenie nákladov',
+        align: 'center'
       },
       xaxis: {
         categories: props.result.header,

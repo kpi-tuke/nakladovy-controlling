@@ -17,7 +17,7 @@ export default function Task1() {
   })
 
 
-  const task1 = function () {
+  const task1 = () => {
 
     let totalCost: number = 0
     let totalIncome: number = 0
@@ -51,8 +51,7 @@ export default function Task1() {
     <div className={"scrollbox-lg"} style={{height: "100vh"}}>
 
       <div>
-        <TableDynamic taskName={"Hospodarenie"}
-                      header={state[0].header}
+        <TableDynamic header={state[0].header}
                       inputs={state[0].inputs}
                       data={state[0].data}
                       rows={2} cols={2}

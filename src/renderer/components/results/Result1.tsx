@@ -66,7 +66,6 @@ export default function Result1(props: any) {
     ],
     options: {
       chart: {
-        height: 350,
         type: 'line',
         toolbar: {
           show: false
@@ -88,7 +87,7 @@ export default function Result1(props: any) {
       grid: {
         borderColor: '#e7e7e7',
         row: {
-          colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
+          colors: ['#f3f3f3', 'transparent'],
           opacity: 0.5
         },
       },
@@ -97,14 +96,6 @@ export default function Result1(props: any) {
       },
       xaxis: {
         categories: props.result.header,
-        title: {
-          text: 'Year'
-        }
-      },
-      yaxis: {
-        title: {
-          text: '€'
-        },
       },
       legend: {
         horizontalAlign: 'right',
@@ -142,23 +133,21 @@ export default function Result1(props: any) {
         enabled: true
       },
       stroke: {
-        curve: 'straight'
+        curve: 'smooth'
       },
-
+      grid: {
+        borderColor: '#e7e7e7',
+        row: {
+          colors: ['#f3f3f3', 'transparent'],
+          opacity: 0.5
+        },
+      },
       title: {
         text: 'Celkové náklady, výnosy, zisky',
         align: 'center'
       },
       xaxis: {
         categories: props.result.header,
-        title: {
-          text: 'Year'
-        }
-      },
-      yaxis: {
-        title: {
-          text: '€'
-        }
       },
       legend: {
         horizontalAlign: 'right'
@@ -196,6 +185,13 @@ export default function Result1(props: any) {
       title: {
         text: 'Ekonomické ukazovatele',
         align: 'center'
+      },
+      grid: {
+        borderColor: '#e7e7e7',
+        row: {
+          colors: ['#f3f3f3', 'transparent'],
+          opacity: 0.5
+        },
       },
       dataLabels: {
         enabled: false
@@ -364,7 +360,7 @@ export default function Result1(props: any) {
 
       <div className={"row"}>
 
-        <div className={"col-lg-6 col-sm-12"}>
+        <div className={"col-lg-6 col-md-12"}>
           <div className={"card mb-3"}>
             <div className={"card-body"}>
               {
@@ -376,7 +372,7 @@ export default function Result1(props: any) {
         </div>
 
 
-        <div className={"col-lg-6 col-sm-12"}>
+        <div className={"col-lg-6 col-md-12"}>
           <div className={"card mb-3"}>
             <div className={"card-body"}>
               {   // @ts-ignore

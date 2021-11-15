@@ -6,7 +6,9 @@ import Result2 from "../results/Result2";
 export default function Task2() {
 
   let state = useState({
-    header: ["mzdy", "rezia"], inputs: ["naklad", "material"], data: [
+    header: ["mzdy", "rezia"],
+    inputs: ["naklad", "material"],
+    data: [
       ["1", "4"],
       ["5", "10"]
     ]

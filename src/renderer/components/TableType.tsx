@@ -34,6 +34,7 @@ export default function TableDynamic(props: any) {
   const addRow = () => {
     let arr: number[] = []
     props.inputs.push("naklad")
+    props.types.push(false)
     for (let i = 0; i < props.data[0].length; i++) {
       arr.push(0)
     }
@@ -43,13 +44,20 @@ export default function TableDynamic(props: any) {
   }
 
   return (
-    <div className="mb-3">
+    <div className="card mb-3">
+
+      <div className="card-header">
+        <h3 className="caption">{props.taskName}</h3>
+      </div>
 
       <table className="table table-bordered table-responsive">
         <thead className="thead-light">
         <tr>
           <th>
             Ekonomická položka
+          </th>
+          <th>
+            Typ
           </th>
           {props.header.map((value: string, idx: number) => {
             return <th key={value}><input type="text" className="input-group-text"
@@ -67,6 +75,12 @@ export default function TableDynamic(props: any) {
               <td key={value}>
                 <input type="text" style={{border: 0}} defaultValue={value}
                        onBlur={() => (handleChangeInput(event, row))}/>
+              </td>
+              <td onClick={() => {
+                props.types[row] = !props.types[row];
+                props.proceed()
+              }}>
+                {props.types[row] ? "+" : "-"}
               </td>
 
               {props.data[row].map((value: string, col: number) => {
@@ -93,8 +107,8 @@ export default function TableDynamic(props: any) {
         }
         {props.dynRows
           ? <tr>
-              <td colSpan={props.header.length + 1} onClick={addRow}>+</td>
-            </tr>
+            <td colSpan={props.header.length + 2} onClick={addRow}>+</td>
+          </tr>
           : console.log("dynamic rows disabled")
         }
         </tbody>
