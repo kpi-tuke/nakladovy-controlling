@@ -87,6 +87,20 @@ export default function TaskSelector() {
           </div>
         </div>
 
+        <div className={"col-4"}>
+          <div className={"card card-outline-primary"}>
+            <div className={"card-header"}>
+              <h1>Task6</h1>
+            </div>
+            <div className={"card-body"}>
+              <p>Lorem ipsum</p>
+            </div>
+            <div className={"card-footer"}>
+              <button><Link to={"/task6"}>Task6</Link></button>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   );

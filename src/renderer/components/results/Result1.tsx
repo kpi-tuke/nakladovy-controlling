@@ -1,67 +1,30 @@
 import '../../App.css';
-import {Link} from "react-router-dom";
 import ReactApexChart from "react-apexcharts"
 import TableStatic from "../TableStatic";
+import InfoCard from "../InfoCard";
 
 
 export default function Result1(props: any) {
 
-  const makeArray = (numerator: number[], denominator: number[]): number[] => {
-    let arr: number[] = []
-    for (let i = 0; i < props.result.header.length; i++) {
-      if (numerator[i] === 0 || denominator[i] === 0) arr.push(0)
-      else arr.push(Math.round(100 * numerator[i] / denominator[i]) / 100)
-    }
-    return arr
-  }
-
-  let profitData: number[] = []
-  for (let i = 0; i < props.result.header.length; i++) {
-    profitData.push(props.result.incomeData[i] - props.result.costData[i])
-  }
-
-  let rentIncomeData: number[] = makeArray(profitData, props.result.incomeData);
-  let rentCostData: number[] = makeArray(profitData, props.result.costData);
-  let costEff: number[] = makeArray(props.result.incomeData, props.result.costData);
-  let costIndicator: number[] = makeArray(props.result.costData, props.result.incomeData);
-
-  let profitTotal: number[] = []
-  for (let i = 0; i < props.result.header.length; i++) {
-    profitTotal[i] = 0
-    for (let j = 0; j <= i; j++) {
-      profitTotal[i] += profitData[j]
-    }
-  }
-
-  let costTotal: number[] = []
-  for (let i = 0; i < props.result.header.length; i++) {
-    costTotal[i] = 0
-    for (let j = 0; j <= i; j++) {
-      costTotal[i] += props.result.costData[j]
-    }
-  }
-
-  let incomeTotal: number[] = []
-  for (let i = 0; i < props.result.header.length; i++) {
-    incomeTotal[i] = 0
-    for (let j = 0; j <= i; j++) {
-      incomeTotal[i] += props.result.incomeData[j]
-    }
-  }
+  const profitTotal: number = props.result.incomeTotal - props.result.costTotal
+  const costIndicator: number = Math.round(props.result.costTotal * 100 / props.result.incomeTotal) / 100
+  const costEfficiency: number = Math.round(props.result.incomeTotal * 100 / props.result.costTotal) / 100
+  const costProfitability: number = Math.round(profitTotal * 100 / props.result.costTotal) / 100
+  const incomeProfitability: number = Math.round(profitTotal * 100 / props.result.incomeTotal) / 100
 
   const lineGraph = {
     series: [
       {
-        name: "Cost",
+        name: "Náklady",
         data: props.result.costData
       },
       {
-        name: "Income",
+        name: "Tržby",
         data: props.result.incomeData
       },
       {
-        name: "Profit",
-        data: profitData
+        name: "Zisk",
+        data: props.result.profitData
       }
     ],
     options: {
@@ -106,22 +69,21 @@ export default function Result1(props: any) {
   const totalGraph = {
     series: [
       {
-        name: "Total Cost",
-        data: costTotal
+        name: "Celkové náklady",
+        data: props.result.costFlow
       },
       {
-        name: "Total Income",
-        data: incomeTotal
+        name: "Celkové tržby",
+        data: props.result.incomeFlow
       },
       {
-        name: "Total Profit",
-        data: profitTotal
+        name: "Celkový zisk",
+        data: props.result.profitFlow
       }
     ],
     options: {
       chart: {
         type: 'area',
-        height: 350,
         toolbar: {
           show: false
         },
@@ -159,21 +121,20 @@ export default function Result1(props: any) {
 
     series: [{
       name: 'Rentabilita výnosov',
-      data: rentIncomeData
+      data: props.result.incomeProfitabilityData
     }, {
       name: 'Rentabilita nákladov',
-      data: rentCostData
+      data: props.result.costProfitabilityData
     }, {
       name: 'Nákladová účinnosť',
-      data: costEff
+      data: props.result.costEfficiencyData
     }, {
       name: 'Nákladovosť',
-      data: costIndicator
+      data: props.result.costIndicatorData
     }],
     options: {
       chart: {
         type: 'bar',
-        height: 350
       },
       plotOptions: {
         bar: {
@@ -217,47 +178,24 @@ export default function Result1(props: any) {
         <h2>Ekonomická analýza ukazovateľov</h2>
 
         <div className={"row"}>
-          <div className={"col"}>
-            <div className={"card card-outline-primary mb-3"}>
-              <div className={"card-body"}>
-                <div className={"number-left"}>
-                  <h6 className={"bold"}>VÝNOSY CELKOM</h6>
-                  <h3 className={"card-title bold text-success"}>{props.result.income}</h3>
-                </div>
-                <div className={"icon-right"}>
-                  <i className={"fa fa-line-chart"}/>
-                </div>
-              </div>
-            </div>
-          </div>
 
-          <div className={"col"}>
-            <div className={"card card-outline-primary mb-3"}>
-              <div className={"card-body"}>
-                <div className={"number-left"}>
-                  <h6 className={"bold"}>NÁKLADY CELKOM</h6>
-                  <h3 className={"card-title bold text-primary"}>{props.result.cost}</h3>
+          {
+            [
+              ["VÝNOSY CELKOM", props.result.incomeTotal, "success", "fa fa-line-chart"],
+              ["NÁKLADY CELKOM", props.result.costTotal, "primary", "fa fa-shopping-cart"],
+              ["ZISK CELKOM", profitTotal, "warning", "fa fa-money"]
+            ].map(value => (
+                <div className={"col"}>
+                  <InfoCard header={value[0]}
+                            value={value[1]}
+                            color={value[2]}
+                            icon={value[3]}
+                  />
                 </div>
-                <div className={"icon-right"}>
-                  <i className={"fa fa-shopping-cart"}/>
-                </div>
-              </div>
-            </div>
-          </div>
+              )
+            )
+          }
 
-          <div className={"col"}>
-            <div className={"card card-outline-primary mb-3"}>
-              <div className={"card-body"}>
-                <div className={"number-left"}>
-                  <h6 className={"bold"}>ZISK CELKOM</h6>
-                  <h3 className={"card-title bold text-warning"}>{props.result.income - props.result.cost}</h3>
-                </div>
-                <div className={"icon-right"}>
-                  <i className={"fa fa-money"}/>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
 
@@ -273,11 +211,11 @@ export default function Result1(props: any) {
             <TableStatic header={[...props.result.header, "Celkovo"]}
                          inputs={["Zisk", "Rentabilita výnosov", "Rentabilita nákladov", "Nákladová účinnosť", "Nákladovosť"]}
                          data={[
-                           [...profitData, props.result.income - props.result.cost],
-                           [...rentIncomeData, Math.round((props.result.income - props.result.cost) * 100 / props.result.income) / 100],
-                           [...rentCostData, Math.round((props.result.income - props.result.cost) * 100 / props.result.cost) / 100],
-                           [...costEff, Math.round(props.result.income * 100 / props.result.cost) / 100],
-                           [...costIndicator, Math.round(props.result.cost * 100 / props.result.income) / 100]
+                           [...props.result.profitData, profitTotal],
+                           [...props.result.incomeProfitabilityData, incomeProfitability],
+                           [...props.result.costProfitabilityData, costProfitability],
+                           [...props.result.costEfficiencyData, costEfficiency],
+                           [...props.result.costIndicatorData, costIndicator]
                          ]}
             />
           </div>
@@ -292,7 +230,7 @@ export default function Result1(props: any) {
                     <div className={"number-left"}>
                       <h6 className={"bold"}>Rentabilita výnosov</h6>
                       <h3
-                        className={"card-title bold text-primary"}>{Math.round((props.result.income - props.result.cost) * 100 / props.result.income) / 100}</h3>
+                        className={"card-title bold text-primary"}>{incomeProfitability}</h3>
                     </div>
                     <div className={"icon-right"}>
                       <i className={"fa fa-pie-chart"}/>
@@ -307,7 +245,7 @@ export default function Result1(props: any) {
                     <div className={"number-left"}>
                       <h6 className={"bold"}>Rentabilita nákladov</h6>
                       <h3
-                        className={"card-title bold text-success"}>{Math.round((props.result.income - props.result.cost) * 100 / props.result.cost) / 100}</h3>
+                        className={"card-title bold text-success"}>{costProfitability}</h3>
                     </div>
                     <div className={"icon-right"}>
                       <i className={"fa fa-calculator"}/>
@@ -326,7 +264,7 @@ export default function Result1(props: any) {
                     <div className={"number-left"}>
                       <h6 className={"bold"}>Nákladová účinnosť</h6>
                       <h3
-                        className={"card-title bold text-warning"}>{Math.round(props.result.income * 100 / props.result.cost) / 100}</h3>
+                        className={"card-title bold text-warning"}>{costEfficiency}</h3>
                     </div>
                     <div className={"icon-right"}>
                       <i className={"fa fa-dashboard"}/>
@@ -341,7 +279,7 @@ export default function Result1(props: any) {
                     <div className={"number-left"}>
                       <h6 className={"bold"}>Nákladovosť</h6>
                       <h3
-                        className={"card-title bold text-danger"}>{Math.round(props.result.cost * 100 / props.result.income) / 100}</h3>
+                        className={"card-title bold text-danger"}>{costIndicator}</h3>
                     </div>
                     <div className={"icon-right"}>
                       <i className={"fa fa-area-chart"}/>
@@ -394,7 +332,7 @@ export default function Result1(props: any) {
         </div>
       </div>
 
-      <button><Link to={"/taskselect"}>Back</Link></button>
+
     </div>
   );
 }

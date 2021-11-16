@@ -51,14 +51,21 @@ export default function Task4() {
 
     fixTotal[0] = state[0].fixTotal[0]
     minProfit[0] = state[0].minProfit[0]
-    // @ts-ignore
+
     setResult({
+      // @ts-ignore
       volumes: volumes,
+      // @ts-ignore
       prices: prices,
+      // @ts-ignore
       costs: costs,
+      // @ts-ignore
       fixCost: fixCost,
+      // @ts-ignore
       inputs: state[0].inputs,
+      // @ts-ignore
       fixTotal: fixTotal,
+      // @ts-ignore
       minProfit: minProfit
     })
   }

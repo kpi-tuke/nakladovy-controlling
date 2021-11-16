@@ -2,6 +2,7 @@ import '../../App.css';
 import TableDynamic from "../TableDynamic";
 import Result5 from "../results/Result5";
 import {useEffect, useState} from "react";
+import {Link} from "react-router-dom";
 
 export default function Task5() {
 
@@ -52,16 +53,24 @@ export default function Task5() {
 
     // @ts-ignore
     setResult({
+      // @ts-ignore
       rentCost: rentCost,
+      // @ts-ignore
       rentIncome: rentIncome,
+      // @ts-ignore
       marginProfit: marginProfit,
+      // @ts-ignore
       marginGross: marginGross,
+      // @ts-ignore
       allowance: allowance,
+      // @ts-ignore
       profit: profit,
+      // @ts-ignore
       header: state[0].header
     })
   }
   useEffect(task5, [])
+
   return (
     <div className={"scrollbox-lg"} style={{height: "100vh"}}>
       <TableDynamic header={state[0].header}
@@ -73,6 +82,8 @@ export default function Task5() {
       />
 
       <Result5 result={getResult}/>
+
+      <button><Link to={"/taskselect"}>Back</Link></button>
     </div>
   )
 }

@@ -1,8 +1,7 @@
 import '../../App.css';
-import {Link} from "react-router-dom";
 import TableStatic from "../TableStatic";
 import ReactApexChart from "react-apexcharts";
-//import ReactApexChart from "react-apexcharts";
+
 
 export default function Result5(props: any) {
 
@@ -22,9 +21,6 @@ export default function Result5(props: any) {
       }
     )
   }
-
-  // @ts-ignore
-  console.log(series)
 
   const colGraph = {
     series: series,
@@ -91,7 +87,6 @@ export default function Result5(props: any) {
         </div>
       </div>
 
-      <button><Link to={"/taskselect"}>Back</Link></button>
     </div>
   )
 }

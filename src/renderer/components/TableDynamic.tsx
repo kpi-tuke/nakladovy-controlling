@@ -6,7 +6,9 @@ export default function TableDynamic(props: any) {
   const [getState, setState] = useState({rows: props.rows, cols: props.cols})
 
   const handleChangeData = function (event: any, row: number, col: number) {
-    props.data[row][col] = event.target.value === '' ? "0" : event.target.value
+    props.data[row][col] = event.target.value === ''
+      ? "0"
+      : event.target.value
     props.proceed()
   }
 

@@ -41,7 +41,7 @@ export default function Result2(props: any) {
         categories: props.result.inputs,
       }
     },
-  };
+  }
 
   const barChartCol = {
     series: [{
