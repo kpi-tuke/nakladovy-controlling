@@ -2,21 +2,22 @@ import '../../App.css';
 import TableDynamic from "../TableDynamic";
 import Result6 from "../results/Result6";
 import {useEffect, useState} from "react";
+import {Link} from "react-router-dom";
 
 export default function Task6() {
 
   let [getResult, setResult] = useState({causes: [], percentages: [], values: [], kumul: []})
   let state = useState({
-    header: ["Príčina", "Hodnota"],
-    inputs: ["1", "2", "3", "4", "5", "6", "7"],
+    header: ["Kód", "Hodnota"],
+    inputs: ["Chyby mechanického trieskového opracovania", "Chyby tvárnenia materiálu", "Materiálové chyby", "Chyby zvárania", "Chyby povrchu a povrchovej úpravy", "Chyby kompletizácie, balenia", "Chyby dokumentácie"],
     data: [
-      ["Chyby mechanického trieskového opracovania", "3998"],
-      ["Chyby tvárnenia materiálu", "1307"],
-      ["Materiálové chyby", "361"],
-      ["Chyby zvárania", "82"],
-      ["Chyby povrchu a povrchovej úpravy", "104"],
-      ["Chyby kompletizácie, balenia", "1573"],
-      ["Chyby dokumentácie", "5"]
+      ["1", "3998"],
+      ["2", "1307"],
+      ["3", "361"],
+      ["4", "82"],
+      ["5", "104"],
+      ["6", "1573"],
+      ["7", "5"]
     ],
   })
 
@@ -57,7 +58,10 @@ export default function Task6() {
 
   return (
     <div className={"scrollbox-lg"} style={{height: "100vh"}}>
-      <TableDynamic header={state[0].header}
+      <TableDynamic corner={"Príčina"}
+                    headerType={"text"}
+                    header={state[0].header}
+                    inputType={"input"}
                     inputs={state[0].inputs}
                     data={state[0].data}
                     rows={7} cols={2}
@@ -66,6 +70,8 @@ export default function Task6() {
       />
 
       <Result6 result={getResult}/>
+
+      <button><Link to={"/taskselect"}>Back</Link></button>
     </div>
   )
 }

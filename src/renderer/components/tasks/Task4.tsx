@@ -32,12 +32,14 @@ export default function Task4() {
     let fixCost: number[] = []
     let fixTotal: number[] = []
     let minProfit: number[] = []
+    let inputs: string[] = []
 
     for (let i = 0; i < state[0].inputs.length; i++) {
       volumes.push(0)
       prices.push(0)
       costs.push(0)
       fixCost.push(0)
+      inputs.push(state[0].inputs[i])
     }
     fixTotal.push(0)
     minProfit.push(0)
@@ -62,7 +64,7 @@ export default function Task4() {
       // @ts-ignore
       fixCost: fixCost,
       // @ts-ignore
-      inputs: state[0].inputs,
+      inputs: inputs,
       // @ts-ignore
       fixTotal: fixTotal,
       // @ts-ignore
@@ -76,15 +78,17 @@ export default function Task4() {
   return (
     <div className={"scrollbox-lg"} style={{height: "100vh"}}>
       <div className={"row"} style={{paddingLeft: 10, paddingRight: 10, marginTop: 10}}>
-        <div className={"col-5"}>
-          <TableDynamic header={state[0].header}
-                        inputs={state[0].inputs}
-                        data={state[0].data}
-                        rows={1} cols={4}
-                        dynRows={true} dynCols={false}
-                        proceed={task4}
-          />
-        </div>
+
+        <TableDynamic corner={"Ekonomická položka"}
+                      headerType={"text"}
+                      header={state[0].header}
+                      inputType={"input"}
+                      inputs={state[0].inputs}
+                      data={state[0].data}
+                      rows={1} cols={4}
+                      dynRows={true} dynCols={false}
+                      proceed={task4}
+        />
 
         <div className={"col"}>
 

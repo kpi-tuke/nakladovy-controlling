@@ -8,8 +8,8 @@ export default function Result4(props: any) {
   const zeroEur: number[] = []
   const zeroTon: number[] = []
   const zeroProf: number[] = []
-
   const fixSum = props.result.fixTotal[0] + props.result.fixCost.reduce((a: number, b: number) => a + b, 0)
+
   for (let i = 0; i < props.result.inputs.length; i++) {
     zeroEur.push(0)
     zeroTon.push(0)
@@ -21,82 +21,6 @@ export default function Result4(props: any) {
     zeroTon[i] = fixSum / (props.result.prices[i] - props.result.costs[i])
     zeroProf[i] = (parseInt(fixSum) + parseInt(props.result.minProfit)) / (props.result.prices[i] - props.result.costs[i]) // pridat min zisk
   }
-
-
-  /*  const costTotal: number[] = []
-    const incomeTotal: number[] = []
-    const vol :number = (zeroTon[0] + 2*(zeroTon[0]/3))/5
-    //const vol :number = (props.result.volumes[0] + 2*(props.result.volumes[0]/3))/5
-    const osX :number[] = []
-
-    for (let i = 0; i < 7; i++){
-      osX.push(Math.round(i * vol*100)/100)
-    }
-    for (let i = 0; i < 7; i++){
-      costTotal.push(Math.round((fixSum + ( (i * vol)*props.result.costs[0] ) )*100)/100)
-      incomeTotal.push(Math.round(((i * vol) * props.result.prices[0])*100)/100)
-    }
-
-
-    const lineGraph = {
-      series: [
-        {
-          name: "Cost",
-          data: costTotal
-        },
-        {
-          name: "Sales",
-          data: incomeTotal
-        }
-      ],
-      options: {
-        chart: {
-          type: 'line',
-          zoom: {
-            enabled: false
-          }
-        },
-
-        stroke: {
-          curve: 'smooth'
-        },
-        title: {
-          text: 'Náklady, výnosy a zisky',
-          align: 'center'
-        },
-        grid: {
-          borderColor: '#e7e7e7',
-          row: {
-            colors: ['#f3f3f3', 'transparent'],
-            opacity: 0.5
-          },
-        },
-        xaxis: {
-          categories: osX,
-          type: 'numeric'
-        },
-        annotations: {
-        points:
-          [
-            {
-              x:zeroTon[0],
-              y: zeroEur[0],
-              marker: {
-                size: 8,
-              },
-              label: {
-                borderColor: '#FF4560',
-                text: 'Nulový bod'
-              }
-            }
-          ],
-        },
-        legend: {
-          horizontalAlign: 'right',
-        }
-      },
-    };*/
-
 
   // @ts-ignore
   return (

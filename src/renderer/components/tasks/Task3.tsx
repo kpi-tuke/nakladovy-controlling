@@ -20,9 +20,12 @@ export default function Task3() {
   const task3 = () => {
     let costSums: number[] = []
     let incomeSums: number[] = []
+    let header: string[] = []
+
     for (let i = 0; i < state[0].header.length; i++) {
       costSums.push(0)
       incomeSums.push(0)
+      header.push(state[0].header[i])
     }
     state[0].data.map((rowData: string[], row: number) => {
       state[0].types[row]
@@ -35,7 +38,14 @@ export default function Task3() {
     })
     console.log(incomeSums)
     // @ts-ignore
-    setResult({header: state[0].header, costSums: costSums, incomeSums: incomeSums})
+    setResult({
+      // @ts-ignore
+      header: header,
+      // @ts-ignore
+      costSums: costSums,
+      // @ts-ignore
+      incomeSums: incomeSums
+    })
   }
 
   useEffect(task3, [])
@@ -44,8 +54,10 @@ export default function Task3() {
     <div className={"scrollbox-lg"} style={{height: "100vh"}}>
 
       <div>
-        <TableType taskName={"Koeficient reakcie"}
+        <TableType corner={"Ekonomická položka"}
+                   headerType={"text"}
                    header={state[0].header}
+                   inputType={"input"}
                    inputs={state[0].inputs}
                    data={state[0].data}
                    types={state[0].types}

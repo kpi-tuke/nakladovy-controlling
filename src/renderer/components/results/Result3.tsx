@@ -1,5 +1,6 @@
 import '../../App.css';
 import {Link} from "react-router-dom";
+import InfoCard from "../InfoCard";
 // import {Link} from "react-router-dom";
 // import ReactApexChart from "react-apexcharts"
 // import TableStatic from "../TableStatic";
@@ -8,7 +9,10 @@ export default function Result3(props: any) {
 
   const profitDiff = props.result.incomeSums[1] * 100 / props.result.incomeSums[0] - 100
   const chainIdx = props.result.costSums[1] / props.result.costSums[0]
-  console.log(props.result.incomeSums)
+  const costDiff = Math.round(chainIdx * 100 - 100) / 100
+  const incomeDiff = Math.round(profitDiff * 100) / 100
+  const reaction = Math.round((chainIdx * 100 - 100) * 100 / profitDiff) / 100
+
   return (
     <div style={{paddingLeft: 10, paddingRight: 10}}>
       <div className={"card-body"}>
@@ -16,59 +20,36 @@ export default function Result3(props: any) {
         <div className={"row"}>
 
           <div className={"col-sm-12 col-md-6 col-lg-3"}>
-            <div className={"card card-outline-primary mb-3"}>
-              <div className={"card-body"}>
-                <div className={"number-left"}>
-                  <h6 className={"bold"}>NÁKLADY CELKOM({props.result.header[0]})</h6>
-                  <h3 className={"card-title bold text-primary"}>{props.result.costSums[0]}</h3>
-                </div>
-                <div className={"icon-right"}>
-                  <i className={"fa fa-line-chart"}/>
-                </div>
-              </div>
-            </div>
+            <InfoCard header={"NÁKLADY CELKOM(" + props.result.header[0] + ")"}
+                      value={props.result.costSums[0]}
+                      color={"primary"}
+                      icon={"fa fa-line-chart"}
+            />
           </div>
 
           <div className={"col-sm-12 col-md-6 col-lg-3"}>
-            <div className={"card card-outline-primary mb-3"}>
-              <div className={"card-body"}>
-                <div className={"number-left"}>
-                  <h6 className={"bold"}>NÁKLADY CELKOM({props.result.header[1]})</h6>
-                  <h3 className={"card-title bold text-primary"}>{props.result.costSums[1]}</h3>
-                </div>
-                <div className={"icon-right"}>
-                  <i className={"fa fa-line-chart"}/>
-                </div>
-              </div>
-            </div>
+            <InfoCard header={"NÁKLADY CELKOM(" + props.result.header[1] + ")"}
+                      value={props.result.costSums[1]}
+                      color={"primary"}
+                      icon={"fa fa-line-chart"}
+            />
+
           </div>
 
           <div className={"col-sm-12 col-md-6 col-lg-3"}>
-            <div className={"card card-outline-primary mb-3"}>
-              <div className={"card-body"}>
-                <div className={"number-left"}>
-                  <h6 className={"bold"}>VÝNOSY CELKOM({props.result.header[0]})</h6>
-                  <h3 className={"card-title bold text-warning"}>{props.result.incomeSums[0]}</h3>
-                </div>
-                <div className={"icon-right"}>
-                  <i className={"fa fa-money"}/>
-                </div>
-              </div>
-            </div>
+            <InfoCard header={"VÝNOSY CELKOM(" + props.result.header[0] + ")"}
+                      value={props.result.incomeSums[0]}
+                      color={"warning"}
+                      icon={"fa fa-money"}
+            />
           </div>
 
           <div className={"col-sm-12 col-md-6 col-lg-3"}>
-            <div className={"card card-outline-primary mb-3"}>
-              <div className={"card-body"}>
-                <div className={"number-left"}>
-                  <h6 className={"bold"}>VÝNOSY CELKOM({props.result.header[1]})</h6>
-                  <h3 className={"card-title bold text-warning"}>{props.result.incomeSums[1]}</h3>
-                </div>
-                <div className={"icon-right"}>
-                  <i className={"fa fa-money"}/>
-                </div>
-              </div>
-            </div>
+            <InfoCard header={"VÝNOSY CELKOM(" + props.result.header[1] + ")"}
+                      value={props.result.incomeSums[1]}
+                      color={"warning"}
+                      icon={"fa fa-money"}
+            />
           </div>
 
         </div>
@@ -78,60 +59,35 @@ export default function Result3(props: any) {
         <div className={"row"}>
 
           <div className={"col-sm-12 col-md-6 col-lg-3"}>
-            <div className={"card card-outline-primary mb-3"}>
-              <div className={"card-body"}>
-                <div className={"number-left"}>
-                  <h6 className={"bold"}>REŤAZOVÝ INDEX</h6>
-                  <h3 className={"card-title bold text-success"}>{Math.round(chainIdx * 100) / 100}</h3>
-                </div>
-                <div className={"icon-right"}>
-                  <i className={"fa fa-area-chart"}/>
-                </div>
-              </div>
-            </div>
+            <InfoCard header={"REŤAZOVÝ INDEX"}
+                      value={Math.round(chainIdx * 100) / 100}
+                      color={"success"}
+                      icon={"fa fa-area-chart"}
+            />
           </div>
 
           <div className={"col-sm-12 col-md-6 col-lg-3"}>
-            <div className={"card card-outline-primary mb-3"}>
-              <div className={"card-body"}>
-                <div className={"number-left"}>
-                  <h6 className={"bold"}>PERCENTO ZMENY NÁKLADOV</h6>
-                  <h3 className={"card-title bold text-primary"}>{Math.round(chainIdx * 100 - 100) / 100}</h3>
-                </div>
-                <div className={"icon-right"}>
-                  <i className={"fa fa-shopping-cart"}/>
-                </div>
-              </div>
-            </div>
+            <InfoCard header={"PERCENTO ZMENY NÁKLADOV"}
+                      value={costDiff}
+                      color={"primary"}
+                      icon={"fa fa-shopping-cart"}
+            />
           </div>
 
           <div className={"col-sm-12 col-md-6 col-lg-3"}>
-            <div className={"card card-outline-primary mb-3"}>
-              <div className={"card-body"}>
-                <div className={"number-left"}>
-                  <h6 className={"bold"}>PERCENTO ZMENY VÝNOSOV</h6>
-                  <h3 className={"card-title bold text-warning"}>{Math.round(profitDiff * 100) / 100}</h3>
-                </div>
-                <div className={"icon-right"}>
-                  <i className={"fa fa-dashboard"}/>
-                </div>
-              </div>
-            </div>
+            <InfoCard header={"PERCENTO ZMENY VÝNOSOV"}
+                      value={incomeDiff}
+                      color={"warning"}
+                      icon={"fa fa-dashboard"}
+            />
           </div>
 
           <div className={"col-sm-12 col-md-6 col-lg-3"}>
-            <div className={"card card-outline-primary mb-3"}>
-              <div className={"card-body"}>
-                <div className={"number-left"}>
-                  <h6 className={"bold"}>KOEFICIENT REAKCIE</h6>
-                  <h3
-                    className={"card-title bold text-danger"}>{Math.round((chainIdx * 100 - 100) * 100 / profitDiff) / 100}</h3>
-                </div>
-                <div className={"icon-right"}>
-                  <i className={"fa fa-calculator"}/>
-                </div>
-              </div>
-            </div>
+            <InfoCard header={"KOEFICIENT REAKCIE"}
+                      value={reaction}
+                      color={"danger"}
+                      icon={"fa fa-calculator"}
+            />
           </div>
 
         </div>

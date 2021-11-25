@@ -39,7 +39,7 @@ export default function Task1() {
 
   let state = useState({
     header: ["2000", "2001"],
-    inputs: ["Vynos", "Naklad"],
+    inputs: ["Výnos", "Náklad"],
     data: [
       ["2", "4"],
       ["1", "3"]
@@ -61,6 +61,7 @@ export default function Task1() {
     let costData: number[] = []
     let incomeData: number[] = []
     let profitData: number[] = []
+    let header: string[] = []
 
     state[0].data[0].map((value: string) => {
       incomeTotal += parseFloat(value)
@@ -73,6 +74,7 @@ export default function Task1() {
 
     for (let i = 0; i < state[0].header.length; i++) {
       profitData.push(incomeData[i] - costData[i])
+      header.push(state[0].header[i])
     }
 
     let incomeProfitabilityData: number[] = makeArray(profitData, incomeData);
@@ -108,7 +110,7 @@ export default function Task1() {
 
     setResult({
       // @ts-ignore
-      header: state[0].header,
+      header: header,
       // @ts-ignore
       costTotal: costTotal,
       // @ts-ignore
@@ -142,7 +144,10 @@ export default function Task1() {
     <div className={"scrollbox-lg"} style={{height: "100vh"}}>
 
       <div>
-        <TableDynamic header={state[0].header}
+        <TableDynamic corner={"Ekonomická položka"}
+                      headerType={"input"}
+                      header={state[0].header}
+                      inputType={"text"}
                       inputs={state[0].inputs}
                       data={state[0].data}
                       rows={2} cols={2}

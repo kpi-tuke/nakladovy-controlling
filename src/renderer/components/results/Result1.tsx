@@ -175,28 +175,37 @@ export default function Result1(props: any) {
     <div style={{paddingLeft: 10, paddingRight: 10}}>
 
       <div className={"card-body"}>
+
         <h2>Ekonomická analýza ukazovateľov</h2>
 
         <div className={"row"}>
 
-          {
-            [
-              ["VÝNOSY CELKOM", props.result.incomeTotal, "success", "fa fa-line-chart"],
-              ["NÁKLADY CELKOM", props.result.costTotal, "primary", "fa fa-shopping-cart"],
-              ["ZISK CELKOM", profitTotal, "warning", "fa fa-money"]
-            ].map(value => (
-                <div className={"col"}>
-                  <InfoCard header={value[0]}
-                            value={value[1]}
-                            color={value[2]}
-                            icon={value[3]}
-                  />
-                </div>
-              )
-            )
-          }
+          <div className={"col"}>
+            <InfoCard header={"VÝNOSY CELKOM"}
+                      value={props.result.incomeTotal}
+                      color={"success"}
+                      icon={"fa fa-line-chart"}
+            />
+          </div>
+
+          <div className={"col"}>
+            <InfoCard header={"NÁKLADY CELKOM"}
+                      value={props.result.costTotal}
+                      color={"primary"}
+                      icon={"fa fa-shopping-cart"}
+            />
+          </div>
+
+          <div className={"col"}>
+            <InfoCard header={"ZISK CELKOM"}
+                      value={profitTotal}
+                      color={"warning"}
+                      icon={"fa fa-money"}
+            />
+          </div>
 
         </div>
+
       </div>
 
 
@@ -225,33 +234,19 @@ export default function Result1(props: any) {
             <div className={"row"}>
 
               <div className={"col"}>
-                <div className={"card card-outline-primary mb-3"}>
-                  <div className={"card-body"}>
-                    <div className={"number-left"}>
-                      <h6 className={"bold"}>Rentabilita výnosov</h6>
-                      <h3
-                        className={"card-title bold text-primary"}>{incomeProfitability}</h3>
-                    </div>
-                    <div className={"icon-right"}>
-                      <i className={"fa fa-pie-chart"}/>
-                    </div>
-                  </div>
-                </div>
+                <InfoCard header={"Rentabilita výnosov"}
+                          value={incomeProfitability}
+                          color={"primary"}
+                          icon={"fa fa-pie-chart"}
+                />
               </div>
 
               <div className={"col"}>
-                <div className={"card card-outline-primary mb-3"}>
-                  <div className={"card-body"}>
-                    <div className={"number-left"}>
-                      <h6 className={"bold"}>Rentabilita nákladov</h6>
-                      <h3
-                        className={"card-title bold text-success"}>{costProfitability}</h3>
-                    </div>
-                    <div className={"icon-right"}>
-                      <i className={"fa fa-calculator"}/>
-                    </div>
-                  </div>
-                </div>
+                <InfoCard header={"Rentabilita nákladov"}
+                          value={costProfitability}
+                          color={"success"}
+                          icon={"fa fa-calculator"}
+                />
               </div>
 
             </div>
@@ -259,36 +254,23 @@ export default function Result1(props: any) {
             <div className={"row"}>
 
               <div className={"col"}>
-                <div className={"card card-outline-primary mb-3"}>
-                  <div className={"card-body"}>
-                    <div className={"number-left"}>
-                      <h6 className={"bold"}>Nákladová účinnosť</h6>
-                      <h3
-                        className={"card-title bold text-warning"}>{costEfficiency}</h3>
-                    </div>
-                    <div className={"icon-right"}>
-                      <i className={"fa fa-dashboard"}/>
-                    </div>
-                  </div>
-                </div>
+                <InfoCard header={"Nákladová účinnosť"}
+                          value={costEfficiency}
+                          color={"warning"}
+                          icon={"fa fa-dashboard"}
+                />
               </div>
 
               <div className={"col"}>
-                <div className={"card card-outline-primary mb-3"}>
-                  <div className={"card-body"}>
-                    <div className={"number-left"}>
-                      <h6 className={"bold"}>Nákladovosť</h6>
-                      <h3
-                        className={"card-title bold text-danger"}>{costIndicator}</h3>
-                    </div>
-                    <div className={"icon-right"}>
-                      <i className={"fa fa-area-chart"}/>
-                    </div>
-                  </div>
-                </div>
+                <InfoCard header={"Nákladovosť"}
+                          value={costIndicator}
+                          color={"danger"}
+                          icon={"fa fa-area-chart"}
+                />
               </div>
 
             </div>
+
           </div>
         </div>
       </div>

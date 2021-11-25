@@ -32,6 +32,7 @@ export default function Task5() {
     let marginGross: number[] = []
     let allowance: number[] = []
     let profit: number[] = []
+    let header: string[] = []
 
     for (let i = 0; i < state[0].header.length; i++) {
       rentCost.push(0)
@@ -40,15 +41,30 @@ export default function Task5() {
       marginProfit.push(0)
       allowance.push(0)
       profit.push(0)
+      header.push(state[0].header[i])
     }
 
     for (let col = 0; col < state[0].header.length; col++) {
       marginProfit[col] = parseInt(state[0].data[1][col]) - parseInt(state[0].data[2][col])
-      rentCost[col] = marginProfit[col] / parseInt(state[0].data[2][col])
-      rentIncome[col] = marginProfit[col] / parseInt(state[0].data[1][col])
+
+      if (parseInt(state[0].data[2][col]) === 0) {
+        console.log("delenie nulou");
+        rentCost[col] = 0
+      } else rentCost[col] = Math.round((marginProfit[col] / parseInt(state[0].data[2][col])) * 100) / 100
+
+      if (parseInt(state[0].data[1][col]) === 0) {
+        console.log("delenie nulou");
+        rentIncome[col] = 0
+      } else rentIncome[col] = Math.round((marginProfit[col] / parseInt(state[0].data[1][col])) * 100) / 100
+
       marginGross[col] = parseInt(state[0].data[1][col]) - parseInt(state[0].data[3][col])
-      allowance[col] = 1 - (parseInt(state[0].data[3][col]) / parseInt(state[0].data[1][col]))
-      profit[col] = parseInt(state[0].data[0][col]) * parseInt(state[0].data[1][col]) - parseInt(state[0].data[0][col]) * parseInt(state[0].data[2][col])
+
+      if (parseInt(state[0].data[1][col]) === 0) {
+        console.log("delenie nulou");
+        allowance[col] = 0
+      } else allowance[col] = Math.round((1 - (parseInt(state[0].data[3][col]) / parseInt(state[0].data[1][col]))) * 100) / 100
+
+      profit[col] = Math.round((parseInt(state[0].data[0][col]) * parseInt(state[0].data[1][col]) - parseInt(state[0].data[0][col]) * parseInt(state[0].data[2][col])) * 100) / 100
     }
 
     // @ts-ignore
@@ -66,14 +82,17 @@ export default function Task5() {
       // @ts-ignore
       profit: profit,
       // @ts-ignore
-      header: state[0].header
+      header: header
     })
   }
   useEffect(task5, [])
 
   return (
     <div className={"scrollbox-lg"} style={{height: "100vh"}}>
-      <TableDynamic header={state[0].header}
+      <TableDynamic corner={"Ekonomická položka"}
+                    headerType={"input"}
+                    header={state[0].header}
+                    inputType={"text"}
                     inputs={state[0].inputs}
                     data={state[0].data}
                     rows={4} cols={2}

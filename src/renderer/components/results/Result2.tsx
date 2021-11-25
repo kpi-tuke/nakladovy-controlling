@@ -1,10 +1,9 @@
 import '../../App.css';
 import {Link} from "react-router-dom";
 import ReactApexChart from "react-apexcharts"
+import InfoCard from "../InfoCard";
 
 export default function Result2(props: any) {
-
-  const totalCost = props.result.rowSums.reduce((a: number, b: number) => a + b, 0)
 
   const barChartRow = {
     series: [{
@@ -118,17 +117,16 @@ export default function Result2(props: any) {
     <div style={{paddingLeft: 10, paddingRight: 10}}>
 
       <div className={"card-body"}>
+
         <h2>Štruktúrna analýza</h2>
-        <div className={"card card-outline-primary mb-3 col-2"}>
-          <div className={"card-body"}>
-            <div className={"number-left"}>
-              <h6 className={"bold"}>NÁKLADY SPOLU</h6>
-              <h3 className={"card-title bold text-success"}>{totalCost}</h3>
-            </div>
-            <div className={"icon-right"}>
-              <i className={"fa fa-money"}/>
-            </div>
-          </div>
+
+
+        <div className={"col-2"}>
+          <InfoCard header={"NÁKLADY SPOLU"}
+                    value={props.result.totalCost}
+                    color={"success"}
+                    icon={"fa fa-money"}
+          />
         </div>
       </div>
 

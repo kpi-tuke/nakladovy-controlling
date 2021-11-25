@@ -1,11 +1,8 @@
 import '../../App.css';
 import ReactApexChart from "react-apexcharts";
 
-//import ReactApexChart from "react-apexcharts";
-
 
 export default function Result6(props: any) {
-  console.log(props)
 
   const barChart = {
 
@@ -39,16 +36,16 @@ export default function Result6(props: any) {
         type: 'text'
       },
       yaxis: [{
-        // min: 0,
-        // max: props.result.sum,
+        min: 0,
+        max: props.result.sum,
         title: {
           text: 'Hodnota',
         },
 
       }, {
         opposite: true,
-        // min: 0,
-        // max: 100,
+        min: 0,
+        max: 100,
         title: {
           text: 'Percento',
         }

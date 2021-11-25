@@ -63,6 +63,7 @@ export default function Result5(props: any) {
       },
     },
   }
+
   return (
     <div style={{paddingLeft: 10, paddingRight: 10}}>
       <TableStatic header={[...props.result.header]}

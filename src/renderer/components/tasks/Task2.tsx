@@ -6,25 +6,39 @@ import Result2 from "../results/Result2";
 export default function Task2() {
 
   let state = useState({
-    header: ["mzdy", "rezia"],
-    inputs: ["naklad", "material"],
-    data: [
-      ["1", "4"],
-      ["5", "10"]
+    header: [""],
+    inputs: [""],
+    data: [["1"]],
+    selectRow: [
+      "Materiálové náklady",
+      "Služby",
+      "Mzdové a osobné náklady",
+      "Zákonne sociálne poistenie",
+      "Odpisy",
+      "Daň z nehnuteľnosti"
+    ],
+    selectCol: [
+      "Priamy materiál",
+      "Priame mzdy",
+      "Výrobná réžia",
+      "Správna réžia"
     ]
   })
 
-  let [getResult, setResult] = useState({inputs: state[0].inputs, header: state[0].header, rowSums: [], colSums: []})
+  let [getResult, setResult] = useState({inputs: [], header: [], rowSums: [], colSums: [], totalCost: 0})
 
   const task2 = () => {
     let rowSums: number[] = []
     let colSums: number[] = []
-
+    let inputs: string[] = []
+    let header: string[] = []
     for (let i = 0; i < state[0].inputs.length; i++) {
       rowSums.push(0)
+      inputs.push(state[0].inputs[i])
     }
     for (let i = 0; i < state[0].header.length; i++) {
       colSums.push(0)
+      header.push(state[0].header[i])
     }
 
     state[0].data.map((value: string[], row: number) => {
@@ -39,8 +53,20 @@ export default function Task2() {
       })
     })
 
-    // @ts-ignore
-    setResult({inputs: state[0].inputs, header: state[0].header, rowSums: rowSums, colSums: colSums})
+    const totalCost: number = rowSums.reduce((a: number, b: number) => a + b, 0)
+
+    setResult({
+      // @ts-ignore
+      inputs: inputs,
+      // @ts-ignore
+      header: header,
+      // @ts-ignore
+      rowSums: rowSums,
+      // @ts-ignore
+      colSums: colSums,
+      // @ts-ignore
+      totalCost: totalCost
+    })
   }
 
   useEffect(task2, [])
@@ -48,13 +74,17 @@ export default function Task2() {
   return (
     <div className={"scrollbox-lg"} style={{height: "100vh"}}>
 
-      <TableDynamic taskName={"Štruktúra"}
+      <TableDynamic corner={"↓Druhové | Kalkulačné→"}
+                    headerType={"select"}
                     header={state[0].header}
+                    inputType={"select"}
                     inputs={state[0].inputs}
                     data={state[0].data}
-                    rows={2} cols={2}
+                    rows={1} cols={1}
                     dynRows={true} dynCols={true}
                     proceed={task2}
+                    selectRow={state[0].selectRow}
+                    selectCol={state[0].selectCol}
       />
 
       <Result2 result={getResult}/>
