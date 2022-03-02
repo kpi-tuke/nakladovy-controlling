@@ -4,7 +4,7 @@ import ReactApexChart from "react-apexcharts"
 import InfoCard from "../InfoCard";
 
 export default function Result2(props: any) {
-
+  console.log(props.result.dataset)
   const barChartRow = {
     series: [{
       data: props.result.rowSums

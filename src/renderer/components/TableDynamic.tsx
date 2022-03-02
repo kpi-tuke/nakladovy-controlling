@@ -3,48 +3,65 @@ import {useState} from "react";
 
 export default function TableDynamic(props: any) {
 
-  const [getState, setState] = useState({rows: props.rows, cols: props.cols})
-  const [count, setCount] = useState(0)
+  const [state, setState] = useState(props.data)
+
   const handleChangeData = function (event: any, row: number, col: number) {
-    props.data[row][col] = event.target.value === ''
-      ? "0"
+    let arr: any[] = state
+    arr[row][col] = event.target.value === ''
+      ? ""
       : event.target.value
+    setState(arr)
     props.proceed()
   }
 
   const handleChangeHeader = function (event: any, idx: number,) {
     props.header[idx] = event.target.value
-
-    setCount(count + 1)
-    setState({cols: getState.cols + 1, rows: getState.rows})
     props.proceed()
   }
 
   const handleChangeInput = function (event: any, idx: number,) {
     props.inputs[idx] = event.target.value
     props.proceed()
-    setCount(count + 1)
-    setState({cols: getState.cols + 1, rows: getState.rows})
   }
 
   const addColumn = () => {
     props.header.push((parseInt(props.header[props.header.length - 1]) + 1).toString())
-    props.data.map((value: any) => {
-      value.push(0)
+    let arr: any[] = state
+    arr.map((value: any) => {
+      value.push("0")
     })
-    setState({cols: getState.cols + 1, rows: getState.rows})
-
+    setState(arr)
+    props.proceed()
   }
 
   const addRow = () => {
-    let arr: number[] = []
+    let arr: any[] = []
+    let arr2: any[] = state
     props.inputs.push("--please input value--")
-    for (let i = 0; i < props.data[0].length; i++) {
-      arr.push(0)
+    for (let i = 0; i < state[0].length; i++) {
+      arr.push("0")
     }
-    props.data.push(arr)
-    setState({cols: getState.cols, rows: getState.rows + 1})
+    arr2.push(arr)
+    setState(arr2)
+    props.proceed()
+  }
 
+  const deleteRow = (row: number) => {
+    if (props.inputs.length === 1) return
+    let arr: any[] = state
+    props.inputs.splice(row, 1)
+    arr.splice(row, 1)
+    setState(arr)
+    props.proceed()
+  }
+
+  const deleteColumn = (col: number) => {
+    if (props.header.length === 1) return
+    props.data.map((value: any) => {
+      value.splice(col, 1)
+    })
+    props.header.splice(col, 1)
+    props.proceed()
   }
 
   return (
@@ -76,6 +93,10 @@ export default function TableDynamic(props: any) {
               </th>
             )
           })}
+          {props.dynCols &&
+            <th style={{backgroundColor: "mediumspringgreen", textAlign: "center", color: "white"}} onClick={addColumn}>
+              +
+            </th>}
         </tr>
 
         </thead>
@@ -96,7 +117,8 @@ export default function TableDynamic(props: any) {
                     : value}
               </td>
 
-              {props.data[row].map((value: string, col: number) => {
+              {state[row].map((value: string, col: number) => {
+                console.log(value)
                 return (
                   <td key={row + ":" + col} style={{textAlign: "center"}}>
                     <input type="text"
@@ -107,26 +129,40 @@ export default function TableDynamic(props: any) {
                              width: 60,
                              textAlign: "center"
                            }}
-                           defaultValue={value}
-                           onBlur={() => (handleChangeData(event, row, col))}/>
+                           value={value}
+                           onChange={() => (handleChangeData(event, row, col))}
+                    />
                   </td>
                 )
               })}
-              {row === 0 && props.dynCols
-                ? <td rowSpan={props.data.length} onClick={addColumn}>+</td>
-                : console.log('else')}
+              {props.dynRows &&
+                <td style={{backgroundColor: "red", textAlign: "center", color: "white"}}
+                    onClick={() => deleteRow(row)}>-</td>
+              }
             </tr>)
         })
         }
-        {props.dynRows
-          ? <tr>
-              <td colSpan={props.header.length + 1} onClick={addRow}>+</td>
-            </tr>
-          : console.log("dynamic rows disabled")
+        {
+          <tr>
+            {props.dynRows
+              ? <td style={{backgroundColor: "mediumspringgreen", textAlign: "center", color: "white"}}
+                    onClick={addRow}>+</td>
+              : <td/>
+            }
+            {
+              props.dynCols &&
+              //@ts-ignore
+              state[0].map((value: any, col: number) => {
+                return (
+                  <td key={col} style={{backgroundColor: "red", textAlign: "center", color: "white"}}
+                      onClick={() => deleteColumn(col)}>-</td>
+                )
+              })
+            }
+          </tr>
         }
         </tbody>
       </table>
-
     </div>
   );
 };

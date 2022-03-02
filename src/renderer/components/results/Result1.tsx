@@ -6,6 +6,7 @@ import InfoCard from "../InfoCard";
 
 export default function Result1(props: any) {
 
+
   const lineGraph = {
     series: [
       {

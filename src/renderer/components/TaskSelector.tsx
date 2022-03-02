@@ -4,9 +4,6 @@ import {Link} from "react-router-dom";
 
 export default function TaskSelector() {
 
-  //const [getSelection, setSelection] = useState(false)
-  //použit tlacidla
-// v popise popisat čo analyza obsahuje alebo iba nadpis
   return (
     <div style={{ padding: 30 }}>
       <div className={'row'}>

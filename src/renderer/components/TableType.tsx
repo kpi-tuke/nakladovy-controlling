@@ -6,7 +6,7 @@ export default function TableDynamic(props: any) {
   const [getState, setState] = useState({rows: props.rows, cols: props.cols})
 
   const handleChangeData = function (event: any, row: number, col: number) {
-    props.data[row][col] = event.target.value === '' ? "0" : event.target.value
+    props.data[row][col] = event.target.value === '' ? "" : event.target.value
     props.proceed()
   }
 
@@ -22,14 +22,8 @@ export default function TableDynamic(props: any) {
 
   }
 
-  const addColumn = () => {
-    props.header.push((parseInt(props.header[props.header.length - 1]) + 1).toString())
-    props.data.map((value: any) => {
-      value.push(0)
-    })
-    setState({cols: getState.cols + 1, rows: getState.rows})
 
-  }
+
 
   const addRow = () => {
     let arr: number[] = []
@@ -41,6 +35,12 @@ export default function TableDynamic(props: any) {
     props.data.push(arr)
     setState({cols: getState.cols, rows: getState.rows + 1})
 
+  }
+  const deleteRow = (row: number) => {
+    props.inputs.splice(row, 1)
+    props.data.splice(row, 1)
+    props.types.splice(row, 1)
+    props.proceed()
   }
 
   return (
@@ -94,20 +94,23 @@ export default function TableDynamic(props: any) {
                              width: 60,
                              textAlign: "center"
                            }}
-                           defaultValue={value}
-                           onBlur={() => (handleChangeData(event, row, col))}/>
+                           value={value}
+                           onChange={() => (handleChangeData(event, row, col))}/>
                   </td>
                 )
               })}
-              {row === 0 && props.dynCols
-                ? <td rowSpan={props.data.length} onClick={addColumn}>+</td>
-                : console.log('else')}
+              {
+                <td style={{backgroundColor: "red", textAlign: "center", color: "white"}}
+                    onClick={() => deleteRow(row)}>-</td>
+              }
+
             </tr>)
         })
         }
         {props.dynRows
           ? <tr>
-            <td colSpan={props.header.length + 2} onClick={addRow}>+</td>
+            <td style={{backgroundColor: "mediumspringgreen", textAlign: "center", color: "white"}} onClick={addRow}>+
+            </td>
           </tr>
           : console.log("dynamic rows disabled")
         }

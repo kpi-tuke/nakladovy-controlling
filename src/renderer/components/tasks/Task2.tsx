@@ -26,9 +26,10 @@ export default function Task2() {
     ]
   })
 
-  let [getResult, setResult] = useState({inputs: [], header: [], rowSums: [], colSums: [], totalCost: 0})
+  let [getResult, setResult] = useState({inputs: [], header: [], rowSums: [], colSums: [], totalCost: 0, dataset: []})
 
   const task2 = () => {
+
     let rowSums: number[] = []
     let colSums: number[] = []
     let inputs: string[] = []
@@ -55,7 +56,7 @@ export default function Task2() {
     })
 
     const totalCost: number = rowSums.reduce((a: number, b: number) => a + b, 0)
-
+    console.log(state[0].data)
     setResult({
       // @ts-ignore
       inputs,
@@ -66,7 +67,9 @@ export default function Task2() {
       // @ts-ignore
       colSums,
       // @ts-ignore
-      totalCost
+      totalCost,
+      // @ts-ignore
+      dataset: state[0].data
     })
   }
 
@@ -84,8 +87,6 @@ export default function Task2() {
         inputType={'select'}
         inputs={state[0].inputs}
         data={state[0].data}
-        rows={1}
-        cols={1}
         dynRows={true}
         dynCols={true}
         proceed={task2}

@@ -96,6 +96,7 @@ export default function Result4(props: any) {
 
             return (
               <div
+                key={idx}
                 className={(props.result.inputs.length % 2 === 1 && idx === props.result.inputs.length - 1) ? "col-lg-12 col-md-12" : "col-lg-6 col-md-12"}>
                 <div className={"card mb-3"}>
                   <div className={"card-body"}>

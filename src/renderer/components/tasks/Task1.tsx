@@ -149,23 +149,21 @@ export default function Task1() {
   return (
     <div className={"scrollbox-lg"} style={{height: "100vh"}}>
 
-      <HeaderBar title={"Ekonomická analýza hospodárenia"} />
+      <HeaderBar title={"Ekonomická analýza hospodárenia"}/>
 
-      <div>
-        <TableDynamic corner={"Ekonomická položka"}
-                      headerType={"input"}
-                      header={state[0].header}
-                      inputType={"text"}
-                      inputs={state[0].inputs}
-                      data={state[0].data}
-                      rows={2} cols={2}
-                      dynRows={false} dynCols={true}
-                      proceed={task1}
-        />
-      </div>
-      <div>
-        <Result1 result={getResult}/>
-      </div>
+      <TableDynamic corner={"Ekonomická položka"}
+                    headerType={"input"}
+                    header={state[0].header}
+                    inputType={"text"}
+                    inputs={state[0].inputs}
+                    data={state[0].data}
+                    rows={2} cols={2}
+                    dynRows={false} dynCols={true}
+                    proceed={task1}
+      />
+
+      <Result1 result={getResult}/>
+
     </div>
   )
 }
