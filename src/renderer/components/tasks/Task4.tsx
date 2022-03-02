@@ -3,6 +3,7 @@ import TableDynamic from "../TableDynamic";
 import Result4 from "../results/Result4";
 import {useEffect, useState} from "react";
 import SingleInput from "../SingleInput";
+import HeaderBar from '../HeaderBar';
 
 export default function Task4() {
 
@@ -10,101 +11,127 @@ export default function Task4() {
     volumes: [],
     prices: [],
     costs: [],
-    fixCost: [],
     inputs: [],
-    fixTotal: [],
-    minProfit: []
+    fixTotal: 0,
+    minProfit: 0,
+    zeroEur: [],
+    zeroTon: [],
+    zeroProf: []
   })
-
-  let state = useState({
-    header: ["Výroba", "Cena/tona", "Variabilné náklady/tona", "Fixné náklady"],
+  const [fixTotal, setFixTotal] = useState(0)
+  const [minProfit, setMinProfit] = useState(0)
+  //ostranic fixne nakaldy pre jednotlive polozky, ostanu len celkove fixne
+  let [state] = useState({
+    header: ["Výroba", "Cena/tona", "Variabilné náklady/tona"],
     inputs: ["Výrobok A",],
     data: [
-      ["100", "8", "6", "50"]
+      ["100", "8", "6"]
     ],
-    fixTotal: [0],
-    minProfit: [0]
+    fixTotal: 0,
+    minProfit: 0
   })
   const task4 = () => {
     let volumes: number[] = []
     let prices: number[] = []
     let costs: number[] = []
-    let fixCost: number[] = []
-    let fixTotal: number[] = []
-    let minProfit: number[] = []
     let inputs: string[] = []
 
-    for (let i = 0; i < state[0].inputs.length; i++) {
+    for (let i = 0; i < state.inputs.length; i++) {
       volumes.push(0)
       prices.push(0)
       costs.push(0)
-      fixCost.push(0)
-      inputs.push(state[0].inputs[i])
+      inputs.push(state.inputs[i])
     }
-    fixTotal.push(0)
-    minProfit.push(0)
 
-    state[0].data.map((rowData: string[], idx: number) => {
+    state.data.map((rowData: string[], idx: number) => {
       volumes[idx] = parseInt(rowData[0])
       prices[idx] = parseInt(rowData[1])
       costs[idx] = parseInt(rowData[2])
-      fixCost[idx] = parseInt(rowData[3])
     })
 
-    fixTotal[0] = state[0].fixTotal[0]
-    minProfit[0] = state[0].minProfit[0]
+    const zeroEur: number[] = []
+    const zeroTon: number[] = []
+    const zeroProf: number[] = []
 
+    for (let i = 0; i < inputs.length; i++) {
+      zeroEur.push(0)
+      zeroTon.push(0)
+      zeroProf.push(0)
+    }
+
+    for (let i = 0; i < inputs.length; i++) {
+      zeroEur[i] = fixTotal / (1 - (costs[i] / prices[i]))
+      zeroTon[i] = fixTotal / (prices[i] - costs[i])
+      zeroProf[i] = (fixTotal + minProfit) / (prices[i] - costs[i]) // pridat min zisk
+    }
+
+    // @ts-ignore
     setResult({
       // @ts-ignore
-      volumes: volumes,
+      volumes,
       // @ts-ignore
-      prices: prices,
+      prices,
       // @ts-ignore
-      costs: costs,
+      costs,
       // @ts-ignore
-      fixCost: fixCost,
-      // @ts-ignore
-      inputs: inputs,
+      inputs,
       // @ts-ignore
       fixTotal: fixTotal,
       // @ts-ignore
-      minProfit: minProfit
+      minProfit: minProfit,
+      // @ts-ignore
+      zeroEur,
+      // @ts-ignore
+      zeroTon,
+      // @ts-ignore
+      zeroProf
     })
   }
 
 
-  useEffect(task4, [])
+  useEffect(task4, [fixTotal, minProfit])
 
   return (
-    <div className={"scrollbox-lg"} style={{height: "100vh"}}>
-      <div className={"row"} style={{paddingLeft: 10, paddingRight: 10, marginTop: 10}}>
-
-        <TableDynamic corner={"Ekonomická položka"}
-                      headerType={"text"}
-                      header={state[0].header}
-                      inputType={"input"}
-                      inputs={state[0].inputs}
-                      data={state[0].data}
-                      rows={1} cols={4}
-                      dynRows={true} dynCols={false}
-                      proceed={task4}
+    <div className={'scrollbox-lg'} style={{ height: '100vh' }}>
+      <HeaderBar title={"CVP analýza"} />
+      <div
+        className={'row'}
+        style={{ paddingLeft: 10, paddingRight: 10, marginTop: 10 }}
+      >
+        <TableDynamic
+          corner={'Ekonomická položka'}
+          headerType={'text'}
+          header={state.header}
+          inputType={'input'}
+          inputs={state.inputs}
+          data={state.data}
+          rows={1}
+          cols={4}
+          dynRows={true}
+          dynCols={false}
+          proceed={task4}
         />
 
-        <div className={"col"}>
-
-          <div className={"row"}>
-            <SingleInput input={state[0].fixTotal} title={"CELKOVÉ FIXNÉ NÁKLADY"} proceed={task4}/>
-            <SingleInput input={state[0].minProfit} title={"MINIMÁLNY ZISK"} proceed={task4}/>
+        <div className={'col'}>
+          <div className={'row'}>
+            <SingleInput
+              input={setFixTotal}
+              title={'CELKOVÉ FIXNÉ NÁKLADY'}
+              proceed={task4}
+            />
+            <SingleInput
+              input={setMinProfit}
+              title={'MINIMÁLNY ZISK'}
+              proceed={task4}
+            />
           </div>
-
         </div>
-
       </div>
 
       <div>
-        <Result4 result={getResult}/>
+        <Result4 result={getResult} />
       </div>
     </div>
-  )
+  );
 
 }

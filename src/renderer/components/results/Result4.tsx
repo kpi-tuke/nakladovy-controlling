@@ -5,32 +5,15 @@ import ReactApexChart from "react-apexcharts";
 
 export default function Result4(props: any) {
 
-  const zeroEur: number[] = []
-  const zeroTon: number[] = []
-  const zeroProf: number[] = []
-  const fixSum = props.result.fixTotal[0] + props.result.fixCost.reduce((a: number, b: number) => a + b, 0)
-
-  for (let i = 0; i < props.result.inputs.length; i++) {
-    zeroEur.push(0)
-    zeroTon.push(0)
-    zeroProf.push(0)
-  }
-
-  for (let i = 0; i < props.result.inputs.length; i++) {
-    zeroEur[i] = fixSum / (1 - (props.result.costs[i] / props.result.prices[i]))
-    zeroTon[i] = fixSum / (props.result.prices[i] - props.result.costs[i])
-    zeroProf[i] = (parseInt(fixSum) + parseInt(props.result.minProfit)) / (props.result.prices[i] - props.result.costs[i]) // pridat min zisk
-  }
-
   // @ts-ignore
   return (
     <div style={{paddingLeft: 10, paddingRight: 10}}>
       <TableStatic header={...props.result.inputs}
                    inputs={["Nulový bod[€]", "Nulový bod[tony]", "Zisk " + props.result.minProfit.toString() + " pri objeme"]}
                    data={[
-                     [...(zeroEur.map(value => (Math.round(value * 100) / 100)))],
-                     [...(zeroTon.map(value => (Math.round(value * 100) / 100)))],
-                     [...(zeroProf.map(value => (Math.round(value * 100) / 100)))],
+                     [...(props.result.zeroEur.map((value: number) => (Math.round(value * 100) / 100)))],
+                     [...(props.result.zeroTon.map((value: number) => (Math.round(value * 100) / 100)))],
+                     [...(props.result.zeroProf.map((value: number) => (Math.round(value * 100) / 100)))],
                    ]}
       />
       <div className={"row"}>
@@ -39,26 +22,27 @@ export default function Result4(props: any) {
             console.log(value)
             const costTotal: number[] = []
             const incomeTotal: number[] = []
-            const vol: number = (zeroTon[idx] + 2 * (zeroTon[idx] / 3)) / 5
-            //const vol :number = (props.result.volumes[idx] + 2*(props.result.volumes[idx]/3))/5
+            //prepočitat rozsah grafu
+            //const vol: number = (zeroTon[idx] + 2 * (zeroTon[idx] / 3)) / 5
+            const vol :number = (props.result.volumes[idx] + 2*(props.result.volumes[idx]/3))/5
             const osX: number[] = []
-
+            //pridat viac bodov na osXS
             for (let i = 0; i < 7; i++) {
               osX.push(Math.round(i * vol * 100) / 100)
             }
             for (let i = 0; i < 7; i++) {
-              costTotal.push(Math.round((fixSum + ((i * vol) * props.result.costs[idx])) * 100) / 100)
+              costTotal.push(Math.round((props.result.fixTotal + ((i * vol) * props.result.costs[idx])) * 100) / 100)
               incomeTotal.push(Math.round(((i * vol) * props.result.prices[idx]) * 100) / 100)
             }
 
             const lineGraph = {
               series: [
                 {
-                  name: "Cost",
+                  name: "Náklady",
                   data: costTotal
                 },
                 {
-                  name: "Sales",
+                  name: "Výnosy",
                   data: incomeTotal
                 }
               ],
@@ -71,7 +55,7 @@ export default function Result4(props: any) {
                 },
 
                 stroke: {
-                  curve: 'smooth'
+                  curve: 'straight'
                 },
                 title: {
                   text: value,
@@ -92,8 +76,8 @@ export default function Result4(props: any) {
                   points:
                     [
                       {
-                        x: zeroTon[idx],
-                        y: zeroEur[idx],
+                        x: props.result.zeroTon[idx],
+                        y: props.result.zeroEur[idx],
                         marker: {
                           size: 8,
                         },

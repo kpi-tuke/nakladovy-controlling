@@ -1,17 +1,60 @@
 import '../../App.css';
 import {Link} from "react-router-dom";
 import InfoCard from "../InfoCard";
+import ReactApexChart from "react-apexcharts";
 // import {Link} from "react-router-dom";
 // import ReactApexChart from "react-apexcharts"
 // import TableStatic from "../TableStatic";
 
 export default function Result3(props: any) {
 
-  const profitDiff = props.result.incomeSums[1] * 100 / props.result.incomeSums[0] - 100
-  const chainIdx = props.result.costSums[1] / props.result.costSums[0]
-  const costDiff = Math.round(chainIdx * 100 - 100) / 100
-  const incomeDiff = Math.round(profitDiff * 100) / 100
-  const reaction = Math.round((chainIdx * 100 - 100) * 100 / profitDiff) / 100
+  const colGraph = {
+
+    series: [{
+      name: "2000",
+      data: props.result.inputsDataOld
+    },{
+      name: "2001",
+      data: props.result.inputsDataNew
+    }],
+    options: {
+      chart: {
+        type: 'bar',
+      },
+      plotOptions: {
+        bar: {
+          horizontal: false,
+          columnWidth: '55%',
+          endingShape: 'rounded'
+        },
+      },
+      title: {
+        text: 'Náklady',
+        align: 'center'
+      },
+      grid: {
+        borderColor: '#e7e7e7',
+        row: {
+          colors: ['#f3f3f3', 'transparent'],
+          opacity: 0.5
+        },
+      },
+      dataLabels: {
+        enabled: true
+      },
+      stroke: {
+        show: true,
+        width: 2,
+        colors: ['transparent']
+      },
+      xaxis: {
+        categories: props.result.inputs,
+      },
+      fill: {
+        opacity: 1
+      },
+    },
+  }
 
   return (
     <div style={{paddingLeft: 10, paddingRight: 10}}>
@@ -60,7 +103,7 @@ export default function Result3(props: any) {
 
           <div className={"col-sm-12 col-md-6 col-lg-3"}>
             <InfoCard header={"REŤAZOVÝ INDEX"}
-                      value={Math.round(chainIdx * 100) / 100}
+                      value={props.result.chainIdx}
                       color={"success"}
                       icon={"fa fa-area-chart"}
             />
@@ -68,7 +111,7 @@ export default function Result3(props: any) {
 
           <div className={"col-sm-12 col-md-6 col-lg-3"}>
             <InfoCard header={"PERCENTO ZMENY NÁKLADOV"}
-                      value={costDiff}
+                      value={props.result.costDiff}
                       color={"primary"}
                       icon={"fa fa-shopping-cart"}
             />
@@ -76,7 +119,7 @@ export default function Result3(props: any) {
 
           <div className={"col-sm-12 col-md-6 col-lg-3"}>
             <InfoCard header={"PERCENTO ZMENY VÝNOSOV"}
-                      value={incomeDiff}
+                      value={props.result.incomeDiff}
                       color={"warning"}
                       icon={"fa fa-dashboard"}
             />
@@ -84,7 +127,7 @@ export default function Result3(props: any) {
 
           <div className={"col-sm-12 col-md-6 col-lg-3"}>
             <InfoCard header={"KOEFICIENT REAKCIE"}
-                      value={reaction}
+                      value={props.result.reaction}
                       color={"danger"}
                       icon={"fa fa-calculator"}
             />
@@ -92,6 +135,17 @@ export default function Result3(props: any) {
 
         </div>
       </div>
+
+      <div>
+        <div className={"card mb-3"}>
+          <div className={"card-body"}>
+            {   // @ts-ignore
+              <ReactApexChart options={colGraph.options} series={colGraph.series} type="bar" height={400}/>
+            }
+          </div>
+        </div>
+      </div>
+
       <button><Link to={"/taskselect"}>Back</Link></button>
     </div>
   )

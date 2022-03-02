@@ -75,6 +75,9 @@ export default function Result2(props: any) {
       },
       xaxis: {
         categories: props.result.header,
+      },
+      yaxis: {
+        label: "Náklady (€)"
       }
     }
   }
@@ -122,7 +125,7 @@ export default function Result2(props: any) {
 
 
         <div className={"col-2"}>
-          <InfoCard header={"NÁKLADY SPOLU"}
+          <InfoCard header={"CELKOVÉ NÁKLADY"}
                     value={props.result.totalCost}
                     color={"success"}
                     icon={"fa fa-money"}

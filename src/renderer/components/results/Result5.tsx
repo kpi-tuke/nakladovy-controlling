@@ -4,7 +4,8 @@ import ReactApexChart from "react-apexcharts";
 
 
 export default function Result5(props: any) {
-
+  // prva tabula len 4
+  //druha tabulka zisk a zisková prirážka, vstupna tabulka - tržby, primae naklady, hrube rozpetie,
   let series = []
   for (let index = 0; index < props.result.header.length; index++) {
     // @ts-ignore

@@ -6,12 +6,6 @@ import InfoCard from "../InfoCard";
 
 export default function Result1(props: any) {
 
-  const profitTotal: number = props.result.incomeTotal - props.result.costTotal
-  const costIndicator: number = Math.round(props.result.costTotal * 100 / props.result.incomeTotal) / 100
-  const costEfficiency: number = Math.round(props.result.incomeTotal * 100 / props.result.costTotal) / 100
-  const costProfitability: number = Math.round(profitTotal * 100 / props.result.costTotal) / 100
-  const incomeProfitability: number = Math.round(profitTotal * 100 / props.result.incomeTotal) / 100
-
   const lineGraph = {
     series: [
       {
@@ -44,7 +38,7 @@ export default function Result1(props: any) {
         curve: 'straight'
       },
       title: {
-        text: 'Náklady, výnosy a zisky',
+        text: 'Náklady, výnosy a zisk',
         align: 'center'
       },
       grid: {
@@ -64,57 +58,6 @@ export default function Result1(props: any) {
         horizontalAlign: 'right',
       }
     },
-  };
-
-  const totalGraph = {
-    series: [
-      {
-        name: "Celkové náklady",
-        data: props.result.costFlow
-      },
-      {
-        name: "Celkové tržby",
-        data: props.result.incomeFlow
-      },
-      {
-        name: "Celkový zisk",
-        data: props.result.profitFlow
-      }
-    ],
-    options: {
-      chart: {
-        type: 'area',
-        toolbar: {
-          show: false
-        },
-        zoom: {
-          enabled: false
-        }
-      },
-      dataLabels: {
-        enabled: true
-      },
-      stroke: {
-        curve: 'smooth'
-      },
-      grid: {
-        borderColor: '#e7e7e7',
-        row: {
-          colors: ['#f3f3f3', 'transparent'],
-          opacity: 0.5
-        },
-      },
-      title: {
-        text: 'Celkové náklady, výnosy, zisky',
-        align: 'center'
-      },
-      xaxis: {
-        categories: props.result.header,
-      },
-      legend: {
-        horizontalAlign: 'right'
-      }
-    }
   };
 
   const colGraph = {
@@ -144,7 +87,7 @@ export default function Result1(props: any) {
         },
       },
       title: {
-        text: 'Ekonomické ukazovatele',
+        text: 'Vývoj ekonomických ukazovateľov',
         align: 'center'
       },
       grid: {
@@ -155,7 +98,7 @@ export default function Result1(props: any) {
         },
       },
       dataLabels: {
-        enabled: false
+        enabled: true
       },
       stroke: {
         show: true,
@@ -170,6 +113,8 @@ export default function Result1(props: any) {
       },
     },
   }
+
+ // pridat graf stlpcovy/riadkovy len pre jednotlive ukazovatele
 
   return (
     <div style={{paddingLeft: 10, paddingRight: 10}}>
@@ -198,7 +143,7 @@ export default function Result1(props: any) {
 
           <div className={"col"}>
             <InfoCard header={"ZISK CELKOM"}
-                      value={profitTotal}
+                      value={props.result.profitTotal}
                       color={"warning"}
                       icon={"fa fa-money"}
             />
@@ -208,71 +153,27 @@ export default function Result1(props: any) {
 
       </div>
 
-
       <div className={"card"}>
 
         <h1 className={"bold text-primary"} style={{textAlign: "center", margin: 20}}>Ukazovatele</h1>
 
-
         <div className={"row"}>
 
-          <div className={"col-7"}>
-            <TableStatic header={[...props.result.header, "Celkovo"]}
+          <div className={"col"}>
+            <TableStatic header={[...props.result.header]}
                          inputs={["Zisk", "Rentabilita výnosov", "Rentabilita nákladov", "Nákladová účinnosť", "Nákladovosť"]}
                          data={[
-                           [...props.result.profitData, profitTotal],
-                           [...props.result.incomeProfitabilityData, incomeProfitability],
-                           [...props.result.costProfitabilityData, costProfitability],
-                           [...props.result.costEfficiencyData, costEfficiency],
-                           [...props.result.costIndicatorData, costIndicator]
+                           [...props.result.profitData],
+                           [...props.result.incomeProfitabilityData],
+                           [...props.result.costProfitabilityData],
+                           [...props.result.costEfficiencyData],
+                           [...props.result.costIndicatorData]
                          ]}
             />
           </div>
 
-          <div className={"col-5"}>
-
-            <div className={"row"}>
-
-              <div className={"col"}>
-                <InfoCard header={"Rentabilita výnosov"}
-                          value={incomeProfitability}
-                          color={"primary"}
-                          icon={"fa fa-pie-chart"}
-                />
-              </div>
-
-              <div className={"col"}>
-                <InfoCard header={"Rentabilita nákladov"}
-                          value={costProfitability}
-                          color={"success"}
-                          icon={"fa fa-calculator"}
-                />
-              </div>
-
-            </div>
-
-            <div className={"row"}>
-
-              <div className={"col"}>
-                <InfoCard header={"Nákladová účinnosť"}
-                          value={costEfficiency}
-                          color={"warning"}
-                          icon={"fa fa-dashboard"}
-                />
-              </div>
-
-              <div className={"col"}>
-                <InfoCard header={"Nákladovosť"}
-                          value={costIndicator}
-                          color={"danger"}
-                          icon={"fa fa-area-chart"}
-                />
-              </div>
-
-            </div>
-
-          </div>
         </div>
+
       </div>
 
 
@@ -280,23 +181,12 @@ export default function Result1(props: any) {
 
       <div className={"row"}>
 
-        <div className={"col-lg-6 col-md-12"}>
+        <div className={"col-lg-12 col-md-12"}>
           <div className={"card mb-3"}>
             <div className={"card-body"}>
               {
                 // @ts-ignore
                 <ReactApexChart options={lineGraph.options} series={lineGraph.series} type="line" height={400}/>
-              }
-            </div>
-          </div>
-        </div>
-
-
-        <div className={"col-lg-6 col-md-12"}>
-          <div className={"card mb-3"}>
-            <div className={"card-body"}>
-              {   // @ts-ignore
-                <ReactApexChart options={totalGraph.options} series={totalGraph.series} type="area" height={400}/>
               }
             </div>
           </div>
@@ -313,8 +203,6 @@ export default function Result1(props: any) {
           </div>
         </div>
       </div>
-
-
     </div>
   );
 }

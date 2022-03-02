@@ -1,17 +1,15 @@
 import '../../App.css';
 import ReactApexChart from "react-apexcharts";
 
-
 export default function Result6(props: any) {
-
   const barChart = {
 
     series: [{
-      name: 'Website Blog',
+      name: 'Paretova analyza',
       type: 'column',
       data: props.result.values
     }, {
-      name: 'Social Media',
+      name: 'Lorenzova krivka',
       type: 'line',
       data: props.result.kumul
     }],
@@ -25,15 +23,10 @@ export default function Result6(props: any) {
         show: true,
       },
       title: {
-        text: 'Traffic Sources'
+        text: 'Pareto analýza'
       },
-      dataLabels: {
-        enabled: true,
-        // enabledOnSeries: [0]
-      },
-      labels: props.result.causes,
       xaxis: {
-        type: 'text'
+        categories: props.result.causes,
       },
       yaxis: [{
         min: 0,

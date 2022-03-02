@@ -3,6 +3,7 @@ import TableDynamic from "../TableDynamic";
 import Result5 from "../results/Result5";
 import {useEffect, useState} from "react";
 import {Link} from "react-router-dom";
+import HeaderBar from '../HeaderBar';
 
 export default function Task5() {
 
@@ -17,7 +18,10 @@ export default function Task5() {
   })
   let state = useState({
     header: ["VýrobokA", "VýrobokB"],
-    inputs: ["Objem výroby", "Predajná cena", "Úplné vlastné náklady", "Priame náklady"],
+    //objem dat pod priame naklady a pocutat z neho az druhu tabulku
+    //hrube rozpetie a prispevok na uhradu je v €, => samostatne grafy, rentability mozu byt spolu
+    //oznacenia do ()
+    inputs: ["Objem výroby", "Predajná cena jednotková", "Úplné vlastné náklady jednotková", "Priame náklady jednotková"],
     data: [
       ["8000", "4000"],
       ["2700", "2600"],
@@ -88,21 +92,27 @@ export default function Task5() {
   useEffect(task5, [])
 
   return (
-    <div className={"scrollbox-lg"} style={{height: "100vh"}}>
-      <TableDynamic corner={"Ekonomická položka"}
-                    headerType={"input"}
-                    header={state[0].header}
-                    inputType={"text"}
-                    inputs={state[0].inputs}
-                    data={state[0].data}
-                    rows={4} cols={2}
-                    dynRows={false} dynCols={true}
-                    proceed={task5}
+    <div className={'scrollbox-lg'} style={{ height: '100vh' }}>
+      <HeaderBar title={'Sortimentová analýza'} />
+      <TableDynamic
+        corner={'Ekonomická položka'}
+        headerType={'input'}
+        header={state[0].header}
+        inputType={'text'}
+        inputs={state[0].inputs}
+        data={state[0].data}
+        rows={4}
+        cols={2}
+        dynRows={false}
+        dynCols={true}
+        proceed={task5}
       />
 
-      <Result5 result={getResult}/>
+      <Result5 result={getResult} />
 
-      <button><Link to={"/taskselect"}>Back</Link></button>
+      <button>
+        <Link to={'/taskselect'}>Back</Link>
+      </button>
     </div>
-  )
+  );
 }

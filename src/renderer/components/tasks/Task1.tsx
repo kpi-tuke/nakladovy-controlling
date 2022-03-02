@@ -2,7 +2,7 @@ import '../../App.css';
 import TableDynamic from "../TableDynamic";
 import Result1 from "../results/Result1";
 import {useEffect, useState} from "react";
-import {Link} from "react-router-dom";
+import HeaderBar from '../HeaderBar';
 
 export default function Task1() {
 
@@ -14,6 +14,8 @@ export default function Task1() {
       costTotal: 0,
       // @ts-ignore
       incomeTotal: 0,
+      // @ts-ignore
+      profitTotal: 0,
       // @ts-ignore
       costData: [],
       // @ts-ignore
@@ -39,7 +41,7 @@ export default function Task1() {
 
   let state = useState({
     header: ["2000", "2001"],
-    inputs: ["Výnos", "Náklad"],
+    inputs: ["Výnosy", "Náklady"],
     data: [
       ["2", "4"],
       ["1", "3"]
@@ -107,41 +109,47 @@ export default function Task1() {
       }
     }
 
+    let profitTotal: number = incomeTotal - costTotal
+
 
     setResult({
       // @ts-ignore
-      header: header,
+      header,
       // @ts-ignore
-      costTotal: costTotal,
+      costTotal,
       // @ts-ignore
-      incomeTotal: incomeTotal,
+      incomeTotal,
       // @ts-ignore
-      costData: costData,
+      profitTotal,
       // @ts-ignore
-      incomeData: incomeData,
+      costData,
       // @ts-ignore
-      profitData: profitData,
+      incomeData,
       // @ts-ignore
-      incomeProfitabilityData: incomeProfitabilityData,
+      profitData,
       // @ts-ignore
-      costProfitabilityData: costProfitabilityData,
+      incomeProfitabilityData,
       // @ts-ignore
-      costEfficiencyData: costEfficiencyData,
+      costProfitabilityData,
       // @ts-ignore
-      costIndicatorData: costIndicatorData,
+      costEfficiencyData,
       // @ts-ignore
-      costFlow: costFlow,
+      costIndicatorData,
       // @ts-ignore
-      incomeFlow: incomeFlow,
+      costFlow,
       // @ts-ignore
-      profitFlow: profitFlow
+      incomeFlow,
+      // @ts-ignore
+      profitFlow
     })
   }
 
   useEffect(task1, [])
-
+  //moznost pridat viac poloziek z učtovej osnovy
   return (
     <div className={"scrollbox-lg"} style={{height: "100vh"}}>
+
+      <HeaderBar title={"Ekonomická analýza hospodárenia"} />
 
       <div>
         <TableDynamic corner={"Ekonomická položka"}
@@ -158,7 +166,6 @@ export default function Task1() {
       <div>
         <Result1 result={getResult}/>
       </div>
-      <button><Link to={"/taskselect"}>Back</Link></button>
     </div>
   )
 }

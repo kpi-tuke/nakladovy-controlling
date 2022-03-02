@@ -2,13 +2,14 @@ import '../../App.css';
 import TableDynamic from "../TableDynamic";
 import {useEffect, useState} from "react";
 import Result2 from "../results/Result2";
+import HeaderBar from '../HeaderBar';
 
 export default function Task2() {
 
   let state = useState({
     header: [""],
     inputs: [""],
-    data: [["1"]],
+    data: [["0"]],
     selectRow: [
       "Materiálové náklady",
       "Služby",
@@ -57,38 +58,42 @@ export default function Task2() {
 
     setResult({
       // @ts-ignore
-      inputs: inputs,
+      inputs,
       // @ts-ignore
-      header: header,
+      header,
       // @ts-ignore
-      rowSums: rowSums,
+      rowSums,
       // @ts-ignore
-      colSums: colSums,
+      colSums,
       // @ts-ignore
-      totalCost: totalCost
+      totalCost
     })
   }
 
   useEffect(task2, [])
 
   return (
-    <div className={"scrollbox-lg"} style={{height: "100vh"}}>
+    <div className={'scrollbox-lg'} style={{ height: '100vh' }}>
 
-      <TableDynamic corner={"↓Druhové | Kalkulačné→"}
-                    headerType={"select"}
-                    header={state[0].header}
-                    inputType={"select"}
-                    inputs={state[0].inputs}
-                    data={state[0].data}
-                    rows={1} cols={1}
-                    dynRows={true} dynCols={true}
-                    proceed={task2}
-                    selectRow={state[0].selectRow}
-                    selectCol={state[0].selectCol}
+      <HeaderBar title={'Analýza štruktúry nákladov'} />
+
+      <TableDynamic
+        corner={'↓Druhové | Kalkulačné→'}
+        headerType={'select'}
+        header={state[0].header}
+        inputType={'select'}
+        inputs={state[0].inputs}
+        data={state[0].data}
+        rows={1}
+        cols={1}
+        dynRows={true}
+        dynCols={true}
+        proceed={task2}
+        selectRow={state[0].selectRow}
+        selectCol={state[0].selectCol}
       />
 
-      <Result2 result={getResult}/>
-
+      <Result2 result={getResult} />
     </div>
-  )
+  );
 }

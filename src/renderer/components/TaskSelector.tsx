@@ -6,106 +6,98 @@ export default function TaskSelector() {
 
   //const [getSelection, setSelection] = useState(false)
   //použit tlacidla
-
+// v popise popisat čo analyza obsahuje alebo iba nadpis
   return (
-    <div style={{padding: 30}}>
-      <div className={"row"}>
-
-        <div className={"col"}>
-          <div className={"card card-outline-primary"}>
-            <div className={"card-header"}>
-              <h1>Analýza hospodárenia</h1>
+    <div style={{ padding: 30 }}>
+      <div className={'row'}>
+        <div className={'col'}>
+          <Link to={'/task1'} className={'card card-outline-primary'}>
+            <div className={'card-header bg-primary'} style={{ height: 110 }}>
+              <h1 style={{ color: 'white' }}>
+                Ekonomická analýza hospodárenia
+              </h1>
             </div>
-            <div className={"card-body"}>
-              <p>Na základe výstupov z výkazu ziskov a strát uskutočnite hodnotenie úrovne hospodárenia podniku z
-                hľadiska nákladov. Grafické znázornenie priebehu ukazovateľov.</p>
+            <div className={'card-body'} style={{ height: 150 }}>
+              <p style={{ fontSize: 16 }}>
+                Hodnotenie úrovne hospodárenia podniku z hľadiska nákladov na
+                základe výstupov z výkazu ziskov a strát a jeho grafické
+                znázornenie.
+              </p>
             </div>
-            <div className={"card-footer"}>
-              <button><Link to={"/task1"}>Start</Link></button>
-            </div>
-          </div>
+          </Link>
         </div>
 
-        <div className={"col"}>
-          <div className={"card card-outline-primary"}>
-            <div className={"card-header"}>
-              <h1>Analýza štruktúry nákladov</h1>
+        <div className={'col'}>
+          <Link to={'/task2'} className={'card card-outline-primary'}>
+            <div className={'card-header bg-primary'} style={{ height: 110 }}>
+              <h1 style={{ color: 'white' }}>Analýza štruktúry nákladov</h1>
             </div>
-            <div className={"card-body"}>
-              <p>Analyzujte štruktúru nákladov podľa druhového a kalkulačného členenia. Graficky znázornenie štruktúry
-                nákladov podľa druhového a kalkulačného členenia.</p>
+            <div className={'card-body'} style={{ height: 150 }}>
+              <p style={{ fontSize: 16 }}>
+                Analýza a grafické znázornenie štruktúry nákladov podľa
+                druhového a kalkulačného členenia.
+              </p>
             </div>
-            <div className={"card-footer"}>
-              <button><Link to={"/task2"}>Start</Link></button>
-            </div>
-          </div>
+          </Link>
         </div>
 
-        <div className={"col-4"}>
-          <div className={"card card-outline-primary"}>
-            <div className={"card-header"}>
-              <h1>CVP analýza</h1>
+        <div className={'col-4'}>
+          <Link to={'/task4'} className={'card card-outline-primary'}>
+            <div className={'card-header bg-primary'} style={{ height: 110 }}>
+              <h1 style={{ color: 'white' }}>CVP analýza</h1>
             </div>
-            <div className={"card-body"}>
-              <p>Vypočítajte bod zvratu pre štruktúru výkonov. Zistite pri akom objeme dosiahnete požadovaný zisk.
-                Riešenie je znázornené graficky. </p>
+            <div className={'card-body'} style={{ height: 150 }}>
+              <p style={{ fontSize: 16 }}>
+                Výpočet bod zvratu a minimálneho objemu výroby pre dosiahnutie
+                požadovaného zisku pre štruktúru výkonov.
+              </p>
             </div>
-            <div className={"card-footer"}>
-              <button><Link to={"/task4"}>Start</Link></button>
-            </div>
-          </div>
+          </Link>
         </div>
       </div>
 
-      <div className={"row mt-5"}>
-
-        <div className={"col-4"}>
-          <div className={"card card-outline-primary"}>
-            <div className={"card-header"}>
-              <h1>Sortimentová analýza</h1>
+      <div className={'row mt-5'}>
+        <div className={'col-4'}>
+          <Link to={'/task5'} className={'card card-outline-primary'}>
+            <div className={'card-header bg-primary'} style={{ height: 110 }}>
+              <h1 style={{ color: 'white' }}>Sortimentová analýza</h1>
             </div>
-            <div className={"card-body"}>
-              <p>Na základe sortimentnej analýzy určte, ktorý výrobok je pre firmu výhodnejšie vyrábať. Analyzujte
-                celkový ročný zisk pre výrobky, ak beriete do úvahy plné využitie výrobných kapacít jedného výrobku.
-                Grafické znázornenie ukazovateľov sortimentnej analýzy.</p>
+            <div className={'card-body'} style={{ height: 150 }}>
+              <p style={{ fontSize: 16 }}>
+                Analýza a grafické znázornenie celkového ročného zisku výrobkov
+                pre plné využitie výrobných kapacít.
+              </p>
             </div>
-            <div className={"card-footer"}>
-              <button><Link to={"/task5"}>Start</Link></button>
-            </div>
-          </div>
+          </Link>
         </div>
 
-        <div className={"col"}>
-          <div className={"card card-outline-primary"}>
-            <div className={"card-header"}>
-              <h1>Analýza reťazových a bázických indexov</h1>
+        <div className={'col'}>
+          <Link to={'/task3'} className={'card card-outline-primary'}>
+            <div className={'card-header bg-primary'} style={{ height: 110 }}>
+              <h1 style={{ color: 'white' }}>Analýza reťazových a bázických indexov</h1>
             </div>
-            <div className={"card-body"}>
-              <p>Zhodnoťte vývoj nákladových druhov v závislosti od zmeny objemu výkonov (tržieb) cez koeficient
-                reakcie.</p>
+            <div className={'card-body'} style={{ height: 150 }}>
+              <p style={{ fontSize: 16 }}>
+                Zhodnotenie vývoja nákladových druhov v závislosti od zmeny
+                objemu výkonov (tržieb) cez koeficient reakcie.
+              </p>
             </div>
-            <div className={"card-footer"}>
-              <button><Link to={"/task3"}>Start</Link></button>
-            </div>
-          </div>
+          </Link>
         </div>
 
-        <div className={"col-4"}>
-          <div className={"card card-outline-primary"}>
-            <div className={"card-header"}>
-              <h1>Pareto analýza nákladov</h1>
+        <div className={'col-4'}>
+          <Link to={'/task6'} className={'card card-outline-primary'}>
+            <div className={'card-header bg-primary'} style={{ height: 110 }}>
+              <h1 style={{ color: 'white' }}>Pareto analýza nákladov</h1>
             </div>
-            <div className={"card-body"}>
-              <p>Sledujte náklady na interné chyby a príčiny vzniku týchto chýb v podniku. Na základe Pareto analýzy
-                určte skupinu životne dôležitých príčin a skupinu príčin, ktoré neovplyvňujú náklady na interné chyby vo
-                veľkom rozsahu. </p>
+            <div className={'card-body'} style={{ height: 150 }}>
+              <p style={{ fontSize: 16 }}>
+                Sledovanie nákladov na interné chyby a príčin vzniku týchto chýb
+                v podniku.
+              </p>
             </div>
-            <div className={"card-footer"}>
-              <button><Link to={"/task6"}>Start</Link></button>
-            </div>
-          </div>
+          </Link>
         </div>
-
       </div>
     </div>
   );
