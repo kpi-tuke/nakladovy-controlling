@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
 
 
 export default function HeaderBar(props: any) {
@@ -9,9 +9,12 @@ export default function HeaderBar(props: any) {
 				{props.title}
 			</div>
 			<div className={"tools"}>
-				<Link className={"btn-outline-light btn bg-primary"} to={"/taskselect"}>
-					Menu
-				</Link>
+        <Link className={"btn-outline-light btn bg-primary"} to={"/taskselect"}>
+          <div>
+            <i className={"ti-back-left"}/>
+            <p>Menu</p>
+          </div>
+        </Link>
 			</div>
     	</div>
 		</div>

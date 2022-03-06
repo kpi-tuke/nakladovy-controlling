@@ -6,7 +6,7 @@ import {Link} from "react-router-dom";
 import HeaderBar from '../HeaderBar';
 
 export default function Task6() {
-
+  //kolmica na os x v bode kde ma krivka hodnotu 80%
   let [getResult, setResult] = useState({ causes: [], percentages: [], values: [], kumul: [] })
 
   let state = useState({

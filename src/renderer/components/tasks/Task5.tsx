@@ -18,15 +18,12 @@ export default function Task5() {
   })
   let state = useState({
     header: ["VýrobokA", "VýrobokB"],
-    //objem dat pod priame naklady a pocutat z neho az druhu tabulku
-    //hrube rozpetie a prispevok na uhradu je v €, => samostatne grafy, rentability mozu byt spolu
-    //oznacenia do ()
-    inputs: ["Objem výroby", "Predajná cena jednotková", "Úplné vlastné náklady jednotková", "Priame náklady jednotková"],
+    inputs: ["Predajná cena jednotková", "Úplné vlastné náklady jednotková", "Priame náklady jednotková", "Objem výroby"],
     data: [
-      ["8000", "4000"],
       ["2700", "2600"],
       ["1745", "1581"],
-      ["985", "1215"]
+      ["985", "1215"],
+      ["8000", "4000"]
     ],
   })
   const task5 = () => {
@@ -49,26 +46,26 @@ export default function Task5() {
     }
 
     for (let col = 0; col < state[0].header.length; col++) {
-      marginProfit[col] = parseInt(state[0].data[1][col]) - parseInt(state[0].data[2][col])
+      marginProfit[col] = parseInt(state[0].data[0][col]) - parseInt(state[0].data[1][col])
 
-      if (parseInt(state[0].data[2][col]) === 0) {
+      if (parseInt(state[0].data[1][col]) === 0) {
         console.log("delenie nulou");
         rentCost[col] = 0
-      } else rentCost[col] = Math.round((marginProfit[col] / parseInt(state[0].data[2][col])) * 100) / 100
+      } else rentCost[col] = Math.round((marginProfit[col] / parseInt(state[0].data[1][col])) * 100) / 100
 
-      if (parseInt(state[0].data[1][col]) === 0) {
+      if (parseInt(state[0].data[0][col]) === 0) {
         console.log("delenie nulou");
         rentIncome[col] = 0
-      } else rentIncome[col] = Math.round((marginProfit[col] / parseInt(state[0].data[1][col])) * 100) / 100
+      } else rentIncome[col] = Math.round((marginProfit[col] / parseInt(state[0].data[0][col])) * 100) / 100
 
-      marginGross[col] = parseInt(state[0].data[1][col]) - parseInt(state[0].data[3][col])
+      marginGross[col] = parseInt(state[0].data[0][col]) - parseInt(state[0].data[2][col])
 
-      if (parseInt(state[0].data[1][col]) === 0) {
+      if (parseInt(state[0].data[0][col]) === 0) {
         console.log("delenie nulou");
         allowance[col] = 0
-      } else allowance[col] = Math.round((1 - (parseInt(state[0].data[3][col]) / parseInt(state[0].data[1][col]))) * 100) / 100
+      } else allowance[col] = Math.round((1 - (parseInt(state[0].data[2][col]) / parseInt(state[0].data[0][col]))) * 100) / 100
 
-      profit[col] = Math.round((parseInt(state[0].data[0][col]) * parseInt(state[0].data[1][col]) - parseInt(state[0].data[0][col]) * parseInt(state[0].data[2][col])) * 100) / 100
+      profit[col] = Math.round((parseInt(state[0].data[3][col]) * parseInt(state[0].data[0][col]) - parseInt(state[0].data[3][col]) * parseInt(state[0].data[1][col])) * 100) / 100
     }
 
     // @ts-ignore

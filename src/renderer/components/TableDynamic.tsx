@@ -67,15 +67,15 @@ export default function TableDynamic(props: any) {
   return (
     <div className="mb-3">
 
-      <table className="table table-bordered table-responsive">
+      <table className="table table-bordered table-responsive" style={{borderWidth: 0}}>
         <thead className="thead-light">
         <tr>
-          <th style={{background: "mediumspringgreen"}}>
+          <th style={{background: "lightgray"}}>
             {props.corner}
           </th>
           {props.header.map((value: string, idx: number) => {
             return (
-              <th key={idx.toString()} style={{background: "deepskyblue"}}>
+              <th key={idx.toString()} style={{background: "deepskyblue", textAlign: "center"}}>
                 {props.headerType === "select"
                   ? <select style={{border: 0, background: "deepskyblue"}} value={value}
                             onChange={() => (handleChangeHeader(event, idx))}>
@@ -118,7 +118,6 @@ export default function TableDynamic(props: any) {
               </td>
 
               {state[row].map((value: string, col: number) => {
-                console.log(value)
                 return (
                   <td key={row + ":" + col} style={{textAlign: "center"}}>
                     <input type="text"
@@ -147,7 +146,7 @@ export default function TableDynamic(props: any) {
             {props.dynRows
               ? <td style={{backgroundColor: "mediumspringgreen", textAlign: "center", color: "white"}}
                     onClick={addRow}>+</td>
-              : <td/>
+              : <td style={{borderWidth: 0}}/>
             }
             {
               props.dynCols &&

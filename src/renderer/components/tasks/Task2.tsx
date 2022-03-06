@@ -5,7 +5,7 @@ import Result2 from "../results/Result2";
 import HeaderBar from '../HeaderBar';
 
 export default function Task2() {
-
+  //konkretne polozky, len náklady
   let state = useState({
     header: [""],
     inputs: [""],
@@ -21,8 +21,11 @@ export default function Task2() {
     selectCol: [
       "Priamy materiál",
       "Priame mzdy",
+      "Ostatné priame náklady",
       "Výrobná réžia",
-      "Správna réžia"
+      "Správna réžia",
+      "Odbytová réžia",
+      "Zásobovacia réžia"
     ]
   })
 
@@ -56,7 +59,6 @@ export default function Task2() {
     })
 
     const totalCost: number = rowSums.reduce((a: number, b: number) => a + b, 0)
-    console.log(state[0].data)
     setResult({
       // @ts-ignore
       inputs,

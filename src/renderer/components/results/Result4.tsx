@@ -19,7 +19,6 @@ export default function Result4(props: any) {
       <div className={"row"}>
         {
           props.result.inputs.map((value: any, idx: number) => {
-            console.log(value)
             const costTotal: number[] = []
             const incomeTotal: number[] = []
             //prepočitat rozsah grafu
@@ -87,6 +86,18 @@ export default function Result4(props: any) {
                         }
                       }
                     ],
+                  xaxis: [
+                    {
+                      x: props.result.zeroProf[idx],
+                      borderColor: '#775DD0',
+                      label: {
+                        style: {
+                          color: '#fa023f',
+                        },
+                        text: 'Minimálny zisk'
+                      }
+                    }
+                  ]
                 },
                 legend: {
                   horizontalAlign: 'right',

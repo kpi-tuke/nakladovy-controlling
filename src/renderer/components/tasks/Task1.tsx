@@ -1,11 +1,12 @@
 import '../../App.css';
-import TableDynamic from "../TableDynamic";
+import TableType from "../TableType";
 import Result1 from "../results/Result1";
 import {useEffect, useState} from "react";
 import HeaderBar from '../HeaderBar';
+import inputOptions from "../chartOfAccounts"
 
 export default function Task1() {
-
+  //konkretne položky
   let [getResult, setResult] = useState(
     {
       // @ts-ignore
@@ -45,8 +46,12 @@ export default function Task1() {
     data: [
       ["2", "4"],
       ["1", "3"]
-    ]
+    ],
+    types: [true, false],
   })
+
+  // const header = useState<string[]>(["2000"])
+
   const makeArray = (numerator: number[], denominator: number[]): number[] => {
     let arr: number[] = []
     for (let i = 0; i < state[0].header.length; i++) {
@@ -65,13 +70,23 @@ export default function Task1() {
     let profitData: number[] = []
     let header: string[] = []
 
-    state[0].data[0].map((value: string) => {
-      incomeTotal += parseFloat(value)
-      incomeData.push(parseFloat(value))
-    })
-    state[0].data[1].map((value: string) => {
-      costTotal += parseFloat(value)
-      costData.push(parseFloat(value))
+    for (let i = 0; i < state[0].header.length; i++) {
+      incomeData.push(0)
+      costData.push(0)
+    }
+
+    console.log(state[0].data)
+    state[0].data.map((rowData: string[], row: number) => {
+
+      state[0].types[row]
+        ? rowData.map((value: string, col: number) => {
+          incomeTotal += parseFloat(value)
+          incomeData[col] = incomeData[col] + parseFloat(value)
+        })
+        : rowData.map((value: string, col: number) => {
+          costTotal += parseFloat(value)
+          costData[col] = costData[col] + parseFloat(value)
+        })
     })
 
     for (let i = 0; i < state[0].header.length; i++) {
@@ -145,21 +160,23 @@ export default function Task1() {
   }
 
   useEffect(task1, [])
-  //moznost pridat viac poloziek z učtovej osnovy
+
   return (
     <div className={"scrollbox-lg"} style={{height: "100vh"}}>
 
       <HeaderBar title={"Ekonomická analýza hospodárenia"}/>
 
-      <TableDynamic corner={"Ekonomická položka"}
-                    headerType={"input"}
-                    header={state[0].header}
-                    inputType={"text"}
-                    inputs={state[0].inputs}
-                    data={state[0].data}
-                    rows={2} cols={2}
-                    dynRows={false} dynCols={true}
-                    proceed={task1}
+      <TableType corner={"Ekonomická položka"}
+                 headerType={"input"}
+                 header={state[0].header}
+                 inputType={"select"}
+                 inputs={state[0].inputs}
+                 data={state[0].data}
+                 types={state[0].types}
+                 rows={2} cols={2}
+                 dynRows={true} dynCols={true}
+                 proceed={task1}
+                 selectRow={inputOptions}
       />
 
       <Result1 result={getResult}/>

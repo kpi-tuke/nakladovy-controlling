@@ -4,9 +4,11 @@ import Result4 from "../results/Result4";
 import {useEffect, useState} from "react";
 import SingleInput from "../SingleInput";
 import HeaderBar from '../HeaderBar';
+import Select from "react-select";
 
 export default function Task4() {
-
+  // potom po skonceni analýz pridat moznost suhrnu, report vysledkov a slovná interpretacia vysledkov
+  //potom tento report može byt vytlaceny alebo pdf
   let [getResult, setResult] = useState({
     volumes: [],
     prices: [],
@@ -18,9 +20,14 @@ export default function Task4() {
     zeroTon: [],
     zeroProf: []
   })
+  const inputOptions = [
+    {value: 'chocolate', label: 'Chocolate'},
+    {value: 'strawberry', label: 'Strawberry'},
+    {value: 'vanilla', label: 'Vanilla'}
+  ]
+
   const [fixTotal, setFixTotal] = useState(0)
   const [minProfit, setMinProfit] = useState(0)
-  //ostranic fixne nakaldy pre jednotlive polozky, ostanu len celkove fixne
   let [state] = useState({
     header: ["Výroba", "Cena/tona", "Variabilné náklady/tona"],
     inputs: ["Výrobok A",],
@@ -93,10 +100,11 @@ export default function Task4() {
 
   return (
     <div className={'scrollbox-lg'} style={{ height: '100vh' }}>
-      <HeaderBar title={"CVP analýza"} />
+      <HeaderBar title={"CVP analýza"}/>
+      <Select options={inputOptions}/>
       <div
         className={'row'}
-        style={{ paddingLeft: 10, paddingRight: 10, marginTop: 10 }}
+        style={{paddingLeft: 10, paddingRight: 10, marginTop: 10}}
       >
         <TableDynamic
           corner={'Ekonomická položka'}

@@ -1,5 +1,6 @@
 import '../App.css';
 import {useState} from "react";
+import Select from 'react-select'
 
 export default function TableDynamic(props: any) {
 
@@ -22,7 +23,13 @@ export default function TableDynamic(props: any) {
 
   }
 
-
+  const addColumn = () => {
+    props.header.push((parseInt(props.header[props.header.length - 1]) + 1).toString())
+    props.data.map((value: any) => {
+      value.push("0")
+    })
+    props.proceed()
+  }
 
 
   const addRow = () => {
@@ -43,28 +50,47 @@ export default function TableDynamic(props: any) {
     props.proceed()
   }
 
+  const deleteColumn = (col: number) => {
+    if (props.header.length === 1) return
+    props.data.map((value: any) => {
+      value.splice(col, 1)
+    })
+    props.header.splice(col, 1)
+    props.proceed()
+  }
+
   return (
-    <div className="card mb-3">
+    <div>
 
-      <div className="card-header">
-        <h3 className="caption">{props.taskName}</h3>
-      </div>
-
-      <table className="table table-bordered table-responsive">
+      <table className="table table-bordered table-responsive" style={{paddingBottom: 10}}>
         <thead className="thead-light">
         <tr>
           <th>
-            Ekonomická položka
+            {props.corner}
           </th>
           <th>
             Typ
           </th>
           {props.header.map((value: string, idx: number) => {
-            return <th key={value}><input type="text" className="input-group-text"
-                                          style={{border: 0, margin: 0, padding: 0, width: 60}}
-                                          defaultValue={value}
-                                          onBlur={() => (handleChangeHeader(event, idx))}/></th>
+            return (
+              <th key={idx.toString()} style={{background: "deepskyblue", textAlign: "center"}}>
+                {props.headerType === "select"
+                  ? <Select options={props.selectCol}/>
+                  : props.headerType === "input"
+                    ? <input type="text"
+                             className="input-group-text"
+                             style={{border: 0, margin: 0, padding: 0, background: "deepskyblue"}}
+                             defaultValue={value}
+                             onBlur={() => (handleChangeHeader(event, idx))}/>
+                    : value
+                }
+              </th>
+            )
           })}
+          {props.dynCols &&
+            <th style={{backgroundColor: "mediumspringgreen", textAlign: "center", color: "white"}} onClick={addColumn}>
+              +
+            </th>}
         </tr>
 
         </thead>
@@ -72,9 +98,13 @@ export default function TableDynamic(props: any) {
         {props.inputs.map((value: string, row: number) => {
           return (
             <tr key={row}>
-              <td key={value}>
-                <input type="text" style={{border: 0}} defaultValue={value}
-                       onBlur={() => (handleChangeInput(event, row))}/>
+              <td key={value + row.toString()} style={{background: "yellow"}}>
+                {props.inputType === "select"
+                  ? <Select options={props.selectRow}/>
+                  : props.inputType === "input"
+                    ? <input type="text" style={{border: 0, background: "yellow"}} defaultValue={value}
+                             onBlur={() => (handleChangeInput(event, row))}/>
+                    : value}
               </td>
               <td onClick={() => {
                 props.types[row] = !props.types[row];
@@ -85,7 +115,7 @@ export default function TableDynamic(props: any) {
 
               {props.data[row].map((value: string, col: number) => {
                 return (
-                  <td key={row + ":" + col}>
+                  <td key={row + ":" + col} style={{textAlign: "center"}}>
                     <input type="text"
                            style={{
                              border: 0,
@@ -99,7 +129,7 @@ export default function TableDynamic(props: any) {
                   </td>
                 )
               })}
-              {
+              {props.dynRows &&
                 <td style={{backgroundColor: "red", textAlign: "center", color: "white"}}
                     onClick={() => deleteRow(row)}>-</td>
               }
@@ -107,12 +137,24 @@ export default function TableDynamic(props: any) {
             </tr>)
         })
         }
-        {props.dynRows
-          ? <tr>
-            <td style={{backgroundColor: "mediumspringgreen", textAlign: "center", color: "white"}} onClick={addRow}>+
-            </td>
+        {
+          <tr>
+            {props.dynRows
+              ? <td colSpan={2} style={{backgroundColor: "mediumspringgreen", textAlign: "center", color: "white"}}
+                    onClick={addRow}>+</td>
+              : <td style={{borderWidth: 0}}/>
+            }
+            {
+              props.dynCols &&
+              //@ts-ignore
+              props.data[0].map((value: any, col: number) => {
+                return (
+                  <td key={col} style={{backgroundColor: "red", textAlign: "center", color: "white"}}
+                      onClick={() => deleteColumn(col)}>-</td>
+                )
+              })
+            }
           </tr>
-          : console.log("dynamic rows disabled")
         }
         </tbody>
       </table>

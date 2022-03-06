@@ -4,19 +4,66 @@ import ReactApexChart from "react-apexcharts";
 
 
 export default function Result5(props: any) {
-  // prva tabula len 4
-  //druha tabulka zisk a zisková prirážka, vstupna tabulka - tržby, primae naklady, hrube rozpetie,
   let series = []
   for (let index = 0; index < props.result.header.length; index++) {
     // @ts-ignore
     series.push(
       {
         name: props.result.header[index].toString(),
-        data: [props.result.rentIncome[index],
+        data: [
+          props.result.rentIncome[index],
           props.result.rentCost[index],
-          props.result.marginProfit[index],
+        ]
+      }
+    )
+  }
+
+  let series2: any[] = []
+  for (let index = 0; index < props.result.header.length; index++) {
+    // @ts-ignore
+    series2.push(
+      {
+        name: props.result.header[index].toString(),
+        data: [
           props.result.marginGross[index],
+        ]
+      }
+    )
+  }
+
+  let series3: any[] = []
+  for (let index = 0; index < props.result.header.length; index++) {
+    // @ts-ignore
+    series3.push(
+      {
+        name: props.result.header[index].toString(),
+        data: [
           props.result.allowance[index],
+        ]
+      }
+    )
+  }
+
+  let series4: any[] = []
+  for (let index = 0; index < props.result.header.length; index++) {
+    // @ts-ignore
+    series4.push(
+      {
+        name: props.result.header[index].toString(),
+        data: [
+          props.result.marginProfit[index]
+        ]
+      }
+    )
+  }
+
+  let series5: any[] = []
+  for (let index = 0; index < props.result.header.length; index++) {
+    // @ts-ignore
+    series5.push(
+      {
+        name: props.result.header[index].toString(),
+        data: [
           props.result.profit[index]
         ]
       }
@@ -57,7 +104,180 @@ export default function Result5(props: any) {
         colors: ['transparent']
       },
       xaxis: {
-        categories: ["Rentabilita tržieb", "Rentabilita nákladov", "Zisková prirážka", " Hrubé rozpätie", "Príspevok na úhradu", "Zisk"],
+        categories: ["Rentabilita tržieb", "Rentabilita nákladov"],
+      },
+      fill: {
+        opacity: 1
+      },
+    },
+  }
+
+
+  const colGraph2 = {
+    // @ts-ignore
+    series: series2,
+    options: {
+      chart: {
+        type: 'bar',
+        height: 350
+      },
+      plotOptions: {
+        bar: {
+          horizontal: false,
+          columnWidth: '55%',
+          endingShape: 'rounded'
+        },
+      },
+      title: {
+        text: 'Hrubé rozpätie',
+        align: 'center'
+      },
+      grid: {
+        borderColor: '#e7e7e7',
+        row: {
+          colors: ['#f3f3f3', 'transparent'],
+          opacity: 0.5
+        },
+      },
+      dataLabels: {
+        enabled: false
+      },
+      stroke: {
+        show: true,
+        width: 2,
+        colors: ['transparent']
+      },
+      xaxis: {
+        categories: ["Hrubé rozpätie"],
+      },
+      fill: {
+        opacity: 1
+      },
+    },
+  }
+
+  const colGraph3 = {
+    // @ts-ignore
+    series: series3,
+    options: {
+      chart: {
+        type: 'bar',
+        height: 350
+      },
+      plotOptions: {
+        bar: {
+          horizontal: false,
+          columnWidth: '55%',
+          endingShape: 'rounded'
+        },
+      },
+      title: {
+        text: 'Príspevok na úhradu',
+        align: 'center'
+      },
+      grid: {
+        borderColor: '#e7e7e7',
+        row: {
+          colors: ['#f3f3f3', 'transparent'],
+          opacity: 0.5
+        },
+      },
+      dataLabels: {
+        enabled: false
+      },
+      stroke: {
+        show: true,
+        width: 2,
+        colors: ['transparent']
+      },
+      xaxis: {
+        categories: ["Príspevok na úhradu"],
+      },
+      fill: {
+        opacity: 1
+      },
+    },
+  }
+
+  const colGraph4 = {
+    // @ts-ignore
+    series: series4,
+    options: {
+      chart: {
+        type: 'bar',
+        height: 350
+      },
+      plotOptions: {
+        bar: {
+          horizontal: false,
+          columnWidth: '55%',
+          endingShape: 'rounded'
+        },
+      },
+      title: {
+        text: 'Zisková prirážka',
+        align: 'center'
+      },
+      grid: {
+        borderColor: '#e7e7e7',
+        row: {
+          colors: ['#f3f3f3', 'transparent'],
+          opacity: 0.5
+        },
+      },
+      dataLabels: {
+        enabled: false
+      },
+      stroke: {
+        show: true,
+        width: 2,
+        colors: ['transparent']
+      },
+      xaxis: {
+        categories: ["Zisková prirážka"],
+      },
+      fill: {
+        opacity: 1
+      },
+    },
+  }
+
+  const colGraph5 = {
+    // @ts-ignore
+    series: series5,
+    options: {
+      chart: {
+        type: 'bar',
+        height: 350
+      },
+      plotOptions: {
+        bar: {
+          horizontal: false,
+          columnWidth: '55%',
+          endingShape: 'rounded'
+        },
+      },
+      title: {
+        text: 'Zisk',
+        align: 'center'
+      },
+      grid: {
+        borderColor: '#e7e7e7',
+        row: {
+          colors: ['#f3f3f3', 'transparent'],
+          opacity: 0.5
+        },
+      },
+      dataLabels: {
+        enabled: false
+      },
+      stroke: {
+        show: true,
+        width: 2,
+        colors: ['transparent']
+      },
+      xaxis: {
+        categories: ["Zisk"],
       },
       fill: {
         opacity: 1
@@ -68,13 +288,19 @@ export default function Result5(props: any) {
   return (
     <div style={{paddingLeft: 10, paddingRight: 10}}>
       <TableStatic header={[...props.result.header]}
-                   inputs={["Rentabilita tržieb", "Rentabilita nákladov", "Zisková prirážka", " Hrubé rozpätie", "Príspevok na úhradu", "Zisk"]}
+                   inputs={["Rentabilita tržieb", "Rentabilita nákladov", "Hrubé rozpätie", "Príspevok na úhradu"]}
                    data={[
                      [...props.result.rentCost.map((value: number) => (Math.round(value * 100) + "%"))],
                      [...props.result.rentIncome.map((value: number) => (Math.round(value * 100) + "%"))],
-                     [...props.result.marginProfit.map((value: number) => (Math.round(value * 100) / 100))],
                      [...props.result.marginGross.map((value: number) => (Math.round(value * 100) / 100))],
                      [...props.result.allowance.map((value: number) => (Math.round(value * 100) / 100))],
+                   ]}
+      />
+
+      <TableStatic header={[...props.result.header]}
+                   inputs={["Zisková prirážka", "Zisk"]}
+                   data={[
+                     [...props.result.marginProfit.map((value: number) => (Math.round(value * 100) / 100))],
                      [...props.result.profit.map((value: number) => (Math.round(value * 100) / 100))]
                    ]}
       />
@@ -85,6 +311,50 @@ export default function Result5(props: any) {
             {   // @ts-ignore
               <ReactApexChart options={colGraph.options} series={colGraph.series} type="bar" height={400}/>
             }
+          </div>
+        </div>
+      </div>
+
+      <div className={"row"}>
+        <div className={"col-lg-6 col-sm-12"}>
+          <div className={"card mb-3"}>
+            <div className={"card-body"}>
+              {   // @ts-ignore
+                <ReactApexChart options={colGraph2.options} series={colGraph2.series} type="bar" height={400}/>
+              }
+            </div>
+          </div>
+        </div>
+
+        <div className={"col-lg-6 col-sm-12"}>
+          <div className={"card mb-3"}>
+            <div className={"card-body"}>
+              {   // @ts-ignore
+                <ReactApexChart options={colGraph3.options} series={colGraph3.series} type="bar" height={400}/>
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className={"row"}>
+        <div className={"col-lg-6 col-sm-12"}>
+          <div className={"card mb-3"}>
+            <div className={"card-body"}>
+              {   // @ts-ignore
+                <ReactApexChart options={colGraph4.options} series={colGraph4.series} type="bar" height={400}/>
+              }
+            </div>
+          </div>
+        </div>
+
+        <div className={"col-lg-6 col-sm-12"}>
+          <div className={"card mb-3"}>
+            <div className={"card-body"}>
+              {   // @ts-ignore
+                <ReactApexChart options={colGraph5.options} series={colGraph5.series} type="bar" height={400}/>
+              }
+            </div>
           </div>
         </div>
       </div>

@@ -7,15 +7,17 @@ import ReactApexChart from "react-apexcharts";
 // import TableStatic from "../TableStatic";
 
 export default function Result3(props: any) {
-
   const colGraph = {
 
     series: [{
-      name: "2000",
+      name: props.result.header[0],
       data: props.result.inputsDataOld
-    },{
-      name: "2001",
+    }, {
+      name: props.result.header[1],
       data: props.result.inputsDataNew
+    }, {
+      name: props.result.header[2],
+      data: props.result.inputsDataBase
     }],
     options: {
       chart: {
@@ -104,6 +106,22 @@ export default function Result3(props: any) {
           <div className={"col-sm-12 col-md-6 col-lg-3"}>
             <InfoCard header={"REŤAZOVÝ INDEX"}
                       value={props.result.chainIdx}
+                      color={"success"}
+                      icon={"fa fa-area-chart"}
+            />
+          </div>
+
+          <div className={"col-sm-12 col-md-6 col-lg-3"}>
+            <InfoCard header={"BÁZICKÝ INDEX " + props.result.header[0]}
+                      value={props.result.baseIdxOld}
+                      color={"success"}
+                      icon={"fa fa-area-chart"}
+            />
+          </div>
+
+          <div className={"col-sm-12 col-md-6 col-lg-3"}>
+            <InfoCard header={"BÁZICKÝ INDEX " + props.result.header[1]}
+                      value={props.result.baseIdxNew}
                       color={"success"}
                       icon={"fa fa-area-chart"}
             />
