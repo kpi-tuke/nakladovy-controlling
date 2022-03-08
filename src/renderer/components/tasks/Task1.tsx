@@ -84,12 +84,19 @@ export default function Task1() {
       costTotal,
       incomeTotal,
       profitTotal,
+      // @ts-ignore
       costData,
+      // @ts-ignore
       incomeData,
+      // @ts-ignore
       profitData,
+      // @ts-ignore
       incomeProfitabilityData,
+      // @ts-ignore
       costProfitabilityData,
+      // @ts-ignore
       costEfficiencyData,
+      // @ts-ignore
       costIndicatorData
     })
   }
