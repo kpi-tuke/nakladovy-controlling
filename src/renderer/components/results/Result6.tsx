@@ -15,7 +15,7 @@ export default function Result6(props: any) {
     }],
     options: {
       chart: {
-        type: 'line',
+        type: 'bar',
       },
       stroke: {
         curve: 'straight',
@@ -25,8 +25,45 @@ export default function Result6(props: any) {
       title: {
         text: 'Pareto analýza'
       },
+      dataLabels: {
+        enabled: true,
+        enabledOnSeries: [1]
+      },
+      annotations: {
+        yaxis: [
+          {
+            y: 80,
+            yAxisIndex: 1,
+            borderColor: '#775DD0',
+            label: {
+              style: {
+                color: '#fa023f',
+              },
+              text: 'Minimálny zisk'
+            }
+          }
+        ],
+        xaxis: [
+          {
+            x: 100,
+            xAxisIndex: 0,
+            borderColor: '#775DD0',
+            label: {
+              style: {
+                color: '#fa023f',
+              },
+              text: 'Minimálny zisk'
+            }
+          }
+        ]
+
+      },
+      labels: props.result.causes,
       xaxis: {
-        categories: props.result.causes,
+        type: "category",
+        labels: {
+          trim: true
+        }
       },
       yaxis: [{
         min: 0,

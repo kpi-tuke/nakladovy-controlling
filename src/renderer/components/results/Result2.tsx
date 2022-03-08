@@ -37,7 +37,7 @@ export default function Result2(props: any) {
         align: 'center'
       },
       xaxis: {
-        categories: props.result.inputs,
+        categories: props.result.items,
       }
     },
   }
@@ -74,7 +74,7 @@ export default function Result2(props: any) {
         align: 'center'
       },
       xaxis: {
-        categories: props.result.header,
+        categories: props.result.headers,
       },
       yaxis: {
         label: "Náklady (€)"
@@ -95,7 +95,7 @@ export default function Result2(props: any) {
       title: {
         text: 'Druhové členenie nákladov'
       },
-      labels: props.result.inputs,
+      labels: props.result.items,
     }
   }
 
@@ -112,7 +112,7 @@ export default function Result2(props: any) {
       title: {
         text: 'Kalkulačné členenie nákladov'
       },
-      labels: props.result.header,
+      labels: props.result.headers,
     }
   }
 

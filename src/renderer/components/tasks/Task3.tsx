@@ -1,8 +1,9 @@
 import '../../App.css';
-import TableType from "../TableType";
 import Result3 from "../results/Result3";
 import {useEffect, useState} from "react";
 import HeaderBar from '../HeaderBar';
+import groupedOptions from "../chartOfAccounts";
+import TableDynamic from "../TableDynamic";
 
 export default function Task3() {
   //odstranit graf s nakladmi
@@ -10,7 +11,7 @@ export default function Task3() {
   //tiez polozky s učt osnovy ako v task1
   //moznost pridat viacero obdobi, vzdy sa porovnavaju iba dve po sebe iduce, graf s indexami = spojnicovy
   let [getResult, setResult] = useState({
-    header: [],
+    headers: [],
     costSums: [],
     incomeSums: [],
     chainIdx: 0,
@@ -19,49 +20,47 @@ export default function Task3() {
     costDiff: 0,
     incomeDiff: 0,
     reaction: 0,
-    inputs: [],
+    items: [],
     inputsDataOld: [],
     inputsDataNew: [],
     inputsDataBase: []
   })
-  let state = useState({
-    header: ["2000", "2001", "Bázicky rok"],
-    inputs: ["Tržby", "Naklady"],
-    data: [
-      ["2", "4", "3"],
-      ["1", "3", "5"]
-    ],
-    types: [true, false]
-  })
+
+  // @ts-ignore
+  const [headers, setHeaders] = useState<string[]>(["2000", "2001", "Bázicky rok"])
+  // @ts-ignore
+  const [items, setItems] = useState<string[]>(['501 – Spotreba materiálu', "666 – Výnosy z krátkodobého finančného majetku"])
+  // @ts-ignore
+  const [data, setData] = useState<string[][]>([["1", "2", "3"], ["3", "4", "5"]])
+  // @ts-ignore
+  const [values, setValues] = useState<number[]>([501, 666])
+
 
   const task3 = () => {
     let costSums: number[] = []
     let incomeSums: number[] = []
-    let header: string[] = []
-    let inputs: string[] = []
     let inputsDataOld: number[] = []
     let inputsDataNew: number[] = []
     let inputsDataBase: number[] = []
-    for (let i = 0; i < state[0].header.length; i++) {
+
+    for (let i = 0; i < headers.length; i++) {
       costSums.push(0)
       incomeSums.push(0)
-      header.push(state[0].header[i])
     }
 
-    for (let i = 0; i < state[0].inputs.length; i++) {
-      inputs.push(state[0].inputs[i])
-      inputsDataOld.push( parseInt(state[0].data[i][0]) )
-      inputsDataNew.push(parseInt(state[0].data[i][1]))
-      inputsDataBase.push(parseInt(state[0].data[i][2]))
+    for (let i = 0; i < items.length; i++) {
+      inputsDataOld.push(parseFloat(data[i][0] === "" ? "0" : data[i][0]))
+      inputsDataNew.push(parseFloat(data[i][1] === "" ? "0" : data[i][1]))
+      inputsDataBase.push(parseFloat(data[i][2] === "" ? "0" : data[i][2]))
     }
 
-    state[0].data.map((rowData: string[], row: number) => {
-      state[0].types[row]
+    data.map((rowData: string[], row: number) => {
+      values[row] >= 600
         ? rowData.map((value: string, idx: number) => {
-          incomeSums[idx] = incomeSums[idx] + parseInt(value)
+          incomeSums[idx] = incomeSums[idx] + parseFloat(value === "" ? "0" : value)
         })
         : rowData.map((value: string, idx: number) => {
-          costSums[idx] = costSums[idx] + parseInt(value)
+          costSums[idx] = costSums[idx] + parseFloat(value === "" ? "0" : value)
         })
     })
     const profitDiff: number = incomeSums[1] * 100 / incomeSums[0] - 100
@@ -74,7 +73,7 @@ export default function Task3() {
 
     setResult({
       // @ts-ignore
-      header,
+      headers,
       // @ts-ignore
       costSums,
       // @ts-ignore
@@ -86,7 +85,7 @@ export default function Task3() {
       incomeDiff,
       reaction,
       // @ts-ignore
-      inputs,
+      items,
       // @ts-ignore
       inputsDataOld,
       // @ts-ignore
@@ -104,18 +103,17 @@ export default function Task3() {
       <HeaderBar title={'Analýza reťazových a bázických indexov'} />
 
       <div>
-        <TableType
+        <TableDynamic
           corner={'Ekonomická položka'}
           headerType={'input'}
-          header={state[0].header}
-          inputType={'input'}
-          inputs={state[0].inputs}
-          data={state[0].data}
-          types={state[0].types}
-          rows={2}
-          cols={3}
+          header={headers}
+          inputType={'select'}
+          inputs={items}
+          data={data}
+          values={values}
           dynRows={true}
           dynCols={false}
+          selectRow={groupedOptions}
           proceed={task3}
         />
       </div>

@@ -1,26 +1,29 @@
 import '../App.css';
 import {useState} from "react";
+import Select from "react-select";
 
 export default function TableDynamic(props: any) {
 
-  const [state, setState] = useState(props.data)
+  const [state, setstate] = useState(props.data)
 
   const handleChangeData = function (event: any, row: number, col: number) {
     let arr: any[] = state
     arr[row][col] = event.target.value === ''
       ? ""
       : event.target.value
-    setState(arr)
+    setstate(arr)
     props.proceed()
   }
 
-  const handleChangeHeader = function (event: any, idx: number,) {
-    props.header[idx] = event.target.value
+  const handleChangeHeader = function (e: any, idx: number,) {
+    props.header[idx] = e.label || e.value
     props.proceed()
   }
 
-  const handleChangeInput = function (event: any, idx: number,) {
-    props.inputs[idx] = event.target.value
+  const handleChangeInput = function (e: any, idx: number,) {
+    console.log(e.value)
+    props.inputs[idx] = e.label || e.value
+    props.values[idx] = e.value
     props.proceed()
   }
 
@@ -30,7 +33,7 @@ export default function TableDynamic(props: any) {
     arr.map((value: any) => {
       value.push("0")
     })
-    setState(arr)
+    setstate(arr)
     props.proceed()
   }
 
@@ -42,7 +45,7 @@ export default function TableDynamic(props: any) {
       arr.push("0")
     }
     arr2.push(arr)
-    setState(arr2)
+    setstate(arr2)
     props.proceed()
   }
 
@@ -51,7 +54,7 @@ export default function TableDynamic(props: any) {
     let arr: any[] = state
     props.inputs.splice(row, 1)
     arr.splice(row, 1)
-    setState(arr)
+    setstate(arr)
     props.proceed()
   }
 
@@ -77,17 +80,13 @@ export default function TableDynamic(props: any) {
             return (
               <th key={idx.toString()} style={{background: "deepskyblue", textAlign: "center"}}>
                 {props.headerType === "select"
-                  ? <select style={{border: 0, background: "deepskyblue"}} value={value}
-                            onChange={() => (handleChangeHeader(event, idx))}>
-                    <option key={"choose"} value="chose">--Please choose an option--</option>
-                    {props.selectCol.map((option: string) => <option key={option} value={option}>{option}</option>)}
-                  </select>
+                  ? <Select options={props.selectCol} onChange={(e) => (handleChangeHeader(e, idx))}/>
                   : props.headerType === "input"
                     ? <input type="text"
                              className="input-group-text"
                              style={{border: 0, margin: 0, padding: 0, background: "deepskyblue"}}
                              defaultValue={value}
-                             onBlur={() => (handleChangeHeader(event, idx))}/>
+                             onBlur={(e) => (handleChangeHeader(e.target, idx))}/>
                     : value
                 }
               </th>
@@ -106,14 +105,11 @@ export default function TableDynamic(props: any) {
             <tr key={row}>
               <td key={value + row.toString()} style={{background: "yellow"}}>
                 {props.inputType === "select"
-                  ? <select style={{border: 0, background: "yellow"}} value={value}
-                            onChange={() => (handleChangeInput(event, row))}>
-                    <option key={"choose"} value="chose">--Please choose an option--</option>
-                    {props.selectRow.map((option: string) => <option key={option} value={option}>{option}</option>)}
-                  </select>
+                  ? <Select value={{value: "xxx", label: value}} options={props.selectRow}
+                            onChange={(e) => (handleChangeInput(e, row))}/>
                   : props.inputType === "input"
                     ? <input type="text" style={{border: 0, background: "yellow"}} defaultValue={value}
-                             onBlur={() => (handleChangeInput(event, row))}/>
+                             onBlur={(e) => (handleChangeInput(e.target, row))}/>
                     : value}
               </td>
 

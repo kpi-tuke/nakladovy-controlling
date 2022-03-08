@@ -8,8 +8,8 @@ export default function TableStatic(props: any) {
           <th className="sorting">
             Ekonomický ukazovateľ
           </th>
-          {props.header.map((value: string) => {
-            return <th key={value}>{value}</th>
+          {props.header.map((value: string, idx: number) => {
+            return <th key={idx}>{value}</th>
           })}
         </tr>
 

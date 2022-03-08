@@ -4,11 +4,11 @@ import TableStatic from "../TableStatic";
 import ReactApexChart from "react-apexcharts";
 
 export default function Result4(props: any) {
-
+  console.log(props.result.items)
   // @ts-ignore
   return (
     <div style={{paddingLeft: 10, paddingRight: 10}}>
-      <TableStatic header={...props.result.inputs}
+      <TableStatic header={...props.result.items}
                    inputs={["Nulový bod[€]", "Nulový bod[tony]", "Zisk " + props.result.minProfit.toString() + " pri objeme"]}
                    data={[
                      [...(props.result.zeroEur.map((value: number) => (Math.round(value * 100) / 100)))],
@@ -18,12 +18,12 @@ export default function Result4(props: any) {
       />
       <div className={"row"}>
         {
-          props.result.inputs.map((value: any, idx: number) => {
+          props.result.items.map((value: any, idx: number) => {
             const costTotal: number[] = []
             const incomeTotal: number[] = []
             //prepočitat rozsah grafu
             //const vol: number = (zeroTon[idx] + 2 * (zeroTon[idx] / 3)) / 5
-            const vol :number = (props.result.volumes[idx] + 2*(props.result.volumes[idx]/3))/5
+            const vol: number = (props.result.volumes[idx] + 2 * (props.result.volumes[idx] / 3)) / 5
             const osX: number[] = []
             //pridat viac bodov na osXS
             for (let i = 0; i < 7; i++) {
@@ -94,6 +94,7 @@ export default function Result4(props: any) {
                         style: {
                           color: '#fa023f',
                         },
+                        orientation: 'horizontal',
                         text: 'Minimálny zisk'
                       }
                     }
@@ -108,7 +109,7 @@ export default function Result4(props: any) {
             return (
               <div
                 key={idx}
-                className={(props.result.inputs.length % 2 === 1 && idx === props.result.inputs.length - 1) ? "col-lg-12 col-md-12" : "col-lg-6 col-md-12"}>
+                className={(props.result.items.length % 2 === 1 && idx === props.result.items.length - 1) ? "col-lg-12 col-md-12" : "col-lg-6 col-md-12"}>
                 <div className={"card mb-3"}>
                   <div className={"card-body"}>
                     {

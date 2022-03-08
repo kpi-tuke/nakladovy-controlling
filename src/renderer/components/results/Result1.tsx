@@ -52,7 +52,7 @@ export default function Result1(props: any) {
         size: 1
       },
       xaxis: {
-        categories: props.result.header,
+        categories: props.result.headers,
       },
       legend: {
         horizontalAlign: 'right',
@@ -106,7 +106,7 @@ export default function Result1(props: any) {
         colors: ['transparent']
       },
       xaxis: {
-        categories: props.result.header,
+        categories: props.result.headers,
       },
       fill: {
         opacity: 1
@@ -151,7 +151,7 @@ export default function Result1(props: any) {
         colors: ['transparent']
       },
       xaxis: {
-        categories: props.result.header,
+        categories: props.result.headers,
       },
       fill: {
         opacity: 1
@@ -197,7 +197,7 @@ export default function Result1(props: any) {
         colors: ['transparent']
       },
       xaxis: {
-        categories: props.result.header,
+        categories: props.result.headers,
       },
       fill: {
         opacity: 1
@@ -243,7 +243,7 @@ export default function Result1(props: any) {
         colors: ['transparent']
       },
       xaxis: {
-        categories: props.result.header,
+        categories: props.result.headers,
       },
       fill: {
         opacity: 1
@@ -289,7 +289,7 @@ export default function Result1(props: any) {
         colors: ['transparent']
       },
       xaxis: {
-        categories: props.result.header,
+        categories: props.result.headers,
       },
       fill: {
         opacity: 1
@@ -341,7 +341,7 @@ export default function Result1(props: any) {
         <div className={"row"}>
 
           <div className={"col"}>
-            <TableStatic header={[...props.result.header]}
+            <TableStatic header={[...props.result.headers]}
                          inputs={["Zisk", "Rentabilita výnosov", "Rentabilita nákladov", "Nákladová účinnosť", "Nákladovosť"]}
                          data={[
                            [...props.result.profitData],

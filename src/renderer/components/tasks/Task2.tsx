@@ -5,74 +5,64 @@ import Result2 from "../results/Result2";
 import HeaderBar from '../HeaderBar';
 
 export default function Task2() {
-  //konkretne polozky, len náklady
-  let state = useState({
-    header: [""],
-    inputs: [""],
-    data: [["0"]],
-    selectRow: [
-      "Materiálové náklady",
-      "Služby",
-      "Mzdové a osobné náklady",
-      "Zákonne sociálne poistenie",
-      "Odpisy",
-      "Daň z nehnuteľnosti"
-    ],
-    selectCol: [
-      "Priamy materiál",
-      "Priame mzdy",
-      "Ostatné priame náklady",
-      "Výrobná réžia",
-      "Správna réžia",
-      "Odbytová réžia",
-      "Zásobovacia réžia"
-    ]
-  })
+  // @ts-ignore
+  const [headers, setHeaders] = useState<string[]>(["Priamy materiál"])
+  // @ts-ignore
+  const [items, setItems] = useState<string[]>(["Materiálové náklady"])
+  // @ts-ignore
+  const [data, setData] = useState<string[][]>([["0"]])
+  // @ts-ignore
+  const [values, setValues] = useState<number[]>([1, 7])
+  // @ts-ignore
+  const [selectCol, getSelectCol] = useState([
+    {value: 7, label: "Priamy materiál"},
+    {value: 8, label: "Priame mzdy"},
+    {value: 9, label: "Ostatné priame náklady"},
+    {value: 10, label: "Výrobná réžia"},
+    {value: 11, label: "Správna réžia"},
+    {value: 12, label: "Odbytová réžia"},
+    {value: 13, label: "Zásobovacia réžia"}
+  ])
+  // @ts-ignore
+  const [selectRow, getSelectRow] = useState([
+    {value: 1, label: "Materiálové náklady"},
+    {value: 2, label: "Služby"},
+    {value: 3, label: "Mzdové a osobné náklady"},
+    {value: 4, label: "Zákonne sociálne poistenie"},
+    {value: 5, label: "Odpisy"},
+    {value: 6, label: "Daň z nehnuteľnosti"}
+  ])
 
-  let [getResult, setResult] = useState({inputs: [], header: [], rowSums: [], colSums: [], totalCost: 0, dataset: []})
+  let [getResult, setResult] = useState({items: [], headers: [], rowSums: [], colSums: [], totalCost: 0, dataset: []})
 
   const task2 = () => {
 
     let rowSums: number[] = []
     let colSums: number[] = []
-    let inputs: string[] = []
-    let header: string[] = []
-    for (let i = 0; i < state[0].inputs.length; i++) {
+
+    for (let i = 0; i < items.length; i++) {
       rowSums.push(0)
-      inputs.push(state[0].inputs[i])
     }
-    for (let i = 0; i < state[0].header.length; i++) {
+    for (let i = 0; i < headers.length; i++) {
       colSums.push(0)
-      header.push(state[0].header[i])
     }
 
-    state[0].data.map((value: string[], row: number) => {
-      value.map((x: string) => {
-        rowSums[row] = rowSums[row] + parseInt(x)
+    data.map((rowData: string[], row: number) => {
+      rowData.map((value: string) => {
+        rowSums[row] = rowSums[row] + parseFloat(value === "" ? "0" : value)
       })
     })
 
-    state[0].data.map((rowData: string[]) => {
+    data.map((rowData: string[]) => {
       rowData.map((value: string, idx: number) => {
-        colSums[idx] = colSums[idx] + parseInt(value)
+        colSums[idx] = colSums[idx] + parseFloat(value === "" ? "0" : value)
       })
     })
 
     const totalCost: number = rowSums.reduce((a: number, b: number) => a + b, 0)
-    setResult({
-      // @ts-ignore
-      inputs,
-      // @ts-ignore
-      header,
-      // @ts-ignore
-      rowSums,
-      // @ts-ignore
-      colSums,
-      // @ts-ignore
-      totalCost,
-      // @ts-ignore
-      dataset: state[0].data
-    })
+
+    //@ts-ignore
+    setResult({items, headers, rowSums, colSums, totalCost,})
   }
 
   useEffect(task2, [])
@@ -85,15 +75,16 @@ export default function Task2() {
       <TableDynamic
         corner={'↓Druhové | Kalkulačné→'}
         headerType={'select'}
-        header={state[0].header}
+        header={headers}
         inputType={'select'}
-        inputs={state[0].inputs}
-        data={state[0].data}
+        inputs={items}
+        data={data}
+        values={values}
         dynRows={true}
         dynCols={true}
         proceed={task2}
-        selectRow={state[0].selectRow}
-        selectCol={state[0].selectCol}
+        selectRow={selectRow}
+        selectCol={selectCol}
       />
 
       <Result2 result={getResult} />

@@ -4,7 +4,6 @@ import Result4 from "../results/Result4";
 import {useEffect, useState} from "react";
 import SingleInput from "../SingleInput";
 import HeaderBar from '../HeaderBar';
-import Select from "react-select";
 
 export default function Task4() {
   // potom po skonceni analýz pridat moznost suhrnu, report vysledkov a slovná interpretacia vysledkov
@@ -13,44 +12,39 @@ export default function Task4() {
     volumes: [],
     prices: [],
     costs: [],
-    inputs: [],
+    items: [],
     fixTotal: 0,
     minProfit: 0,
     zeroEur: [],
     zeroTon: [],
     zeroProf: []
   })
-  const inputOptions = [
-    {value: 'chocolate', label: 'Chocolate'},
-    {value: 'strawberry', label: 'Strawberry'},
-    {value: 'vanilla', label: 'Vanilla'}
-  ]
 
-  const [fixTotal, setFixTotal] = useState(0)
-  const [minProfit, setMinProfit] = useState(0)
-  let [state] = useState({
-    header: ["Výroba", "Cena/tona", "Variabilné náklady/tona"],
-    inputs: ["Výrobok A",],
-    data: [
-      ["100", "8", "6"]
-    ],
-    fixTotal: 0,
-    minProfit: 0
-  })
+
+  // @ts-ignore
+  const [headers, setHeaders] = useState<string[]>(["Výroba", "Cena/tona", "Variabilné náklady/tona"])
+  // @ts-ignore
+  const [items, setItems] = useState<string[]>(["Výrobok A"])
+  // @ts-ignore
+  const [data, setData] = useState<string[][]>([["100", "8", "6"]])
+  // @ts-ignore
+  const [values, setValues] = useState<string[]>(["Výrobok A"])
+
+  const [fixTotal, setFixTotal] = useState<number>(0)
+  const [minProfit, setMinProfit] = useState<number>(0)
+
   const task4 = () => {
     let volumes: number[] = []
     let prices: number[] = []
     let costs: number[] = []
-    let inputs: string[] = []
 
-    for (let i = 0; i < state.inputs.length; i++) {
+    for (let i = 0; i < items.length; i++) {
       volumes.push(0)
       prices.push(0)
       costs.push(0)
-      inputs.push(state.inputs[i])
     }
 
-    state.data.map((rowData: string[], idx: number) => {
+    data.map((rowData: string[], idx: number) => {
       volumes[idx] = parseInt(rowData[0])
       prices[idx] = parseInt(rowData[1])
       costs[idx] = parseInt(rowData[2])
@@ -60,13 +54,13 @@ export default function Task4() {
     const zeroTon: number[] = []
     const zeroProf: number[] = []
 
-    for (let i = 0; i < inputs.length; i++) {
+    for (let i = 0; i < items.length; i++) {
       zeroEur.push(0)
       zeroTon.push(0)
       zeroProf.push(0)
     }
 
-    for (let i = 0; i < inputs.length; i++) {
+    for (let i = 0; i < items.length; i++) {
       zeroEur[i] = fixTotal / (1 - (costs[i] / prices[i]))
       zeroTon[i] = fixTotal / (prices[i] - costs[i])
       zeroProf[i] = (fixTotal + minProfit) / (prices[i] - costs[i]) // pridat min zisk
@@ -81,7 +75,7 @@ export default function Task4() {
       // @ts-ignore
       costs,
       // @ts-ignore
-      inputs,
+      items,
       // @ts-ignore
       fixTotal: fixTotal,
       // @ts-ignore
@@ -101,7 +95,6 @@ export default function Task4() {
   return (
     <div className={'scrollbox-lg'} style={{ height: '100vh' }}>
       <HeaderBar title={"CVP analýza"}/>
-      <Select options={inputOptions}/>
       <div
         className={'row'}
         style={{paddingLeft: 10, paddingRight: 10, marginTop: 10}}
@@ -109,12 +102,11 @@ export default function Task4() {
         <TableDynamic
           corner={'Ekonomická položka'}
           headerType={'text'}
-          header={state.header}
+          header={headers}
           inputType={'input'}
-          inputs={state.inputs}
-          data={state.data}
-          rows={1}
-          cols={4}
+          inputs={items}
+          data={data}
+          values={values}
           dynRows={true}
           dynCols={false}
           proceed={task4}

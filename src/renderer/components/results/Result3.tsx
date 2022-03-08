@@ -10,13 +10,13 @@ export default function Result3(props: any) {
   const colGraph = {
 
     series: [{
-      name: props.result.header[0],
+      name: props.result.headers[0],
       data: props.result.inputsDataOld
     }, {
-      name: props.result.header[1],
+      name: props.result.headers[1],
       data: props.result.inputsDataNew
     }, {
-      name: props.result.header[2],
+      name: props.result.headers[2],
       data: props.result.inputsDataBase
     }],
     options: {
@@ -50,7 +50,7 @@ export default function Result3(props: any) {
         colors: ['transparent']
       },
       xaxis: {
-        categories: props.result.inputs,
+        categories: props.result.items,
       },
       fill: {
         opacity: 1
@@ -65,7 +65,7 @@ export default function Result3(props: any) {
         <div className={"row"}>
 
           <div className={"col-sm-12 col-md-6 col-lg-3"}>
-            <InfoCard header={"NÁKLADY CELKOM(" + props.result.header[0] + ")"}
+            <InfoCard header={"NÁKLADY CELKOM(" + props.result.headers[0] + ")"}
                       value={props.result.costSums[0]}
                       color={"primary"}
                       icon={"fa fa-line-chart"}
@@ -73,7 +73,7 @@ export default function Result3(props: any) {
           </div>
 
           <div className={"col-sm-12 col-md-6 col-lg-3"}>
-            <InfoCard header={"NÁKLADY CELKOM(" + props.result.header[1] + ")"}
+            <InfoCard header={"NÁKLADY CELKOM(" + props.result.headers[1] + ")"}
                       value={props.result.costSums[1]}
                       color={"primary"}
                       icon={"fa fa-line-chart"}
@@ -82,7 +82,7 @@ export default function Result3(props: any) {
           </div>
 
           <div className={"col-sm-12 col-md-6 col-lg-3"}>
-            <InfoCard header={"VÝNOSY CELKOM(" + props.result.header[0] + ")"}
+            <InfoCard header={"VÝNOSY CELKOM(" + props.result.headers[0] + ")"}
                       value={props.result.incomeSums[0]}
                       color={"warning"}
                       icon={"fa fa-money"}
@@ -90,7 +90,7 @@ export default function Result3(props: any) {
           </div>
 
           <div className={"col-sm-12 col-md-6 col-lg-3"}>
-            <InfoCard header={"VÝNOSY CELKOM(" + props.result.header[1] + ")"}
+            <InfoCard header={"VÝNOSY CELKOM(" + props.result.headers[1] + ")"}
                       value={props.result.incomeSums[1]}
                       color={"warning"}
                       icon={"fa fa-money"}
@@ -112,7 +112,7 @@ export default function Result3(props: any) {
           </div>
 
           <div className={"col-sm-12 col-md-6 col-lg-3"}>
-            <InfoCard header={"BÁZICKÝ INDEX " + props.result.header[0]}
+            <InfoCard header={"BÁZICKÝ INDEX " + props.result.headers[0]}
                       value={props.result.baseIdxOld}
                       color={"success"}
                       icon={"fa fa-area-chart"}
@@ -120,7 +120,7 @@ export default function Result3(props: any) {
           </div>
 
           <div className={"col-sm-12 col-md-6 col-lg-3"}>
-            <InfoCard header={"BÁZICKÝ INDEX " + props.result.header[1]}
+            <InfoCard header={"BÁZICKÝ INDEX " + props.result.headers[1]}
                       value={props.result.baseIdxNew}
                       color={"success"}
                       icon={"fa fa-area-chart"}
