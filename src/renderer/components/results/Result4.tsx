@@ -4,8 +4,7 @@ import TableStatic from "../TableStatic";
 import ReactApexChart from "react-apexcharts";
 
 export default function Result4(props: any) {
-  console.log(props.result.items)
-  // @ts-ignore
+
   return (
     <div style={{paddingLeft: 10, paddingRight: 10}}>
       <TableStatic header={...props.result.items}

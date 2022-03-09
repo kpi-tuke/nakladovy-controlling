@@ -7,29 +7,37 @@ import HeaderBar from '../HeaderBar';
 
 export default function Task6() {
   //kolmica na os x v bode kde ma krivka hodnotu 80%
-  let [getResult, setResult] = useState({ causes: [], percentages: [], values: [], kumul: [] })
+  let [getResult, setResult] = useState({causes: [], percentages: [], values: [], kumul: []})
 
-  let state = useState({
-    header: ["Hodnota"],
+  // @ts-ignore
+  const [headers, setHeaders] = useState<string[]>(["Hodnota"])
+  // @ts-ignore
+  const [items, setItems] = useState<string[]>([
+    "Chyby mechanického trieskového opracovania",
+    "Chyby tvárnenia materiálu", "Materiálové chyby",
+    "Chyby zvárania", "Chyby povrchu a povrchovej úpravy",
+    "Chyby kompletizácie, balenia",
+    "Chyby dokumentácie"
+  ])
+  // @ts-ignore
+  const [data, setData] = useState<string[][]>([
+    ["3998"],
+    ["1307"],
+    ["361"],
+    ["82"],
+    ["104"],
+    ["1573"],
+    ["5"]
+  ])
+  // @ts-ignore
+  const [values, setValues] = useState<string[]>([
+    "Chyby mechanického trieskového opracovania",
+    "Chyby tvárnenia materiálu", "Materiálové chyby",
+    "Chyby zvárania", "Chyby povrchu a povrchovej úpravy",
+    "Chyby kompletizácie, balenia",
+    "Chyby dokumentácie"
+  ])
 
-    inputs: [
-      "Chyby mechanického trieskového opracovania",
-      "Chyby tvárnenia materiálu", "Materiálové chyby",
-      "Chyby zvárania", "Chyby povrchu a povrchovej úpravy",
-      "Chyby kompletizácie, balenia",
-      "Chyby dokumentácie"
-    ],
-
-    data: [
-      ["3998"],
-      ["1307"],
-      ["361"],
-      ["82"],
-      ["104"],
-      ["1573"],
-      ["5"]
-    ],
-  })
 
   const task6 = () => {
     let values: number[] = []
@@ -37,38 +45,39 @@ export default function Task6() {
     let kumul: number[] = []
     let sum: number = 0
 
-    for (let i = 0; i < state[0].inputs.length; i++) {
+    for (let i = 0; i < items.length; i++) {
       percentages.push(0)
       kumul.push(0)
     }
-    for (let i = 0; i < state[0].inputs.length; i++) {
-      values.push(parseInt(state[0].data[i][0]))
-      sum = sum + parseInt(state[0].data[i][0])
+    for (let i = 0; i < items.length; i++) {
+      values.push(parseInt(data[i][0]))
+      sum = sum + parseInt(data[i][0])
     }
     values.sort((a, b) => (b - a))
 
     let temp = 0
-    for (let i = 0; i < state[0].inputs.length; i++) {
+    for (let i = 0; i < items.length; i++) {
       temp = temp + (values[i] * 100 / sum)
       percentages[i] = Math.round(values[i] * 10000 / sum) / 100
       kumul[i] = Math.round(temp * 100) / 100
     }
     // @ts-ignore
-    setResult({causes: state[0].inputs, percentages: percentages, values: values, kumul: kumul, sum: sum})
+    setResult({causes: items, percentages: percentages, values: values, kumul: kumul, sum: sum})
   }
 
   useEffect(task6, [])
   //pridat graf pre lorenzovy krivku
   return (
     <div className={'scrollbox-lg'} style={{ height: '100vh' }}>
-      <HeaderBar title={'Pareto analýza nákladov'} />
+      <HeaderBar title={'Pareto analýza nákladov'}/>
       <TableDynamic
         corner={'Príčina'}
         headerType={'text'}
-        header={state[0].header}
+        header={headers}
         inputType={'input'}
-        inputs={state[0].inputs}
-        data={state[0].data}
+        inputs={items}
+        data={data}
+        values={values}
         rows={7}
         cols={2}
         dynRows={true}

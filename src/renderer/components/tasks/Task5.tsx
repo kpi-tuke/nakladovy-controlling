@@ -14,18 +14,23 @@ export default function Task5() {
     marginGross: [],
     allowance: [],
     profit: [],
-    header: []
+    headers: []
   })
-  let state = useState({
-    header: ["VýrobokA", "VýrobokB"],
-    inputs: ["Predajná cena jednotková", "Úplné vlastné náklady jednotková", "Priame náklady jednotková", "Objem výroby"],
-    data: [
-      ["2700", "2600"],
-      ["1745", "1581"],
-      ["985", "1215"],
-      ["8000", "4000"]
-    ],
-  })
+
+  // @ts-ignore
+  const [headers, setHeaders] = useState<string[]>(["VýrobokA", "VýrobokB"])
+  // @ts-ignore
+  const [items, setItems] = useState<string[]>(["Predajná cena jednotková", "Úplné vlastné náklady jednotková", "Priame náklady jednotková", "Objem výroby"])
+  // @ts-ignore
+  const [data, setData] = useState<string[][]>([
+    ["2700", "2600"],
+    ["1745", "1581"],
+    ["985", "1215"],
+    ["8000", "4000"]
+  ])
+  // @ts-ignore
+  const [values, setValues] = useState<string[]>(["Predajná cena jednotková", "Úplné vlastné náklady jednotková", "Priame náklady jednotková", "Objem výroby"])
+
   const task5 = () => {
     let rentCost: number[] = []
     let rentIncome: number[] = []
@@ -33,39 +38,37 @@ export default function Task5() {
     let marginGross: number[] = []
     let allowance: number[] = []
     let profit: number[] = []
-    let header: string[] = []
 
-    for (let i = 0; i < state[0].header.length; i++) {
+    for (let i = 0; i < headers.length; i++) {
       rentCost.push(0)
       rentIncome.push(0)
       marginGross.push(0)
       marginProfit.push(0)
       allowance.push(0)
       profit.push(0)
-      header.push(state[0].header[i])
     }
 
-    for (let col = 0; col < state[0].header.length; col++) {
-      marginProfit[col] = parseInt(state[0].data[0][col]) - parseInt(state[0].data[1][col])
+    for (let col = 0; col < headers.length; col++) {
+      marginProfit[col] = parseInt(data[0][col]) - parseInt(data[1][col])
 
-      if (parseInt(state[0].data[1][col]) === 0) {
+      if (parseInt(data[1][col]) === 0) {
         console.log("delenie nulou");
         rentCost[col] = 0
-      } else rentCost[col] = Math.round((marginProfit[col] / parseInt(state[0].data[1][col])) * 100) / 100
+      } else rentCost[col] = Math.round((marginProfit[col] / parseInt(data[1][col])) * 100) / 100
 
-      if (parseInt(state[0].data[0][col]) === 0) {
+      if (parseInt(data[0][col]) === 0) {
         console.log("delenie nulou");
         rentIncome[col] = 0
-      } else rentIncome[col] = Math.round((marginProfit[col] / parseInt(state[0].data[0][col])) * 100) / 100
+      } else rentIncome[col] = Math.round((marginProfit[col] / parseInt(data[0][col])) * 100) / 100
 
-      marginGross[col] = parseInt(state[0].data[0][col]) - parseInt(state[0].data[2][col])
+      marginGross[col] = parseInt(data[0][col]) - parseInt(data[2][col])
 
-      if (parseInt(state[0].data[0][col]) === 0) {
+      if (parseInt(data[0][col]) === 0) {
         console.log("delenie nulou");
         allowance[col] = 0
-      } else allowance[col] = Math.round((1 - (parseInt(state[0].data[2][col]) / parseInt(state[0].data[0][col]))) * 100) / 100
+      } else allowance[col] = Math.round((1 - (parseInt(data[2][col]) / parseInt(data[0][col]))) * 100) / 100
 
-      profit[col] = Math.round((parseInt(state[0].data[3][col]) * parseInt(state[0].data[0][col]) - parseInt(state[0].data[3][col]) * parseInt(state[0].data[1][col])) * 100) / 100
+      profit[col] = Math.round((parseInt(data[3][col]) * parseInt(data[0][col]) - parseInt(data[3][col]) * parseInt(data[1][col])) * 100) / 100
     }
 
     // @ts-ignore
@@ -83,23 +86,22 @@ export default function Task5() {
       // @ts-ignore
       profit: profit,
       // @ts-ignore
-      header: header
+      headers
     })
   }
   useEffect(task5, [])
 
   return (
     <div className={'scrollbox-lg'} style={{ height: '100vh' }}>
-      <HeaderBar title={'Sortimentová analýza'} />
+      <HeaderBar title={'Sortimentová analýza'}/>
       <TableDynamic
         corner={'Ekonomická položka'}
         headerType={'input'}
-        header={state[0].header}
+        header={headers}
         inputType={'text'}
-        inputs={state[0].inputs}
-        data={state[0].data}
-        rows={4}
-        cols={2}
+        inputs={items}
+        data={data}
+        values={values}
         dynRows={false}
         dynCols={true}
         proceed={task5}

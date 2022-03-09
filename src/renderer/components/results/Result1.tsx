@@ -55,7 +55,8 @@ export default function Result1(props: any) {
         categories: props.result.headers,
       },
       legend: {
-        horizontalAlign: 'right',
+        horizontalAlign: 'center',
+        verticalAlign: "center"
       }
     },
   };
@@ -385,43 +386,49 @@ export default function Result1(props: any) {
         </div>
       </div>
 
-      <div>
-        <div className={"card mb-3"}>
-          <div className={"card-body"}>
-            {   // @ts-ignore
-              <ReactApexChart options={incomeRentGraph.options} series={incomeRentGraph.series} type="bar"
-                              height={400}/>
-            }
+
+      <div className={"row"}>
+        <div className={"col-lg-6 col-sm-12"}>
+          <div className={"card mb-3"}>
+            <div className={"card-body"}>
+              {   // @ts-ignore
+                <ReactApexChart options={incomeRentGraph.options} series={incomeRentGraph.series} type="bar"
+                                height={400}/>
+              }
+            </div>
+          </div>
+        </div>
+
+        <div className={"col-lg-6 col-sm-12"}>
+          <div className={"card mb-3"}>
+            <div className={"card-body"}>
+              {   // @ts-ignore
+                <ReactApexChart options={costRentGraph.options} series={costRentGraph.series} type="bar" height={400}/>
+              }
+            </div>
           </div>
         </div>
       </div>
 
-      <div>
-        <div className={"card mb-3"}>
-          <div className={"card-body"}>
-            {   // @ts-ignore
-              <ReactApexChart options={costRentGraph.options} series={costRentGraph.series} type="bar" height={400}/>
-            }
+      <div className={"row"}>
+        <div className={"col-lg-6 col-sm-12"}>
+          <div className={"card mb-3"}>
+            <div className={"card-body"}>
+              {   // @ts-ignore
+                <ReactApexChart options={costEffiGraph.options} series={costEffiGraph.series} type="bar" height={400}/>
+              }
+            </div>
           </div>
         </div>
-      </div>
 
-      <div>
-        <div className={"card mb-3"}>
-          <div className={"card-body"}>
-            {   // @ts-ignore
-              <ReactApexChart options={costEffiGraph.options} series={costEffiGraph.series} type="bar" height={400}/>
-            }
-          </div>
-        </div>
-      </div>
-
-      <div>
-        <div className={"card mb-3"}>
-          <div className={"card-body"}>
-            {   // @ts-ignore
-              <ReactApexChart options={costIndicGraph.options} series={costIndicGraph.series} type="bar" height={400}/>
-            }
+        <div className={"col-lg-6 col-sm-12"}>
+          <div className={"card mb-3"}>
+            <div className={"card-body"}>
+              {   // @ts-ignore
+                <ReactApexChart options={costIndicGraph.options} series={costIndicGraph.series} type="bar"
+                                height={400}/>
+              }
+            </div>
           </div>
         </div>
       </div>

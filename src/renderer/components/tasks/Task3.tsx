@@ -6,119 +6,156 @@ import groupedOptions from "../chartOfAccounts";
 import TableDynamic from "../TableDynamic";
 
 export default function Task3() {
-  //odstranit graf s nakladmi
-  //vyznacit korý stlpec je báza
-  //tiez polozky s učt osnovy ako v task1
-  //moznost pridat viacero obdobi, vzdy sa porovnavaju iba dve po sebe iduce, graf s indexami = spojnicovy
   let [getResult, setResult] = useState({
     headers: [],
-    costSums: [],
-    incomeSums: [],
-    chainIdx: 0,
-    baseIdxOld: 0,
-    baseIdxNew: 0,
-    costDiff: 0,
-    incomeDiff: 0,
-    reaction: 0,
+    costSumsForYears: [],
+    incomeSumsForYears: [],
+    costSumBase: 0,
+    incomeSumBase: 0,
+    chainIndexes: [],
+    baseIndexes: [],
+    costDiff: [],
+    incomeDiff: [],
+    reaction: [],
     items: [],
-    inputsDataOld: [],
-    inputsDataNew: [],
-    inputsDataBase: []
+    betweenYears: []
   })
 
   // @ts-ignore
-  const [headers, setHeaders] = useState<string[]>(["2000", "2001", "Bázicky rok"])
+  const [headers, setHeaders] = useState<string[]>(["2000", "2001"])
   // @ts-ignore
   const [items, setItems] = useState<string[]>(['501 – Spotreba materiálu', "666 – Výnosy z krátkodobého finančného majetku"])
   // @ts-ignore
-  const [data, setData] = useState<string[][]>([["1", "2", "3"], ["3", "4", "5"]])
+  const [data, setData] = useState<string[][]>([["1", "2"], ["3", "4"]])
   // @ts-ignore
   const [values, setValues] = useState<number[]>([501, 666])
 
+  // @ts-ignore
+  const [baseData, setBaseData] = useState<string[]>([["2"], ["3"]])
+  // @ts-ignore
+  const [baseItems, setBaseItems] = useState<string[]>(['501 – Spotreba materiálu', "666 – Výnosy z krátkodobého finančného majetku"])
+  // @ts-ignore
+  const [baseValues, setBaseValues] = useState<number[]>([501, 666])
 
   const task3 = () => {
-    let costSums: number[] = []
-    let incomeSums: number[] = []
-    let inputsDataOld: number[] = []
-    let inputsDataNew: number[] = []
-    let inputsDataBase: number[] = []
+    let costSumsForYears: number[] = []
+    let incomeSumsForYears: number[] = []
+    let costSumBase: number = 0
+    let incomeSumBase: number = 0
+    let chainIndexes: number[] = []
+    let baseIndexes: number[] = []
+    let incomeDiff: number[] = []
+    let costDiff: number[] = []
+    let reaction: number[] = []
+    let betweenYears: string[] = []
 
     for (let i = 0; i < headers.length; i++) {
-      costSums.push(0)
-      incomeSums.push(0)
+      costSumsForYears.push(0)
+      incomeSumsForYears.push(0)
     }
 
-    for (let i = 0; i < items.length; i++) {
-      inputsDataOld.push(parseFloat(data[i][0] === "" ? "0" : data[i][0]))
-      inputsDataNew.push(parseFloat(data[i][1] === "" ? "0" : data[i][1]))
-      inputsDataBase.push(parseFloat(data[i][2] === "" ? "0" : data[i][2]))
-    }
-
-    data.map((rowData: string[], row: number) => {
+    data.map((rowData, row) => {
       values[row] >= 600
-        ? rowData.map((value: string, idx: number) => {
-          incomeSums[idx] = incomeSums[idx] + parseFloat(value === "" ? "0" : value)
-        })
-        : rowData.map((value: string, idx: number) => {
-          costSums[idx] = costSums[idx] + parseFloat(value === "" ? "0" : value)
-        })
+        ? rowData.map(((value, col) => {
+            incomeSumsForYears[col] = incomeSumsForYears[col] + parseFloat(value === "" ? "0" : value)
+          }
+        ))
+        : rowData.map(((value, col) => {
+            costSumsForYears[col] = costSumsForYears[col] + parseFloat(value === "" ? "0" : value)
+          }
+        ))
     })
-    const profitDiff: number = incomeSums[1] * 100 / incomeSums[0] - 100
-    const chainIdx: number = Math.round((costSums[1] / costSums[0]) * 100) / 100
-    const baseIdxOld: number = Math.round((costSums[0] / costSums[2]) * 100) / 100
-    const baseIdxNew: number = Math.round((costSums[1] / costSums[2]) * 100) / 100
-    const costDiff: number = Math.round(chainIdx * 100 - 100) / 100
-    const incomeDiff: number = Math.round(profitDiff * 100) / 100
-    const reaction: number = Math.round((chainIdx * 100 - 100) * 100 / profitDiff) / 100
 
+    baseData.map((rowData, row) => {
+      baseValues[row] >= 600
+        ? incomeSumBase = incomeSumBase + parseFloat(rowData[0] === "" ? "0" : rowData[0])
+        : costSumBase = costSumBase + parseFloat(rowData[0] === "" ? "0" : rowData[0])
+    })
+
+    for (let i = 0; i < headers.length - 1; i++) {
+      chainIndexes[i] = Math.round((costSumsForYears[i + 1] / costSumsForYears[i]) * 100) / 100
+      incomeDiff[i] = incomeSumsForYears[i + 1] * 100 / incomeSumsForYears[i] - 100
+      costDiff[i] = costSumsForYears[i + 1] * 100 / costSumsForYears[i] - 100
+      reaction[i] = Math.round(costDiff[i] / incomeDiff[i] * 100) / 100
+      incomeDiff[i] = Math.round(incomeDiff[i] * 100) / 100
+      costDiff[i] = Math.round(costDiff[i] * 100) / 100
+      betweenYears[i] = headers[i] + "/" + headers[i + 1]
+    }
+
+
+    for (let i = 0; i < headers.length; i++) {
+      baseIndexes[i] = Math.round((costSumsForYears[i] / costSumBase) * 100) / 100
+    }
+
+    // @ts-ignore
     setResult({
       // @ts-ignore
       headers,
       // @ts-ignore
-      costSums,
+      costSumsForYears,
       // @ts-ignore
-      incomeSums,
-      chainIdx,
-      baseIdxOld,
-      baseIdxNew,
+      incomeSumsForYears,
+      costSumBase,
+      incomeSumBase,
+      // @ts-ignore
+      chainIndexes,
+      // @ts-ignore
+      baseIndexes,
+      // @ts-ignore
       costDiff,
+      // @ts-ignore
       incomeDiff,
+      // @ts-ignore
       reaction,
       // @ts-ignore
       items,
       // @ts-ignore
-      inputsDataOld,
-      // @ts-ignore
-      inputsDataNew,
-      // @ts-ignore
-      inputsDataBase
+      betweenYears
     })
   }
 
   useEffect(task3, [])
 
   return (
-    <div className={'scrollbox-lg'} style={{ height: '100vh' }}>
+    <div className={'scrollbox-lg'} style={{height: '100vh'}}>
 
-      <HeaderBar title={'Analýza reťazových a bázických indexov'} />
+      <HeaderBar title={'Analýza reťazových a bázických indexov'}/>
 
-      <div>
-        <TableDynamic
-          corner={'Ekonomická položka'}
-          headerType={'input'}
-          header={headers}
-          inputType={'select'}
-          inputs={items}
-          data={data}
-          values={values}
-          dynRows={true}
-          dynCols={false}
-          selectRow={groupedOptions}
-          proceed={task3}
-        />
+      <div className={"row p-1"}>
+
+        <div className={"col-8"}>
+          <TableDynamic
+            corner={'Ekonomická položka'}
+            headerType={'input'}
+            header={headers}
+            inputType={'select'}
+            inputs={items}
+            data={data}
+            values={values}
+            dynRows={true}
+            dynCols={true}
+            selectRow={groupedOptions}
+            proceed={task3}
+          />
+        </div>
+
+        <div className={"col-4"}>
+          <TableDynamic
+            corner={'Ekonomická položka'}
+            headerType={'text'}
+            header={["Bázický rok"]}
+            inputType={'select'}
+            inputs={baseItems}
+            data={baseData}
+            values={baseValues}
+            dynRows={true}
+            selectRow={groupedOptions}
+            proceed={task3}
+          />
+        </div>
       </div>
       <div>
-        <Result3 result={getResult} />
+        <Result3 result={getResult}/>
       </div>
     </div>
   );

@@ -5,11 +5,11 @@ import ReactApexChart from "react-apexcharts";
 
 export default function Result5(props: any) {
   let series = []
-  for (let index = 0; index < props.result.header.length; index++) {
+  for (let index = 0; index < props.result.headers.length; index++) {
     // @ts-ignore
     series.push(
       {
-        name: props.result.header[index].toString(),
+        name: props.result.headers[index].toString(),
         data: [
           props.result.rentIncome[index],
           props.result.rentCost[index],
@@ -19,11 +19,11 @@ export default function Result5(props: any) {
   }
 
   let series2: any[] = []
-  for (let index = 0; index < props.result.header.length; index++) {
+  for (let index = 0; index < props.result.headers.length; index++) {
     // @ts-ignore
     series2.push(
       {
-        name: props.result.header[index].toString(),
+        name: props.result.headers[index].toString(),
         data: [
           props.result.marginGross[index],
         ]
@@ -32,11 +32,11 @@ export default function Result5(props: any) {
   }
 
   let series3: any[] = []
-  for (let index = 0; index < props.result.header.length; index++) {
+  for (let index = 0; index < props.result.headers.length; index++) {
     // @ts-ignore
     series3.push(
       {
-        name: props.result.header[index].toString(),
+        name: props.result.headers[index].toString(),
         data: [
           props.result.allowance[index],
         ]
@@ -45,11 +45,11 @@ export default function Result5(props: any) {
   }
 
   let series4: any[] = []
-  for (let index = 0; index < props.result.header.length; index++) {
+  for (let index = 0; index < props.result.headers.length; index++) {
     // @ts-ignore
     series4.push(
       {
-        name: props.result.header[index].toString(),
+        name: props.result.headers[index].toString(),
         data: [
           props.result.marginProfit[index]
         ]
@@ -58,11 +58,11 @@ export default function Result5(props: any) {
   }
 
   let series5: any[] = []
-  for (let index = 0; index < props.result.header.length; index++) {
+  for (let index = 0; index < props.result.headers.length; index++) {
     // @ts-ignore
     series5.push(
       {
-        name: props.result.header[index].toString(),
+        name: props.result.headers[index].toString(),
         data: [
           props.result.profit[index]
         ]
@@ -287,7 +287,7 @@ export default function Result5(props: any) {
 
   return (
     <div style={{paddingLeft: 10, paddingRight: 10}}>
-      <TableStatic header={[...props.result.header]}
+      <TableStatic header={[...props.result.headers]}
                    inputs={["Rentabilita tržieb", "Rentabilita nákladov", "Hrubé rozpätie", "Príspevok na úhradu"]}
                    data={[
                      [...props.result.rentCost.map((value: number) => (Math.round(value * 100) + "%"))],
@@ -297,7 +297,7 @@ export default function Result5(props: any) {
                    ]}
       />
 
-      <TableStatic header={[...props.result.header]}
+      <TableStatic header={[...props.result.headers]}
                    inputs={["Zisková prirážka", "Zisk"]}
                    data={[
                      [...props.result.marginProfit.map((value: number) => (Math.round(value * 100) / 100))],

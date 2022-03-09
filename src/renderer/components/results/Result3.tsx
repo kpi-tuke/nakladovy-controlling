@@ -1,28 +1,165 @@
 import '../../App.css';
-import {Link} from "react-router-dom";
-import InfoCard from "../InfoCard";
-import ReactApexChart from "react-apexcharts";
-// import {Link} from "react-router-dom";
-// import ReactApexChart from "react-apexcharts"
-// import TableStatic from "../TableStatic";
+import ReactApexChart from "react-apexcharts"
 
 export default function Result3(props: any) {
-  const colGraph = {
+
+  const lineGraph = {
+    series: [
+      {
+        name: "Náklady",
+        data: props.result.costSumsForYears
+      },
+      {
+        name: "Tržby",
+        data: props.result.incomeSumsForYears
+      },
+    ],
+    options: {
+      chart: {
+        type: 'line',
+        toolbar: {
+          show: false
+        },
+        zoom: {
+          enabled: false
+        }
+      },
+      dataLabels: {
+        enabled: true,
+      },
+      stroke: {
+        curve: 'straight'
+      },
+      title: {
+        text: 'Náklady a výnosy',
+        align: 'center'
+      },
+      grid: {
+        borderColor: '#e7e7e7',
+        row: {
+          colors: ['#f3f3f3', 'transparent'],
+          opacity: 0.5
+        },
+      },
+      markers: {
+        size: 1
+      },
+      xaxis: {
+        categories: props.result.headers,
+      },
+      legend: {
+        horizontalAlign: 'center',
+        verticalAlign: "center"
+      }
+    },
+  };
+
+  const chainGraph = {
+    series: [
+      {
+        name: "Reťazový index",
+        data: props.result.chainIndexes
+      }
+    ],
+    options: {
+      chart: {
+        type: 'line',
+        toolbar: {
+          show: false
+        },
+        zoom: {
+          enabled: false
+        }
+      },
+      dataLabels: {
+        enabled: true,
+      },
+      stroke: {
+        curve: 'straight'
+      },
+      title: {
+        text: 'Reťazový index',
+        align: 'center'
+      },
+      grid: {
+        borderColor: '#e7e7e7',
+        row: {
+          colors: ['#f3f3f3', 'transparent'],
+          opacity: 0.5
+        },
+      },
+      markers: {
+        size: 1
+      },
+      xaxis: {
+        categories: props.result.betweenYears,
+      },
+      legend: {
+        horizontalAlign: 'center',
+        verticalAlign: "center"
+      }
+    },
+  };
+
+  const baseGraph = {
+    series: [
+      {
+        name: "Bázický index",
+        data: props.result.baseIndexes
+      }
+    ],
+    options: {
+      chart: {
+        type: 'bar',
+        toolbar: {
+          show: false
+        },
+        zoom: {
+          enabled: false
+        }
+      },
+      dataLabels: {
+        enabled: true,
+      },
+      stroke: {
+        curve: 'straight'
+      },
+      title: {
+        text: 'Bázický index',
+        align: 'center'
+      },
+      grid: {
+        borderColor: '#e7e7e7',
+        row: {
+          colors: ['#f3f3f3', 'transparent'],
+          opacity: 0.5
+        },
+      },
+      markers: {
+        size: 1
+      },
+      xaxis: {
+        categories: props.result.headers,
+      },
+      legend: {
+        horizontalAlign: 'center',
+        verticalAlign: "center"
+      }
+    },
+  };
+
+  const incomeDiffGraph = {
 
     series: [{
-      name: props.result.headers[0],
-      data: props.result.inputsDataOld
-    }, {
-      name: props.result.headers[1],
-      data: props.result.inputsDataNew
-    }, {
-      name: props.result.headers[2],
-      data: props.result.inputsDataBase
-    }],
+      name: 'Percento zmeny výnosov',
+      data: props.result.incomeDiff
+    }
+    ],
     options: {
       chart: {
         type: 'bar',
       },
+      colors: ['#ff4560'],
       plotOptions: {
         bar: {
           horizontal: false,
@@ -31,7 +168,7 @@ export default function Result3(props: any) {
         },
       },
       title: {
-        text: 'Náklady',
+        text: 'Percento zmeny výnosov',
         align: 'center'
       },
       grid: {
@@ -50,7 +187,101 @@ export default function Result3(props: any) {
         colors: ['transparent']
       },
       xaxis: {
-        categories: props.result.items,
+        categories: props.result.betweenYears,
+      },
+      fill: {
+        opacity: 1
+      },
+    },
+  }
+
+  const costDiffGraph = {
+
+    series: [{
+      name: 'Percento zmeny nákladov',
+      data: props.result.costDiff
+    }
+    ],
+    options: {
+      chart: {
+        type: 'bar',
+      },
+      colors: ['#00e396'],
+      plotOptions: {
+        bar: {
+          horizontal: false,
+          columnWidth: '55%',
+          endingShape: 'rounded'
+        },
+      },
+      title: {
+        text: 'Percento zmeny nákladov',
+        align: 'center'
+      },
+      grid: {
+        borderColor: '#e7e7e7',
+        row: {
+          colors: ['#f3f3f3', 'transparent'],
+          opacity: 0.5
+        },
+      },
+      dataLabels: {
+        enabled: true
+      },
+      stroke: {
+        show: true,
+        width: 2,
+        colors: ['transparent']
+      },
+      xaxis: {
+        categories: props.result.betweenYears,
+      },
+      fill: {
+        opacity: 1
+      },
+    },
+  }
+
+  const reactionGraph = {
+
+    series: [{
+      name: 'Koeficient reakcie',
+      data: props.result.reaction
+    }
+    ],
+    options: {
+      chart: {
+        type: 'bar',
+      },
+      colors: ['#feb019'],
+      plotOptions: {
+        bar: {
+          horizontal: false,
+          columnWidth: '55%',
+          endingShape: 'rounded'
+        },
+      },
+      title: {
+        text: 'Koeficient reakcie',
+        align: 'center'
+      },
+      grid: {
+        borderColor: '#e7e7e7',
+        row: {
+          colors: ['#f3f3f3', 'transparent'],
+          opacity: 0.5
+        },
+      },
+      dataLabels: {
+        enabled: true
+      },
+      stroke: {
+        show: true,
+        width: 2,
+        colors: ['transparent']
+      },
+      xaxis: {
+        categories: props.result.betweenYears,
       },
       fill: {
         opacity: 1
@@ -61,110 +292,87 @@ export default function Result3(props: any) {
   return (
     <div style={{paddingLeft: 10, paddingRight: 10}}>
       <div className={"card-body"}>
+        <div className={"row"}>
+          <div className={"col-lg-12 col-md-12"}>
+            <div className={"card mb-3"}>
+              <div className={"card-body"}>
+                {
+                  // @ts-ignore
+                  <ReactApexChart options={lineGraph.options} series={lineGraph.series} type="line" height={400}/>
+                }
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className={"row"}>
+          <div className={"col-lg-12 col-md-12"}>
+            <div className={"card mb-3"}>
+              <div className={"card-body"}>
+                {
+                  // @ts-ignore
+                  <ReactApexChart options={chainGraph.options} series={chainGraph.series} type="line" height={400}/>
+                }
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className={"row"}>
+
+          <div className={"col-lg-6 col-md-12"}>
+            <div className={"card mb-3"}>
+              <div className={"card-body"}>
+                {
+                  // @ts-ignore
+                  <ReactApexChart options={baseGraph.options} series={baseGraph.series} type="bar" height={400}/>
+                }
+              </div>
+            </div>
+          </div>
+
+          <div className={"col-lg-6 col-md-12"}>
+            <div className={"card mb-3"}>
+              <div className={"card-body"}>
+                {   // @ts-ignore
+                  <ReactApexChart options={incomeDiffGraph.options} series={incomeDiffGraph.series} type="bar"
+                                  height={400}/>
+                }
+              </div>
+            </div>
+          </div>
+
+        </div>
+
 
         <div className={"row"}>
 
-          <div className={"col-sm-12 col-md-6 col-lg-3"}>
-            <InfoCard header={"NÁKLADY CELKOM(" + props.result.headers[0] + ")"}
-                      value={props.result.costSums[0]}
-                      color={"primary"}
-                      icon={"fa fa-line-chart"}
-            />
+          <div className={"col-lg-6 col-md-12"}>
+            <div className={"card mb-3"}>
+              <div className={"card-body"}>
+                {
+                  // @ts-ignore
+                  <ReactApexChart options={costDiffGraph.options} series={costDiffGraph.series} type="bar"
+                                  height={400}/>
+                }
+              </div>
+            </div>
           </div>
 
-          <div className={"col-sm-12 col-md-6 col-lg-3"}>
-            <InfoCard header={"NÁKLADY CELKOM(" + props.result.headers[1] + ")"}
-                      value={props.result.costSums[1]}
-                      color={"primary"}
-                      icon={"fa fa-line-chart"}
-            />
 
-          </div>
-
-          <div className={"col-sm-12 col-md-6 col-lg-3"}>
-            <InfoCard header={"VÝNOSY CELKOM(" + props.result.headers[0] + ")"}
-                      value={props.result.incomeSums[0]}
-                      color={"warning"}
-                      icon={"fa fa-money"}
-            />
-          </div>
-
-          <div className={"col-sm-12 col-md-6 col-lg-3"}>
-            <InfoCard header={"VÝNOSY CELKOM(" + props.result.headers[1] + ")"}
-                      value={props.result.incomeSums[1]}
-                      color={"warning"}
-                      icon={"fa fa-money"}
-            />
+          <div className={"col-lg-6 col-md-12"}>
+            <div className={"card mb-3"}>
+              <div className={"card-body"}>
+                {   // @ts-ignore
+                  <ReactApexChart options={reactionGraph.options} series={reactionGraph.series} type="bar"
+                                  height={400}/>
+                }
+              </div>
+            </div>
           </div>
 
         </div>
 
-        <h2>Ekonomická analýza ukazovateľov</h2>
-
-        <div className={"row"}>
-
-          <div className={"col-sm-12 col-md-6 col-lg-3"}>
-            <InfoCard header={"REŤAZOVÝ INDEX"}
-                      value={props.result.chainIdx}
-                      color={"success"}
-                      icon={"fa fa-area-chart"}
-            />
-          </div>
-
-          <div className={"col-sm-12 col-md-6 col-lg-3"}>
-            <InfoCard header={"BÁZICKÝ INDEX " + props.result.headers[0]}
-                      value={props.result.baseIdxOld}
-                      color={"success"}
-                      icon={"fa fa-area-chart"}
-            />
-          </div>
-
-          <div className={"col-sm-12 col-md-6 col-lg-3"}>
-            <InfoCard header={"BÁZICKÝ INDEX " + props.result.headers[1]}
-                      value={props.result.baseIdxNew}
-                      color={"success"}
-                      icon={"fa fa-area-chart"}
-            />
-          </div>
-
-          <div className={"col-sm-12 col-md-6 col-lg-3"}>
-            <InfoCard header={"PERCENTO ZMENY NÁKLADOV"}
-                      value={props.result.costDiff}
-                      color={"primary"}
-                      icon={"fa fa-shopping-cart"}
-            />
-          </div>
-
-          <div className={"col-sm-12 col-md-6 col-lg-3"}>
-            <InfoCard header={"PERCENTO ZMENY VÝNOSOV"}
-                      value={props.result.incomeDiff}
-                      color={"warning"}
-                      icon={"fa fa-dashboard"}
-            />
-          </div>
-
-          <div className={"col-sm-12 col-md-6 col-lg-3"}>
-            <InfoCard header={"KOEFICIENT REAKCIE"}
-                      value={props.result.reaction}
-                      color={"danger"}
-                      icon={"fa fa-calculator"}
-            />
-          </div>
-
-        </div>
       </div>
 
-      <div>
-        <div className={"card mb-3"}>
-          <div className={"card-body"}>
-            {   // @ts-ignore
-              <ReactApexChart options={colGraph.options} series={colGraph.series} type="bar" height={400}/>
-            }
-          </div>
-        </div>
-      </div>
-
-      <button><Link to={"/taskselect"}>Back</Link></button>
     </div>
   )
 }

@@ -73,7 +73,7 @@ export default function TableDynamic(props: any) {
       <table className="table table-bordered table-responsive" style={{borderWidth: 0}}>
         <thead className="thead-light">
         <tr>
-          <th style={{background: "lightgray"}}>
+          <th style={{background: "lightgray", textAlign: "center", minWidth: 250}}>
             {props.corner}
           </th>
           {props.header.map((value: string, idx: number) => {
