@@ -10,10 +10,7 @@ export default function HeaderBar(props: any) {
 			</div>
 			<div className={"tools"}>
         <Link className={"btn-outline-light btn bg-primary"} to={"/taskselect"}>
-          <div>
             <i className={"ti-back-left"}/>
-            <p>Menu</p>
-          </div>
         </Link>
 			</div>
     	</div>

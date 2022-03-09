@@ -89,7 +89,7 @@ export default function Task5() {
       headers
     })
   }
-  useEffect(task5, [])
+  useEffect(task5, [headers])
 
   return (
     <div className={'scrollbox-lg'} style={{ height: '100vh' }}>
@@ -98,6 +98,7 @@ export default function Task5() {
         corner={'Ekonomická položka'}
         headerType={'input'}
         header={headers}
+        setHeader={setHeaders}
         inputType={'text'}
         inputs={items}
         data={data}

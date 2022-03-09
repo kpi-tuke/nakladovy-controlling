@@ -101,7 +101,7 @@ export default function Task1() {
     })
   }
 
-  useEffect(task1, [])
+  useEffect(task1, [headers])
 
   return (
     <div className={"scrollbox-lg"} style={{height: "100vh"}}>
@@ -111,8 +111,10 @@ export default function Task1() {
       <TableDynamic corner={"Ekonomická položka"}
                     headerType={"input"}
                     header={headers}
+                    setHeader={setHeaders}
                     inputType={"select"}
                     inputs={items}
+                    setInputs={setItems}
                     data={data}
                     values={values}
                     dynRows={true}

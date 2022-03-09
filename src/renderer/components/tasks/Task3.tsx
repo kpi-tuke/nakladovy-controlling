@@ -31,7 +31,7 @@ export default function Task3() {
   const [values, setValues] = useState<number[]>([501, 666])
 
   // @ts-ignore
-  const [baseData, setBaseData] = useState<string[]>([["2"], ["3"]])
+  const [baseData, setBaseData] = useState<string[][]>([["2"], ["3"]])
   // @ts-ignore
   const [baseItems, setBaseItems] = useState<string[]>(['501 – Spotreba materiálu', "666 – Výnosy z krátkodobého finančného majetku"])
   // @ts-ignore
@@ -73,10 +73,26 @@ export default function Task3() {
     })
 
     for (let i = 0; i < headers.length - 1; i++) {
-      chainIndexes[i] = Math.round((costSumsForYears[i + 1] / costSumsForYears[i]) * 100) / 100
-      incomeDiff[i] = incomeSumsForYears[i + 1] * 100 / incomeSumsForYears[i] - 100
-      costDiff[i] = costSumsForYears[i + 1] * 100 / costSumsForYears[i] - 100
-      reaction[i] = Math.round(costDiff[i] / incomeDiff[i] * 100) / 100
+      if (costSumsForYears[i] === 0)
+        chainIndexes[i] = 0
+      else
+        chainIndexes[i] = Math.round((costSumsForYears[i + 1] / costSumsForYears[i]) * 100) / 100
+
+      if (incomeSumsForYears[i] === 0)
+        incomeDiff[i] = 0
+      else
+        incomeDiff[i] = incomeSumsForYears[i + 1] * 100 / incomeSumsForYears[i] - 100
+
+      if (costSumsForYears[i] === 0)
+        costDiff[i] = 0
+      else
+        costDiff[i] = costSumsForYears[i + 1] * 100 / costSumsForYears[i] - 100
+
+      if (incomeDiff[i] === 0)
+        reaction[i] = 0
+      else
+        reaction[i] = Math.round(costDiff[i] / incomeDiff[i] * 100) / 100
+
       incomeDiff[i] = Math.round(incomeDiff[i] * 100) / 100
       costDiff[i] = Math.round(costDiff[i] * 100) / 100
       betweenYears[i] = headers[i] + "/" + headers[i + 1]
@@ -114,7 +130,7 @@ export default function Task3() {
     })
   }
 
-  useEffect(task3, [])
+  useEffect(task3, [headers, items, baseItems])
 
   return (
     <div className={'scrollbox-lg'} style={{height: '100vh'}}>
@@ -130,6 +146,7 @@ export default function Task3() {
             header={headers}
             inputType={'select'}
             inputs={items}
+            setInputs={setItems}
             data={data}
             values={values}
             dynRows={true}
@@ -140,18 +157,21 @@ export default function Task3() {
         </div>
 
         <div className={"col-4"}>
-          <TableDynamic
-            corner={'Ekonomická položka'}
-            headerType={'text'}
-            header={["Bázický rok"]}
-            inputType={'select'}
-            inputs={baseItems}
-            data={baseData}
-            values={baseValues}
-            dynRows={true}
-            selectRow={groupedOptions}
-            proceed={task3}
-          />
+          {
+            <TableDynamic
+              corner={'Ekonomická položka'}
+              headerType={'text'}
+              header={["Bázický rok"]}
+              inputType={'select'}
+              inputs={baseItems}
+              setInputs={setBaseItems}
+              data={baseData}
+              values={baseValues}
+              dynCols={false}
+              dynRows={true}
+              selectRow={groupedOptions}
+              proceed={task3}/>
+          }
         </div>
       </div>
       <div>

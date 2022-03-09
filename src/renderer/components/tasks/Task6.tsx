@@ -65,10 +65,10 @@ export default function Task6() {
     setResult({causes: items, percentages: percentages, values: values, kumul: kumul, sum: sum})
   }
 
-  useEffect(task6, [])
-  //pridat graf pre lorenzovy krivku
+  useEffect(task6, [items])
+
   return (
-    <div className={'scrollbox-lg'} style={{ height: '100vh' }}>
+    <div className={'scrollbox-lg'} style={{height: '100vh'}}>
       <HeaderBar title={'Pareto analýza nákladov'}/>
       <TableDynamic
         corner={'Príčina'}
@@ -76,6 +76,7 @@ export default function Task6() {
         header={headers}
         inputType={'input'}
         inputs={items}
+        setInputs={setItems}
         data={data}
         values={values}
         rows={7}

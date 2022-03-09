@@ -65,7 +65,7 @@ export default function Task2() {
     setResult({items, headers, rowSums, colSums, totalCost,})
   }
 
-  useEffect(task2, [])
+  useEffect(task2, [headers, items])
 
   return (
     <div className={'scrollbox-lg'} style={{ height: '100vh' }}>
@@ -76,8 +76,10 @@ export default function Task2() {
         corner={'↓Druhové | Kalkulačné→'}
         headerType={'select'}
         header={headers}
+        setHeader={setHeaders}
         inputType={'select'}
         inputs={items}
+        setInputs={setItems}
         data={data}
         values={values}
         dynRows={true}

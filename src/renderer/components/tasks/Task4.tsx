@@ -90,7 +90,7 @@ export default function Task4() {
   }
 
 
-  useEffect(task4, [fixTotal, minProfit])
+  useEffect(task4, [fixTotal, minProfit, items])
 
   return (
     <div className={'scrollbox-lg'} style={{ height: '100vh' }}>
@@ -105,6 +105,7 @@ export default function Task4() {
           header={headers}
           inputType={'input'}
           inputs={items}
+          setInputs={setItems}
           data={data}
           values={values}
           dynRows={true}
