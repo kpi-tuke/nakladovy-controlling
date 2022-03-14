@@ -4,6 +4,8 @@ import Result4 from "../results/Result4";
 import {useEffect, useState} from "react";
 import SingleInput from "../SingleInput";
 import HeaderBar from '../HeaderBar';
+import { CVPActions, selectCVP } from 'renderer/store/slice';
+import { useAppSelector } from 'renderer/store/hooks';
 
 export default function Task4() {
   // potom po skonceni analýz pridat moznost suhrnu, report vysledkov a slovná interpretacia vysledkov
@@ -20,18 +22,7 @@ export default function Task4() {
     zeroProf: []
   })
 
-
-  // @ts-ignore
-  const [headers, setHeaders] = useState<string[]>(["Výroba", "Cena/tona", "Variabilné náklady/tona"])
-  // @ts-ignore
-  const [items, setItems] = useState<string[]>(["Výrobok A"])
-  // @ts-ignore
-  const [data, setData] = useState<string[][]>([["100", "8", "6"]])
-  // @ts-ignore
-  const [values, setValues] = useState<string[]>(["Výrobok A"])
-
-  const [fixTotal, setFixTotal] = useState<number>(0)
-  const [minProfit, setMinProfit] = useState<number>(0)
+  const {headers, data, items, values, fixTotal, minProfit} = useAppSelector(selectCVP)
 
   const task4 = () => {
     let volumes: number[] = []
@@ -90,14 +81,14 @@ export default function Task4() {
   }
 
 
-  useEffect(task4, [fixTotal, minProfit, items])
+  useEffect(task4, [fixTotal, minProfit, items, data, headers, values])
 
   return (
     <div className={'scrollbox-lg'} style={{ height: '100vh' }}>
       <HeaderBar title={"CVP analýza"}/>
       <div
         className={'row'}
-        style={{paddingLeft: 10, paddingRight: 10, marginTop: 10}}
+        style={{paddingLeft: 10, paddingRight: 10, marginTop: 60}}
       >
         <TableDynamic
           corner={'Ekonomická položka'}
@@ -105,25 +96,24 @@ export default function Task4() {
           header={headers}
           inputType={'input'}
           inputs={items}
-          setInputs={setItems}
           data={data}
           values={values}
           dynRows={true}
           dynCols={false}
-          proceed={task4}
+          actions={CVPActions}
         />
 
         <div className={'col'}>
           <div className={'row'}>
             <SingleInput
-              input={setFixTotal}
+              input={CVPActions.setFixTotal}
+              value={fixTotal}
               title={'CELKOVÉ FIXNÉ NÁKLADY'}
-              proceed={task4}
             />
             <SingleInput
-              input={setMinProfit}
+              input={CVPActions.setMinProfit}
+              value={minProfit}
               title={'MINIMÁLNY ZISK'}
-              proceed={task4}
             />
           </div>
         </div>

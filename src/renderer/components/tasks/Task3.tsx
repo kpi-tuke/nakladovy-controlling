@@ -4,6 +4,8 @@ import {useEffect, useState} from "react";
 import HeaderBar from '../HeaderBar';
 import groupedOptions from "../chartOfAccounts";
 import TableDynamic from "../TableDynamic";
+import { baseIndexActions, chainActions, selectBase, selectChain } from 'renderer/store/slice';
+import { useSelector } from 'react-redux';
 
 export default function Task3() {
   let [getResult, setResult] = useState({
@@ -21,21 +23,8 @@ export default function Task3() {
     betweenYears: []
   })
 
-  // @ts-ignore
-  const [headers, setHeaders] = useState<string[]>(["2000", "2001"])
-  // @ts-ignore
-  const [items, setItems] = useState<string[]>(['501 – Spotreba materiálu', "666 – Výnosy z krátkodobého finančného majetku"])
-  // @ts-ignore
-  const [data, setData] = useState<string[][]>([["1", "2"], ["3", "4"]])
-  // @ts-ignore
-  const [values, setValues] = useState<number[]>([501, 666])
-
-  // @ts-ignore
-  const [baseData, setBaseData] = useState<string[][]>([["2"], ["3"]])
-  // @ts-ignore
-  const [baseItems, setBaseItems] = useState<string[]>(['501 – Spotreba materiálu', "666 – Výnosy z krátkodobého finančného majetku"])
-  // @ts-ignore
-  const [baseValues, setBaseValues] = useState<number[]>([501, 666])
+  const { headers, items, data, values } = useSelector(selectChain);
+  const baseState = useSelector(selectBase);
 
   const task3 = () => {
     let costSumsForYears: number[] = []
@@ -55,19 +44,19 @@ export default function Task3() {
     }
 
     data.map((rowData, row) => {
-      values[row] >= 600
-        ? rowData.map(((value, col) => {
-            incomeSumsForYears[col] = incomeSumsForYears[col] + parseFloat(value === "" ? "0" : value)
-          }
-        ))
-        : rowData.map(((value, col) => {
-            costSumsForYears[col] = costSumsForYears[col] + parseFloat(value === "" ? "0" : value)
-          }
-        ))
+      parseInt(values[row]) >= 600
+        ? rowData.map((value, col) => {
+            incomeSumsForYears[col] =
+              incomeSumsForYears[col] + parseFloat(value === '' ? '0' : value);
+          })
+        : rowData.map((value, col) => {
+            costSumsForYears[col] =
+              costSumsForYears[col] + parseFloat(value === '' ? '0' : value);
+          });
     })
 
-    baseData.map((rowData, row) => {
-      baseValues[row] >= 600
+    baseState.data.map((rowData, row) => {
+      parseInt(baseState.values[row]) >= 600
         ? incomeSumBase = incomeSumBase + parseFloat(rowData[0] === "" ? "0" : rowData[0])
         : costSumBase = costSumBase + parseFloat(rowData[0] === "" ? "0" : rowData[0])
     })
@@ -130,14 +119,14 @@ export default function Task3() {
     })
   }
 
-  useEffect(task3, [headers, items, baseItems])
+  useEffect(task3, [headers, items, data, values, baseState])
 
   return (
     <div className={'scrollbox-lg'} style={{height: '100vh'}}>
 
       <HeaderBar title={'Analýza reťazových a bázických indexov'}/>
 
-      <div className={"row p-1"}>
+      <div className={"row"} style={{marginTop:60}}>
 
         <div className={"col-8"}>
           <TableDynamic
@@ -146,13 +135,12 @@ export default function Task3() {
             header={headers}
             inputType={'select'}
             inputs={items}
-            setInputs={setItems}
             data={data}
             values={values}
             dynRows={true}
             dynCols={true}
             selectRow={groupedOptions}
-            proceed={task3}
+            actions={chainActions}
           />
         </div>
 
@@ -161,16 +149,16 @@ export default function Task3() {
             <TableDynamic
               corner={'Ekonomická položka'}
               headerType={'text'}
-              header={["Bázický rok"]}
+              header={baseState.headers}
               inputType={'select'}
-              inputs={baseItems}
-              setInputs={setBaseItems}
-              data={baseData}
-              values={baseValues}
+              inputs={baseState.items}
+              data={baseState.data}
+              values={baseState.values}
               dynCols={false}
               dynRows={true}
               selectRow={groupedOptions}
-              proceed={task3}/>
+              actions={baseIndexActions}
+            />
           }
         </div>
       </div>

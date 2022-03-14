@@ -2,8 +2,9 @@ import '../../App.css';
 import TableDynamic from "../TableDynamic";
 import Result5 from "../results/Result5";
 import {useEffect, useState} from "react";
-import {Link} from "react-router-dom";
 import HeaderBar from '../HeaderBar';
+import { selectSortiment, sortimentActions } from 'renderer/store/slice';
+import { useAppSelector } from 'renderer/store/hooks';
 
 export default function Task5() {
 
@@ -17,20 +18,8 @@ export default function Task5() {
     headers: []
   })
 
-  // @ts-ignore
-  const [headers, setHeaders] = useState<string[]>(["VýrobokA", "VýrobokB"])
-  // @ts-ignore
-  const [items, setItems] = useState<string[]>(["Predajná cena jednotková", "Úplné vlastné náklady jednotková", "Priame náklady jednotková", "Objem výroby"])
-  // @ts-ignore
-  const [data, setData] = useState<string[][]>([
-    ["2700", "2600"],
-    ["1745", "1581"],
-    ["985", "1215"],
-    ["8000", "4000"]
-  ])
-  // @ts-ignore
-  const [values, setValues] = useState<string[]>(["Predajná cena jednotková", "Úplné vlastné náklady jednotková", "Priame náklady jednotková", "Objem výroby"])
-
+  const { headers, values, data, items } = useAppSelector(selectSortiment)
+  
   const task5 = () => {
     let rentCost: number[] = []
     let rentIncome: number[] = []
@@ -89,30 +78,27 @@ export default function Task5() {
       headers
     })
   }
-  useEffect(task5, [headers])
+  useEffect(task5, [headers, items, data, values])
 
   return (
     <div className={'scrollbox-lg'} style={{ height: '100vh' }}>
-      <HeaderBar title={'Sortimentová analýza'}/>
-      <TableDynamic
-        corner={'Ekonomická položka'}
-        headerType={'input'}
-        header={headers}
-        setHeader={setHeaders}
-        inputType={'text'}
-        inputs={items}
-        data={data}
-        values={values}
-        dynRows={false}
-        dynCols={true}
-        proceed={task5}
-      />
+      <HeaderBar title={'Sortimentová analýza'} />
+      <div style={{ marginTop: 60 }}>
+        <TableDynamic
+          corner={'Ekonomická položka'}
+          headerType={'input'}
+          header={headers}
+          inputType={'text'}
+          inputs={items}
+          data={data}
+          values={values}
+          dynRows={false}
+          dynCols={true}
+          actions={sortimentActions}
+        />
 
-      <Result5 result={getResult} />
-
-      <button>
-        <Link to={'/taskselect'}>Back</Link>
-      </button>
+        <Result5 result={getResult} />
+      </div>
     </div>
   );
 }

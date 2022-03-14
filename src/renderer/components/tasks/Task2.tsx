@@ -3,16 +3,13 @@ import TableDynamic from "../TableDynamic";
 import {useEffect, useState} from "react";
 import Result2 from "../results/Result2";
 import HeaderBar from '../HeaderBar';
+import { selectStructure, structureActions } from 'renderer/store/slice';
+import { useSelector } from 'react-redux';
 
 export default function Task2() {
-  // @ts-ignore
-  const [headers, setHeaders] = useState<string[]>(["Priamy materiál"])
-  // @ts-ignore
-  const [items, setItems] = useState<string[]>(["Materiálové náklady"])
-  // @ts-ignore
-  const [data, setData] = useState<string[][]>([["0"]])
-  // @ts-ignore
-  const [values, setValues] = useState<number[]>([1, 7])
+
+    const { headers, items, data, values } = useSelector(selectStructure);
+
   // @ts-ignore
   const [selectCol, getSelectCol] = useState([
     {value: 7, label: "Priamy materiál"},
@@ -65,31 +62,30 @@ export default function Task2() {
     setResult({items, headers, rowSums, colSums, totalCost,})
   }
 
-  useEffect(task2, [headers, items])
+  useEffect(task2, [headers, items, data, values]);
 
   return (
     <div className={'scrollbox-lg'} style={{ height: '100vh' }}>
-
       <HeaderBar title={'Analýza štruktúry nákladov'} />
+      <div style={{ marginTop: 60 }}>
+        <TableDynamic
+          corner={'↓Druhové | Kalkulačné→'}
+          headerType={'select'}
+          header={headers}
+          inputType={'select'}
+          inputs={items}
+          data={data}
+          values={values}
+          dynRows={true}
+          dynCols={true}
+          proceed={task2}
+          selectRow={selectRow}
+          selectCol={selectCol}
+          actions={structureActions}
+        />
 
-      <TableDynamic
-        corner={'↓Druhové | Kalkulačné→'}
-        headerType={'select'}
-        header={headers}
-        setHeader={setHeaders}
-        inputType={'select'}
-        inputs={items}
-        setInputs={setItems}
-        data={data}
-        values={values}
-        dynRows={true}
-        dynCols={true}
-        proceed={task2}
-        selectRow={selectRow}
-        selectCol={selectCol}
-      />
-
-      <Result2 result={getResult} />
+        <Result2 result={getResult} />
+      </div>
     </div>
   );
 }
