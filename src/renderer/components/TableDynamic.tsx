@@ -1,14 +1,15 @@
+// noinspection JSVoidFunctionReturnValueUsed
+
 import '../App.css';
 import Select from 'react-select';
-import { useAppDispatch } from 'renderer/store/hooks';
+import {useAppDispatch} from 'renderer/store/hooks';
 
 export default function TableDynamic(props: any) {
   const dispatch = useAppDispatch();
-
   const customStyles = {
     control: (provided: any) => ({
       ...provided,
-      border: '0px solid red',
+      border: '0px solid green',
     }),
     menu: (provided: any) => ({
       ...provided,
@@ -66,144 +67,177 @@ export default function TableDynamic(props: any) {
       <div className="col-3" style={{ margin: 0, padding: 0 }}>
         <table style={{ width: '100%' }}>
           <tbody>
-            <tr
+          <tr
+            style={{
+              height: 50,
+              backgroundColor: '#e6f7ff',
+            }}
+          >
+            <td
               style={{
-                height: 50,
-                backgroundColor: '#e6f7ff',
+                border: '1px solid lightgray',
+                borderTopWidth: 0,
+                borderLeft: 0,
+                textAlign: "center"
               }}
             >
-              <td
-                style={{
-                  border: '1px solid lightgray',
-                  borderTopWidth: 0,
-                  borderLeft: 0,
-                }}
-              >
-                {props.corner}
+              {props.corner}
+            </td>
+          </tr>
+          {props.inputs.map((value: string, row: number) => {
+            return (
+              <tr key={row} style={{ height: 50 }}>
+                <td
+                  style={{ border: '1px solid lightgray', borderLeft: 0 }}
+                  key={value + row.toString()}
+                >
+                  {props.inputType === 'select' ? (
+                    <Select
+                      styles={customStyles}
+                      value={{ label: value }}
+                      options={props.selectRow}
+                      onChange={(e) => handleChangeInput(e, row)}
+                    />
+                  ) : props.inputType === 'input' ? (
+                    <input
+                      style={{border: 0, width: "100%"}}
+                      type="text"
+                      defaultValue={value}
+                      onBlur={(e) => handleChangeInput(e.target, row)}
+                    />
+                  ) : (
+                    value
+                  )}
+                </td>
+              </tr>
+            );
+          })}
+          {props.dynRows
+            ? <tr>
+              <td style={{textAlign: "center"}} onClick={addRow}>
+                <button
+                  type="button"
+                  className="btn btn-flat mb-1 btn-outline-success"
+                >
+                  <i className="ti-plus"/>
+                </button>
               </td>
             </tr>
-            {props.inputs.map((value: string, row: number) => {
-              return (
-                <tr key={row} style={{ height: 50 }}>
-                  <td
-                    style={{ border: '1px solid lightgray', borderLeft: 0 }}
-                    key={value + row.toString()}
-                  >
-                    {props.inputType === 'select' ? (
-                      <Select
-                        styles={customStyles}
-                        value={{ label: value }}
-                        options={props.selectRow}
-                        onChange={(e) => handleChangeInput(e, row)}
-                      />
-                    ) : props.inputType === 'input' ? (
-                      <input
-                        style={{ border: 0, textAlign: 'center' }}
-                        type="text"
-                        value={value}
-                        onBlur={(e) => handleChangeInput(e.target, row)}
-                      />
-                    ) : (
-                      value
-                    )}
-                  </td>
-                </tr>
-              );
-            })}
-            {props.dynRows ? <td onClick={addRow}>+</td> : <td />}
+            : <tr>
+              <td/>
+            </tr>}
           </tbody>
         </table>
       </div>
 
       <div
         className="col-9"
-        style={{ overflow: 'auto', margin: 0, padding: 0 }}
+        style={{overflow: "auto", margin: 0, padding: 0}}
       >
         <table style={{ margin: 0 }}>
           <thead>
-            <tr style={{ height: 50, backgroundColor: '#e6f7ff' }}>
-              {props.header.map((value: string, idx: number) => (
-                <th
-                  style={{
-                    border: '1px solid lightgray',
-                    borderTopWidth: 0,
-                    width: 100,
-                  }}
-                >
-                  {props.headerType === 'select' ? (
-                    <Select
-                      value={{ label: value }}
-                      options={props.selectCol}
-                      onChange={(e) => handleChangeHeader(e, idx)}
-                    />
-                  ) : props.headerType === 'input' ? (
+          <tr style={{ height: 50, backgroundColor: '#e6f7ff' }}>
+            {props.header.map((value: string, idx: number) => (
+              <th
+                key={idx}
+                style={{
+                  border: '1px solid lightgray',
+                  borderTopWidth: 0,
+                }}
+              >
+                {props.headerType === 'select'
+                  ?
+                  // <Select
+                  //   value={{label: value}}
+                  //   options={props.selectCol}
+                  //   onChange={(e) => handleChangeHeader(e, idx)}
+                  // />
+                  <select style={{textAlign: 'center', border: 0, backgroundColor: "#e6f7ff"}} value={value}
+                          onChange={(e) => (handleChangeHeader(e.target, idx))}>
+                    {/*<option key={"choose"} value="chose">--Please choose an option--</option>*/}
+                    {props.selectCol.map((option: any) => <option key={option.value}
+                                                                  value={option.label}>{option.label}</option>)}
+                  </select>
+
+                  : props.headerType === 'input' ? (
                     <input
                       style={{
                         border: 0,
                         textAlign: 'center',
                         backgroundColor: '#e6f7ff',
-                        width: 100,
                       }}
                       type="text"
-                      value={value}
+                      defaultValue={value}
                       onBlur={(e) => handleChangeHeader(e.target, idx)}
                     />
                   ) : (
-                    value
+
+                    <div style={{textAlign: "center"}}>
+                      {value}
+                    </div>
+
                   )}
-                </th>
-              ))}
-              {props.dynCols && <th onClick={addColumn}>+</th>}
-            </tr>
+              </th>
+            ))}
+            {props.dynCols &&
+              <th style={{backgroundColor: "white"}} onClick={addColumn}>
+                <button
+                  type="button"
+                  className="btn btn-flat mb-1 btn-outline-success"
+                >
+                  <i className="ti-plus"/>
+                </button>
+              </th>}
+          </tr>
           </thead>
           <tbody>
-            {props.data.map((rowData: string[], row: number) => (
-              <tr style={{ height: 50 }}>
-                {rowData.map((value: string, col: number) => (
-                  <td
-                    style={{ border: '1px solid lightgray', width: 100 }}
-                    key={row + ':' + col}
+          {props.data.map((rowData: string[], row: number) => (
+            <tr style={{ height: 50 }}>
+              {rowData.map((value: string, col: number) => (
+                <td
+                  style={{border: '1px solid lightgray'}}
+                  key={row + ':' + col}
+                >
+                  <input
+                    type="text"
+                    style={{border: 0, textAlign: 'center'}}
+                    defaultValue={value}
+                    onBlur={() => handleChangeData(event, row, col)}
+                  />
+                </td>
+              ))}
+              {props.dynRows && (
+                <td onClick={() => deleteRow(row)}>
+                  <button
+                    type="button"
+                    className="btn btn-flat mb-1 btn-outline-danger"
                   >
-                    <input
-                      type="text"
-                      style={{ border: 0, textAlign: 'center', width: 100 }}
-                      value={value}
-                      onChange={() => handleChangeData(event, row, col)}
-                    />
-                  </td>
-                ))}
-                {props.dynRows && (
-                  <td onClick={() => deleteRow(row)}>
+                    <i className="ti-trash"/>
+                  </button>
+                </td>
+              )}
+            </tr>
+          ))}
+          <tr>
+            {props.dynCols &&
+              //@ts-ignore
+              props.data[0].map((value: any, col: number) => {
+                return (
+                  <td
+                    style={{ textAlign: 'center' }}
+                    key={col}
+                    onClick={() => deleteColumn(col)}
+                  >
                     <button
                       type="button"
                       className="btn btn-flat mb-1 btn-outline-danger"
                     >
-                      <i className="ti-trash"></i>
+                      <i className="ti-trash"/>
                     </button>
                   </td>
-                )}
-              </tr>
-            ))}
-            <tr>
-              {props.dynCols &&
-                //@ts-ignore
-                props.data[0].map((value: any, col: number) => {
-                  return (
-                    <td
-                      style={{ textAlign: 'center' }}
-                      key={col}
-                      onClick={() => deleteColumn(col)}
-                    >
-                      <button
-                        type="button"
-                        className="btn btn-flat mb-1 btn-outline-danger"
-                      >
-                        <i className="ti-trash"></i>
-                      </button>
-                    </td>
-                  );
-                })}
-            </tr>
+                );
+              })}
+          </tr>
           </tbody>
         </table>
       </div>

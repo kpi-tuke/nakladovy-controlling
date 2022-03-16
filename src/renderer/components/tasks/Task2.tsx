@@ -3,15 +3,16 @@ import TableDynamic from "../TableDynamic";
 import {useEffect, useState} from "react";
 import Result2 from "../results/Result2";
 import HeaderBar from '../HeaderBar';
-import { selectStructure, structureActions } from 'renderer/store/slice';
-import { useSelector } from 'react-redux';
+import {selectStructure, structureActions} from 'renderer/store/slice';
+import {useSelector} from 'react-redux';
+import {costs} from "../chartOfAccounts";
 
 export default function Task2() {
 
-    const { headers, items, data, values } = useSelector(selectStructure);
+  const {headers, items, data, values} = useSelector(selectStructure);
 
   // @ts-ignore
-  const [selectCol, getSelectCol] = useState([
+  const selectCol = [
     {value: 7, label: "Priamy materiál"},
     {value: 8, label: "Priame mzdy"},
     {value: 9, label: "Ostatné priame náklady"},
@@ -19,16 +20,7 @@ export default function Task2() {
     {value: 11, label: "Správna réžia"},
     {value: 12, label: "Odbytová réžia"},
     {value: 13, label: "Zásobovacia réžia"}
-  ])
-  // @ts-ignore
-  const [selectRow, getSelectRow] = useState([
-    {value: 1, label: "Materiálové náklady"},
-    {value: 2, label: "Služby"},
-    {value: 3, label: "Mzdové a osobné náklady"},
-    {value: 4, label: "Zákonne sociálne poistenie"},
-    {value: 5, label: "Odpisy"},
-    {value: 6, label: "Daň z nehnuteľnosti"}
-  ])
+  ]
 
   let [getResult, setResult] = useState({items: [], headers: [], rowSums: [], colSums: [], totalCost: 0, dataset: []})
 
@@ -65,9 +57,9 @@ export default function Task2() {
   useEffect(task2, [headers, items, data, values]);
 
   return (
-    <div className={'scrollbox-lg'} style={{ height: '100vh' }}>
-      <HeaderBar title={'Analýza štruktúry nákladov'} />
-      <div style={{ marginTop: 60 }}>
+    <div style={{height: '100vh', overflow: "auto"}}>
+      <HeaderBar title={'Analýza štruktúry nákladov'}/>
+      <div style={{marginTop: 60}}>
         <TableDynamic
           corner={'↓Druhové | Kalkulačné→'}
           headerType={'select'}
@@ -79,12 +71,12 @@ export default function Task2() {
           dynRows={true}
           dynCols={true}
           proceed={task2}
-          selectRow={selectRow}
+          selectRow={costs}
           selectCol={selectCol}
           actions={structureActions}
         />
 
-        <Result2 result={getResult} />
+        <Result2 result={getResult}/>
       </div>
     </div>
   );

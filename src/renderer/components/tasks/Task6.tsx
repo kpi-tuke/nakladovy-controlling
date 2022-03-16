@@ -3,8 +3,8 @@ import TableDynamic from "../TableDynamic";
 import Result6 from "../results/Result6";
 import {useEffect, useState} from "react";
 import HeaderBar from '../HeaderBar';
-import { useAppSelector } from 'renderer/store/hooks';
-import { paretoActions, selectPareto } from 'renderer/store/slice';
+import {useAppSelector} from 'renderer/store/hooks';
+import {paretoActions, selectPareto} from 'renderer/store/slice';
 
 export default function Task6() {
   //kolmica na os x v bode kde ma krivka hodnotu 80%
@@ -59,9 +59,9 @@ export default function Task6() {
           dynCols={false}
           actions={paretoActions}
         />
-
-        <Result6 result={getResult} />
       </div>
+      <Result6 result={getResult}/>
+
     </div>
   );
 }

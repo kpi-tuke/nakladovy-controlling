@@ -1,10 +1,10 @@
 import '../../App.css';
 import Result1 from '../results/Result1';
-import { useEffect, useState } from 'react';
+import {useEffect, useState} from 'react';
 import groupedOptions from '../chartOfAccounts';
 import TableDynamic from '../TableDynamic';
-import { useSelector } from 'react-redux';
-import { bilanceActions, selectBilance } from 'renderer/store/slice';
+import {useSelector} from 'react-redux';
+import {bilanceActions, selectBilance} from 'renderer/store/slice';
 import HeaderBar from '../HeaderBar';
 
 export default function Task1() {
@@ -103,9 +103,9 @@ export default function Task1() {
   useEffect(task1, [headers, items, data, values]);
 
   return (
-    <div style={{ height: '100vh', overflow: 'auto' }}>
-      <HeaderBar title={'Ekonomická analýza hospodárenia'}></HeaderBar>
-      <div style={{ marginTop: 60 }}>
+    <div style={{height: '100vh', overflow: 'auto'}}>
+      <HeaderBar title={'Ekonomická analýza hospodárenia'}/>
+      <div style={{marginTop: 60}}>
         <TableDynamic
           corner={'Ekonomická položka'}
           headerType={'input'}

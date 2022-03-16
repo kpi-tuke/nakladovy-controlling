@@ -6,15 +6,23 @@ import ReactApexChart from "react-apexcharts";
 export default function Result4(props: any) {
 
   return (
-    <div style={{paddingLeft: 10, paddingRight: 10}}>
-      <TableStatic header={...props.result.items}
-                   inputs={["Nulový bod[€]", "Nulový bod[tony]", "Zisk " + props.result.minProfit.toString() + " pri objeme"]}
-                   data={[
-                     [...(props.result.zeroEur.map((value: number) => (Math.round(value * 100) / 100)))],
-                     [...(props.result.zeroTon.map((value: number) => (Math.round(value * 100) / 100)))],
-                     [...(props.result.zeroProf.map((value: number) => (Math.round(value * 100) / 100)))],
-                   ]}
-      />
+    <div style={{padding: 30}}>
+      <div
+        style={{
+          backgroundColor: 'white',
+          marginTop: 30,
+          boxShadow: '0px 0px 10px lightgray',
+        }}
+      >
+        <TableStatic header={...props.result.items}
+                     inputs={["Nulový bod[€]", "Nulový bod[tony]", "Zisk " + props.result.minProfit.toString() + " pri objeme"]}
+                     data={[
+                       [...(props.result.zeroEur.map((value: number) => (Math.round(value * 100) / 100)))],
+                       [...(props.result.zeroTon.map((value: number) => (Math.round(value * 100) / 100)))],
+                       [...(props.result.zeroProf.map((value: number) => (Math.round(value * 100) / 100)))],
+                     ]}
+        />
+      </div>
       <div className={"row"}>
         {
           props.result.items.map((value: any, idx: number) => {
@@ -109,13 +117,16 @@ export default function Result4(props: any) {
               <div
                 key={idx}
                 className={(props.result.items.length % 2 === 1 && idx === props.result.items.length - 1) ? "col-lg-12 col-md-12" : "col-lg-6 col-md-12"}>
-                <div className={"card mb-3"}>
-                  <div className={"card-body"}>
-                    {
-                      // @ts-ignore
-                      <ReactApexChart options={lineGraph.options} series={lineGraph.series} type="line" height={500}/>
-                    }
-                  </div>
+                <div style={{
+                  backgroundColor: 'white',
+                  marginTop: 30,
+                  padding: 25,
+                  boxShadow: '0px 0px 10px lightgray',
+                }}>
+                  {
+                    // @ts-ignore
+                    <ReactApexChart options={lineGraph.options} series={lineGraph.series} type="line" height={500}/>
+                  }
                 </div>
               </div>
             )

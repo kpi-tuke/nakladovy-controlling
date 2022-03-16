@@ -1,5 +1,4 @@
 import '../../App.css';
-import {Link} from "react-router-dom";
 import ReactApexChart from "react-apexcharts"
 import InfoCard from "../InfoCard";
 
@@ -38,6 +37,9 @@ export default function Result2(props: any) {
       },
       xaxis: {
         categories: props.result.items,
+        labels: {
+          trim: true
+        }
       }
     },
   }
@@ -69,18 +71,18 @@ export default function Result2(props: any) {
           distributed: true,
         }
       },
-      title: {
-        text: 'Kalkulačné členenie nákladov',
-        align: 'center'
-      },
       xaxis: {
         categories: props.result.headers,
+        labels: {
+          trim: true
+        }
       },
       yaxis: {
         label: "Náklady (€)"
       }
     }
   }
+
 
   const pieChart = {
 
@@ -91,9 +93,6 @@ export default function Result2(props: any) {
       },
       fill: {
         type: 'gradient',
-      },
-      title: {
-        text: 'Druhové členenie nákladov'
       },
       labels: props.result.items,
     }
@@ -117,77 +116,118 @@ export default function Result2(props: any) {
   }
 
   return (
-    <div style={{paddingLeft: 10, paddingRight: 10}}>
+    <div style={{padding: 30}}>
 
-      <div className={"card-body"}>
+      <h2>Štruktúrna analýza</h2>
 
-        <h2>Štruktúrna analýza</h2>
-
-
-        <div className={"col-2"}>
-          <InfoCard header={"CELKOVÉ NÁKLADY"}
-                    value={props.result.totalCost}
-                    color={"success"}
-                    icon={"fa fa-money"}
-          />
-        </div>
+      <div className={'col-3'}>
+        <InfoCard
+          header={'CELKOVÉ NÁKLADY'}
+          value={props.result.totalCost}
+          color={'success'}
+          icon={'fa fa-money'}
+        />
       </div>
 
-      <h1 className={"bold text-primary"} style={{textAlign: "center", margin: 50}}>Dashboarding</h1>
+      <h1
+        className={'bold text-primary'}
+        style={{textAlign: 'center', margin: 50}}
+      >
+        Dashboarding
+      </h1>
 
-      <div className={"row"}>
-
-        <div className={"col-lg-6 col-sm-12"}>
-          <div className={"card mb-3"}>
-            <div className={"card-body"}>
-              {
+      <div className={'row'}>
+        <div className={'col-lg-6 col-md-12'}>
+          <div
+            className={'col'}
+            style={{
+              backgroundColor: 'white',
+              padding: 25,
+              marginTop: 30,
+              boxShadow: '0px 0px 10px lightgray',
+            }}
+          >
+            <h4 className={'text-primary'}>DRUHOVÉ ČLENENIE NÁKLADOV</h4>
+            {
+              <ReactApexChart
                 // @ts-ignore
-                <ReactApexChart options={pieChart.options} series={pieChart.series} type="pie" height={312}/>
-              }
-            </div>
+                options={pieChart.options}
+                series={pieChart.series}
+                type="pie"
+
+              />
+            }
           </div>
         </div>
 
-
-        <div className={"col-lg-6 col-sm-12"}>
-          <div className={"card mb-3"}>
-            <div className={"card-body"}>
-              {   // @ts-ignore
-                <ReactApexChart options={barChartRow.options} series={barChartRow.series} type="bar" height={300}/>
-              }
-            </div>
-          </div>
-        </div>
-
-      </div>
-
-      <div className={"row"}>
-
-        <div className={"col-lg-6 col-sm-12"}>
-          <div className={"card mb-3"}>
-            <div className={"card-body"}>
-              {
+        <div className={'col-lg-6 col-md-12'}>
+          <div
+            className={'col'}
+            style={{
+              backgroundColor: 'white',
+              padding: 25,
+              marginTop: 30,
+              boxShadow: '0px 0px 10px lightgray',
+            }}
+          >
+            <h4 className={'text-primary'}>DRUHOVÉ ČLENENIE NÁKLADOV</h4>
+            {
+              <ReactApexChart
                 // @ts-ignore
-                <ReactApexChart options={donutChart.options} series={donutChart.series} type="donut" height={312}/>
-              }
-            </div>
+                options={barChartRow.options}
+                series={barChartRow.series}
+                type="bar"
+              />
+            }
           </div>
         </div>
-
-
-        <div className={"col-lg-6 col-sm-12"}>
-          <div className={"card mb-3"}>
-            <div className={"card-body"}>
-              {   // @ts-ignore
-                <ReactApexChart options={barChartCol.options} series={barChartCol.series} type="bar" height={300}/>
-              }
-            </div>
-          </div>
-        </div>
-
       </div>
 
-      <button><Link to={"/taskselect"}>Back</Link></button>
+      <div className={'row'}>
+        <div className={'col-lg-6 col-md-12'}>
+          <div
+            className={'col'}
+            style={{
+              backgroundColor: 'white',
+              padding: 25,
+              marginTop: 30,
+              boxShadow: '0px 0px 10px lightgray',
+            }}
+          >
+            <h4 className={'text-primary'}>KALKULAČNÉ ČLENENIE NÁKLADOV</h4>
+            {
+              <ReactApexChart
+                // @ts-ignore
+                options={donutChart.options}
+                series={donutChart.series}
+                type="donut"
+              />
+            }
+          </div>
+        </div>
+
+        <div className={'col-lg-6 col-md-12'}>
+          <div
+            className={'col'}
+            style={{
+              backgroundColor: 'white',
+              padding: 25,
+              marginTop: 30,
+              boxShadow: '0px 0px 10px lightgray',
+            }}
+          >
+            <h4 className={'text-primary'}>KALKULAČNÉ ČLENENIE NÁKLADOV</h4>
+            {
+              <ReactApexChart
+                // @ts-ignore
+                options={barChartCol.options}
+                series={barChartCol.series}
+                type="bar"
+              />
+            }
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

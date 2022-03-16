@@ -286,30 +286,71 @@ export default function Result5(props: any) {
   }
 
   return (
-    <div style={{paddingLeft: 10, paddingRight: 10}}>
-      <TableStatic header={[...props.result.headers]}
-                   inputs={["Rentabilita tržieb", "Rentabilita nákladov", "Hrubé rozpätie", "Príspevok na úhradu"]}
-                   data={[
-                     [...props.result.rentCost.map((value: number) => (Math.round(value * 100) + "%"))],
-                     [...props.result.rentIncome.map((value: number) => (Math.round(value * 100) + "%"))],
-                     [...props.result.marginGross.map((value: number) => (Math.round(value * 100) / 100))],
-                     [...props.result.allowance.map((value: number) => (Math.round(value * 100) / 100))],
-                   ]}
-      />
+    <div style={{padding: 30}}>
+      <div style={{
+        backgroundColor: 'white',
+        marginTop: 30,
+        boxShadow: '0px 0px 10px lightgray',
+      }}>
+        <TableStatic header={[...props.result.headers]}
+                     inputs={["Rentabilita tržieb", "Rentabilita nákladov", "Hrubé rozpätie", "Príspevok na úhradu"]}
+                     data={[
+                       [...props.result.rentCost.map((value: number) => (Math.round(value * 100) + "%"))],
+                       [...props.result.rentIncome.map((value: number) => (Math.round(value * 100) + "%"))],
+                       [...props.result.marginGross.map((value: number) => (Math.round(value * 100) / 100))],
+                       [...props.result.allowance.map((value: number) => (Math.round(value * 100) / 100))],
+                     ]}
+        />
+      </div>
 
-      <TableStatic header={[...props.result.headers]}
-                   inputs={["Zisková prirážka", "Zisk"]}
-                   data={[
-                     [...props.result.marginProfit.map((value: number) => (Math.round(value * 100) / 100))],
-                     [...props.result.profit.map((value: number) => (Math.round(value * 100) / 100))]
-                   ]}
-      />
+      <div style={{
+        backgroundColor: 'white',
+        marginTop: 30,
+        boxShadow: '0px 0px 10px lightgray',
+      }}>
+        <TableStatic header={[...props.result.headers]}
+                     inputs={["Zisková prirážka", "Zisk"]}
+                     data={[
+                       [...props.result.marginProfit.map((value: number) => (Math.round(value * 100) / 100))],
+                       [...props.result.profit.map((value: number) => (Math.round(value * 100) / 100))]
+                     ]}
+        />
+      </div>
 
-      <div>
-        <div className={"card mb-3"}>
-          <div className={"card-body"}>
+      <div style={{
+        backgroundColor: 'white',
+        padding: 25,
+        marginTop: 30,
+        boxShadow: '0px 0px 10px lightgray',
+      }}>
+        {   // @ts-ignore
+          <ReactApexChart options={colGraph.options} series={colGraph.series} type="bar" height={400}/>
+        }
+      </div>
+
+      <div className={"row"}>
+        <div className={"col-lg-6 col-sm-12"}>
+          <div className={"col"} style={{
+            backgroundColor: 'white',
+            padding: 25,
+            marginTop: 30,
+            boxShadow: '0px 0px 10px lightgray',
+          }}>
             {   // @ts-ignore
-              <ReactApexChart options={colGraph.options} series={colGraph.series} type="bar" height={400}/>
+              <ReactApexChart options={colGraph2.options} series={colGraph2.series} type="bar" height={400}/>
+            }
+          </div>
+        </div>
+
+        <div className={"col-lg-6 col-sm-12"}>
+          <div className={"col"} style={{
+            backgroundColor: 'white',
+            padding: 25,
+            marginTop: 30,
+            boxShadow: '0px 0px 10px lightgray',
+          }}>
+            {   // @ts-ignore
+              <ReactApexChart options={colGraph3.options} series={colGraph3.series} type="bar" height={400}/>
             }
           </div>
         </div>
@@ -317,44 +358,28 @@ export default function Result5(props: any) {
 
       <div className={"row"}>
         <div className={"col-lg-6 col-sm-12"}>
-          <div className={"card mb-3"}>
-            <div className={"card-body"}>
-              {   // @ts-ignore
-                <ReactApexChart options={colGraph2.options} series={colGraph2.series} type="bar" height={400}/>
-              }
-            </div>
+          <div className={"col"} style={{
+            backgroundColor: 'white',
+            padding: 25,
+            marginTop: 30,
+            boxShadow: '0px 0px 10px lightgray',
+          }}>
+            {   // @ts-ignore
+              <ReactApexChart options={colGraph4.options} series={colGraph4.series} type="bar" height={400}/>
+            }
           </div>
         </div>
 
         <div className={"col-lg-6 col-sm-12"}>
-          <div className={"card mb-3"}>
-            <div className={"card-body"}>
-              {   // @ts-ignore
-                <ReactApexChart options={colGraph3.options} series={colGraph3.series} type="bar" height={400}/>
-              }
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div className={"row"}>
-        <div className={"col-lg-6 col-sm-12"}>
-          <div className={"card mb-3"}>
-            <div className={"card-body"}>
-              {   // @ts-ignore
-                <ReactApexChart options={colGraph4.options} series={colGraph4.series} type="bar" height={400}/>
-              }
-            </div>
-          </div>
-        </div>
-
-        <div className={"col-lg-6 col-sm-12"}>
-          <div className={"card mb-3"}>
-            <div className={"card-body"}>
-              {   // @ts-ignore
-                <ReactApexChart options={colGraph5.options} series={colGraph5.series} type="bar" height={400}/>
-              }
-            </div>
+          <div className={"col"} style={{
+            backgroundColor: 'white',
+            padding: 25,
+            marginTop: 30,
+            boxShadow: '0px 0px 10px lightgray',
+          }}>
+            {   // @ts-ignore
+              <ReactApexChart options={colGraph5.options} series={colGraph5.series} type="bar" height={400}/>
+            }
           </div>
         </div>
       </div>

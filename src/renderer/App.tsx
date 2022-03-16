@@ -1,7 +1,6 @@
 import {MemoryRouter as Router, Redirect, Route, Switch} from 'react-router-dom';
 import './App.css';
 import TaskSelector from "./components/TaskSelector";
-// import Task1 from "./components/tasks/Task1";
 import Task2 from "./components/tasks/Task2";
 import Task3 from './components/tasks/Task3';
 import Task4 from "./components/tasks/Task4";

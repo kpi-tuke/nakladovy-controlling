@@ -15,10 +15,10 @@ export default function Page(Task: any) {
           <h3>Menu</h3>
         </div>
         <div
-          className={'col-10'}
-          style={{ backgroundColor: '#f0f2f5', paddingLeft: 0 }}
+          className={"col-10"}
+          style={{backgroundColor: '#f0f2f5', paddingLeft: 0}}
         >
-          <Task></Task>
+          <Task/>
         </div>
       </div>
     </div>

@@ -1,4 +1,4 @@
-const profits = [
+export const profits = [
   {value: 601, label: '601 – Tržby za vlastné výrobky'},
   {value: 602, label: "602 – Tržby z predaja služieb"},
   {value: 604, label: "604 – Tržby za tovar"},
@@ -30,7 +30,7 @@ const profits = [
   {value: 668, label: "668 – Ostatné finančné výnosy"}
 ]
 
-const costs = [
+export const costs = [
   {value: 501, label: '501 – Spotreba materiálu'},
   {value: 502, label: "502 – Spotreba energie"},
   {value: 503, label: "503 – Spotreba ostatných neskladovateľných dodávok"},

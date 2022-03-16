@@ -4,8 +4,8 @@ import {useEffect, useState} from "react";
 import HeaderBar from '../HeaderBar';
 import groupedOptions from "../chartOfAccounts";
 import TableDynamic from "../TableDynamic";
-import { baseIndexActions, chainActions, selectBase, selectChain } from 'renderer/store/slice';
-import { useSelector } from 'react-redux';
+import {baseIndexActions, chainActions, selectBase, selectChain} from 'renderer/store/slice';
+import {useSelector} from 'react-redux';
 
 export default function Task3() {
   let [getResult, setResult] = useState({
@@ -122,11 +122,11 @@ export default function Task3() {
   useEffect(task3, [headers, items, data, values, baseState])
 
   return (
-    <div className={'scrollbox-lg'} style={{height: '100vh'}}>
+    <div style={{height: '100vh', overflow: "auto"}}>
 
       <HeaderBar title={'Analýza reťazových a bázických indexov'}/>
 
-      <div className={"row"} style={{marginTop:60}}>
+      <div className={"row"}>
 
         <div className={"col-8"}>
           <TableDynamic

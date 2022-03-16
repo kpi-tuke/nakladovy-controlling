@@ -391,8 +391,8 @@ export default function Result1(props: any) {
 
       <div className={'row'} style={{ margin: 0 }}>
         <div
-          className={'col-lg-6 col-sm-12'}
-          style={{ margin: 0, paddingLeft: 0 }}
+          className={'col-lg-6 col-md-12'}
+          style={{margin: 0, paddingLeft: 0}}
         >
           <div
             className={'col'}
@@ -416,8 +416,8 @@ export default function Result1(props: any) {
         </div>
 
         <div
-          className={'col-lg-6 col-sm-12'}
-          style={{ margin: 0, paddingRight: 0 }}
+          className={'col-lg-6 col-md-12'}
+          style={{margin: 0, paddingRight: 0}}
         >
           <div
             className={'col'}
@@ -443,8 +443,8 @@ export default function Result1(props: any) {
 
       <div className={'row'} style={{ margin: 0 }}>
         <div
-          className={'col-lg-6 col-sm-12'}
-          style={{ margin: 0, paddingLeft: 0 }}
+          className={'col-lg-6 col-md-12'}
+          style={{margin: 0, paddingLeft: 0}}
         >
           <div
             className={'col'}
@@ -468,8 +468,8 @@ export default function Result1(props: any) {
         </div>
 
         <div
-          className={'col-lg-6 col-sm-12'}
-          style={{ margin: 0, paddingRight: 0 }}
+          className={'col-lg-6 col-md-12'}
+          style={{margin: 0, paddingRight: 0}}
         >
           <div
             className={'col'}

@@ -4,8 +4,8 @@ import Result4 from "../results/Result4";
 import {useEffect, useState} from "react";
 import SingleInput from "../SingleInput";
 import HeaderBar from '../HeaderBar';
-import { CVPActions, selectCVP } from 'renderer/store/slice';
-import { useAppSelector } from 'renderer/store/hooks';
+import {CVPActions, selectCVP} from 'renderer/store/slice';
+import {useAppSelector} from 'renderer/store/hooks';
 
 export default function Task4() {
   // potom po skonceni analýz pridat moznost suhrnu, report vysledkov a slovná interpretacia vysledkov
@@ -84,37 +84,43 @@ export default function Task4() {
   useEffect(task4, [fixTotal, minProfit, items, data, headers, values])
 
   return (
-    <div className={'scrollbox-lg'} style={{ height: '100vh' }}>
+    <div style={{height: '100vh', overflow: 'auto'}}>
       <HeaderBar title={"CVP analýza"}/>
       <div
         className={'row'}
-        style={{paddingLeft: 10, paddingRight: 10, marginTop: 60}}
+        style={{paddingLeft: 0, paddingRight: 30}}
       >
-        <TableDynamic
-          corner={'Ekonomická položka'}
-          headerType={'text'}
-          header={headers}
-          inputType={'input'}
-          inputs={items}
-          data={data}
-          values={values}
-          dynRows={true}
-          dynCols={false}
-          actions={CVPActions}
-        />
+        <div className={'col'}>
+          <TableDynamic
+            corner={'Ekonomická položka'}
+            headerType={'text'}
+            header={headers}
+            inputType={'input'}
+            inputs={items}
+            data={data}
+            values={values}
+            dynRows={true}
+            dynCols={false}
+            actions={CVPActions}
+          />
+        </div>
 
         <div className={'col'}>
           <div className={'row'}>
-            <SingleInput
-              input={CVPActions.setFixTotal}
-              value={fixTotal}
-              title={'CELKOVÉ FIXNÉ NÁKLADY'}
-            />
-            <SingleInput
-              input={CVPActions.setMinProfit}
-              value={minProfit}
-              title={'MINIMÁLNY ZISK'}
-            />
+            <div className={'col'}>
+              <SingleInput
+                input={CVPActions.setFixTotal}
+                value={fixTotal}
+                title={'CELKOVÉ FIXNÉ NÁKLADY'}
+              />
+            </div>
+            <div className={'col'}>
+              <SingleInput
+                input={CVPActions.setMinProfit}
+                value={minProfit}
+                title={'MINIMÁLNY ZISK'}
+              />
+            </div>
           </div>
         </div>
       </div>

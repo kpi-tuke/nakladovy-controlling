@@ -290,88 +290,101 @@ export default function Result3(props: any) {
   }
 
   return (
-    <div style={{paddingLeft: 10, paddingRight: 10}}>
-      <div className={"card-body"}>
-        <div className={"row"}>
-          <div className={"col-lg-12 col-md-12"}>
-            <div className={"card mb-3"}>
-              <div className={"card-body"}>
-                {
-                  // @ts-ignore
-                  <ReactApexChart options={lineGraph.options} series={lineGraph.series} type="line" height={400}/>
-                }
-              </div>
-            </div>
+    <div style={{padding: 30}}>
+
+      <div style={{
+        backgroundColor: 'white',
+        padding: 25,
+        boxShadow: '0px 0px 10px lightgray',
+      }}>
+        {
+          // @ts-ignore
+          <ReactApexChart options={lineGraph.options} series={lineGraph.series} type="line" height={400}/>
+        }
+      </div>
+
+
+      <div className={"card-body"}
+           style={{
+             backgroundColor: 'white',
+             padding: 25,
+             marginTop: 30,
+             boxShadow: '0px 0px 10px lightgray',
+           }}>
+        {
+          // @ts-ignore
+          <ReactApexChart options={chainGraph.options} series={chainGraph.series} type="line" height={400}/>
+        }
+      </div>
+
+      <div className={"row"}>
+
+        <div className={"col-lg-6 col-md-12"}>
+          <div className={"col"}
+               style={{
+                 backgroundColor: 'white',
+                 padding: 25,
+                 marginTop: 30,
+                 boxShadow: '0px 0px 10px lightgray',
+               }}>
+            {
+              // @ts-ignore
+              <ReactApexChart options={baseGraph.options} series={baseGraph.series} type="bar" height={400}/>
+            }
           </div>
         </div>
-        <div className={"row"}>
-          <div className={"col-lg-12 col-md-12"}>
-            <div className={"card mb-3"}>
-              <div className={"card-body"}>
-                {
-                  // @ts-ignore
-                  <ReactApexChart options={chainGraph.options} series={chainGraph.series} type="line" height={400}/>
-                }
-              </div>
-            </div>
+
+        <div className={"col-lg-6 col-md-12"}>
+          <div className={"col"} style={{
+            backgroundColor: 'white',
+            padding: 25,
+            marginTop: 30,
+            boxShadow: '0px 0px 10px lightgray',
+          }}>
+            {   // @ts-ignore
+              <ReactApexChart options={incomeDiffGraph.options} series={incomeDiffGraph.series} type="bar"
+                              height={400}/>
+            }
           </div>
-        </div>
-        <div className={"row"}>
-
-          <div className={"col-lg-6 col-md-12"}>
-            <div className={"card mb-3"}>
-              <div className={"card-body"}>
-                {
-                  // @ts-ignore
-                  <ReactApexChart options={baseGraph.options} series={baseGraph.series} type="bar" height={400}/>
-                }
-              </div>
-            </div>
-          </div>
-
-          <div className={"col-lg-6 col-md-12"}>
-            <div className={"card mb-3"}>
-              <div className={"card-body"}>
-                {   // @ts-ignore
-                  <ReactApexChart options={incomeDiffGraph.options} series={incomeDiffGraph.series} type="bar"
-                                  height={400}/>
-                }
-              </div>
-            </div>
-          </div>
-
-        </div>
-
-
-        <div className={"row"}>
-
-          <div className={"col-lg-6 col-md-12"}>
-            <div className={"card mb-3"}>
-              <div className={"card-body"}>
-                {
-                  // @ts-ignore
-                  <ReactApexChart options={costDiffGraph.options} series={costDiffGraph.series} type="bar"
-                                  height={400}/>
-                }
-              </div>
-            </div>
-          </div>
-
-
-          <div className={"col-lg-6 col-md-12"}>
-            <div className={"card mb-3"}>
-              <div className={"card-body"}>
-                {   // @ts-ignore
-                  <ReactApexChart options={reactionGraph.options} series={reactionGraph.series} type="bar"
-                                  height={400}/>
-                }
-              </div>
-            </div>
-          </div>
-
         </div>
 
       </div>
+
+
+        <div className={"row"}>
+
+          <div className={"col-lg-6 col-md-12"}>
+            <div className={"col"} style={{
+              backgroundColor: 'white',
+              padding: 25,
+              marginTop: 30,
+              boxShadow: '0px 0px 10px lightgray',
+            }}>
+              {
+                // @ts-ignore
+                <ReactApexChart options={costDiffGraph.options} series={costDiffGraph.series} type="bar"
+                                height={400}/>
+              }
+            </div>
+          </div>
+
+
+          <div className={"col-lg-6 col-md-12"}>
+            <div className={"col"} style={{
+              backgroundColor: 'white',
+              padding: 25,
+              marginTop: 30,
+              boxShadow: '0px 0px 10px lightgray',
+            }}>
+              {   // @ts-ignore
+                <ReactApexChart options={reactionGraph.options} series={reactionGraph.series} type="bar"
+                                height={400}/>
+              }
+            </div>
+          </div>
+
+        </div>
+
 
     </div>
   )

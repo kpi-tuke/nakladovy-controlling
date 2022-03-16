@@ -95,16 +95,17 @@ export default function Result6(props: any) {
   };
 
   return (
-    <div style={{paddingLeft: 10, paddingRight: 10}}>
+    <div style={{padding: 30}}>
 
-      <div className={"col-12"}>
-        <div className={"card mb-3"}>
-          <div className={"card-body"}>
-            {   // @ts-ignore
-              <ReactApexChart options={barChart.options} series={barChart.series} type="bar" height={600}/>
-            }
-          </div>
-        </div>
+      <div style={{
+        backgroundColor: 'white',
+        padding: 25,
+        marginTop: 30,
+        boxShadow: '0px 0px 10px lightgray',
+      }}>
+        {   // @ts-ignore
+          <ReactApexChart options={barChart.options} series={barChart.series} type="bar" height={600}/>
+        }
       </div>
 
     </div>
