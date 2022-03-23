@@ -101,26 +101,25 @@ export default function Task1() {
   useEffect(task1, [headers, items, data, values]);
 
   return (
-    <div style={{height: '100vh', overflow: 'auto'}}>
+    <div className={'task-container'}>
       <HeaderBar title={'Ekonomická analýza hospodárenia'}/>
-      <div style={{marginTop: 60}}>
-        <TableDynamic
-          corner={'Ekonomická položka'}
-          headerType={'input'}
-          header={headers}
-          inputType={'select'}
-          inputs={items}
-          data={data}
-          values={values}
-          dynRows={true}
-          dynCols={true}
-          proceed={task1}
-          selectRow={groupedOptions}
-          actions={bilanceActions}
-        />
 
-        <Result1 result={getResult} />
-      </div>
+      <TableDynamic
+        corner={'Ekonomická položka'}
+        headerType={'input'}
+        header={headers}
+        inputType={'select'}
+        inputs={items}
+        data={data}
+        values={values}
+        dynRows={true}
+        dynCols={true}
+        proceed={task1}
+        selectRow={groupedOptions}
+        actions={bilanceActions}
+      />
+
+      <Result1 result={getResult}/>
     </div>
   );
 }

@@ -3,6 +3,7 @@ import {useAppDispatch} from 'renderer/store/hooks';
 
 export default function TableDynamic(props: any) {
   const dispatch = useAppDispatch();
+
   const customStyles = {
     control: (provided: any) => ({
       ...provided,
@@ -52,39 +53,25 @@ export default function TableDynamic(props: any) {
 
   return (
     <div
-      style={{
-        backgroundColor: 'white',
-        padding: 0,
-        margin: 30,
-        marginTop: 80,
-        boxShadow: '0px 0px 10px lightgray',
-      }}
+      className={"table-card row"}
     >
-      <div style={{margin: 0, padding: 0}}>
+      <div className={"col-4"}>
         <table style={{width: '100%'}}>
           <tbody>
           <tr
-            style={{
-              height: 50,
-              backgroundColor: '#e6f7ff',
-            }}
+            className={"table-head"}
           >
             <td
-              style={{
-                border: '1px solid lightgray',
-                borderTopWidth: 0,
-                borderLeft: 0,
-                textAlign: 'center',
-              }}
+              className={"table-corner"}
             >
               {props.corner}
             </td>
           </tr>
           {props.inputs.map((value: string, row: number) => {
             return (
-              <tr key={row} style={{height: 50}}>
+              <tr key={row}>
                 <td
-                  style={{border: '1px solid lightgray', borderLeft: 0}}
+                  className={"table-cell"}
                   key={value + row.toString()}
                 >
                   {props.inputType === 'select' ? (
@@ -96,7 +83,7 @@ export default function TableDynamic(props: any) {
                     />
                   ) : props.inputType === 'input' ? (
                     <input
-                      style={{border: 0, width: '100%'}}
+                      className={"table-input"}
                       type="text"
                       defaultValue={value}
                       onBlur={(e) => handleChangeInput(e.target, row)}
@@ -123,17 +110,14 @@ export default function TableDynamic(props: any) {
         </table>
       </div>
 
-      <div style={{overflow: 'auto', margin: 0, padding: 0}}>
-        <table style={{margin: 0}}>
+      <div className={"col-8"} style={{overflow: 'auto'}}>
+        <table>
           <thead>
-          <tr style={{height: 50, backgroundColor: '#e6f7ff'}}>
+          <tr className={"table-head"}>
             {props.header.map((value: string, idx: number) => (
               <th
                 key={idx}
-                style={{
-                  border: '1px solid lightgray',
-                  borderTopWidth: 0,
-                }}
+                className={"table-cell"}
               >
                 {props.headerType === 'select' ? (
                   // <Select
@@ -142,15 +126,10 @@ export default function TableDynamic(props: any) {
                   //   onChange={(e) => handleChangeHeader(e, idx)}
                   // />
                   <select
-                    style={{
-                      textAlign: 'center',
-                      border: 0,
-                      backgroundColor: '#e6f7ff',
-                    }}
+                    className={"table-select-head"}
                     value={value}
                     onChange={(e) => handleChangeHeader(e.target, idx)}
                   >
-                    {/*<option key={"choose"} value="chose">--Please choose an option--</option>*/}
                     {props.selectCol.map((option: any) => (
                       <option key={option.value} value={option.label}>
                         {option.label}
@@ -159,11 +138,7 @@ export default function TableDynamic(props: any) {
                   </select>
                 ) : props.headerType === 'input' ? (
                   <input
-                    style={{
-                      border: 0,
-                      textAlign: 'center',
-                      backgroundColor: '#e6f7ff',
-                    }}
+                    className={"table-input-head"}
                     type="text"
                     defaultValue={value}
                     onBlur={(e) => handleChangeHeader(e.target, idx)}
@@ -182,17 +157,17 @@ export default function TableDynamic(props: any) {
           </thead>
           <tbody>
           {props.data.map((rowData: string[], row: number) => (
-            <tr style={{height: 50}}>
+            <tr>
               {rowData.map((value: string, col: number) => (
                 <td
-                  style={{border: '1px solid lightgray'}}
+                  className={"table-cell"}
                   key={row + ':' + col}
                 >
                   <input
                     type="text"
-                    style={{border: 0, textAlign: 'center'}}
+                    className={"table-input"}
                     defaultValue={value}
-                    onBlur={() => handleChangeData(event, row, col)}
+                    onBlur={(e) => handleChangeData(e, row, col)}
                   />
                 </td>
               ))}

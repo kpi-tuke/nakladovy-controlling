@@ -289,7 +289,7 @@ export default function Result1(props: any) {
   };
 
   return (
-    <div style={{ padding: 30 }}>
+    <div>
       <h2>Ekonomická analýza ukazovateľov</h2>
 
       <div className={'row'}>

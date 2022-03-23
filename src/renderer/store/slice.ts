@@ -49,7 +49,7 @@ const reducerFunctions = {
   ) => {
     state.data[action.payload.row][action.payload.col] = action.payload.data;
   },
-  addColumn: (state: { headers: string[]; data: string[][] }) => {
+  addColumn: (state: { headers: string[]; items: string[]; data: string[][] }) => {
     state.headers.push((parseInt(state.headers[state.headers.length - 1]) + 1).toString());
     state.data.map((rowData: any) => {
       rowData.push('0');
