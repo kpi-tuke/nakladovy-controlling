@@ -1,4 +1,4 @@
-import '../../App.css';
+import '../../ScreenStyle.css';
 import ReactApexChart from 'react-apexcharts';
 import TableStatic from '../TableStatic';
 import InfoCard from '../InfoCard';
@@ -293,7 +293,7 @@ export default function Result1(props: any) {
       <h2>Ekonomická analýza ukazovateľov</h2>
 
       <div className={'row'}>
-        <div className={'col'}>
+        <div className={'col-4'}>
           <InfoCard
             header={'VÝNOSY CELKOM'}
             value={props.result.incomeTotal}
@@ -302,7 +302,7 @@ export default function Result1(props: any) {
           />
         </div>
 
-        <div className={'col'}>
+        <div className={'col-4'}>
           <InfoCard
             header={'NÁKLADY CELKOM'}
             value={props.result.costTotal}
@@ -311,7 +311,7 @@ export default function Result1(props: any) {
           />
         </div>
 
-        <div className={'col'}>
+        <div className={'col-4'}>
           <InfoCard
             header={'ZISK CELKOM'}
             value={props.result.profitTotal}
@@ -347,12 +347,7 @@ export default function Result1(props: any) {
         />
       </div>
 
-      <h1
-        className={'bold text-primary'}
-        style={{ textAlign: 'center', margin: 50 }}
-      >
-        Dashboarding
-      </h1>
+      <h1 style={{textAlign: 'center', margin: 50}}>Dashboarding</h1>
 
       <div
         style={{
@@ -372,30 +367,26 @@ export default function Result1(props: any) {
       </div>
 
       <div
-        style={{
-          backgroundColor: 'white',
-          padding: 25,
-          marginTop: 30,
-          boxShadow: '0px 0px 10px lightgray',
-        }}
+        // style={{
+        //   backgroundColor: 'white',
+        //   padding: 25,
+        //   marginTop: 30,
+        //   boxShadow: '0px 0px 10px lightgray',
+        // }}
       >
         {
           // @ts-ignore
           <ReactApexChart options={colGraph.options}
-            series={colGraph.series}
-            type="bar"
-            height={400}
+                          series={colGraph.series}
+                          type="bar"
+                          height={400}
           />
         }
       </div>
 
-      <div className={'row'} style={{ margin: 0 }}>
-        <div
-          className={'col-lg-6 col-md-12'}
-          style={{margin: 0, paddingLeft: 0}}
-        >
+      <div style={{margin: 0}}>
+        <div style={{margin: 0, paddingLeft: 0}}>
           <div
-            className={'col'}
             style={{
               backgroundColor: 'white',
               padding: 25,
@@ -403,7 +394,7 @@ export default function Result1(props: any) {
               boxShadow: '0px 0px 10px lightgray',
             }}
           >
-            <h4 className={'text-primary'}>VÝVOJ RENTABILITY VÝNOSOV</h4>
+            <h4>VÝVOJ RENTABILITY VÝNOSOV</h4>
             {
               // @ts-ignore
               <ReactApexChart options={incomeRentGraph.options}
@@ -415,12 +406,8 @@ export default function Result1(props: any) {
           </div>
         </div>
 
-        <div
-          className={'col-lg-6 col-md-12'}
-          style={{margin: 0, paddingRight: 0}}
-        >
+        <div style={{margin: 0, paddingRight: 0}}>
           <div
-            className={'col'}
             style={{
               backgroundColor: 'white',
               padding: 25,
@@ -428,26 +415,22 @@ export default function Result1(props: any) {
               boxShadow: '0px 0px 10px lightgray',
             }}
           >
-            <h4 className={'text-primary'}>VÝVOJ RENTABILITY NÁKLADOV</h4>
+            <h4>VÝVOJ RENTABILITY NÁKLADOV</h4>
             {
               // @ts-ignore
               <ReactApexChart options={costRentGraph.options}
-                series={costRentGraph.series}
-                type="bar"
-                height={400}
+                              series={costRentGraph.series}
+                              type="bar"
+                              height={400}
               />
             }
           </div>
         </div>
       </div>
 
-      <div className={'row'} style={{ margin: 0 }}>
-        <div
-          className={'col-lg-6 col-md-12'}
-          style={{margin: 0, paddingLeft: 0}}
-        >
+      <div style={{margin: 0}}>
+        <div style={{margin: 0, paddingLeft: 0}}>
           <div
-            className={'col'}
             style={{
               backgroundColor: 'white',
               padding: 25,
@@ -455,24 +438,20 @@ export default function Result1(props: any) {
               boxShadow: '0px 0px 10px lightgray',
             }}
           >
-            <h4 className={'text-primary'}>VÝVOJ NÁKLADOVEJ ÚČINNOSTI</h4>
+            <h4>VÝVOJ NÁKLADOVEJ ÚČINNOSTI</h4>
             {
               // @ts-ignore
               <ReactApexChart options={costEffiGraph.options}
-                series={costEffiGraph.series}
-                type="bar"
-                height={400}
+                              series={costEffiGraph.series}
+                              type="bar"
+                              height={400}
               />
             }
           </div>
         </div>
 
-        <div
-          className={'col-lg-6 col-md-12'}
-          style={{margin: 0, paddingRight: 0}}
-        >
+        <div style={{margin: 0, paddingRight: 0}}>
           <div
-            className={'col'}
             style={{
               backgroundColor: 'white',
               padding: 25,
@@ -480,7 +459,7 @@ export default function Result1(props: any) {
               boxShadow: '0px 0px 10px lightgray',
             }}
           >
-            <h4 className={'text-primary'}>VÝVOJ NÁKLADOVOSTI</h4>
+            <h4>VÝVOJ NÁKLADOVOSTI</h4>
             {
               // @ts-ignore
               <ReactApexChart options={costIndicGraph.options}

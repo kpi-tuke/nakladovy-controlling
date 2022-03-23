@@ -1,4 +1,3 @@
-import '../../App.css';
 import Result1 from '../results/Result1';
 import {useEffect, useState} from 'react';
 import groupedOptions from '../chartOfAccounts';
@@ -22,8 +21,7 @@ export default function Task1() {
     costIndicatorData: [],
   });
 
-  const { headers, items, data, values } = useSelector(selectBilance)
-
+  const {headers, items, data, values} = useSelector(selectBilance);
 
   const divideArrays = (
     numerator: number[],

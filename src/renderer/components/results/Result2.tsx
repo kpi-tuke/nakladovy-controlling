@@ -1,91 +1,91 @@
-import '../../App.css';
-import ReactApexChart from "react-apexcharts"
-import InfoCard from "../InfoCard";
+import ReactApexChart from 'react-apexcharts';
+import InfoCard from '../InfoCard';
 
 export default function Result2(props: any) {
-
   const barChartRow = {
-    series: [{
-      data: props.result.rowSums
-    }],
+    series: [
+      {
+        data: props.result.rowSums,
+      },
+    ],
     options: {
       chart: {
         toolbar: {
-          show: false
+          show: false,
         },
         type: 'bar',
       },
       legend: {
-        show: false
+        show: false,
       },
       plotOptions: {
         bar: {
           columnWidth: '45%',
           distributed: true,
-        }
+        },
       },
       grid: {
         borderColor: '#e7e7e7',
         row: {
           colors: ['#f3f3f3', 'transparent'],
-          opacity: 0.5
+          opacity: 0.5,
         },
       },
       title: {
         text: 'Druhové členenie nákladov',
-        align: 'center'
+        align: 'center',
       },
       xaxis: {
         categories: props.result.items,
         labels: {
-          trim: true
-        }
-      }
+          trim: true,
+        },
+      },
     },
-  }
+  };
 
   const barChartCol = {
-    series: [{
-      data: props.result.colSums
-    }],
+    series: [
+      {
+        data: props.result.colSums,
+      },
+    ],
     options: {
       chart: {
         toolbar: {
-          show: false
+          show: false,
         },
         type: 'bar',
       },
       legend: {
-        show: false
+        show: false,
       },
       grid: {
         borderColor: '#e7e7e7',
         row: {
           colors: ['#f3f3f3', 'transparent'],
-          opacity: 0.5
+          opacity: 0.5,
         },
       },
       plotOptions: {
         bar: {
           columnWidth: '45%',
           distributed: true,
-        }
+        },
       },
       xaxis: {
         categories: props.result.headers,
         labels: {
-          trim: true
-        }
+          trim: true,
+        },
       },
       yaxis: {
-        label: "Náklady (€)"
-      }
-    }
-  }
-
+        label: 'Náklady (€)',
+      },
+    },
+  };
 
   const pieChart = {
-
     series: props.result.rowSums,
     options: {
       chart: {
@@ -95,11 +95,10 @@ export default function Result2(props: any) {
         type: 'gradient',
       },
       labels: props.result.items,
-    }
-  }
+    },
+  };
 
   const donutChart = {
-
     series: props.result.colSums,
     options: {
       chart: {
@@ -109,18 +108,17 @@ export default function Result2(props: any) {
         type: 'gradient',
       },
       title: {
-        text: 'Kalkulačné členenie nákladov'
+        text: 'Kalkulačné členenie nákladov',
       },
       labels: props.result.headers,
-    }
-  }
+    },
+  };
 
   return (
     <div style={{padding: 30}}>
-
       <h2>Štruktúrna analýza</h2>
 
-      <div className={'col-3'}>
+      <div>
         <InfoCard
           header={'CELKOVÉ NÁKLADY'}
           value={props.result.totalCost}
@@ -129,17 +127,11 @@ export default function Result2(props: any) {
         />
       </div>
 
-      <h1
-        className={'bold text-primary'}
-        style={{textAlign: 'center', margin: 50}}
-      >
-        Dashboarding
-      </h1>
+      <h1 style={{textAlign: 'center', margin: 50}}>Dashboarding</h1>
 
-      <div className={'row'}>
-        <div className={'col-lg-6 col-md-12'}>
+      <div>
+        <div>
           <div
-            className={'col'}
             style={{
               backgroundColor: 'white',
               padding: 25,
@@ -147,22 +139,20 @@ export default function Result2(props: any) {
               boxShadow: '0px 0px 10px lightgray',
             }}
           >
-            <h4 className={'text-primary'}>DRUHOVÉ ČLENENIE NÁKLADOV</h4>
+            <h4>DRUHOVÉ ČLENENIE NÁKLADOV</h4>
             {
               <ReactApexChart
                 // @ts-ignore
                 options={pieChart.options}
                 series={pieChart.series}
                 type="pie"
-
               />
             }
           </div>
         </div>
 
-        <div className={'col-lg-6 col-md-12'}>
+        <div>
           <div
-            className={'col'}
             style={{
               backgroundColor: 'white',
               padding: 25,
@@ -170,7 +160,7 @@ export default function Result2(props: any) {
               boxShadow: '0px 0px 10px lightgray',
             }}
           >
-            <h4 className={'text-primary'}>DRUHOVÉ ČLENENIE NÁKLADOV</h4>
+            <h4>DRUHOVÉ ČLENENIE NÁKLADOV</h4>
             {
               <ReactApexChart
                 // @ts-ignore
@@ -183,10 +173,9 @@ export default function Result2(props: any) {
         </div>
       </div>
 
-      <div className={'row'}>
-        <div className={'col-lg-6 col-md-12'}>
+      <div>
+        <div>
           <div
-            className={'col'}
             style={{
               backgroundColor: 'white',
               padding: 25,
@@ -194,7 +183,7 @@ export default function Result2(props: any) {
               boxShadow: '0px 0px 10px lightgray',
             }}
           >
-            <h4 className={'text-primary'}>KALKULAČNÉ ČLENENIE NÁKLADOV</h4>
+            <h4>KALKULAČNÉ ČLENENIE NÁKLADOV</h4>
             {
               <ReactApexChart
                 // @ts-ignore
@@ -206,9 +195,8 @@ export default function Result2(props: any) {
           </div>
         </div>
 
-        <div className={'col-lg-6 col-md-12'}>
+        <div>
           <div
-            className={'col'}
             style={{
               backgroundColor: 'white',
               padding: 25,
@@ -216,7 +204,7 @@ export default function Result2(props: any) {
               boxShadow: '0px 0px 10px lightgray',
             }}
           >
-            <h4 className={'text-primary'}>KALKULAČNÉ ČLENENIE NÁKLADOV</h4>
+            <h4>KALKULAČNÉ ČLENENIE NÁKLADOV</h4>
             {
               <ReactApexChart
                 // @ts-ignore

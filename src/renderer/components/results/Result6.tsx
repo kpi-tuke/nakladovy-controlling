@@ -1,19 +1,19 @@
-import '../../App.css';
-import ReactApexChart from "react-apexcharts";
+import ReactApexChart from 'react-apexcharts';
 
 export default function Result6(props: any) {
-
   const barChart = {
-
-    series: [{
-      name: 'Paretova analyza',
-      type: 'column',
-      data: props.result.values
-    }, {
-      name: 'Lorenzova krivka',
-      type: 'line',
-      data: props.result.kumul
-    }],
+    series: [
+      {
+        name: 'Paretova analyza',
+        type: 'column',
+        data: props.result.values,
+      },
+      {
+        name: 'Lorenzova krivka',
+        type: 'line',
+        data: props.result.kumul,
+      },
+    ],
     options: {
       chart: {
         type: 'bar',
@@ -24,11 +24,11 @@ export default function Result6(props: any) {
         show: true,
       },
       title: {
-        text: 'Pareto analýza'
+        text: 'Pareto analýza',
       },
       dataLabels: {
         enabled: true,
-        enabledOnSeries: [1]
+        enabledOnSeries: [1],
       },
       annotations: {
         yaxis: [
@@ -40,9 +40,9 @@ export default function Result6(props: any) {
               style: {
                 color: '#fa023f',
               },
-              text: 'Minimálny zisk'
-            }
-          }
+              text: 'Minimálny zisk',
+            },
+          },
         ],
         xaxis: [
           {
@@ -53,61 +53,67 @@ export default function Result6(props: any) {
               style: {
                 color: '#fa023f',
               },
-              text: 'Minimálny zisk'
-            }
-          }
-        ]
-
+              text: 'Minimálny zisk',
+            },
+          },
+        ],
       },
       labels: props.result.causes,
       xaxis: {
-        type: "category",
+        type: 'category',
         labels: {
-          trim: true
-        }
-      },
-      yaxis: [{
-        min: 0,
-        max: props.result.sum,
-        title: {
-          text: 'Hodnota',
+          trim: true,
         },
-
-      }, {
-        opposite: true,
-        min: 0,
-        max: 100,
-        title: {
-          text: 'Percento',
-        }
-      }]
+      },
+      yaxis: [
+        {
+          min: 0,
+          max: props.result.sum,
+          title: {
+            text: 'Hodnota',
+          },
+        },
+        {
+          opposite: true,
+          min: 0,
+          max: 100,
+          title: {
+            text: 'Percento',
+          },
+        },
+      ],
     },
     grid: {
       borderColor: '#e7e7e7',
       row: {
         colors: ['#f3f3f3', 'transparent'],
-        opacity: 0.5
+        opacity: 0.5,
       },
     },
     markers: {
-      size: 1
+      size: 1,
     },
   };
 
   return (
     <div style={{padding: 30}}>
-
-      <div style={{
-        backgroundColor: 'white',
-        padding: 25,
-        marginTop: 30,
-        boxShadow: '0px 0px 10px lightgray',
-      }}>
-        {   // @ts-ignore
-          <ReactApexChart options={barChart.options} series={barChart.series} type="bar" height={600}/>
+      <div
+        style={{
+          backgroundColor: 'white',
+          padding: 25,
+          marginTop: 30,
+          boxShadow: '0px 0px 10px lightgray',
+        }}
+      >
+        {
+          // @ts-ignore
+          <ReactApexChart options={barChart.options}
+                          series={barChart.series}
+                          type="bar"
+                          height={600}
+          />
         }
       </div>
-
     </div>
-  )
+  );
 }

@@ -1,8 +1,7 @@
-import '../../App.css';
-import TableDynamic from "../TableDynamic";
-import Result4 from "../results/Result4";
-import {useEffect, useState} from "react";
-import SingleInput from "../SingleInput";
+import TableDynamic from '../TableDynamic';
+import Result4 from '../results/Result4';
+import {useEffect, useState} from 'react';
+import SingleInput from '../SingleInput';
 import HeaderBar from '../HeaderBar';
 import {CVPActions, selectCVP} from 'renderer/store/slice';
 import {useAppSelector} from 'renderer/store/hooks';
@@ -19,42 +18,43 @@ export default function Task4() {
     minProfit: 0,
     zeroEur: [],
     zeroTon: [],
-    zeroProf: []
-  })
+    zeroProf: [],
+  });
 
-  const {headers, data, items, values, fixTotal, minProfit} = useAppSelector(selectCVP)
+  const {headers, data, items, values, fixTotal, minProfit} =
+    useAppSelector(selectCVP);
 
   const task4 = () => {
-    let volumes: number[] = []
-    let prices: number[] = []
-    let costs: number[] = []
+    let volumes: number[] = [];
+    let prices: number[] = [];
+    let costs: number[] = [];
 
     for (let i = 0; i < items.length; i++) {
-      volumes.push(0)
-      prices.push(0)
-      costs.push(0)
+      volumes.push(0);
+      prices.push(0);
+      costs.push(0);
     }
 
     data.map((rowData: string[], idx: number) => {
-      volumes[idx] = parseInt(rowData[0])
-      prices[idx] = parseInt(rowData[1])
-      costs[idx] = parseInt(rowData[2])
-    })
+      volumes[idx] = parseInt(rowData[0]);
+      prices[idx] = parseInt(rowData[1]);
+      costs[idx] = parseInt(rowData[2]);
+    });
 
-    const zeroEur: number[] = []
-    const zeroTon: number[] = []
-    const zeroProf: number[] = []
+    const zeroEur: number[] = [];
+    const zeroTon: number[] = [];
+    const zeroProf: number[] = [];
 
     for (let i = 0; i < items.length; i++) {
-      zeroEur.push(0)
-      zeroTon.push(0)
-      zeroProf.push(0)
+      zeroEur.push(0);
+      zeroTon.push(0);
+      zeroProf.push(0);
     }
 
     for (let i = 0; i < items.length; i++) {
-      zeroEur[i] = fixTotal / (1 - (costs[i] / prices[i]))
-      zeroTon[i] = fixTotal / (prices[i] - costs[i])
-      zeroProf[i] = (fixTotal + minProfit) / (prices[i] - costs[i]) // pridat min zisk
+      zeroEur[i] = fixTotal / (1 - costs[i] / prices[i]);
+      zeroTon[i] = fixTotal / (prices[i] - costs[i]);
+      zeroProf[i] = (fixTotal + minProfit) / (prices[i] - costs[i]); // pridat min zisk
     }
 
     // @ts-ignore
@@ -76,21 +76,17 @@ export default function Task4() {
       // @ts-ignore
       zeroTon,
       // @ts-ignore
-      zeroProf
-    })
-  }
+      zeroProf,
+    });
+  };
 
-
-  useEffect(task4, [fixTotal, minProfit, items, data, headers, values])
+  useEffect(task4, [fixTotal, minProfit, items, data, headers, values]);
 
   return (
     <div style={{height: '100vh', overflow: 'auto'}}>
-      <HeaderBar title={"CVP analýza"}/>
-      <div
-        className={'row'}
-        style={{paddingLeft: 0, paddingRight: 30}}
-      >
-        <div className={'col'}>
+      <HeaderBar title={'CVP analýza'}/>
+      <div style={{paddingLeft: 0, paddingRight: 30}}>
+        <div>
           <TableDynamic
             corner={'Ekonomická položka'}
             headerType={'text'}
@@ -105,16 +101,16 @@ export default function Task4() {
           />
         </div>
 
-        <div className={'col'}>
-          <div className={'row'}>
-            <div className={'col'}>
+        <div>
+          <div>
+            <div>
               <SingleInput
                 input={CVPActions.setFixTotal}
                 value={fixTotal}
                 title={'CELKOVÉ FIXNÉ NÁKLADY'}
               />
             </div>
-            <div className={'col'}>
+            <div>
               <SingleInput
                 input={CVPActions.setMinProfit}
                 value={minProfit}
@@ -130,5 +126,4 @@ export default function Task4() {
       </div>
     </div>
   );
-
 }

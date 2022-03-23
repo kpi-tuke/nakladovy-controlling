@@ -1,10 +1,11 @@
+import '../ScreenStyle.css';
+
 export default function HeaderBar(props: any) {
   return (
     <div
-      className={'bg-primary p-2'}
-      style={{ position: 'fixed', width: '100%', zIndex: 2 }}
+      className={'header-bar'}
     >
-      <div className={'caption text-light bold'} style={{ fontSize: 30 }}>
+      <div className={"header-title"}>
         {props.title}
       </div>
     </div>

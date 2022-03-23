@@ -1,10 +1,9 @@
-import '../../App.css';
-import Result3 from "../results/Result3";
-import {useEffect, useState} from "react";
+import Result3 from '../results/Result3';
+import {useEffect, useState} from 'react';
 import HeaderBar from '../HeaderBar';
-import groupedOptions from "../chartOfAccounts";
-import TableDynamic from "../TableDynamic";
-import {baseIndexActions, chainActions, selectBase, selectChain} from 'renderer/store/slice';
+import groupedOptions from '../chartOfAccounts';
+import TableDynamic from '../TableDynamic';
+import {baseIndexActions, chainActions, selectBase, selectChain,} from 'renderer/store/slice';
 import {useSelector} from 'react-redux';
 
 export default function Task3() {
@@ -20,76 +19,77 @@ export default function Task3() {
     incomeDiff: [],
     reaction: [],
     items: [],
-    betweenYears: []
-  })
+    betweenYears: [],
+  });
 
   const { headers, items, data, values } = useSelector(selectChain);
   const baseState = useSelector(selectBase);
 
   const task3 = () => {
-    let costSumsForYears: number[] = []
-    let incomeSumsForYears: number[] = []
-    let costSumBase: number = 0
-    let incomeSumBase: number = 0
-    let chainIndexes: number[] = []
-    let baseIndexes: number[] = []
-    let incomeDiff: number[] = []
-    let costDiff: number[] = []
-    let reaction: number[] = []
-    let betweenYears: string[] = []
+    let costSumsForYears: number[] = [];
+    let incomeSumsForYears: number[] = [];
+    let costSumBase: number = 0;
+    let incomeSumBase: number = 0;
+    let chainIndexes: number[] = [];
+    let baseIndexes: number[] = [];
+    let incomeDiff: number[] = [];
+    let costDiff: number[] = [];
+    let reaction: number[] = [];
+    let betweenYears: string[] = [];
 
     for (let i = 0; i < headers.length; i++) {
-      costSumsForYears.push(0)
-      incomeSumsForYears.push(0)
+      costSumsForYears.push(0);
+      incomeSumsForYears.push(0);
     }
 
     data.map((rowData, row) => {
       parseInt(values[row]) >= 600
         ? rowData.map((value, col) => {
-            incomeSumsForYears[col] =
-              incomeSumsForYears[col] + parseFloat(value === '' ? '0' : value);
-          })
+          incomeSumsForYears[col] =
+            incomeSumsForYears[col] + parseFloat(value === '' ? '0' : value);
+        })
         : rowData.map((value, col) => {
-            costSumsForYears[col] =
-              costSumsForYears[col] + parseFloat(value === '' ? '0' : value);
-          });
-    })
+          costSumsForYears[col] =
+            costSumsForYears[col] + parseFloat(value === '' ? '0' : value);
+        });
+    });
 
     baseState.data.map((rowData, row) => {
       parseInt(baseState.values[row]) >= 600
-        ? incomeSumBase = incomeSumBase + parseFloat(rowData[0] === "" ? "0" : rowData[0])
-        : costSumBase = costSumBase + parseFloat(rowData[0] === "" ? "0" : rowData[0])
-    })
+        ? (incomeSumBase =
+          incomeSumBase + parseFloat(rowData[0] === '' ? '0' : rowData[0]))
+        : (costSumBase =
+          costSumBase + parseFloat(rowData[0] === '' ? '0' : rowData[0]));
+    });
 
     for (let i = 0; i < headers.length - 1; i++) {
-      if (costSumsForYears[i] === 0)
-        chainIndexes[i] = 0
+      if (costSumsForYears[i] === 0) chainIndexes[i] = 0;
       else
-        chainIndexes[i] = Math.round((costSumsForYears[i + 1] / costSumsForYears[i]) * 100) / 100
+        chainIndexes[i] =
+          Math.round((costSumsForYears[i + 1] / costSumsForYears[i]) * 100) /
+          100;
 
-      if (incomeSumsForYears[i] === 0)
-        incomeDiff[i] = 0
+      if (incomeSumsForYears[i] === 0) incomeDiff[i] = 0;
       else
-        incomeDiff[i] = incomeSumsForYears[i + 1] * 100 / incomeSumsForYears[i] - 100
+        incomeDiff[i] =
+          (incomeSumsForYears[i + 1] * 100) / incomeSumsForYears[i] - 100;
 
-      if (costSumsForYears[i] === 0)
-        costDiff[i] = 0
+      if (costSumsForYears[i] === 0) costDiff[i] = 0;
       else
-        costDiff[i] = costSumsForYears[i + 1] * 100 / costSumsForYears[i] - 100
+        costDiff[i] =
+          (costSumsForYears[i + 1] * 100) / costSumsForYears[i] - 100;
 
-      if (incomeDiff[i] === 0)
-        reaction[i] = 0
-      else
-        reaction[i] = Math.round(costDiff[i] / incomeDiff[i] * 100) / 100
+      if (incomeDiff[i] === 0) reaction[i] = 0;
+      else reaction[i] = Math.round((costDiff[i] / incomeDiff[i]) * 100) / 100;
 
-      incomeDiff[i] = Math.round(incomeDiff[i] * 100) / 100
-      costDiff[i] = Math.round(costDiff[i] * 100) / 100
-      betweenYears[i] = headers[i] + "/" + headers[i + 1]
+      incomeDiff[i] = Math.round(incomeDiff[i] * 100) / 100;
+      costDiff[i] = Math.round(costDiff[i] * 100) / 100;
+      betweenYears[i] = headers[i] + '/' + headers[i + 1];
     }
 
-
     for (let i = 0; i < headers.length; i++) {
-      baseIndexes[i] = Math.round((costSumsForYears[i] / costSumBase) * 100) / 100
+      baseIndexes[i] =
+        Math.round((costSumsForYears[i] / costSumBase) * 100) / 100;
     }
 
     // @ts-ignore
@@ -115,20 +115,18 @@ export default function Task3() {
       // @ts-ignore
       items,
       // @ts-ignore
-      betweenYears
-    })
-  }
+      betweenYears,
+    });
+  };
 
-  useEffect(task3, [headers, items, data, values, baseState])
+  useEffect(task3, [headers, items, data, values, baseState]);
 
   return (
-    <div style={{height: '100vh', overflow: "auto"}}>
-
+    <div style={{height: '100vh', overflow: 'auto'}}>
       <HeaderBar title={'Analýza reťazových a bázických indexov'}/>
 
-      <div className={"row"}>
-
-        <div className={"col-8"}>
+      <div>
+        <div>
           <TableDynamic
             corner={'Ekonomická položka'}
             headerType={'input'}
@@ -144,7 +142,7 @@ export default function Task3() {
           />
         </div>
 
-        <div className={"col-4"}>
+        <div>
           {
             <TableDynamic
               corner={'Ekonomická položka'}
