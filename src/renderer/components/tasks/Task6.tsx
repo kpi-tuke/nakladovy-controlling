@@ -38,8 +38,8 @@ export default function Task6() {
       percentages[i] = Math.round((values[i] * 10000) / sum) / 100;
       kumul[i] = Math.round(temp * 100) / 100;
     }
-    // @ts-ignore
     setResult({
+      // @ts-ignore
       causes: items, percentages: percentages, values: values, kumul: kumul,
       sum: sum,
     });
