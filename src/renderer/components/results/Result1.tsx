@@ -23,7 +23,7 @@ export default function Result1(props: any) {
       chart: {
         type: 'line',
         toolbar: {
-          show: false,
+          show: true,
         },
         zoom: {
           enabled: false,
@@ -34,10 +34,6 @@ export default function Result1(props: any) {
       },
       stroke: {
         curve: 'straight',
-      },
-      title: {
-        text: 'Náklady, výnosy a zisk',
-        align: 'center',
       },
       grid: {
         borderColor: '#e7e7e7',
@@ -52,6 +48,12 @@ export default function Result1(props: any) {
       xaxis: {
         categories: props.result.headers,
       },
+      yaxis: [{
+        title: {
+          text: '€',
+        },
+
+      }],
       legend: {
         horizontalAlign: 'center',
         verticalAlign: 'center',
@@ -88,10 +90,6 @@ export default function Result1(props: any) {
           columnWidth: '55%',
           endingShape: 'rounded',
         },
-      },
-      title: {
-        text: 'Vývoj ekonomických ukazovateľov',
-        align: 'center',
       },
       grid: {
         borderColor: '#e7e7e7',
@@ -290,45 +288,38 @@ export default function Result1(props: any) {
 
   return (
     <div>
-      <h2>Ekonomická analýza ukazovateľov</h2>
+
+      <h1 className={"result-h1"}>Analýza ukazovateľov</h1>
 
       <div className={'row'}>
         <div className={'col-4'}>
           <InfoCard
             header={'VÝNOSY CELKOM'}
-            value={props.result.incomeTotal}
-            color={'success'}
-            icon={'fa fa-line-chart'}
+            value={props.result.incomeTotal.toString() + "€"}
           />
         </div>
 
         <div className={'col-4'}>
           <InfoCard
             header={'NÁKLADY CELKOM'}
-            value={props.result.costTotal}
-            color={'primary'}
-            icon={'fa fa-shopping-cart'}
+            value={props.result.costTotal.toString() + "€"}
           />
         </div>
 
         <div className={'col-4'}>
           <InfoCard
             header={'ZISK CELKOM'}
-            value={props.result.profitTotal}
-            color={'warning'}
-            icon={'fa fa-money'}
+            value={props.result.profitTotal.toString() + "€"}
           />
         </div>
       </div>
 
       <div
-        style={{
-          backgroundColor: 'white',
-          marginTop: 30,
-          boxShadow: '0px 0px 10px lightgray',
-        }}
+        className={"table-card"}
+        style={{marginTop:50}}
       >
         <TableStatic
+          corner={"Ekonomické ukazovatele"}
           header={[...props.result.headers]}
           inputs={[
             'Zisk',
@@ -338,7 +329,7 @@ export default function Result1(props: any) {
             'Nákladovosť',
           ]}
           data={[
-            [...props.result.profitData],
+            [...(props.result.profitData.map((value: number) => (value.toString() + "€")))],
             [...props.result.incomeProfitabilityData],
             [...props.result.costProfitabilityData],
             [...props.result.costEfficiencyData],
@@ -347,15 +338,12 @@ export default function Result1(props: any) {
         />
       </div>
 
-      <h1 style={{textAlign: 'center', margin: 50}}>Dashboarding</h1>
+      <h1 className={"result-h1"}>Dashboarding</h1>
 
       <div
-        style={{
-          backgroundColor: 'white',
-          padding: 25,
-          boxShadow: '0px 0px 10px lightgray',
-        }}
+        className={"graph-card"}
       >
+        <h4 className={"graph-title"}>TRENDY VÝVOJA EKONOMICKÝCH VELIČÍN</h4>
         {
           // @ts-ignore
           <ReactApexChart options={lineGraph.options}
@@ -367,13 +355,9 @@ export default function Result1(props: any) {
       </div>
 
       <div
-        // style={{
-        //   backgroundColor: 'white',
-        //   padding: 25,
-        //   marginTop: 30,
-        //   boxShadow: '0px 0px 10px lightgray',
-        // }}
+        className={"graph-card"}
       >
+        <h4 className={"graph-title"}>EKONOMICÉ UKAZOVATELE V SLEDOVANOM OBDOBÍ</h4>
         {
           // @ts-ignore
           <ReactApexChart options={colGraph.options}
@@ -384,17 +368,13 @@ export default function Result1(props: any) {
         }
       </div>
 
-      <div style={{margin: 0}}>
-        <div style={{margin: 0, paddingLeft: 0}}>
+      <div className={"row"} >
+        <div className={"col-6"}>
           <div
-            style={{
-              backgroundColor: 'white',
-              padding: 25,
-              marginTop: 30,
-              boxShadow: '0px 0px 10px lightgray',
-            }}
+            className={"graph-card"}
+            style={{marginRight:25}}
           >
-            <h4>VÝVOJ RENTABILITY VÝNOSOV</h4>
+            <h4 className={"graph-title"}>VÝVOJ RENTABILITY VÝNOSOV</h4>
             {
               // @ts-ignore
               <ReactApexChart options={incomeRentGraph.options}
@@ -406,16 +386,12 @@ export default function Result1(props: any) {
           </div>
         </div>
 
-        <div style={{margin: 0, paddingRight: 0}}>
+        <div className={"col-6"}>
           <div
-            style={{
-              backgroundColor: 'white',
-              padding: 25,
-              marginTop: 30,
-              boxShadow: '0px 0px 10px lightgray',
-            }}
+            className={"graph-card"}
+            style={{marginLeft:25}}
           >
-            <h4>VÝVOJ RENTABILITY NÁKLADOV</h4>
+            <h4 className={"graph-title"}>VÝVOJ RENTABILITY NÁKLADOV</h4>
             {
               // @ts-ignore
               <ReactApexChart options={costRentGraph.options}
@@ -428,17 +404,13 @@ export default function Result1(props: any) {
         </div>
       </div>
 
-      <div style={{margin: 0}}>
-        <div style={{margin: 0, paddingLeft: 0}}>
+      <div className={"row"}>
+        <div className={"col-6"}>
           <div
-            style={{
-              backgroundColor: 'white',
-              padding: 25,
-              marginTop: 30,
-              boxShadow: '0px 0px 10px lightgray',
-            }}
+            className={"graph-card"}
+            style={{marginRight:25}}
           >
-            <h4>VÝVOJ NÁKLADOVEJ ÚČINNOSTI</h4>
+            <h4 className={"graph-title"}>VÝVOJ NÁKLADOVEJ ÚČINNOSTI</h4>
             {
               // @ts-ignore
               <ReactApexChart options={costEffiGraph.options}
@@ -450,16 +422,12 @@ export default function Result1(props: any) {
           </div>
         </div>
 
-        <div style={{margin: 0, paddingRight: 0}}>
+        <div className={"col-6"}>
           <div
-            style={{
-              backgroundColor: 'white',
-              padding: 25,
-              marginTop: 30,
-              boxShadow: '0px 0px 10px lightgray',
-            }}
+            className={"graph-card"}
+            style={{marginLeft:25}}
           >
-            <h4>VÝVOJ NÁKLADOVOSTI</h4>
+            <h4 className={"graph-title"}>VÝVOJ NÁKLADOVOSTI</h4>
             {
               // @ts-ignore
               <ReactApexChart options={costIndicGraph.options}

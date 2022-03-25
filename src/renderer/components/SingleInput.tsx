@@ -5,25 +5,22 @@ export default function SingleInput(props: any) {
   const dispatch = useAppDispatch();
 
   const handleChange = function (event: any) {
-    dispatch(props.input(event.target.value));
+    dispatch(props.input(parseFloat(event.target.value)));
   };
 
   return (
     <div
       className={'info-card'}
-      style={{
-        marginTop: 80,
-      }}
     >
-      <h6>{props.title}</h6>
-
-      <div>
-        <input
-          value={props.value}
-          type="number"
-          onChange={() => handleChange(event)}
-        />
-      </div>
+      <h2 className={"info-title"}>{props.title}</h2>
+      <input
+        className={"single-input"}
+        value={props.value}
+        type="number"
+        min="0"
+        step="0.01"
+        onChange={() => handleChange(event)}
+      />
     </div>
   );
 }

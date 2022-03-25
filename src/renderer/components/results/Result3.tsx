@@ -1,4 +1,5 @@
 import ReactApexChart from 'react-apexcharts';
+import TableStatic from "../TableStatic";
 
 export default function Result3(props: any) {
   const lineGraph = {
@@ -27,10 +28,6 @@ export default function Result3(props: any) {
       },
       stroke: {
         curve: 'straight',
-      },
-      title: {
-        text: 'Náklady a výnosy',
-        align: 'center',
       },
       grid: {
         borderColor: '#e7e7e7',
@@ -75,10 +72,6 @@ export default function Result3(props: any) {
       stroke: {
         curve: 'straight',
       },
-      title: {
-        text: 'Reťazový index',
-        align: 'center',
-      },
       grid: {
         borderColor: '#e7e7e7',
         row: {
@@ -122,10 +115,6 @@ export default function Result3(props: any) {
       stroke: {
         curve: 'straight',
       },
-      title: {
-        text: 'Bázický index',
-        align: 'center',
-      },
       grid: {
         borderColor: '#e7e7e7',
         row: {
@@ -164,10 +153,6 @@ export default function Result3(props: any) {
           columnWidth: '55%',
           endingShape: 'rounded',
         },
-      },
-      title: {
-        text: 'Percento zmeny výnosov',
-        align: 'center',
       },
       grid: {
         borderColor: '#e7e7e7',
@@ -212,10 +197,6 @@ export default function Result3(props: any) {
           endingShape: 'rounded',
         },
       },
-      title: {
-        text: 'Percento zmeny nákladov',
-        align: 'center',
-      },
       grid: {
         borderColor: '#e7e7e7',
         row: {
@@ -259,10 +240,6 @@ export default function Result3(props: any) {
           endingShape: 'rounded',
         },
       },
-      title: {
-        text: 'Koeficient reakcie',
-        align: 'center',
-      },
       grid: {
         borderColor: '#e7e7e7',
         row: {
@@ -286,16 +263,41 @@ export default function Result3(props: any) {
       },
     },
   };
-
+  console.log(props.result)
   return (
-    <div style={{padding: 30}}>
+    <div>
+
+      <h1 className={"result-h1"}>Indexná analýza</h1>
+
       <div
-        style={{
-          backgroundColor: 'white',
-          padding: 25,
-          boxShadow: '0px 0px 10px lightgray',
-        }}
+        className={"table-card"}
+        style={{marginTop:50}}
       >
+        <TableStatic
+          corner={"Ekonomické ukazovatele"}
+          header={[...props.result.betweenYears]}
+          inputs={[
+            'Reťazový index',
+            'Percento zmeny nákladov',
+            'Percento zmeny výnosov',
+            'Koeficient reakcie',
+          ]}
+          data={[
+            [...props.result.chainIndexes],
+            [...(props.result.costDiff.map((value: number) => (value.toString() + "%")))],
+            [...(props.result.incomeDiff.map((value: number) => (value.toString() + "%")))],
+            [...props.result.reaction],
+
+          ]}
+        />
+      </div>
+
+      <h1 className={"result-h1"}>Dashboarding</h1>
+
+      <div
+        className={"graph-card"}
+      >
+        <h4 className={"graph-title"}>NÁKLADY A VÝNOSY</h4>
         {
           // @ts-ignore
           <ReactApexChart options={lineGraph.options}
@@ -307,13 +309,9 @@ export default function Result3(props: any) {
       </div>
 
       <div
-        style={{
-          backgroundColor: 'white',
-          padding: 25,
-          marginTop: 30,
-          boxShadow: '0px 0px 10px lightgray',
-        }}
+        className={"graph-card"}
       >
+        <h4 className={"graph-title"}>REŤAZOVÝ INDEX</h4>
         {
           // @ts-ignore
           <ReactApexChart options={chainGraph.options}
@@ -324,16 +322,13 @@ export default function Result3(props: any) {
         }
       </div>
 
-      <div>
-        <div>
+      <div className={"row"}>
+        <div className={"col-6"}>
           <div
-            style={{
-              backgroundColor: 'white',
-              padding: 25,
-              marginTop: 30,
-              boxShadow: '0px 0px 10px lightgray',
-            }}
+            className={"graph-card"}
+            style={{marginRight:25}}
           >
+            <h4 className={"graph-title"}>BÁZICKÝ INDEX</h4>
             {
               // @ts-ignore
               <ReactApexChart options={baseGraph.options}
@@ -345,15 +340,12 @@ export default function Result3(props: any) {
           </div>
         </div>
 
-        <div>
+        <div className={"col-6"}>
           <div
-            style={{
-              backgroundColor: 'white',
-              padding: 25,
-              marginTop: 30,
-              boxShadow: '0px 0px 10px lightgray',
-            }}
+            className={"graph-card"}
+            style={{marginLeft:25}}
           >
+            <h4 className={"graph-title"}>PERCENTO ZMENY VÝNOSOV</h4>
             {
               // @ts-ignore
               <ReactApexChart options={incomeDiffGraph.options}
@@ -366,16 +358,13 @@ export default function Result3(props: any) {
         </div>
       </div>
 
-      <div>
-        <div>
+      <div className={"row"}>
+        <div className={"col-6"}>
           <div
-            style={{
-              backgroundColor: 'white',
-              padding: 25,
-              marginTop: 30,
-              boxShadow: '0px 0px 10px lightgray',
-            }}
+            className={"graph-card"}
+            style={{marginRight:25}}
           >
+            <h4 className={"graph-title"}>PRECENTO ZMENY NÁKLADOV</h4>
             {
               // @ts-ignore
               <ReactApexChart options={costDiffGraph.options}
@@ -387,15 +376,12 @@ export default function Result3(props: any) {
           </div>
         </div>
 
-        <div>
+        <div className={"col-6"}>
           <div
-            style={{
-              backgroundColor: 'white',
-              padding: 25,
-              marginTop: 30,
-              boxShadow: '0px 0px 10px lightgray',
-            }}
+            className={"graph-card"}
+            style={{marginLeft:25}}
           >
+            <h4 className={"graph-title"}>KOFICIENT REAKCIE</h4>
             {
               // @ts-ignore
               <ReactApexChart options={reactionGraph.options}

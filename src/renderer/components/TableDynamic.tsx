@@ -7,11 +7,11 @@ export default function TableDynamic(props: any) {
   const customStyles = {
     control: (provided: any) => ({
       ...provided,
-      border: '0px solid green',
+      border: '0px solid black',
     }),
     menu: (provided: any) => ({
       ...provided,
-      border: '0px solid red',
+      border: '0px solid black',
       borderRadius: 0,
     }),
   };
@@ -54,6 +54,7 @@ export default function TableDynamic(props: any) {
   return (
     <div
       className={"table-card row"}
+
     >
       <div className={"col-4"}>
         <table style={{width: '100%'}}>
@@ -97,8 +98,8 @@ export default function TableDynamic(props: any) {
           })}
           {props.dynRows ? (
             <tr>
-              <td style={{textAlign: 'center'}} onClick={addRow}>
-                <button type="button">delete</button>
+              <td className={"add-cell"} style={{textAlign: 'center'}} onClick={addRow}>
+                +
               </td>
             </tr>
           ) : (
@@ -110,7 +111,8 @@ export default function TableDynamic(props: any) {
         </table>
       </div>
 
-      <div className={"col-8"} style={{overflow: 'auto'}}>
+      <div className={"col-8"} style={{width:"100%"}}>
+        <div style={{overflow:"auto"}}>
         <table>
           <thead>
           <tr className={"table-head"}>
@@ -125,39 +127,39 @@ export default function TableDynamic(props: any) {
                   //   options={props.selectCol}
                   //   onChange={(e) => handleChangeHeader(e, idx)}
                   // />
-                  <select
-                    className={"table-select-head"}
-                    value={value}
-                    onChange={(e) => handleChangeHeader(e.target, idx)}
-                  >
-                    {props.selectCol.map((option: any) => (
-                      <option key={option.value} value={option.label}>
-                        {option.label}
-                      </option>
-                    ))}
-                  </select>
+                    <select
+                      className={"table-select-head"}
+                      value={value}
+                      onChange={(e) => handleChangeHeader(e.target, idx)}
+                    >
+                      {props.selectCol.map((option: any) => (
+                        <option key={option.value} value={option.label}>
+                          {option.label}
+                        </option>
+                      ))}
+                    </select>
                 ) : props.headerType === 'input' ? (
                   <input
                     className={"table-input-head"}
                     type="text"
-                    defaultValue={value}
-                    onBlur={(e) => handleChangeHeader(e.target, idx)}
+                    value={value}
+                    onChange={(e) => handleChangeHeader(e.target, idx)}
                   />
-                ) : (
-                  <div style={{textAlign: 'center'}}>{value}</div>
-                )}
+                ) :
+                  value
+                }
               </th>
             ))}
             {props.dynCols && (
-              <th style={{backgroundColor: 'white'}} onClick={addColumn}>
-                <button type="button">delete</button>
+              <th className={"add-cell"} onClick={addColumn}>
+                +
               </th>
             )}
           </tr>
           </thead>
           <tbody>
           {props.data.map((rowData: string[], row: number) => (
-            <tr>
+            <tr key={row}>
               {rowData.map((value: string, col: number) => (
                 <td
                   className={"table-cell"}
@@ -166,14 +168,14 @@ export default function TableDynamic(props: any) {
                   <input
                     type="text"
                     className={"table-input"}
-                    defaultValue={value}
-                    onBlur={(e) => handleChangeData(e, row, col)}
+                    value={value}
+                    onChange={(e) => handleChangeData(e, row, col)}
                   />
                 </td>
               ))}
               {props.dynRows && (
-                <td onClick={() => deleteRow(row)}>
-                  <button type="button">delete</button>
+                <td className={"delete-cell"} onClick={() => deleteRow(row)}>
+                  🗑
                 </td>
               )}
             </tr>
@@ -184,17 +186,18 @@ export default function TableDynamic(props: any) {
               props.data[0].map((value: any, col: number) => {
                 return (
                   <td
-                    style={{textAlign: 'center'}}
+                    className={"delete-cell"}
                     key={col}
                     onClick={() => deleteColumn(col)}
                   >
-                    <button type="button">delete</button>
+                    🗑
                   </td>
                 );
               })}
           </tr>
           </tbody>
         </table>
+        </div>
       </div>
     </div>
   );

@@ -1,14 +1,20 @@
 import Result1 from '../results/Result1';
 import {useEffect, useState} from 'react';
-import groupedOptions from '../chartOfAccounts';
-import TableDynamic from '../TableDynamic';
+// import groupedOptions from '../chartOfAccounts';
+// import TableDynamic from '../TableDynamic';
 import {useSelector} from 'react-redux';
 import {bilanceActions, selectBilance} from 'renderer/store/slice';
 import HeaderBar from '../HeaderBar';
+import groupedOptions from "../chartOfAccounts";
+import TableDynamic from "../TableDynamic";
+import TextField from "../TextField";
 
 export default function Task1() {
   let [getResult, setResult] = useState({
     headers: [],
+    items: [],
+    data: [[]],
+    values: [],
     costTotal: 0,
     incomeTotal: 0,
     profitTotal: 0,
@@ -21,7 +27,7 @@ export default function Task1() {
     costIndicatorData: [],
   });
 
-  const {headers, items, data, values} = useSelector(selectBilance);
+  const {headers, items, data, values, text} = useSelector(selectBilance);
 
   const divideArrays = (
     numerator: number[],
@@ -78,6 +84,12 @@ export default function Task1() {
     setResult({
       // @ts-ignore
       headers,
+      // @ts-ignore
+      items,
+      // @ts-ignore
+      data,
+      // @ts-ignore
+      values,
       costTotal,
       incomeTotal,
       profitTotal,
@@ -98,14 +110,16 @@ export default function Task1() {
     });
   };
 
-  useEffect(task1, [headers, items, data, values]);
+  useEffect(task1, [headers, items, data, values, text]);
 
   return (
     <div className={'task-container'}>
       <HeaderBar title={'Ekonomická analýza hospodárenia'}/>
 
+      <h1 className={"result-h1"}>Vstupy</h1>
+
       <TableDynamic
-        corner={'Ekonomická položka'}
+        corner={'Ekonomická položka Náklady/Výnosy'}
         headerType={'input'}
         header={headers}
         inputType={'select'}
@@ -117,9 +131,12 @@ export default function Task1() {
         proceed={task1}
         selectRow={groupedOptions}
         actions={bilanceActions}
+        selector={selectBilance}
       />
 
       <Result1 result={getResult}/>
+
+      <TextField text={text} action={bilanceActions.changeText}/>
     </div>
   );
 }

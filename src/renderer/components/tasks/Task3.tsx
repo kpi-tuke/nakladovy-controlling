@@ -1,10 +1,11 @@
 import Result3 from '../results/Result3';
-import {useEffect, useState} from 'react';
+import { useEffect, useState } from 'react';
 import HeaderBar from '../HeaderBar';
 import groupedOptions from '../chartOfAccounts';
 import TableDynamic from '../TableDynamic';
-import {baseIndexActions, chainActions, selectBase, selectChain,} from 'renderer/store/slice';
-import {useSelector} from 'react-redux';
+import {chainActions, selectChain} from 'renderer/store/slice';
+import { useSelector } from 'react-redux';
+import TextField from "../TextField";
 
 export default function Task3() {
   let [getResult, setResult] = useState({
@@ -22,8 +23,7 @@ export default function Task3() {
     betweenYears: [],
   });
 
-  const { headers, items, data, values } = useSelector(selectChain);
-  const baseState = useSelector(selectBase);
+  const { headers, items, data, values, text } = useSelector(selectChain);
 
   const task3 = () => {
     let costSumsForYears: number[] = [];
@@ -37,32 +37,32 @@ export default function Task3() {
     let reaction: number[] = [];
     let betweenYears: string[] = [];
 
-    for (let i = 0; i < headers.length; i++) {
+    for (let i = 0; i < headers.length-1; i++) {
       costSumsForYears.push(0);
       incomeSumsForYears.push(0);
     }
 
     data.map((rowData, row) => {
       parseInt(values[row]) >= 600
-        ? rowData.map((value, col) => {
-          incomeSumsForYears[col] =
-            incomeSumsForYears[col] + parseFloat(value === '' ? '0' : value);
-        })
-        : rowData.map((value, col) => {
-          costSumsForYears[col] =
-            costSumsForYears[col] + parseFloat(value === '' ? '0' : value);
-        });
+          ? rowData.map((value, col) => {
+            col === 0
+              ? (incomeSumBase =
+                incomeSumBase + parseFloat(value === '' ? '0' : value))
+              :
+              incomeSumsForYears[col-1] =
+                incomeSumsForYears[col-1] + parseFloat(value === '' ? '0' : value);
+            })
+          : rowData.map((value, col) => {
+            col === 0
+              ? (costSumBase =
+                costSumBase + parseFloat(value === '' ? '0' : value))
+              :
+              costSumsForYears[col-1] =
+                costSumsForYears[col-1] + parseFloat(value === '' ? '0' : value);
+            });
     });
 
-    baseState.data.map((rowData, row) => {
-      parseInt(baseState.values[row]) >= 600
-        ? (incomeSumBase =
-          incomeSumBase + parseFloat(rowData[0] === '' ? '0' : rowData[0]))
-        : (costSumBase =
-          costSumBase + parseFloat(rowData[0] === '' ? '0' : rowData[0]));
-    });
-
-    for (let i = 0; i < headers.length - 1; i++) {
+    for (let i = 0; i < headers.length - 2; i++) {
       if (costSumsForYears[i] === 0) chainIndexes[i] = 0;
       else
         chainIndexes[i] =
@@ -84,18 +84,24 @@ export default function Task3() {
 
       incomeDiff[i] = Math.round(incomeDiff[i] * 100) / 100;
       costDiff[i] = Math.round(costDiff[i] * 100) / 100;
-      betweenYears[i] = headers[i] + '/' + headers[i + 1];
+      betweenYears[i] = headers[i+1] + '/' + headers[i + 2];
     }
 
-    for (let i = 0; i < headers.length; i++) {
+    for (let i = 0; i < headers.length-1; i++) {
+      if (costSumBase === 0) baseIndexes[i] = 0;
+      else
       baseIndexes[i] =
         Math.round((costSumsForYears[i] / costSumBase) * 100) / 100;
+    }
+    let newHeaders: string[] = []
+    for (let i = 1; i<headers.length; i++){
+      newHeaders.push(headers[i])
     }
 
     // @ts-ignore
     setResult({
       // @ts-ignore
-      headers,
+      headers: newHeaders,
       // @ts-ignore
       costSumsForYears,
       // @ts-ignore
@@ -117,52 +123,38 @@ export default function Task3() {
       // @ts-ignore
       betweenYears,
     });
+
   };
 
-  useEffect(task3, [headers, items, data, values, baseState]);
+  useEffect(task3, [headers, items, data, values, text]);
 
   return (
-    <div style={{height: '100vh', overflow: 'auto'}}>
-      <HeaderBar title={'Analýza reťazových a bázických indexov'}/>
+    <div className={'task-container'}>
 
-      <div>
-        <div>
-          <TableDynamic
-            corner={'Ekonomická položka'}
-            headerType={'input'}
-            header={headers}
-            inputType={'select'}
-            inputs={items}
-            data={data}
-            values={values}
-            dynRows={true}
-            dynCols={true}
-            selectRow={groupedOptions}
-            actions={chainActions}
-          />
-        </div>
+      <h1 className={"result-h1"}>Vstupy</h1>
 
-        <div>
-          {
-            <TableDynamic
-              corner={'Ekonomická položka'}
-              headerType={'text'}
-              header={baseState.headers}
-              inputType={'select'}
-              inputs={baseState.items}
-              data={baseState.data}
-              values={baseState.values}
-              dynCols={false}
-              dynRows={true}
-              selectRow={groupedOptions}
-              actions={baseIndexActions}
-            />
-          }
-        </div>
-      </div>
-      <div>
-        <Result3 result={getResult}/>
-      </div>
+      <HeaderBar
+        title={'Analýza reťazových a bázických indexov druhových nákladov '}
+      />
+
+      <TableDynamic
+        corner={'Ekonomická položka'}
+        headerType={'input'}
+        header={headers}
+        inputType={'select'}
+        inputs={items}
+        data={data}
+        values={values}
+        dynRows={true}
+        dynCols={true}
+        selectRow={groupedOptions}
+        actions={chainActions}
+        base={true}
+      />
+
+      <Result3 result={getResult} />
+
+      <TextField text={text} action={chainActions.changeText}/>
     </div>
   );
 }

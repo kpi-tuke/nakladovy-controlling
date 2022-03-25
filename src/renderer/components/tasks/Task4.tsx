@@ -1,14 +1,13 @@
 import TableDynamic from '../TableDynamic';
 import Result4 from '../results/Result4';
-import {useEffect, useState} from 'react';
+import { useEffect, useState } from 'react';
 import SingleInput from '../SingleInput';
 import HeaderBar from '../HeaderBar';
 import {CVPActions, selectCVP} from 'renderer/store/slice';
-import {useAppSelector} from 'renderer/store/hooks';
+import { useAppSelector } from 'renderer/store/hooks';
+import TextField from "../TextField";
 
 export default function Task4() {
-  // potom po skonceni analýz pridat moznost suhrnu, report vysledkov a slovná interpretacia vysledkov
-  //potom tento report može byt vytlaceny alebo pdf
   let [getResult, setResult] = useState({
     volumes: [],
     prices: [],
@@ -21,7 +20,7 @@ export default function Task4() {
     zeroProf: [],
   });
 
-  const {headers, data, items, values, fixTotal, minProfit} =
+  const { headers, data, items, values, fixTotal, minProfit, text } =
     useAppSelector(selectCVP);
 
   const task4 = () => {
@@ -29,32 +28,19 @@ export default function Task4() {
     let prices: number[] = [];
     let costs: number[] = [];
 
-    for (let i = 0; i < items.length; i++) {
-      volumes.push(0);
-      prices.push(0);
-      costs.push(0);
-    }
-
-    data.map((rowData: string[], idx: number) => {
-      volumes[idx] = parseInt(rowData[0]);
-      prices[idx] = parseInt(rowData[1]);
-      costs[idx] = parseInt(rowData[2]);
-    });
-
     const zeroEur: number[] = [];
     const zeroTon: number[] = [];
     const zeroProf: number[] = [];
 
+    data.map((rowData: string[], idx: number) => {
+      volumes[idx] = parseFloat(rowData[0]);
+      prices[idx] = parseFloat(rowData[1]);
+      costs[idx] = parseFloat(rowData[2]);
+    });
     for (let i = 0; i < items.length; i++) {
-      zeroEur.push(0);
-      zeroTon.push(0);
-      zeroProf.push(0);
-    }
-
-    for (let i = 0; i < items.length; i++) {
-      zeroEur[i] = fixTotal / (1 - costs[i] / prices[i]);
-      zeroTon[i] = fixTotal / (prices[i] - costs[i]);
-      zeroProf[i] = (fixTotal + minProfit) / (prices[i] - costs[i]); // pridat min zisk
+      zeroEur[i] = (isNaN(fixTotal) ? 0 : fixTotal) / (1 - costs[i] / prices[i]);
+      zeroTon[i] = (isNaN(fixTotal) ? 0 : fixTotal) / (prices[i] - costs[i]);
+      zeroProf[i] = ((isNaN(fixTotal) ? 0 : fixTotal) + (isNaN(minProfit) ? 0 : minProfit)) / (prices[i] - costs[i]);
     }
 
     // @ts-ignore
@@ -68,9 +54,9 @@ export default function Task4() {
       // @ts-ignore
       items,
       // @ts-ignore
-      fixTotal: fixTotal,
+      fixTotal: (isNaN(fixTotal) ? 0 : fixTotal),
       // @ts-ignore
-      minProfit: minProfit,
+      minProfit: (isNaN(minProfit) ? 0 : minProfit),
       // @ts-ignore
       zeroEur,
       // @ts-ignore
@@ -80,15 +66,18 @@ export default function Task4() {
     });
   };
 
-  useEffect(task4, [fixTotal, minProfit, items, data, headers, values]);
+  useEffect(task4, [text, fixTotal, minProfit, items, data, headers, values]);
 
   return (
-    <div style={{height: '100vh', overflow: 'auto'}}>
-      <HeaderBar title={'CVP analýza'}/>
-      <div style={{paddingLeft: 0, paddingRight: 30}}>
-        <div>
+    <div className={'task-container'}>
+      <HeaderBar title={'CVP analýza'} />
+
+      <h1 className={"result-h1"}>Vstupy</h1>
+
+      <div className={"row"}>
+        <div className={"col-8"}>
           <TableDynamic
-            corner={'Ekonomická položka'}
+            corner={'Výrobok'}
             headerType={'text'}
             header={headers}
             inputType={'input'}
@@ -101,29 +90,26 @@ export default function Task4() {
           />
         </div>
 
-        <div>
-          <div>
-            <div>
-              <SingleInput
-                input={CVPActions.setFixTotal}
-                value={fixTotal}
-                title={'CELKOVÉ FIXNÉ NÁKLADY'}
-              />
-            </div>
-            <div>
-              <SingleInput
-                input={CVPActions.setMinProfit}
-                value={minProfit}
-                title={'MINIMÁLNY ZISK'}
-              />
-            </div>
-          </div>
+        <div className={"col-2"}>
+          <SingleInput
+            input={CVPActions.setFixTotal}
+            value={fixTotal}
+            title={'CELKOVÉ FIXNÉ NÁKLADY[€]'}
+          />
+        </div>
+
+        <div className={"col-2"}>
+          <SingleInput
+            input={CVPActions.setMinProfit}
+            value={minProfit}
+            title={'MINIMÁLNY ZISK[€]'}
+          />
         </div>
       </div>
 
-      <div>
-        <Result4 result={getResult} />
-      </div>
+      <Result4 result={getResult} />
+
+      <TextField text={text} action={CVPActions.changeText}/>
     </div>
   );
 }

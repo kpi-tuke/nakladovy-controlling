@@ -1,5 +1,6 @@
 import ReactApexChart from 'react-apexcharts';
 import InfoCard from '../InfoCard';
+import TableStatic from "../TableStatic";
 
 export default function Result2(props: any) {
   const barChartRow = {
@@ -41,6 +42,12 @@ export default function Result2(props: any) {
           trim: true,
         },
       },
+      yaxis: [{
+        title: {
+          text: 'náklady v €',
+        },
+
+      }],
     },
   };
 
@@ -79,9 +86,12 @@ export default function Result2(props: any) {
           trim: true,
         },
       },
-      yaxis: {
-        label: 'Náklady (€)',
-      },
+      yaxis: [{
+        title: {
+          text: 'náklady v €',
+        },
+
+      }],
     },
   };
 
@@ -107,57 +117,76 @@ export default function Result2(props: any) {
       fill: {
         type: 'gradient',
       },
-      title: {
-        text: 'Kalkulačné členenie nákladov',
-      },
       labels: props.result.headers,
     },
   };
 
   return (
     <div style={{padding: 30}}>
-      <h2>Štruktúrna analýza</h2>
+      <h1 className={"result-h1"}>Analýza ukazovateľov</h1>
 
-      <div>
-        <InfoCard
-          header={'CELKOVÉ NÁKLADY'}
-          value={props.result.totalCost}
-          color={'success'}
-          icon={'fa fa-money'}
+      <InfoCard
+      header={'CELKOVÉ NÁKLADY'}
+      value={props.result.totalCost.toString() + "€"}
+      />
+
+      <div
+        className={"table-card"}
+        style={{marginTop:50}}
+      >
+        <TableStatic
+          header={[...props.result.items]}
+          inputs={[
+            'Spolu',
+            "Percentá"
+          ]}
+          data={[
+            [...(props.result.rowSums.map((value: number) => (value.toString() + "€")))],
+            [...(props.result.rowSums.map((value: number) => ((Math.round(value / props.result.totalCost * 10000)/100).toString() + "%")))],
+          ]}
+        />
+
+        <TableStatic
+          header={[...props.result.headers]}
+          inputs={[
+            'Spolu',
+            "Percentá"
+          ]}
+          data={[
+            [...(props.result.colSums.map((value: number) => (value.toString() + "€")))],
+            [...(props.result.colSums.map((value: number) => ((Math.round(value / props.result.totalCost * 10000)/100).toString() + "%")))],
+          ]}
         />
       </div>
 
-      <h1 style={{textAlign: 'center', margin: 50}}>Dashboarding</h1>
+      <h1 className={"result-h1"}>Dashboarding</h1>
 
-      <div>
-        <div>
+      <div className={"row"}>
+        <div className={"col-6"}>
           <div
+            className={"graph-card"}
             style={{
-              backgroundColor: 'white',
-              padding: 25,
-              marginTop: 30,
-              boxShadow: '0px 0px 10px lightgray',
+              marginRight: 25,
             }}
           >
-            <h4>DRUHOVÉ ČLENENIE NÁKLADOV</h4>
+            <h4 className={"graph-title"}>ŠTRUKTÚRNA ANALÝZA NÁKLADOVÝCH DRUHOV</h4>
             {
               <ReactApexChart
                 // @ts-ignore
                 options={pieChart.options}
                 series={pieChart.series}
                 type="pie"
+                height={300}
               />
             }
           </div>
         </div>
 
-        <div>
+        <div className={"col-6"}>
           <div
+            className={"graph-card"}
             style={{
-              backgroundColor: 'white',
-              padding: 25,
-              marginTop: 30,
-              boxShadow: '0px 0px 10px lightgray',
+              marginRight: 25,
             }}
           >
             <h4>DRUHOVÉ ČLENENIE NÁKLADOV</h4>
@@ -167,41 +196,39 @@ export default function Result2(props: any) {
                 options={barChartRow.options}
                 series={barChartRow.series}
                 type="bar"
+                height={300}
               />
             }
           </div>
         </div>
       </div>
 
-      <div>
-        <div>
+      <div className={"row"}>
+        <div className={"col-6"}>
           <div
+            className={"graph-card"}
             style={{
-              backgroundColor: 'white',
-              padding: 25,
-              marginTop: 30,
-              boxShadow: '0px 0px 10px lightgray',
+              marginRight: 25,
             }}
           >
-            <h4>KALKULAČNÉ ČLENENIE NÁKLADOV</h4>
+            <h4 className={"graph-title"}>ŠTRUKTÚRNA ANALÝZA KALKULAČNÝCH POLOŽIEK</h4>
             {
               <ReactApexChart
                 // @ts-ignore
                 options={donutChart.options}
                 series={donutChart.series}
                 type="donut"
+                height={300}
               />
             }
           </div>
         </div>
 
-        <div>
+        <div className={"col-6"}>
           <div
+            className={"graph-card"}
             style={{
-              backgroundColor: 'white',
-              padding: 25,
-              marginTop: 30,
-              boxShadow: '0px 0px 10px lightgray',
+              marginRight: 25,
             }}
           >
             <h4>KALKULAČNÉ ČLENENIE NÁKLADOV</h4>
@@ -211,6 +238,7 @@ export default function Result2(props: any) {
                 options={barChartCol.options}
                 series={barChartCol.series}
                 type="bar"
+                height={300}
               />
             }
           </div>

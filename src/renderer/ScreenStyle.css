@@ -15,16 +15,42 @@ a {
 
 .info-card {
   background-color: white;
+  padding: 20px;
+  box-shadow: 0 0 3px lightgray;
+  margin-inline: 3%;
+  max-width: 400px;
+}
+
+.info-title {
+  color: #1a98ff;
+  font-size: large;
+}
+
+.info-value {
+  text-align: center;
+  font-weight: bold;
+  font-size: large;
+}
+
+.graph-card {
+  background-color: white;
   padding: 25px;
-  box-shadow: 0 0 10px lightgray;
-  width: 300px;
+  box-shadow: 0 0 3px lightgray;
+  margin-bottom: 50px;
+}
+
+.single-input {
+  width: 95%;
+  height: 38px;
+  text-align: center;
+  outline-width: 0;
 }
 
 .select-card {
   background-color: white;
   padding: 0;
   margin-right: 50px;
-  box-shadow: 0 0 10px lightgray;
+  box-shadow: 0 0 3px lightgray;
 }
 
 .select-head {
@@ -63,16 +89,23 @@ a {
   font-weight: bold;
 }
 
+.text-input {
+  height: 200px;
+  width: 100%;
+  border: 0;
+  box-shadow: 0 0 3px lightgrey;
+}
+
 .task-container {
   height: 100%;
-  padding: 80px 30px 30px;
+  padding: 50px 30px 30px;
   background-color: #f2f1f6;
 }
 
 .table-card {
   background-color: white;
   padding: 0;
-  box-shadow: 0 0 10px lightgrey;
+  box-shadow: 0 0 3px lightgrey;
 }
 
 .table-head {
@@ -84,18 +117,18 @@ a {
   text-align: center;
   justify-content: center;
   font-weight: bold;
-  font-size: 20px;
+  font-size: 16px;
   height: 50px;
   border-bottom: 1px solid lightgrey;
-}
-
-.table-row {
+  border-right: 1px solid lightgrey;
 }
 
 .table-cell {
   border-bottom: 1px solid lightgrey;
-  /*border-right: 1px solid lightgrey;*/
+  border-right: 1px solid lightgrey;
   height: 50px;
+  width: auto;
+  min-width: 100px;
 }
 
 .table-select-head {
@@ -108,32 +141,90 @@ a {
 
 .table-input-head {
   border: 0;
-  width: 100%;
-  height: 100%;
+  width: 95%;
+  height: 95%;
   text-align: center;
+  font-size: 15px;
   background-color: #e6f7ff;
+  outline-width: 0;
 }
 
 .table-input {
   border: 0;
-  width: 100%;
-  height: 100%;
+  width: 95%;
+  height: 95%;
+  font-size: 15px;
+  text-align: center;
+  outline-width: 0;
+}
+
+.delete-cell {
+  border: 1px solid lightgrey;
   text-align: center;
 }
 
+.delete-cell:hover {
+  color: white;
+  background-color: #ff3939;
+}
+
+.add-cell {
+  border: 1px solid lightgrey;
+  text-align: center;
+  background-color: white;
+  color: grey;
+  font-weight:normal;
+}
+
+.add-cell:hover {
+  color: white;
+  background-color: #65c565;
+}
+
+.result-h1 {
+  text-align: center;
+  margin: 50px;
+}
+
+.graph-title {
+  text-align: center;
+}
 
 .row {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
-  padding-bottom: 50px;
+}
+
+.col-1 {
+  grid-column: span 1;
+}
+
+.col-2 {
+  grid-column: span 2;
+}
+
+.col-3 {
+  grid-column: span 3;
 }
 
 .col-4 {
   grid-column: span 4;
 }
 
+.col-6 {
+  grid-column: span 6;
+}
+
 .col-8 {
   grid-column: span 8;
+}
+
+.col-10 {
+  grid-column: span 10;
+}
+
+.col-12 {
+  grid-column: span 12;
 }
 
 

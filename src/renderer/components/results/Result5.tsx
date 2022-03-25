@@ -29,23 +29,23 @@ export default function Result5(props: any) {
     });
   }
 
-  let series4: any[] = [];
-  for (let index = 0; index < props.result.headers.length; index++) {
-    // @ts-ignore
-    series4.push({
-      name: props.result.headers[index].toString(),
-      data: [props.result.marginProfit[index]],
-    });
-  }
+  // let series4: any[] = [];
+  // for (let index = 0; index < props.result.headers.length; index++) {
+  //   // @ts-ignore
+  //   series4.push({
+  //     name: props.result.headers[index].toString(),
+  //     data: [props.result.marginProfit[index]],
+  //   });
+  // }
 
-  let series5: any[] = [];
-  for (let index = 0; index < props.result.headers.length; index++) {
-    // @ts-ignore
-    series5.push({
-      name: props.result.headers[index].toString(),
-      data: [props.result.profit[index]],
-    });
-  }
+  // let series5: any[] = [];
+  // for (let index = 0; index < props.result.headers.length; index++) {
+  //   // @ts-ignore
+  //   series5.push({
+  //     name: props.result.headers[index].toString(),
+  //     data: [props.result.profit[index]],
+  //   });
+  // }
 
   const colGraph = {
     series: series,
@@ -60,10 +60,6 @@ export default function Result5(props: any) {
           columnWidth: '55%',
           endingShape: 'rounded',
         },
-      },
-      title: {
-        text: 'Ekonomické ukazovatele',
-        align: 'center',
       },
       grid: {
         borderColor: '#e7e7e7',
@@ -104,10 +100,6 @@ export default function Result5(props: any) {
           endingShape: 'rounded',
         },
       },
-      title: {
-        text: 'Hrubé rozpätie',
-        align: 'center',
-      },
       grid: {
         borderColor: '#e7e7e7',
         row: {
@@ -126,6 +118,12 @@ export default function Result5(props: any) {
       xaxis: {
         categories: ['Hrubé rozpätie'],
       },
+      yaxis: [{
+        title: {
+          text: '€',
+        },
+
+      }],
       fill: {
         opacity: 1,
       },
@@ -147,10 +145,6 @@ export default function Result5(props: any) {
           endingShape: 'rounded',
         },
       },
-      title: {
-        text: 'Príspevok na úhradu',
-        align: 'center',
-      },
       grid: {
         borderColor: '#e7e7e7',
         row: {
@@ -169,124 +163,130 @@ export default function Result5(props: any) {
       xaxis: {
         categories: ['Príspevok na úhradu'],
       },
+      yaxis: [{
+        title: {
+          text: '€',
+        },
+
+      }],
       fill: {
         opacity: 1,
       },
     },
   };
 
-  const colGraph4 = {
-    // @ts-ignore
-    series: series4,
-    options: {
-      chart: {
-        type: 'bar',
-        height: 350,
-      },
-      plotOptions: {
-        bar: {
-          horizontal: false,
-          columnWidth: '55%',
-          endingShape: 'rounded',
-        },
-      },
-      title: {
-        text: 'Zisková prirážka',
-        align: 'center',
-      },
-      grid: {
-        borderColor: '#e7e7e7',
-        row: {
-          colors: ['#f3f3f3', 'transparent'],
-          opacity: 0.5,
-        },
-      },
-      dataLabels: {
-        enabled: false,
-      },
-      stroke: {
-        show: true,
-        width: 2,
-        colors: ['transparent'],
-      },
-      xaxis: {
-        categories: ['Zisková prirážka'],
-      },
-      fill: {
-        opacity: 1,
-      },
-    },
-  };
+  // const colGraph4 = {
+  //   // @ts-ignore
+  //   series: series4,
+  //   options: {
+  //     chart: {
+  //       type: 'bar',
+  //       height: 350,
+  //     },
+  //     plotOptions: {
+  //       bar: {
+  //         horizontal: false,
+  //         columnWidth: '55%',
+  //         endingShape: 'rounded',
+  //       },
+  //     },
+  //     title: {
+  //       text: 'Zisková prirážka',
+  //       align: 'center',
+  //     },
+  //     grid: {
+  //       borderColor: '#e7e7e7',
+  //       row: {
+  //         colors: ['#f3f3f3', 'transparent'],
+  //         opacity: 0.5,
+  //       },
+  //     },
+  //     dataLabels: {
+  //       enabled: false,
+  //     },
+  //     stroke: {
+  //       show: true,
+  //       width: 2,
+  //       colors: ['transparent'],
+  //     },
+  //     xaxis: {
+  //       categories: ['Zisková prirážka'],
+  //     },
+  //     fill: {
+  //       opacity: 1,
+  //     },
+  //   },
+  // };
 
-  const colGraph5 = {
-    // @ts-ignore
-    series: series5,
-    options: {
-      chart: {
-        type: 'bar',
-        height: 350,
-      },
-      plotOptions: {
-        bar: {
-          horizontal: false,
-          columnWidth: '55%',
-          endingShape: 'rounded',
-        },
-      },
-      title: {
-        text: 'Zisk',
-        align: 'center',
-      },
-      grid: {
-        borderColor: '#e7e7e7',
-        row: {
-          colors: ['#f3f3f3', 'transparent'],
-          opacity: 0.5,
-        },
-      },
-      dataLabels: {
-        enabled: false,
-      },
-      stroke: {
-        show: true,
-        width: 2,
-        colors: ['transparent'],
-      },
-      xaxis: {
-        categories: ['Zisk'],
-      },
-      fill: {
-        opacity: 1,
-      },
-    },
-  };
+  // const colGraph5 = {
+  //   // @ts-ignore
+  //   series: series5,
+  //   options: {
+  //     chart: {
+  //       type: 'bar',
+  //       height: 350,
+  //     },
+  //     plotOptions: {
+  //       bar: {
+  //         horizontal: false,
+  //         columnWidth: '55%',
+  //         endingShape: 'rounded',
+  //       },
+  //     },
+  //     title: {
+  //       text: 'Zisk',
+  //       align: 'center',
+  //     },
+  //     grid: {
+  //       borderColor: '#e7e7e7',
+  //       row: {
+  //         colors: ['#f3f3f3', 'transparent'],
+  //         opacity: 0.5,
+  //       },
+  //     },
+  //     dataLabels: {
+  //       enabled: false,
+  //     },
+  //     stroke: {
+  //       show: true,
+  //       width: 2,
+  //       colors: ['transparent'],
+  //     },
+  //     xaxis: {
+  //       categories: ['Zisk'],
+  //     },
+  //     fill: {
+  //       opacity: 1,
+  //     },
+  //   },
+  // };
 
   return (
-    <div style={{padding: 30}}>
+    <div>
+
+      <h1 className={"result-h1"}>Ukazovatele sortimentnej analýzy </h1>
+
       <div
-        style={{
-          backgroundColor: 'white',
-          marginTop: 30,
-          boxShadow: '0px 0px 10px lightgray',
-        }}
+        className={"table-card"}
       >
         <TableStatic
+          corner={"Ekonomické ukazovatele"}
           header={[...props.result.headers]}
           inputs={[
-            'Rentabilita tržieb',
-            'Rentabilita nákladov',
-            'Hrubé rozpätie',
-            'Príspevok na úhradu',
+            'Rentabilita tržieb[%]',
+            'Rentabilita nákladov[%]',
+            'Hrubé rozpätie[€]',
+            'Príspevok na úhradu[€]',
           ]}
           data={[
             [
-              ...props.result.rentCost.map(
-                (value: number) => Math.round(value * 100) + '%'
+              ...props.result.rentIncome.map(
+                (value: number) => Math.round(value * 100)
               ),
             ],
             [
-              ...props.result.rentIncome.map(
-                (value: number) => Math.round(value * 100) + '%'
+              ...props.result.rentCost.map(
+                (value: number) => Math.round(value * 100)
               ),
             ],
             [
@@ -304,15 +304,12 @@ export default function Result5(props: any) {
       </div>
 
       <div
-        style={{
-          backgroundColor: 'white',
-          marginTop: 30,
-          boxShadow: '0px 0px 10px lightgray',
-        }}
+        className={"table-card"}
       >
         <TableStatic
+          corner={"Ekonomické ukazovatele"}
           header={[...props.result.headers]}
-          inputs={['Zisková prirážka', 'Zisk']}
+          inputs={['Zisková prirážka[€]', 'Zisk pri pôvodnej výrobnej štruktúre[€]']}
           data={[
             [
               ...props.result.marginProfit.map(
@@ -328,14 +325,12 @@ export default function Result5(props: any) {
         />
       </div>
 
+      <h1 className={"result-h1"}>Dashboarding</h1>
+
       <div
-        style={{
-          backgroundColor: 'white',
-          padding: 25,
-          marginTop: 30,
-          boxShadow: '0px 0px 10px lightgray',
-        }}
+        className={"graph-card"}
       >
+        <h4 className={"graph-title"}>EKONOMICKÉ UKAZOVAELE</h4>
         {
           // @ts-ignore
           <ReactApexChart options={colGraph.options}
@@ -346,16 +341,13 @@ export default function Result5(props: any) {
         }
       </div>
 
-      <div>
-        <div>
+      <div className={"row"}>
+        <div className={"col-6"}>
           <div
-            style={{
-              backgroundColor: 'white',
-              padding: 25,
-              marginTop: 30,
-              boxShadow: '0px 0px 10px lightgray',
-            }}
+            className={"graph-card"}
+            style={{marginRight:25}}
           >
+            <h4 className={"graph-title"}>HRUBÉ ROZPÄTIE</h4>
             {
               // @ts-ignore
               <ReactApexChart options={colGraph2.options}
@@ -367,15 +359,12 @@ export default function Result5(props: any) {
           </div>
         </div>
 
-        <div>
+        <div className={"col-6"}>
           <div
-            style={{
-              backgroundColor: 'white',
-              padding: 25,
-              marginTop: 30,
-              boxShadow: '0px 0px 10px lightgray',
-            }}
+            className={"graph-card"}
+            style={{marginLeft:25}}
           >
+            <h4 className={"graph-title"}>PRÍSPEVOK NA ÚHRADU</h4>
             {
               // @ts-ignore
               <ReactApexChart options={colGraph3.options}
@@ -388,47 +377,47 @@ export default function Result5(props: any) {
         </div>
       </div>
 
-      <div>
-        <div>
-          <div
-            style={{
-              backgroundColor: 'white',
-              padding: 25,
-              marginTop: 30,
-              boxShadow: '0px 0px 10px lightgray',
-            }}
-          >
-            {
-              // @ts-ignore
-              <ReactApexChart options={colGraph4.options}
-                              series={colGraph4.series}
-                              type="bar"
-                              height={400}
-              />
-            }
-          </div>
-        </div>
+      {/*<div>*/}
+      {/*  <div>*/}
+      {/*    <div*/}
+      {/*      style={{*/}
+      {/*        backgroundColor: 'white',*/}
+      {/*        padding: 25,*/}
+      {/*        marginTop: 30,*/}
+      {/*        boxShadow: '0px 0px 10px lightgray',*/}
+      {/*      }}*/}
+      {/*    >*/}
+      {/*      {*/}
+      {/*        // @ts-ignore*/}
+      {/*        <ReactApexChart options={colGraph4.options}*/}
+      {/*                        series={colGraph4.series}*/}
+      {/*                        type="bar"*/}
+      {/*                        height={400}*/}
+      {/*        />*/}
+      {/*      }*/}
+      {/*    </div>*/}
+      {/*  </div>*/}
 
-        <div>
-          <div
-            style={{
-              backgroundColor: 'white',
-              padding: 25,
-              marginTop: 30,
-              boxShadow: '0px 0px 10px lightgray',
-            }}
-          >
-            {
-              // @ts-ignore
-              <ReactApexChart options={colGraph5.options}
-                              series={colGraph5.series}
-                              type="bar"
-                              height={400}
-              />
-            }
-          </div>
-        </div>
-      </div>
+      {/*  <div>*/}
+      {/*    <div*/}
+      {/*      style={{*/}
+      {/*        backgroundColor: 'white',*/}
+      {/*        padding: 25,*/}
+      {/*        marginTop: 30,*/}
+      {/*        boxShadow: '0px 0px 10px lightgray',*/}
+      {/*      }}*/}
+      {/*    >*/}
+      {/*      {*/}
+      {/*        // @ts-ignore*/}
+      {/*        <ReactApexChart options={colGraph5.options}*/}
+      {/*                        series={colGraph5.series}*/}
+      {/*                        type="bar"*/}
+      {/*                        height={400}*/}
+      {/*        />*/}
+      {/*      }*/}
+      {/*    </div>*/}
+      {/*  </div>*/}
+      {/*</div>*/}
     </div>
   );
 }

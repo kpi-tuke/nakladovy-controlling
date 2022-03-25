@@ -1,10 +1,11 @@
 import ReactApexChart from 'react-apexcharts';
+import TableStatic from "../TableStatic";
 
 export default function Result6(props: any) {
   const barChart = {
     series: [
       {
-        name: 'Paretova analyza',
+        name: 'Pareto analyza',
         type: 'column',
         data: props.result.values,
       },
@@ -23,12 +24,15 @@ export default function Result6(props: any) {
         width: [0, 4],
         show: true,
       },
-      title: {
-        text: 'Pareto analýza',
-      },
       dataLabels: {
         enabled: true,
         enabledOnSeries: [1],
+        style: {
+          fontSize: '14px',
+          fontFamily: 'Helvetica, Arial, sans-serif',
+          fontWeight: 'bold',
+          colors: ["black"]
+        },
       },
       annotations: {
         yaxis: [
@@ -70,7 +74,7 @@ export default function Result6(props: any) {
           min: 0,
           max: props.result.sum,
           title: {
-            text: 'Hodnota',
+            text: 'Náklady v €',
           },
         },
         {
@@ -78,7 +82,7 @@ export default function Result6(props: any) {
           min: 0,
           max: 100,
           title: {
-            text: 'Percento',
+            text: 'Štruktúra nákladov v %',
           },
         },
       ],
@@ -96,15 +100,28 @@ export default function Result6(props: any) {
   };
 
   return (
-    <div style={{padding: 30}}>
+    <div>
+
+      <h1 className={"result-h1"}>Analýza ukazovateľov</h1>
+
+      <div className={"table-card"}>
+        <TableStatic
+          corner={"Príčina"}
+          header={["Náklady[€]", "Náklady kumulované[€]", "Podiel[%]", "Podiel kumulovaný[%]"]}
+          inputs={[...props.result.causes]}
+          data={
+            props.result.values.map((value: string, idx: number) => {
+              return [value, props.result.valuesKumul[idx], props.result.percentages[idx], props.result.kumul[idx]]
+            })
+          }
+        />
+      </div>
+      <h1 className={"result-h1"}>Dashboarding</h1>
+
       <div
-        style={{
-          backgroundColor: 'white',
-          padding: 25,
-          marginTop: 30,
-          boxShadow: '0px 0px 10px lightgray',
-        }}
+       className={"graph-card"}
       >
+        <h4 className={"graph-title"}>PARETO ANALÝZA A LORENZOVA KRIVKA</h4>
         {
           // @ts-ignore
           <ReactApexChart options={barChart.options}

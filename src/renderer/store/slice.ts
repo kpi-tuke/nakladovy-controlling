@@ -5,7 +5,8 @@ export interface BilanceState {
   headers: string[],
   data: string[][],
   items: string[],
-  values: string[]
+  values: string[],
+  text: string
 }
 
 export interface CVPState extends BilanceState {
@@ -74,6 +75,9 @@ const reducerFunctions = {
       rowData.splice(action.payload, 1);
     })
     state.headers.splice(action.payload, 1);
+  },
+  changeText: (state: {text: string}, action: PayloadAction<string>) => {
+    state.text = action.payload
   }
 };
 
@@ -86,10 +90,10 @@ const initialSortimentState: BilanceState = {
     ['8000', '4000'],
   ],
   items: [
-    'Predajná cena jednotková',
-    'Úplné vlastné náklady jednotková',
-    'Priame náklady jednotková',
-    'Objem výroby',
+    'Priame náklady',
+    'Úplné vlastné náklady',
+    'Predajná cena(jednotková)[€]',
+    'Objem výroby[množstvo]',
   ],
   values: [
     'Predajná cena jednotková',
@@ -97,6 +101,7 @@ const initialSortimentState: BilanceState = {
     'Priame náklady jednotková',
     'Objem výroby',
   ],
+  text: ""
 };
 
 const initialBilanceState: BilanceState = {
@@ -110,6 +115,21 @@ const initialBilanceState: BilanceState = {
     '666 – Výnosy z krátkodobého finančného majetku',
   ],
   values: ['501', '666'],
+  text: ""
+};
+
+const initialChainState: BilanceState = {
+  headers: ["Bázický rok", '2000', '2001'],
+  data: [
+    ["4", '1', '2'],
+    ["6", '3', '4'],
+  ],
+  items: [
+    '501 – Spotreba materiálu',
+    '666 – Výnosy z krátkodobého finančného majetku',
+  ],
+  values: ['501', '666'],
+  text: ""
 };
 
 const initialBaseState: BilanceState = {
@@ -120,13 +140,15 @@ const initialBaseState: BilanceState = {
     '666 – Výnosy z krátkodobého finančného majetku',
   ],
   values: ['501', '666'],
+  text: ""
 };
 
 const initialCVPState: CVPState = {
-  headers: ['Výroba', 'Cena/tona', 'Variabilné náklady/tona'],
+  headers: ['Výroba[ks, kg, ton, ...]', 'Cena/množstvo[€/ks, kg, ton, ...]', 'Variabilné náklady/množstvo[€/ks, kg, ton, ...]'],
   items: ['Výrobok A'],
   data: [['100', '8', '6']],
   values: ['Výrobok A'],
+  text: "",
   fixTotal: 0,
   minProfit: 0
 };
@@ -136,10 +158,11 @@ const initialStructureState: BilanceState = {
   data: [['1']],
   items: ['501 – Spotreba materiálu'],
   values: ['1', '7'],
+  text: ""
 };
 
 const initialParetoState: BilanceState = {
-  headers: ['Hodnota'],
+  headers: ['Náklady[€]'],
   data: [['3998'], ['1307'], ['361'], ['82'], ['104'], ['1573'], ['5']],
   items: [
     'Chyby mechanického trieskového opracovania',
@@ -159,6 +182,7 @@ const initialParetoState: BilanceState = {
     'Chyby kompletizácie, balenia',
     'Chyby dokumentácie',
   ],
+  text: ""
 };
 
 export const bilanceSlice = createSlice({
@@ -175,7 +199,7 @@ export const sortimentSlice = createSlice({
 
 export const chainSlice = createSlice({
   name: 'chain',
-  initialState: initialBilanceState,
+  initialState: initialChainState,
   reducers: reducerFunctions,
 });
 

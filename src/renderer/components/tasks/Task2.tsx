@@ -1,23 +1,24 @@
 import TableDynamic from '../TableDynamic';
-import {useEffect, useState} from 'react';
+import { useEffect, useState } from 'react';
 import Result2 from '../results/Result2';
 import HeaderBar from '../HeaderBar';
-import {selectStructure, structureActions} from 'renderer/store/slice';
-import {useSelector} from 'react-redux';
-import {costs} from '../chartOfAccounts';
+import { selectStructure, structureActions} from 'renderer/store/slice';
+import { useSelector } from 'react-redux';
+import { costs } from '../chartOfAccounts';
+import TextField from "../TextField";
 
 export default function Task2() {
-  const {headers, items, data, values} = useSelector(selectStructure);
+  const { headers, items, data, values, text } = useSelector(selectStructure);
 
-  // @ts-ignore
   const selectCol = [
-    {value: 7, label: 'Priamy materiál'},
-    {value: 8, label: 'Priame mzdy'},
-    {value: 9, label: 'Ostatné priame náklady'},
-    {value: 10, label: 'Výrobná réžia'},
-    {value: 11, label: 'Správna réžia'},
-    {value: 12, label: 'Odbytová réžia'},
-    {value: 13, label: 'Zásobovacia réžia'},
+    { value: 7, label: 'Priamy materiál' },
+    { value: 8, label: 'Priame mzdy' },
+    { value: 9, label: 'Ostatné priame náklady' },
+    { value: 10, label: 'Výrobná réžia' },
+    { value: 11, label: 'Správna réžia' },
+    { value: 12, label: 'Odbytová réžia' },
+    { value: 13, label: 'Zásobovacia réžia' },
+    { value: 14, label: 'Dopravná réžia' },
   ];
 
   let [getResult, setResult] = useState({
@@ -58,33 +59,36 @@ export default function Task2() {
     );
 
     //@ts-ignore
-    setResult({items, headers, rowSums, colSums, totalCost});
+    setResult({ items, headers, rowSums, colSums, totalCost });
   };
 
-  useEffect(task2, [headers, items, data, values]);
+  useEffect(task2, [headers, items, data, values, text]);
 
   return (
-    <div style={{height: '100vh', overflow: 'auto'}}>
-      <HeaderBar title={'Analýza štruktúry nákladov'}/>
-      <div style={{marginTop: 60}}>
-        <TableDynamic
-          corner={'↓Druhové | Kalkulačné→'}
-          headerType={'select'}
-          header={headers}
-          inputType={'select'}
-          inputs={items}
-          data={data}
-          values={values}
-          dynRows={true}
-          dynCols={true}
-          proceed={task2}
-          selectRow={costs}
-          selectCol={selectCol}
-          actions={structureActions}
-        />
+    <div className={'task-container'}>
+      <HeaderBar title={'Štruktúrna analýza'} />
 
-        <Result2 result={getResult}/>
-      </div>
+      <h1 className={"result-h1"}>Vstupy</h1>
+
+      <TableDynamic
+        corner={'↓Nákladové druhy (druhové) | Kalkulačné položky (Kalkulačné)→'}
+        headerType={'select'}
+        header={headers}
+        inputType={'select'}
+        inputs={items}
+        data={data}
+        values={values}
+        dynRows={true}
+        dynCols={true}
+        proceed={task2}
+        selectRow={costs}
+        selectCol={selectCol}
+        actions={structureActions}
+      />
+
+      <Result2 result={getResult} />
+
+      <TextField text={text} action={structureActions.changeText}/>
     </div>
   );
 }

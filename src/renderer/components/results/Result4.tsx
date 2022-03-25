@@ -1,23 +1,23 @@
-import {Link} from 'react-router-dom';
 import TableStatic from '../TableStatic';
 import ReactApexChart from 'react-apexcharts';
 
 export default function Result4(props: any) {
+
   return (
-    <div style={{padding: 30}}>
+    <div>
+
+      <h1 className={"result-h1"}>Analýza nulového bodu - kritický bod rentability </h1>
+
       <div
-        style={{
-          backgroundColor: 'white',
-          marginTop: 30,
-          boxShadow: '0px 0px 10px lightgray',
-        }}
+        className={"table-card"}
       >
         <TableStatic
+          corner={"Ekonomické ukazovatele"}
           header={...props.result.items}
           inputs={[
             'Nulový bod[€]',
-            'Nulový bod[tony]',
-            'Zisk ' + props.result.minProfit.toString() + ' pri objeme',
+            'Nulový bod[množstvo]',
+            'Nulový bod Zmin =  ' + props.result.minProfit.toString() + "€" + ' v [množstvo]',
           ]}
           data={[
             [
@@ -38,31 +38,37 @@ export default function Result4(props: any) {
           ]}
         />
       </div>
-      <div>
+
+      <h1 className={"result-h1"}>Dashboarding</h1>
+
+      <div className={"row"}>
         {props.result.items.map((value: any, idx: number) => {
-          const costTotal: number[] = [];
-          const incomeTotal: number[] = [];
-          //prepočitat rozsah grafu
-          //const vol: number = (zeroTon[idx] + 2 * (zeroTon[idx] / 3)) / 5
-          const vol: number =
-            (props.result.volumes[idx] + 2 * (props.result.volumes[idx] / 3)) /
-            5;
-          const osX: number[] = [];
-          //pridat viac bodov na osXS
-          for (let i = 0; i < 7; i++) {
-            osX.push(Math.round(i * vol * 100) / 100);
-          }
-          for (let i = 0; i < 7; i++) {
-            costTotal.push(
-              Math.round(
-                (props.result.fixTotal + i * vol * props.result.costs[idx]) *
-                100
-              ) / 100
-            );
-            incomeTotal.push(
-              Math.round(i * vol * props.result.prices[idx] * 100) / 100
-            );
-          }
+
+          const costTotal: number[] = [0];
+          const incomeTotal: number[] = [0];
+          const osX: number[] = [0];
+
+          costTotal.push(Math.round((props.result.costs[idx] * props.result.zeroTon[idx] + parseFloat(props.result.fixTotal)) * 100) / 100 )
+          costTotal.push(Math.round((props.result.costs[idx] * props.result.zeroProf[idx] + parseFloat(props.result.fixTotal)) * 100 ) / 100 )
+          costTotal.push(Math.round((props.result.costs[idx] * props.result.volumes[idx] + parseFloat(props.result.fixTotal)) * 100 ) / 100 )
+
+          incomeTotal.push(Math.round(props.result.prices[idx] * props.result.zeroTon[idx] * 100) / 100)
+          incomeTotal.push(Math.round(props.result.prices[idx] * props.result.zeroProf[idx] * 100) / 100)
+          incomeTotal.push(Math.round(props.result.prices[idx] * props.result.volumes[idx] * 100) / 100)
+
+          osX.push(Math.round(props.result.zeroTon[idx]))
+          osX.push(Math.round(props.result.zeroProf[idx]))
+          osX.push(Math.round(props.result.volumes[idx]))
+
+          costTotal.sort(function(a, b) {
+            return a - b;
+          });
+          osX.sort(function(a, b) {
+            return a - b;
+          });
+          incomeTotal.sort(function(a, b) {
+            return a - b;
+          });
 
           const lineGraph = {
             series: [
@@ -86,10 +92,6 @@ export default function Result4(props: any) {
               stroke: {
                 curve: 'straight',
               },
-              title: {
-                text: value,
-                align: 'center',
-              },
               grid: {
                 borderColor: '#e7e7e7',
                 row: {
@@ -97,15 +99,17 @@ export default function Result4(props: any) {
                   opacity: 0.5,
                 },
               },
+
               xaxis: {
                 categories: osX,
-                type: 'numeric',
               },
+
+
               annotations: {
                 points: [
                   {
-                    x: props.result.zeroTon[idx],
-                    y: props.result.zeroEur[idx],
+                    x: Math.round(props.result.zeroTon[idx]),
+                    y: Math.round(props.result.zeroEur[idx]),
                     marker: {
                       size: 8,
                     },
@@ -117,7 +121,7 @@ export default function Result4(props: any) {
                 ],
                 xaxis: [
                   {
-                    x: props.result.zeroProf[idx],
+                    x: Math.round(props.result.zeroProf[idx]),
                     borderColor: '#775DD0',
                     label: {
                       style: {
@@ -136,15 +140,11 @@ export default function Result4(props: any) {
           };
 
           return (
-            <div key={idx}>
-              <div
-                style={{
-                  backgroundColor: 'white',
-                  marginTop: 30,
-                  padding: 25,
-                  boxShadow: '0px 0px 10px lightgray',
-                }}
+            <div key={idx} className={"col-12"}>
+              <div className={"graph-card"}
+                   // style={idx % 2 === 0 ? {marginRight: 25} : {marginLeft: 25}}
               >
+                <h4 className={"graph-title"}>{value.toUpperCase()}</h4>
                 {
                   // @ts-ignore
                   <ReactApexChart options={lineGraph.options}
@@ -158,9 +158,6 @@ export default function Result4(props: any) {
           );
         })}
       </div>
-      <button>
-        <Link to={'/taskselect'}>Back</Link>
-      </button>
     </div>
   );
 }

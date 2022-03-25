@@ -1,10 +1,12 @@
 import '../ScreenStyle.css';
 import SelectCard from "./SelectCard";
+import HeaderBar from "./HeaderBar";
 
 export default function TaskSelector() {
   return (
-    <div style={{padding: 20}}>
-      <div className={'row'}>
+    <div style={{paddingTop:100, paddingLeft:50, backgroundColor: "#f2f1f6", height:"100vh"}}>
+      <HeaderBar title={'NÁKALDOVÝ CONTROLLING'} back={true}/>
+      <div className={'row'} style={{marginBottom:"10vh"}}>
 
         <SelectCard
           to={'/task1'}
@@ -45,7 +47,7 @@ export default function TaskSelector() {
           to={'/task3'}
           head={'Analýza reťazových a bázických indexov'}
           body={
-            'Zhodnotenie vývoja nákladových druhov v závislosti od zmeny objemu výkonov (tržieb) cez koeficient reakcie.'
+            'Zhodnotenie trendu vývoja druhových nákladov počas sledovaných období v závislosti od zmeny objemu výkonov (tržieb) cez koeficient reakcie.'
           }
         />
 
@@ -53,7 +55,7 @@ export default function TaskSelector() {
           to={'/task6'}
           head={'Pareto analýza nákladov'}
           body={
-            'Sledovanie nákladov na interné chyby a príčin vzniku týchto chýb v podniku.'
+            'Sledovanie príčin vzniku nákladov na základe pravidla 80/20.'
           }
         />
 
