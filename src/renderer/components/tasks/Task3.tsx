@@ -42,9 +42,9 @@ export default function Task3() {
       incomeSumsForYears.push(0);
     }
 
-    data.map((rowData, row) => {
+    data.map((rowData: string[], row: number) => {
       parseInt(values[row]) >= 600
-          ? rowData.map((value, col) => {
+          ? rowData.map((value: string, col: number) => {
             col === 0
               ? (incomeSumBase =
                 incomeSumBase + parseFloat(value === '' ? '0' : value))
@@ -52,7 +52,7 @@ export default function Task3() {
               incomeSumsForYears[col-1] =
                 incomeSumsForYears[col-1] + parseFloat(value === '' ? '0' : value);
             })
-          : rowData.map((value, col) => {
+          : rowData.map((value: string, col: number) => {
             col === 0
               ? (costSumBase =
                 costSumBase + parseFloat(value === '' ? '0' : value))
