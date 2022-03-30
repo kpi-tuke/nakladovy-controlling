@@ -12,7 +12,7 @@ export default function Task3() {
   const { headers, items, data, values, text } = useSelector(selectChain);
   
   const result = useChainCalc(data, headers, values)
-
+  
   return (
     <div className={'task-container'}>
 

@@ -8,6 +8,7 @@ import Task6 from "./components/tasks/Task6";
 import {Provider} from "react-redux";
 import {store} from "./store/store";
 import Task1 from './components/tasks/Task1';
+import Evaluation from './components/Evaluation';
 
 export default function App() {
 
@@ -22,6 +23,7 @@ export default function App() {
           <Route path="/task3" component={Task3}/>
           <Route path="/task2" component={Task2}/>
           <Route path="/task1" component={Task1}/>
+          <Route path="/evaluation" component={Evaluation}/>
         </Switch>
         <Redirect from="/" to="/taskselect"/>
       </Router>

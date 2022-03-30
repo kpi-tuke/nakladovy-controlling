@@ -6,9 +6,10 @@ export default function HeaderBar(props: any) {
     <div
       className={'header-bar row'}
     >
-      <div className={"col-1"}>
-
-      </div>
+      <Link  to={"/evaluation"} className={"col-1"}>
+      <div style={{borderColor:"white", borderWidth:1, borderStyle:"solid", borderRadius:5, marginRight:20, padding:10, color:"white", fontWeight:"bold", backgroundColor:"#1a98ff", textAlign:"center"}} >Výsledok</div>
+      </Link>
+      
       <div className={"header-title col-10"}>
         {props.title}
       </div>

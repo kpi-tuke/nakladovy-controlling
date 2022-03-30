@@ -53,14 +53,14 @@ const reducerFunctions = {
   addColumn: (state: { headers: string[]; items: string[]; data: number[][] }) => {
     state.headers.push((parseInt(state.headers[state.headers.length - 1]) + 1).toString());
     state.data.map((rowData: any) => {
-      rowData.push('0');
+      rowData.push(0);
     });
   },
   addRow: (state: { headers: string[]; items: string[]; data: number[][] }) => {
     state.items.push('--please input value--');
     let arr: any[] = [];
     for (let i = 0; i < state.headers.length; i++) {
-      arr.push('0');
+      arr.push(0);
     }
     state.data.push(arr);
   },

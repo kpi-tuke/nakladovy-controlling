@@ -285,24 +285,16 @@ export default function Result5(props: any) {
           ]}
           data={[
             [
-              ...props.result.rentIncome.map(
-                (value: number) => Math.round(value * 100)
-              ),
+              ...props.result.rentIncome
             ],
             [
-              ...props.result.rentCost.map(
-                (value: number) => Math.round(value * 100)
-              ),
+              ...props.result.rentCost
             ],
             [
-              ...props.result.marginGross.map(
-                (value: number) => Math.round(value * 100) / 100
-              ),
+              ...props.result.marginGross
             ],
             [
-              ...props.result.allowance.map(
-                (value: number) => Math.round(value * 100) / 100
-              ),
+              ...props.result.allowance
             ],
           ]}
         />
@@ -317,14 +309,10 @@ export default function Result5(props: any) {
           inputs={['Zisková prirážka(€)', 'Zisk pri pôvodnej výrobnej štruktúre(€)']}
           data={[
             [
-              ...props.result.marginProfit.map(
-                (value: number) => Math.round(value * 100) / 100
-              ),
+              ...props.result.marginProfit
             ],
             [
-              ...props.result.profit.map(
-                (value: number) => Math.round(value * 100) / 100
-              ),
+              ...props.result.profit
             ],
           ]}
         />

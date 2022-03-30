@@ -97,6 +97,10 @@ export default function Result2(props: any) {
       chart: {
         type: 'pie',
       },
+      legend: {
+        show:true,
+        position: "bottom"
+      },
       fill: {
         type: 'gradient',
       },
@@ -109,6 +113,9 @@ export default function Result2(props: any) {
     options: {
       chart: {
         type: 'donut',
+      },
+      legend: {
+        show:true
       },
       fill: {
         type: 'gradient',
@@ -138,7 +145,10 @@ export default function Result2(props: any) {
           ]}
           data={[
             [...(props.result.rowSums.map((value: number) => (value.toString() + "€"))), (props.result.totalCost.toString() + "€")],
-            [...(props.result.rowSums.map((value: number) => ((Math.round(value / props.result.totalCost * 10000)/100).toString() + "%"))), "100%"],
+            [...(props.result.rowSums.map((value: number) => {
+              if (props.result.totalCost === 0) return "100%"
+              return (Math.round(value / props.result.totalCost * 10000)/100).toString() + "%"
+            })), "100%"],
           ]}
         />
 
@@ -150,7 +160,10 @@ export default function Result2(props: any) {
           ]}
           data={[
             [...(props.result.colSums.map((value: number) => (value.toString() + "€"))),  (props.result.totalCost.toString() + "€")],
-            [...(props.result.colSums.map((value: number) => ((Math.round(value / props.result.totalCost * 10000)/100).toString() + "%"))), "100%"],
+            [...(props.result.colSums.map((value: number) => {
+              if (props.result.totalCost === 0) return "100%"
+              return (Math.round(value / props.result.totalCost * 10000)/100).toString() + "%"
+            })), "100%"],
           ]}
         />
       </div>
@@ -172,7 +185,7 @@ export default function Result2(props: any) {
                 options={pieChart.options}
                 series={pieChart.series}
                 type="pie"
-                height={300}
+                height={347}
               />
             }
           </div>

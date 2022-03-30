@@ -176,23 +176,23 @@ export function useCVPCalc(data: number[][], fixTotal: number, minProfit: number
   for (let i = 0; i < data.length; i++) {
 
     if (prices[i] === 0 || costs[i] === prices[i]) zeroEur[i] = 0
-    else zeroEur[i] = fixTotal / (1 - costs[i] / prices[i]);
+    else zeroEur[i] = Math.round(100 * fixTotal / (1 - costs[i] / prices[i])) / 100;
 
     if (prices[i] === costs[i]) zeroTon[i] = 0
-    else zeroTon[i] = fixTotal / (prices[i] - costs[i]);
+    else zeroTon[i] = Math.round(100 * fixTotal / (prices[i] - costs[i]))/100;
 
     if (prices[i] === costs[i]) zeroProf[i] = 0
-    else zeroProf[i] =
+    else zeroProf[i] = Math.round( 100*
        (fixTotal + minProfit) /
-      (prices[i] - costs[i]);
+      (prices[i] - costs[i])) /100;
   }
 
   return {
     volumes,
     prices,
     costs,
-    fixTotal: isNaN(fixTotal) ? 0 : fixTotal,
-    minProfit: isNaN(minProfit) ? 0 : minProfit,
+    fixTotal,
+    minProfit,
     zeroEur,
     zeroTon,
     zeroProf,
@@ -235,7 +235,7 @@ export function useSortimentCalc(data: number[][]) {
       rentCost[col] = 0;
     } else
       rentCost[col] =
-        Math.round((marginProfit[col] / totalCost[col]) * 100) /
+        Math.round((marginProfit[col] / totalCost[col]) * 10000) /
         100;
 
     if (price[col] === 0) {
@@ -243,7 +243,7 @@ export function useSortimentCalc(data: number[][]) {
       rentIncome[col] = 0;
     } else
       rentIncome[col] =
-        Math.round((marginProfit[col] / price[col]) * 100) / 100;
+        Math.round((marginProfit[col] / price[col]) * 10000) / 100;
 
     marginGross[col] =
       Math.round((price[col] - directCost[col]) * 100) /
@@ -258,21 +258,16 @@ export function useSortimentCalc(data: number[][]) {
           (1 - directCost[col] / price[col]) * 100
         ) / 100;
 
-    profit[col] =
-      Math.round(
-        (volume[col] * price[col] -
-          volume[col] * totalCost[col]) *
-          100
-      ) / 100;
+    profit[col] = Math.round(100*((volume[col] * price[col] - volume[col] * directCost[col]) - (totalCost[col]*volume[col] - directCost[col]*volume[col])))/100
   }
 
   return {
-    rentCost: rentCost,
-    rentIncome: rentIncome,
-    marginProfit: marginProfit,
-    marginGross: marginGross,
-    allowance: allowance,
-    profit: profit,
+    rentCost,
+    rentIncome,
+    marginProfit,
+    marginGross,
+    allowance,
+    profit,
   };
 }
 
@@ -311,12 +306,12 @@ export function usePretoCalc(data: number[][], items: any) {
   }
 
   return {
-    causes: causes,
-    percentages: percentages,
-    values: values,
+    causes,
+    percentages,
+    values,
     kumul: percentagesKumul,
-    valuesKumul: valuesKumul,
-    sum: sum,
+    valuesKumul,
+    sum,
   };
 }
 
@@ -324,7 +319,7 @@ const divideArrays = (numerator: number[], denominator: number[]): number[] => {
   let arr: number[] = [];
   for (let i = 0; i < numerator.length; i++) {
     if (numerator[i] === 0 || denominator[i] === 0) arr.push(0);
-    else arr.push(Math.round((100 * numerator[i]) / denominator[i]) / 100);
+    else arr.push(Math.round(100*numerator[i] / denominator[i]) / 100);
   }
   return arr;
 };

@@ -10,7 +10,7 @@ export default function Task6() {
   const { headers, values, items, data, text } = useAppSelector(selectPareto);
 
   const result = usePretoCalc(data, items);
-
+  
   return (
     <div className={'task-container'}>
       <HeaderBar title={'Pareto analýza nákladov'} />

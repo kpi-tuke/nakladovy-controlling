@@ -11,7 +11,7 @@ export default function Task1() {
   const { headers, items, data, values, text } = useAppSelector(selectBilance);
 
   const result = useBilanceCalc(data, values);
-
+  
   return (
     <div className={'task-container'}>
       <HeaderBar title={'Ekonomická analýza hospodárenia'} />
