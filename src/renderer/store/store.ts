@@ -1,12 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit'
-import { baseIndexReducer, bilanceReducer, chainReducer, CVPReducer, paretoReducer, sortimentReducer, structureReducer } from './slice'
+import { bilanceReducer, chainReducer, CVPReducer, paretoReducer, sortimentReducer, structureReducer } from './slice'
 
 export const store = configureStore({
   reducer: {
     bilance: bilanceReducer,
     sortiment: sortimentReducer,
     chain: chainReducer,
-    base: baseIndexReducer,
     cvp: CVPReducer,
     structure: structureReducer,
     pareto: paretoReducer

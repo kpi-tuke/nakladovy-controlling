@@ -69,7 +69,7 @@ export default function Result5(props: any) {
         },
       },
       dataLabels: {
-        enabled: false,
+        enabled: true,
       },
       stroke: {
         show: true,
@@ -87,7 +87,10 @@ export default function Result5(props: any) {
 
   const colGraph2 = {
     // @ts-ignore
-    series: series2,
+    // series: series2,
+    series: [{
+      data: props.result.marginGross,
+    }],
     options: {
       chart: {
         type: 'bar',
@@ -96,8 +99,9 @@ export default function Result5(props: any) {
       plotOptions: {
         bar: {
           horizontal: false,
-          columnWidth: '55%',
+          columnWidth: '75%',
           endingShape: 'rounded',
+          distributed: true,
         },
       },
       grid: {
@@ -108,7 +112,7 @@ export default function Result5(props: any) {
         },
       },
       dataLabels: {
-        enabled: false,
+        enabled: true,
       },
       stroke: {
         show: true,
@@ -116,11 +120,12 @@ export default function Result5(props: any) {
         colors: ['transparent'],
       },
       xaxis: {
-        categories: ['Hrubé rozpätie'],
+        // categories: ['Hrubé rozpätie'],
+        categories: props.result.headers
       },
       yaxis: [{
         title: {
-          text: '€',
+          text: 'ekonomický ukazovateľ (€)',
         },
 
       }],
@@ -153,7 +158,7 @@ export default function Result5(props: any) {
         },
       },
       dataLabels: {
-        enabled: false,
+        enabled: true,
       },
       stroke: {
         show: true,
@@ -165,7 +170,7 @@ export default function Result5(props: any) {
       },
       yaxis: [{
         title: {
-          text: '€',
+          text: 'ekonomický ukazovateľ (€)',
         },
 
       }],
@@ -264,19 +269,19 @@ export default function Result5(props: any) {
   return (
     <div>
 
-      <h1 className={"result-h1"}>Ukazovatele sortimentnej analýzy </h1>
+      <h1 className={"result-h1"}>Ukazovatele sortimentnej analýzy</h1>
 
       <div
         className={"table-card"}
       >
         <TableStatic
-          corner={"Ekonomické ukazovatele"}
+          corner={"Ukazovatele sortimentnej analýzy"}
           header={[...props.result.headers]}
           inputs={[
-            'Rentabilita tržieb[%]',
-            'Rentabilita nákladov[%]',
-            'Hrubé rozpätie[€]',
-            'Príspevok na úhradu[€]',
+            'Rentabilita tržieb(%)',
+            'Rentabilita nákladov(%)',
+            'Hrubé rozpätie(€)',
+            'Príspevok na úhradu(€)',
           ]}
           data={[
             [
@@ -307,9 +312,9 @@ export default function Result5(props: any) {
         className={"table-card"}
       >
         <TableStatic
-          corner={"Ekonomické ukazovatele"}
+          corner={"Ukazovatele sortimentnej analýzy"}
           header={[...props.result.headers]}
-          inputs={['Zisková prirážka[€]', 'Zisk pri pôvodnej výrobnej štruktúre[€]']}
+          inputs={['Zisková prirážka(€)', 'Zisk pri pôvodnej výrobnej štruktúre(€)']}
           data={[
             [
               ...props.result.marginProfit.map(
@@ -330,7 +335,7 @@ export default function Result5(props: any) {
       <div
         className={"graph-card"}
       >
-        <h4 className={"graph-title"}>EKONOMICKÉ UKAZOVAELE</h4>
+        <h4 className={"graph-title"}>UKAZOVATELE SORTIMENTNEJ ANALÝZY</h4>
         {
           // @ts-ignore
           <ReactApexChart options={colGraph.options}

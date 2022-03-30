@@ -3,7 +3,7 @@ import type {RootState} from './store'
 
 export interface BilanceState {
   headers: string[],
-  data: string[][],
+  data: number[][],
   items: string[],
   values: string[],
   text: string
@@ -20,7 +20,7 @@ export interface dataOnIndex {
 }
 
 export interface dataOnCords {
-  data: string;
+  data: number;
   row: number;
   col: number;
 }
@@ -45,18 +45,18 @@ const reducerFunctions = {
     state.values[action.payload.index] = action.payload.data;
   },
   setDataOnIndex: (
-    state: { data: string[][] },
+    state: { data: number[][] },
     action: PayloadAction<dataOnCords>
   ) => {
     state.data[action.payload.row][action.payload.col] = action.payload.data;
   },
-  addColumn: (state: { headers: string[]; items: string[]; data: string[][] }) => {
+  addColumn: (state: { headers: string[]; items: string[]; data: number[][] }) => {
     state.headers.push((parseInt(state.headers[state.headers.length - 1]) + 1).toString());
     state.data.map((rowData: any) => {
       rowData.push('0');
     });
   },
-  addRow: (state: { headers: string[]; items: string[]; data: string[][] }) => {
+  addRow: (state: { headers: string[]; items: string[]; data: number[][] }) => {
     state.items.push('--please input value--');
     let arr: any[] = [];
     for (let i = 0; i < state.headers.length; i++) {
@@ -64,14 +64,14 @@ const reducerFunctions = {
     }
     state.data.push(arr);
   },
-  deleteRow: (state: { items: string[]; data: string[][] }, action: PayloadAction<number>) => {
+  deleteRow: (state: { items: string[]; data: number[][] }, action: PayloadAction<number>) => {
     if (state.items.length === 1) return;
     state.items.splice(action.payload, 1);
     state.data.splice(action.payload, 1);
   },
-  deleteColumn: (state: { headers: string[]; data: string[][] }, action: PayloadAction<number>) => {
+  deleteColumn: (state: { headers: string[]; data: number[][] }, action: PayloadAction<number>) => {
     if (state.headers.length === 1) return
-    state.data.map((rowData: string[]) => {
+    state.data.map((rowData: number[]) => {
       rowData.splice(action.payload, 1);
     })
     state.headers.splice(action.payload, 1);
@@ -82,33 +82,33 @@ const reducerFunctions = {
 };
 
 const initialSortimentState: BilanceState = {
-  headers: ['VýrobokA', 'VýrobokB'],
+  headers: ['VýrobokA'],
   data: [
-    ['2700', '2600'],
-    ['1745', '1581'],
-    ['985', '1215'],
-    ['8000', '4000'],
+    [0],
+    [0],
+    [0],
+    [0],
   ],
   items: [
-    'Priame náklady',
-    'Úplné vlastné náklady',
-    'Predajná cena(jednotková)[€]',
-    'Objem výroby[množstvo]',
+    'Priame náklady(€)',
+    'Úplné vlastné náklady výkonu (€)',
+    'Predajná cena výkonu(jednotková)(€)',
+    'Objem výroby(množstvo)',
   ],
   values: [
     'Predajná cena jednotková',
-    'Úplné vlastné náklady jednotková',
-    'Priame náklady jednotková',
+    'Úplné vlastné náklady jednotkové',
+    'Priame náklady jednotkové',
     'Objem výroby',
   ],
   text: ""
 };
 
 const initialBilanceState: BilanceState = {
-  headers: ['2000', '2001'],
+  headers: ['2000'],
   data: [
-    ['1', '2'],
-    ['3', '4'],
+    [0],
+    [0],
   ],
   items: [
     '501 – Spotreba materiálu',
@@ -121,20 +121,9 @@ const initialBilanceState: BilanceState = {
 const initialChainState: BilanceState = {
   headers: ["Bázický rok", '2000', '2001'],
   data: [
-    ["4", '1', '2'],
-    ["6", '3', '4'],
+    [0, 0, 0],
+    [0, 0, 0],
   ],
-  items: [
-    '501 – Spotreba materiálu',
-    '666 – Výnosy z krátkodobého finančného majetku',
-  ],
-  values: ['501', '666'],
-  text: ""
-};
-
-const initialBaseState: BilanceState = {
-  headers: ["Bázický rok"],
-  data: [['2'], ['3']],
   items: [
     '501 – Spotreba materiálu',
     '666 – Výnosy z krátkodobého finančného majetku',
@@ -144,9 +133,9 @@ const initialBaseState: BilanceState = {
 };
 
 const initialCVPState: CVPState = {
-  headers: ['Výroba[ks, kg, ton, ...]', 'Cena/množstvo[€/ks, kg, ton, ...]', 'Variabilné náklady/množstvo[€/ks, kg, ton, ...]'],
+  headers: ['Výroba(ks, kg, ton, ...)', 'Cena/množstvo(€/ks, kg, ton, ...)', 'Variabilné náklady/množstvo(€/ks, kg, ton, ...)'],
   items: ['Výrobok A'],
-  data: [['100', '8', '6']],
+  data: [[0, 0, 0,]],
   values: ['Výrobok A'],
   text: "",
   fixTotal: 0,
@@ -155,15 +144,15 @@ const initialCVPState: CVPState = {
 
 const initialStructureState: BilanceState = {
   headers: ['Priamy materiál'],
-  data: [['1']],
+  data: [[0]],
   items: ['501 – Spotreba materiálu'],
-  values: ['1', '7'],
+  values: ['1'],
   text: ""
 };
 
 const initialParetoState: BilanceState = {
-  headers: ['Náklady[€]'],
-  data: [['3998'], ['1307'], ['361'], ['82'], ['104'], ['1573'], ['5']],
+  headers: ['Náklady(€)'],
+  data: [[3998], [1307], [361], [82], [104], [1573], [5]],
   items: [
     'Chyby mechanického trieskového opracovania',
     'Chyby tvárnenia materiálu',
@@ -185,31 +174,25 @@ const initialParetoState: BilanceState = {
   text: ""
 };
 
-export const bilanceSlice = createSlice({
+const bilanceSlice = createSlice({
   name: 'bilance',
   initialState: initialBilanceState,
   reducers: reducerFunctions
 });
 
-export const sortimentSlice = createSlice({
+const sortimentSlice = createSlice({
   name: 'sortiment',
   initialState: initialSortimentState,
   reducers: reducerFunctions,
 });
 
-export const chainSlice = createSlice({
+const chainSlice = createSlice({
   name: 'chain',
   initialState: initialChainState,
   reducers: reducerFunctions,
 });
 
-export const baseIndexSlice = createSlice({
-  name: 'baseIndex',
-  initialState: initialBaseState,
-  reducers: reducerFunctions,
-});
-
-export const CVPSlice = createSlice( {
+const CVPSlice = createSlice( {
   name: "CVP",
   initialState: initialCVPState,
   reducers: {
@@ -223,13 +206,13 @@ export const CVPSlice = createSlice( {
   }
 })
 
-export const structureSlice = createSlice({
+const structureSlice = createSlice({
   name: 'structure',
   initialState: initialStructureState,
   reducers: reducerFunctions,
 });
 
-export const paretoSlice = createSlice({
+const paretoSlice = createSlice({
   name: 'pareto',
   initialState: initialParetoState,
   reducers: reducerFunctions,
@@ -240,8 +223,6 @@ export const bilanceActions = bilanceSlice.actions
 export const sortimentActions = sortimentSlice.actions
 
 export const chainActions = chainSlice.actions;
-
-export const baseIndexActions = baseIndexSlice.actions;
 
 export const CVPActions = CVPSlice.actions;
 
@@ -256,8 +237,6 @@ export const selectSortiment = (state: RootState) => state.sortiment;
 
 export const selectChain = (state: RootState) => state.chain;
 
-export const selectBase = (state: RootState) => state.base;
-
 export const selectCVP = (state: RootState) => state.cvp;
 
 export const selectStructure = (state: RootState) => state.structure;
@@ -270,8 +249,6 @@ export const bilanceReducer = bilanceSlice.reducer
 export const sortimentReducer = sortimentSlice.reducer
 
 export const chainReducer = chainSlice.reducer;
-
-export const baseIndexReducer = baseIndexSlice.reducer;
 
 export const CVPReducer = CVPSlice.reducer;
 

@@ -263,7 +263,7 @@ export default function Result3(props: any) {
       },
     },
   };
-  console.log(props.result)
+
   return (
     <div>
 

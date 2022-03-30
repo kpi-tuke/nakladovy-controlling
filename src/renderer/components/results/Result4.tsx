@@ -15,9 +15,9 @@ export default function Result4(props: any) {
           corner={"Ekonomické ukazovatele"}
           header={...props.result.items}
           inputs={[
-            'Nulový bod[€]',
-            'Nulový bod[množstvo]',
-            'Nulový bod Zmin =  ' + props.result.minProfit.toString() + "€" + ' v [množstvo]',
+            'Nulový bod(€)',
+            'Nulový bod(množstvo)',
+            'Nulový bod Zmin =  ' + props.result.minProfit.toString() + "€" + ' v (množstvo)',
           ]}
           data={[
             [

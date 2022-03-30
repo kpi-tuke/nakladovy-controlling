@@ -74,7 +74,7 @@ export default function Result6(props: any) {
           min: 0,
           max: props.result.sum,
           title: {
-            text: 'Náklady v €',
+            text: 'Náklady v (€)',
           },
         },
         {
@@ -82,7 +82,7 @@ export default function Result6(props: any) {
           min: 0,
           max: 100,
           title: {
-            text: 'Štruktúra nákladov v %',
+            text: 'Štruktúra nákladov v (%)',
           },
         },
       ],
@@ -107,7 +107,7 @@ export default function Result6(props: any) {
       <div className={"table-card"}>
         <TableStatic
           corner={"Príčina"}
-          header={["Náklady[€]", "Náklady kumulované[€]", "Podiel[%]", "Podiel kumulovaný[%]"]}
+          header={["Náklady(€)", "Náklady kumulované(€)", "Podiel(%)", "Podiel kumulovaný(%)"]}
           inputs={[...props.result.causes]}
           data={
             props.result.values.map((value: string, idx: number) => {

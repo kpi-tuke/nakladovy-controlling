@@ -50,7 +50,7 @@ export default function Result1(props: any) {
       },
       yaxis: [{
         title: {
-          text: '€',
+          text: 'ekonomická veličina (€)',
         },
 
       }],
@@ -343,7 +343,7 @@ export default function Result1(props: any) {
       <div
         className={"graph-card"}
       >
-        <h4 className={"graph-title"}>TRENDY VÝVOJA EKONOMICKÝCH VELIČÍN</h4>
+        <h4 className={"graph-title"}>TREND VÝVOJA EKONOMICKÝCH VELIČÍN</h4>
         {
           // @ts-ignore
           <ReactApexChart options={lineGraph.options}
@@ -357,7 +357,7 @@ export default function Result1(props: any) {
       <div
         className={"graph-card"}
       >
-        <h4 className={"graph-title"}>EKONOMICÉ UKAZOVATELE V SLEDOVANOM OBDOBÍ</h4>
+        <h4 className={"graph-title"}>EKONOMICKÉ UKAZOVATELE V SLEDOVANOM OBDOBÍ</h4>
         {
           // @ts-ignore
           <ReactApexChart options={colGraph.options}

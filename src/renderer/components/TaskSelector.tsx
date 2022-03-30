@@ -5,7 +5,7 @@ import HeaderBar from "./HeaderBar";
 export default function TaskSelector() {
   return (
     <div style={{paddingTop:100, paddingLeft:50, backgroundColor: "#f2f1f6", height:"100vh"}}>
-      <HeaderBar title={'NÁKALDOVÝ CONTROLLING'} back={true}/>
+      <HeaderBar title={'NÁKLADOVÝ CONTROLLING'} back={true}/>
       <div className={'row'} style={{marginBottom:"10vh"}}>
 
         <SelectCard
@@ -37,9 +37,9 @@ export default function TaskSelector() {
 
         <SelectCard
           to={'/task5'}
-          head={'Sortimentová analýza'}
+          head={'Sortimentná analýza'}
           body={
-            'Analýza a grafické znázornenie celkového ročného zisku výrobkov pre plné využitie výrobných kapacít.'
+            'Analýza ekonomických ukazovateľov pre optimálnu štruktúru výrobného sortimentu. Grafické znázornenie celkového ročného zisku výrobkov pre plné využitie výrobných kapacít.'
           }
         />
 

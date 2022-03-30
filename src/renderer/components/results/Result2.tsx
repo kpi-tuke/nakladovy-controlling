@@ -32,10 +32,6 @@ export default function Result2(props: any) {
           opacity: 0.5,
         },
       },
-      title: {
-        text: 'Druhové členenie nákladov',
-        align: 'center',
-      },
       xaxis: {
         categories: props.result.items,
         labels: {
@@ -44,7 +40,7 @@ export default function Result2(props: any) {
       },
       yaxis: [{
         title: {
-          text: 'náklady v €',
+          text: 'náklady v (€)',
         },
 
       }],
@@ -88,7 +84,7 @@ export default function Result2(props: any) {
       },
       yaxis: [{
         title: {
-          text: 'náklady v €',
+          text: 'náklady v (€)',
         },
 
       }],
@@ -135,26 +131,26 @@ export default function Result2(props: any) {
         style={{marginTop:50}}
       >
         <TableStatic
-          header={[...props.result.items]}
+          header={[...props.result.items, "SPOLU"]}
           inputs={[
-            'Spolu',
-            "Percentá"
+            'Nj - náklady jednotkové (€)',
+            "Štruktúra Š (%)"
           ]}
           data={[
-            [...(props.result.rowSums.map((value: number) => (value.toString() + "€")))],
-            [...(props.result.rowSums.map((value: number) => ((Math.round(value / props.result.totalCost * 10000)/100).toString() + "%")))],
+            [...(props.result.rowSums.map((value: number) => (value.toString() + "€"))), (props.result.totalCost.toString() + "€")],
+            [...(props.result.rowSums.map((value: number) => ((Math.round(value / props.result.totalCost * 10000)/100).toString() + "%"))), "100%"],
           ]}
         />
 
         <TableStatic
-          header={[...props.result.headers]}
+          header={[...props.result.headers, "SPOLU"]}
           inputs={[
-            'Spolu',
-            "Percentá"
+            'Nj - náklady jednotkové (€)',
+            "Štruktúra Š (%)"
           ]}
           data={[
-            [...(props.result.colSums.map((value: number) => (value.toString() + "€")))],
-            [...(props.result.colSums.map((value: number) => ((Math.round(value / props.result.totalCost * 10000)/100).toString() + "%")))],
+            [...(props.result.colSums.map((value: number) => (value.toString() + "€"))),  (props.result.totalCost.toString() + "€")],
+            [...(props.result.colSums.map((value: number) => ((Math.round(value / props.result.totalCost * 10000)/100).toString() + "%"))), "100%"],
           ]}
         />
       </div>
@@ -189,7 +185,7 @@ export default function Result2(props: any) {
               marginRight: 25,
             }}
           >
-            <h4>DRUHOVÉ ČLENENIE NÁKLADOV</h4>
+            <h4 className={"graph-title"}>DRUHOVÉ ČLENENIE NÁKLADOV</h4>
             {
               <ReactApexChart
                 // @ts-ignore
@@ -231,7 +227,7 @@ export default function Result2(props: any) {
               marginRight: 25,
             }}
           >
-            <h4>KALKULAČNÉ ČLENENIE NÁKLADOV</h4>
+            <h4 className={"graph-title"}>KALKULAČNÉ ČLENENIE NÁKLADOV</h4>
             {
               <ReactApexChart
                 // @ts-ignore
