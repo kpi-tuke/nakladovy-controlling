@@ -207,3 +207,25 @@ test('useParetoCalc test1', () => {
     sum: 7430,
   });
 });
+
+test('useParetoCalc test2 decimal numbers', () => {
+  expect(
+    usePretoCalc(
+      [[9.8], [1.9]],
+      [
+        'Chyby mechanického trieskového opracovania',
+        'Chyby tvárnenia materiálu',
+      ]
+    )
+  ).toEqual({
+    causes: [
+      'Chyby mechanického trieskového opracovania',
+      'Chyby tvárnenia materiálu',
+    ],
+    percentages: [83.76, 16.24],
+    values: [9.8, 1.9],
+    kumul: [83.76, 100],
+    valuesKumul: [ 9.8, 11.7],
+    sum: 11.7,
+  });
+});

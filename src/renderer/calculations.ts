@@ -13,19 +13,19 @@ export function useBilanceCalc(data: number[][], values: any) {
   data.map((rowData: number[], row: number) => {
     parseInt(values[row]) >= 600
       ? rowData.map((value: number, col: number) => {
-          incomeTotal += value
-          incomeData[col] =
-            incomeData[col] + value
+          incomeTotal = parseFloat((incomeTotal + value).toFixed(12));
+          incomeData[col] = parseFloat((incomeData[col] + value).toFixed(12));
         })
       : rowData.map((value: number, col: number) => {
-          costTotal += value
-          costData[col] =
-            costData[col] + value
+          costTotal = parseFloat((costTotal + value).toFixed(12));
+          costData[col] = parseFloat((costData[col] + value).toFixed(12));
         });
   });
 
   for (let i = 0; i < data[0].length; i++) {
-    profitData.push(incomeData[i] - costData[i]);
+    
+    
+    profitData.push(parseFloat((incomeData[i] - costData[i]).toFixed(12)));
   }
 
   let incomeProfitabilityData: number[] = divideArrays(profitData, incomeData);
@@ -33,7 +33,7 @@ export function useBilanceCalc(data: number[][], values: any) {
   let costEfficiencyData: number[] = divideArrays(incomeData, costData);
   let costIndicatorData: number[] = divideArrays(costData, incomeData);
 
-  let profitTotal: number = incomeTotal - costTotal;
+  let profitTotal: number = parseFloat((incomeTotal - costTotal).toFixed(12));
 
   return {
     costTotal,
@@ -48,7 +48,6 @@ export function useBilanceCalc(data: number[][], values: any) {
     costIndicatorData,
   };
 }
-
 export function useStructureCalc(data: number[][]) {
   let rowSums: number[] = [];
   let colSums: number[] = [];
@@ -56,7 +55,7 @@ export function useStructureCalc(data: number[][]) {
   data.map((rowData: number[], row: number) => {
     rowSums[row] = 0;
     rowData.map((value: number) => {
-      rowSums[row] = rowSums[row] + value
+      rowSums[row] = parseFloat((rowSums[row] + value).toFixed(12));
     });
   });
 
@@ -66,12 +65,11 @@ export function useStructureCalc(data: number[][]) {
 
   data.map((rowData: number[]) => {
     rowData.map((value: number, idx: number) => {
-      colSums[idx] = colSums[idx] + value
+      colSums[idx] = parseFloat((colSums[idx] + value).toFixed(12));
     });
   });
-
-  const totalCost: number = rowSums.reduce((a: number, b: number) => a + b, 0);
-
+  
+  const totalCost: number = rowSums.reduce((a: number, b: number) => parseFloat((a + b).toFixed(12)), 0);
   return { rowSums, colSums, totalCost };
 }
 
@@ -96,17 +94,14 @@ export function useChainCalc(data: number[][], headers: any, values: any) {
     parseInt(values[row]) >= 600
       ? rowData.map((value: number, col: number) => {
           col === 0
-            ? incomeSumBase =
-                incomeSumBase + value
-            : incomeSumsForYears[col - 1] =
-                incomeSumsForYears[col - 1] + value
+            ? (incomeSumBase = parseFloat((incomeSumBase + value).toFixed(12)))
+            : (incomeSumsForYears[col - 1] =
+                parseFloat((incomeSumsForYears[col - 1] + value.toFixed(12))));
         })
       : rowData.map((value: number, col: number) => {
           col === 0
-            ? costSumBase =
-                costSumBase + value
-            : costSumsForYears[col - 1] =
-                costSumsForYears[col - 1] + value
+            ? (costSumBase = parseFloat((costSumBase + value).toFixed(12)))
+            : (costSumsForYears[col - 1] = parseFloat((costSumsForYears[col - 1] + value).toFixed(12)));
         });
   });
 
@@ -119,11 +114,11 @@ export function useChainCalc(data: number[][], headers: any, values: any) {
     if (incomeSumsForYears[i] === 0) incomeDiff[i] = 0;
     else
       incomeDiff[i] =
-        (incomeSumsForYears[i + 1] * 100) / incomeSumsForYears[i] - 100;
+        parseFloat(((incomeSumsForYears[i + 1] * 100) / incomeSumsForYears[i] - 100).toFixed(12));
 
     if (costSumsForYears[i] === 0) costDiff[i] = 0;
     else
-      costDiff[i] = (costSumsForYears[i + 1] * 100) / costSumsForYears[i] - 100;
+      costDiff[i] = parseFloat(((costSumsForYears[i + 1] * 100) / costSumsForYears[i] - 100).toFixed(12))
 
     if (incomeDiff[i] === 0) reaction[i] = 0;
     else reaction[i] = Math.round((costDiff[i] / incomeDiff[i]) * 100) / 100;
@@ -159,7 +154,11 @@ export function useChainCalc(data: number[][], headers: any, values: any) {
   };
 }
 
-export function useCVPCalc(data: number[][], fixTotal: number, minProfit: number) {
+export function useCVPCalc(
+  data: number[][],
+  fixTotal: number,
+  minProfit: number
+) {
   let volumes: number[] = [];
   let prices: number[] = [];
   let costs: number[] = [];
@@ -169,22 +168,25 @@ export function useCVPCalc(data: number[][], fixTotal: number, minProfit: number
   const zeroProf: number[] = [];
 
   data.map((rowData: number[], idx: number) => {
-    volumes[idx] = rowData[0]
-    prices[idx] = rowData[1]
-    costs[idx] = rowData[2]
+    volumes[idx] = rowData[0];
+    prices[idx] = rowData[1];
+    costs[idx] = rowData[2];
   });
   for (let i = 0; i < data.length; i++) {
+    if (prices[i] === 0 || costs[i] === prices[i]) zeroEur[i] = 0;
+    else
+      zeroEur[i] =
+        Math.round((100 * fixTotal) / parseFloat((1 - costs[i] / prices[i]).toFixed(12))) / 100;
 
-    if (prices[i] === 0 || costs[i] === prices[i]) zeroEur[i] = 0
-    else zeroEur[i] = Math.round(100 * fixTotal / (1 - costs[i] / prices[i])) / 100;
+    if (prices[i] === costs[i]) zeroTon[i] = 0;
+    else
+      zeroTon[i] = Math.round((100 * fixTotal) / parseFloat((prices[i] - costs[i]).toFixed(12))) / 100;
 
-    if (prices[i] === costs[i]) zeroTon[i] = 0
-    else zeroTon[i] = Math.round(100 * fixTotal / (prices[i] - costs[i]))/100;
-
-    if (prices[i] === costs[i]) zeroProf[i] = 0
-    else zeroProf[i] = Math.round( 100*
-       (fixTotal + minProfit) /
-      (prices[i] - costs[i])) /100;
+    if (prices[i] === costs[i]) zeroProf[i] = 0;
+    else
+      zeroProf[i] =
+        Math.round((100 * parseFloat((fixTotal + minProfit).toFixed(12))) / parseFloat((prices[i] - costs[i]).toFixed(12))) /
+        100;
   }
 
   return {
@@ -226,17 +228,14 @@ export function useSortimentCalc(data: number[][]) {
   }
 
   for (let col = 0; col < data[0].length; col++) {
-    marginProfit[col] =
-      Math.round((price[col] - totalCost[col]) * 100) /
-      100;
+    marginProfit[col] = Math.round(parseFloat((price[col] - totalCost[col]).toFixed(12)) * 100) / 100;
 
     if (totalCost[col] === 0) {
       console.log('delenie nulou');
       rentCost[col] = 0;
     } else
       rentCost[col] =
-        Math.round((marginProfit[col] / totalCost[col]) * 10000) /
-        100;
+        Math.round((marginProfit[col] / totalCost[col]) * 10000) / 100;
 
     if (price[col] === 0) {
       console.log('delenie nulou');
@@ -245,20 +244,20 @@ export function useSortimentCalc(data: number[][]) {
       rentIncome[col] =
         Math.round((marginProfit[col] / price[col]) * 10000) / 100;
 
-    marginGross[col] =
-      Math.round((price[col] - directCost[col]) * 100) /
-      100;
+    marginGross[col] = Math.round(parseFloat((price[col] - directCost[col]).toFixed(12)) * 100) / 100;
 
     if (price[col] === 0) {
       console.log('delenie nulou');
       allowance[col] = 0;
     } else
       allowance[col] =
-        Math.round(
-          (1 - directCost[col] / price[col]) * 100
-        ) / 100;
+        Math.round(parseFloat((1 - directCost[col] / price[col]).toFixed(12)) * 100) / 100;
 
-    profit[col] = Math.round(100*((volume[col] * price[col] - volume[col] * directCost[col]) - (totalCost[col]*volume[col] - directCost[col]*volume[col])))/100
+    profit[col] =
+      Math.round(
+        100 *
+          parseFloat((parseFloat((volume[col] * price[col] - volume[col] * directCost[col]).toFixed(12)) - parseFloat((totalCost[col] * volume[col] - directCost[col] * volume[col]).toFixed(12))).toFixed(12))
+      ) / 100;
   }
 
   return {
@@ -286,7 +285,7 @@ export function usePretoCalc(data: number[][], items: any) {
   }
   for (let i = 0; i < items.length; i++) {
     valuesWithCauses.set(items[i], data[i][0]);
-    sum = sum + data[i][0];
+    sum = parseFloat((sum + data[i][0]).toFixed(12));
   }
   let map: Map<string, number> = new Map(
     [...valuesWithCauses.entries()].sort((a, b) => b[1] - a[1])
@@ -295,8 +294,8 @@ export function usePretoCalc(data: number[][], items: any) {
   var idx = 0;
   var val = 0;
   for (const [key, value] of map.entries()) {
-    temp = temp + (value * 100) / sum;
-    val = val + value;
+    temp = parseFloat((temp + (value * 100) / sum).toFixed(12))
+    val = parseFloat((val + value).toFixed(12));
     valuesKumul[idx] = val;
     percentages[idx] = Math.round((value * 10000) / sum) / 100;
     percentagesKumul[idx] = Math.round(temp * 100) / 100;
@@ -319,7 +318,7 @@ const divideArrays = (numerator: number[], denominator: number[]): number[] => {
   let arr: number[] = [];
   for (let i = 0; i < numerator.length; i++) {
     if (numerator[i] === 0 || denominator[i] === 0) arr.push(0);
-    else arr.push(Math.round(100*numerator[i] / denominator[i]) / 100);
+    else arr.push(Math.round((100 * numerator[i]) / denominator[i]) / 100);
   }
   return arr;
 };

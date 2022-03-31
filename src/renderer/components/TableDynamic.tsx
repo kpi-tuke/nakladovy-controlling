@@ -21,10 +21,10 @@ export default function TableDynamic(props: any) {
     event: ChangeEvent<HTMLInputElement>,
     row: number,
     col: number
-  ) {
-    dispatch(
+  ) {    
+    dispatch( 
       props.actions.setDataOnIndex({
-        data: event.target.value === '' ? 0 : parseFloat(event.target.value),
+        data: event.target.value === '' ? 0 : Math.round(parseFloat(event.target.value)*100)/100,
         row,
         col,
       })
@@ -161,9 +161,10 @@ export default function TableDynamic(props: any) {
                   {rowData.map((value: number, col: number) => (
                     <td className={'table-cell'} key={row + ':' + col}>
                       <input
-                        type="text"
+                        type="number"
                         className={'table-input'}
-                        value={value}
+                        value={value === 0 ? "" : value}
+                        min="0"
                         onChange={(e) => handleChangeData(e, row, col)}
                       />
                     </td>

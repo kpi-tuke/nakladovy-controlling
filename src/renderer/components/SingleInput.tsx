@@ -16,8 +16,9 @@ export default function SingleInput(props: any) {
       <h2 className={"info-title"}>{props.title}</h2>
       <input
         className={"single-input"}
-        value={props.value}
-        type="text"
+        value={props.value === 0 ? "" : props.value}
+        type="number"
+        min={"0"}
         onChange={(e) => handleChange(e)}
       />
     </div>
