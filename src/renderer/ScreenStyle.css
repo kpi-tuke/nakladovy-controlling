@@ -215,7 +215,8 @@ a {
 }
 
 .header-button:hover {
-  background-color: #007adc
+  background-color: white;
+  color: #1a98ff;
 }
 
 .header-button:active {

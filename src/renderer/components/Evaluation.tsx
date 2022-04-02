@@ -1,12 +1,12 @@
 import HeaderBar from "./HeaderBar";
 import {useAppSelector} from "../store/hooks";
 import {selectReport} from "../store/slice";
-import Task1 from "./tasks/Task1";
-import Task2 from "./tasks/Task2";
-import Task4 from "./tasks/Task4";
-import Task3 from "./tasks/Task3";
-import Task6 from "./tasks/Task6";
-import Task5 from "./tasks/Task5";
+import EconomicAnalysis from "../pages/EconomicAnalysis";
+import StructureAnalysis from "../pages/StructureAnalysis";
+import CVPAnalysis from "../pages/CVPAnalysis";
+import IndexAnalysis from "../pages/IndexAnalysis";
+import ParetoAnalysis from "../pages/ParetoAnalysis";
+import SortimentAnalysis from "../pages/SortimentAnalysis";
 
 export default function Evaluation() {
   //všetko aj vstup
@@ -17,12 +17,12 @@ export default function Evaluation() {
     <div>
 
 
-      {tasks.includes("1") && <Task1/>}
-      {tasks.includes("2") && <Task2/>}
-      {tasks.includes("3") && <Task3/>}
-      {tasks.includes("4") && <Task4/>}
-      {tasks.includes("5") && <Task5/>}
-      {tasks.includes("6") && <Task6/>}
+      {tasks.includes("1") && <EconomicAnalysis/>}
+      {tasks.includes("2") && <StructureAnalysis/>}
+      {tasks.includes("3") && <IndexAnalysis/>}
+      {tasks.includes("4") && <CVPAnalysis/>}
+      {tasks.includes("5") && <SortimentAnalysis/>}
+      {tasks.includes("6") && <ParetoAnalysis/>}
 
       <HeaderBar addToReport={true} title={"Vyhodnotenie"}/>
 

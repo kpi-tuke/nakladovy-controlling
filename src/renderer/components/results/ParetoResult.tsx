@@ -1,7 +1,7 @@
 import ReactApexChart from 'react-apexcharts';
-import TableStatic from "../TableStatic";
+import TableStatic from '../TableStatic';
 
-export default function Result6(props: any) {
+export default function ParetoResult(props: any) {
   const barChart = {
     series: [
       {
@@ -31,7 +31,7 @@ export default function Result6(props: any) {
           fontSize: '14px',
           fontFamily: 'Helvetica, Arial, sans-serif',
           fontWeight: 'bold',
-          colors: ["black"]
+          colors: ['black'],
         },
       },
       annotations: {
@@ -101,33 +101,40 @@ export default function Result6(props: any) {
 
   return (
     <div>
+      <h1 className={'result-h1'}>Analýza ukazovateľov</h1>
 
-      <h1 className={"result-h1"}>Analýza ukazovateľov</h1>
-
-      <div className={"table-card"}>
+      <div className={'table-card'}>
         <TableStatic
-          corner={"Príčiny vzniku nákladov"}
-          header={["Náklady (€)", "Kumulované náklady (€)", "Štruktúra nákladov (%)", "Kumulovaná štruktúra nákladov (%)"]}
+          corner={'Príčiny vzniku nákladov'}
+          header={[
+            'Náklady (€)',
+            'Kumulované náklady (€)',
+            'Štruktúra nákladov (%)',
+            'Kumulovaná štruktúra nákladov (%)',
+          ]}
           inputs={[...props.result.causes]}
-          data={
-            props.result.values.map((value: string, idx: number) => {
-              return [value, props.result.valuesKumul[idx], props.result.percentages[idx], props.result.percentagesKumul[idx]]
-            })
-          }
+          data={props.result.values.map((value: string, idx: number) => {
+            return [
+              value,
+              props.result.valuesKumul[idx],
+              props.result.percentages[idx],
+              props.result.percentagesKumul[idx],
+            ];
+          })}
         />
       </div>
-      <h1 className={"result-h1"}>Dashboarding</h1>
+      <h1 className={'result-h1'}>Dashboarding</h1>
 
-      <div
-        className={"graph-card"}
-      >
-        <h4 className={"graph-title"}>PARETO ANALÝZA A LORENZOVA KRIVKA</h4>
+      <div className={'graph-card'}>
+        <h4 className={'graph-title'}>PARETO ANALÝZA A LORENZOVA KRIVKA</h4>
         {
-          // @ts-ignore
-          <ReactApexChart options={barChart.options}
-                          series={barChart.series}
-                          type="bar"
-                          height={600}
+
+          <ReactApexChart
+            // @ts-ignore
+            options={barChart.options}
+            series={barChart.series}
+            type="bar"
+            height={600}
           />
         }
       </div>

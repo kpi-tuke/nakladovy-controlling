@@ -1,13 +1,13 @@
-import TableDynamic from '../TableDynamic';
-import Result4 from '../results/Result4';
-import SingleInput from '../SingleInput';
-import HeaderBar from '../HeaderBar';
+import TableDynamic from '../components/TableDynamic';
+import CVPResult from '../components/results/CVPResult';
+import SingleInput from '../components/SingleInput';
+import HeaderBar from '../components/HeaderBar';
 import {CVPActions, selectCVP} from 'renderer/store/slice';
 import {useAppSelector} from 'renderer/store/hooks';
-import TextField from "../TextField";
+import TextField from "../components/TextField";
 import {useCVPCalc} from 'renderer/calculations';
 
-export default function Task4() {
+export default function CVPAnalysis() {
 
   const {headers, data, items, values, fixTotal, minProfit, text} =
     useAppSelector(selectCVP);
@@ -53,7 +53,7 @@ export default function Task4() {
         </div>
       </div>
 
-      <Result4 result={{items, ...result}}/>
+      <CVPResult result={{items, ...result}}/>
 
       <TextField text={text} action={CVPActions.changeText}/>
     </div>

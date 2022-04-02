@@ -1,12 +1,12 @@
-import TableDynamic from '../TableDynamic';
-import Result6 from '../results/Result6';
-import HeaderBar from '../HeaderBar';
+import TableDynamic from '../components/TableDynamic';
+import ParetoResult from '../components/results/ParetoResult';
+import HeaderBar from '../components/HeaderBar';
 import {useAppSelector} from 'renderer/store/hooks';
 import {paretoActions, selectPareto} from 'renderer/store/slice';
-import TextField from '../TextField';
+import TextField from '../components/TextField';
 import {usePretoCalc} from 'renderer/calculations';
 
-export default function Task6() {
+export default function ParetoAnalysis() {
   const {headers, values, items, data, text} = useAppSelector(selectPareto);
 
   const result = usePretoCalc(data, items);
@@ -31,7 +31,7 @@ export default function Task6() {
         dynCols={false}
         actions={paretoActions}
       />
-      <Result6 result={{...result}}/>
+      <ParetoResult result={{...result}}/>
 
       <TextField text={text} action={paretoActions.changeText}/>
     </div>

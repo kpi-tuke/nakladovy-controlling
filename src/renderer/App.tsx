@@ -1,13 +1,13 @@
 import {MemoryRouter as Router, Redirect, Route, Switch} from 'react-router-dom';
 import TaskSelector from "./components/TaskSelector";
-import Task2 from "./components/tasks/Task2";
-import Task3 from './components/tasks/Task3';
-import Task4 from "./components/tasks/Task4";
-import Task5 from "./components/tasks/Task5";
-import Task6 from "./components/tasks/Task6";
+import StructureAnalysis from "./pages/StructureAnalysis";
+import IndexAnalysis from './pages/IndexAnalysis';
+import CVPAnalysis from "./pages/CVPAnalysis";
+import SortimentAnalysis from "./pages/SortimentAnalysis";
+import ParetoAnalysis from "./pages/ParetoAnalysis";
 import {Provider} from "react-redux";
 import {store} from "./store/store";
-import Task1 from './components/tasks/Task1';
+import EconomicAnalysis from './pages/EconomicAnalysis';
 import Evaluation from './components/Evaluation';
 
 export default function App() {
@@ -17,12 +17,12 @@ export default function App() {
       <Router>
         <Switch>
           <Route path="/taskselect" component={TaskSelector}/>
-          <Route path="/task6" component={Task6}/>
-          <Route path="/task5" component={Task5}/>
-          <Route path="/task4" component={Task4}/>
-          <Route path="/task3" component={Task3}/>
-          <Route path="/task2" component={Task2}/>
-          <Route path="/task1" component={Task1}/>
+          <Route path="/task6" component={ParetoAnalysis}/>
+          <Route path="/task5" component={SortimentAnalysis}/>
+          <Route path="/task4" component={CVPAnalysis}/>
+          <Route path="/task3" component={IndexAnalysis}/>
+          <Route path="/task2" component={StructureAnalysis}/>
+          <Route path="/task1" component={EconomicAnalysis}/>
           <Route path="/evaluation" component={Evaluation}/>
         </Switch>
         <Redirect from="/" to="/taskselect"/>

@@ -1,13 +1,13 @@
-import Result1 from '../results/Result1';
+import EconomicResult from '../components/results/EconomicResult';
 import {bilanceActions, selectBilance} from 'renderer/store/slice';
-import HeaderBar from '../HeaderBar';
+import HeaderBar from '../components/HeaderBar';
 import groupedOptions from '../chartOfAccounts';
-import TableDynamic from '../TableDynamic';
-import TextField from '../TextField';
+import TableDynamic from '../components/TableDynamic';
+import TextField from '../components/TextField';
 import {useBilanceCalc} from 'renderer/calculations';
 import {useAppSelector} from 'renderer/store/hooks';
 
-export default function Task1() {
+export default function EconomicAnalysis() {
   const {headers, items, data, values, text} = useAppSelector(selectBilance);
 
   const result = useBilanceCalc(data, values);
@@ -31,7 +31,7 @@ export default function Task1() {
         actions={bilanceActions}
       />
 
-      <Result1 result={{...useAppSelector(selectBilance), ...result}}/>
+      <EconomicResult result={{...useAppSelector(selectBilance), ...result}}/>
 
       <TextField text={text} action={bilanceActions.changeText}/>
     </div>

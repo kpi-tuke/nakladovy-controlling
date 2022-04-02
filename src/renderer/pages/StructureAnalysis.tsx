@@ -1,13 +1,13 @@
-import TableDynamic from '../TableDynamic';
-import Result2 from '../results/Result2';
-import HeaderBar from '../HeaderBar';
+import TableDynamic from '../components/TableDynamic';
+import StructureResult from '../components/results/StructureResult';
+import HeaderBar from '../components/HeaderBar';
 import {selectStructure, structureActions} from 'renderer/store/slice';
 import {costs} from '../chartOfAccounts';
-import TextField from '../TextField';
+import TextField from '../components/TextField';
 import {useStructureCalc} from 'renderer/calculations';
 import {useAppSelector} from 'renderer/store/hooks';
 
-export default function Task2() {
+export default function StructureAnalysis() {
   const {headers, items, data, text} = useAppSelector(selectStructure);
 
   const selectCol = [
@@ -43,7 +43,7 @@ export default function Task2() {
         actions={structureActions}
       />
 
-      <Result2 result={{items, headers, ...result}}/>
+      <StructureResult result={{items, headers, ...result}}/>
 
       <TextField text={text} action={structureActions.changeText}/>
     </div>

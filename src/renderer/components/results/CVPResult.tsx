@@ -1,7 +1,9 @@
 import TableStatic from '../TableStatic';
 import ReactApexChart from 'react-apexcharts';
+import { lineGraph } from '../graphOptions';
+import { ApexOptions } from 'apexcharts';
 
-export default function Result4(props: any) {
+export default function CVPResult(props: any) {
   return (
     <div>
       <h1 className={'result-h1'}>
@@ -57,16 +59,18 @@ export default function Result4(props: any) {
 
           if (props.result.volumes[idx] === 0)
             osX.push(Math.max(...osX) + Math.max(...osX) * 0.3);
+          else if (props.result.volumes[idx] === props.result.zeroTon[idx])
+            osX.push(Math.round(props.result.zeroTon[idx] / 2));
           else osX.push(props.result.volumes[idx]);
 
-          osX.push(Math.max(...osX) + Math.max(...osX) * 0.3)
+          osX.push(Math.max(...osX) + Math.max(...osX) * 0.3);
 
           osX.map((vol: number) => {
             costTotal.push(
               Math.round(
                 (props.result.costs[idx] * vol +
                   parseFloat(props.result.fixTotal)) *
-                100
+                  100
               ) / 100
             );
 
@@ -85,71 +89,19 @@ export default function Result4(props: any) {
             return a - b;
           });
 
-          const lineGraph = {
-            series: [
-              {
-                name: 'Náklady',
-                data: costTotal,
-              },
-              {
-                name: 'Výnosy',
-                data: incomeTotal,
-              },
-            ],
-            options: {
-              chart: {
-                type: 'line',
-                zoom: {
-                  enabled: false,
-                },
-              },
-
-              stroke: {
-                curve: 'straight',
-              },
-              grid: {
-                borderColor: '#e7e7e7',
-                row: {
-                  colors: ['#f3f3f3', 'transparent'],
-                  opacity: 0.5,
-                },
-              },
-              xaxis: {
-                categories: osX.map((x: number) => x.toString()),
-              },
-              annotations: {
-                points: [
-                  {
-                    x: props.result.zeroTon[idx].toString(),
-                    y: props.result.zeroEur[idx],
-                    marker: {
-                      size: 8,
-                    },
-                    label: {
-                      borderColor: '#FF4560',
-                      text: 'Nulový bod',
-                    },
-                  },
-                ],
-                xaxis: [
-                  {
-                    x: props.result.zeroProf[idx].toString(),
-                    borderColor: '#775DD0',
-                    label: {
-                      style: {
-                        color: '#fa023f',
-                      },
-                      orientation: 'horizontal',
-                      text: 'Minimálny zisk',
-                    },
-                  },
-                ],
-              },
-              legend: {
-                horizontalAlign: 'center',
-              },
+          const graph: ApexOptions = lineGraph(
+            osX.map((x: number) => x.toString())
+          );
+          const series = [
+            {
+              name: 'Náklady',
+              data: costTotal,
             },
-          };
+            {
+              name: 'Výnosy',
+              data: incomeTotal,
+            },
+          ];
 
           return (
             <div key={idx} className={'col-12'}>
@@ -157,15 +109,12 @@ export default function Result4(props: any) {
                 <h4 className={'graph-title'}>
                   {'NULOVÝ BOD: ' + value.toUpperCase()}
                 </h4>
-                {
-                  <ReactApexChart
-                    // @ts-ignore
-                    options={lineGraph.options}
-                    series={lineGraph.series}
-                    type="line"
-                    height={300}
-                  />
-                }
+                <ReactApexChart
+                  options={graph}
+                  series={series}
+                  type="line"
+                  height={400}
+                />
               </div>
             </div>
           );

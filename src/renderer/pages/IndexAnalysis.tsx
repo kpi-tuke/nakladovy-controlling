@@ -1,13 +1,13 @@
-import Result3 from '../results/Result3';
-import HeaderBar from '../HeaderBar';
+import IndexResult from '../components/results/IndexResult';
+import HeaderBar from '../components/HeaderBar';
 import groupedOptions from '../chartOfAccounts';
-import TableDynamic from '../TableDynamic';
+import TableDynamic from '../components/TableDynamic';
 import {chainActions, selectChain} from 'renderer/store/slice';
 import {useSelector} from 'react-redux';
-import TextField from "../TextField";
+import TextField from "../components/TextField";
 import {useChainCalc} from 'renderer/calculations';
 
-export default function Task3() {
+export default function IndexAnalysis() {
 
   const {headers, items, data, values, text} = useSelector(selectChain);
 
@@ -38,7 +38,7 @@ export default function Task3() {
         base={true}
       />
 
-      <Result3 result={{...result}}/>
+      <IndexResult result={{...result}}/>
 
       <TextField text={text} action={chainActions.changeText}/>
     </div>

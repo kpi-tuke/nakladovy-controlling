@@ -1,114 +1,30 @@
 import ReactApexChart from 'react-apexcharts';
 import InfoCard from '../InfoCard';
 import TableStatic from '../TableStatic';
+import { colGraph } from '../graphOptions';
 
-export default function Result2(props: any) {
-  const barChartRow = {
-    series: [
-      {
-        data: props.result.rowSums,
-      },
-    ],
-    options: {
-      chart: {
-        toolbar: {
-          show: false,
-        },
-        type: 'bar',
-      },
-      legend: {
-        show: false,
-      },
-      plotOptions: {
-        bar: {
-          columnWidth: '45%',
-          distributed: true,
-        },
-      },
-      dataLabels: {
-        enabled: true,
-        style: {
-          fontSize: '14px',
-          fontFamily: 'Helvetica, Arial, sans-serif',
-          fontWeight: 'bold',
-          colors: ['black'],
-        },
-      },
-      grid: {
-        borderColor: '#e7e7e7',
-        row: {
-          colors: ['#f3f3f3', 'transparent'],
-          opacity: 0.5,
-        },
-      },
-      xaxis: {
-        categories: props.result.items,
-        labels: {
-          trim: true,
-        },
-      },
-      yaxis: [
-        {
-          title: {
-            text: 'Náklady (€)',
-          },
-        },
-      ],
+export default function StructureResult(props: any) {
+  const genericSeries = [
+    {
+      data: props.result.rowSums,
     },
+  ];
+
+  const calculationSeries = [
+    {
+      data: props.result.colSums,
+    },
+  ];
+
+  const genericOptions = {
+    ...colGraph(props.result.items, 'Náklady (€)'),
+    legend: { show: false },
+    plotOptions: { bar: { distributed: true } },
   };
-
-  const barChartCol = {
-    series: [
-      {
-        data: props.result.colSums,
-      },
-    ],
-    options: {
-      chart: {
-        toolbar: {
-          show: false,
-        },
-        type: 'bar',
-      },
-      legend: {
-        show: false,
-      },
-      dataLabels: {
-        enabled: true,
-        style: {
-          fontSize: '14px',
-          fontFamily: 'Helvetica, Arial, sans-serif',
-          fontWeight: 'bold',
-          colors: ['black'],
-        },
-      },
-      grid: {
-        borderColor: '#e7e7e7',
-        row: {
-          colors: ['#f3f3f3', 'transparent'],
-          opacity: 0.5,
-        },
-      },
-      plotOptions: {
-        bar: {
-          columnWidth: '45%',
-          distributed: true,
-        },
-      },
-      xaxis: {
-        categories: props.result.headers,
-        labels: {
-          trim: true,
-        },
-      },
-      yaxis: [
-        {
-          title: {
-            text: 'Náklady (€)',
-          },
-        },
-      ],
-    },
+  const calculationOptions = {
+    ...colGraph(props.result.headers, 'Náklady (€)'),
+    legend: { show: false },
+    plotOptions: { bar: { distributed: true } },
   };
 
   const pieChart = {
@@ -211,7 +127,7 @@ export default function Result2(props: any) {
               <ReactApexChart
                 // @ts-ignore
                 options={pieChart.options}
-                series={pieChart.series}
+                series={props.result.rowSums}
                 type="pie"
                 height={347}
               />
@@ -229,9 +145,8 @@ export default function Result2(props: any) {
             <h4 className={'graph-title'}>DRUHOVÉ ČLENENIE NÁKLADOV</h4>
             {
               <ReactApexChart
-                // @ts-ignore
-                options={barChartRow.options}
-                series={barChartRow.series}
+                options={genericOptions}
+                series={genericSeries}
                 type="bar"
                 height={300}
               />
@@ -253,7 +168,7 @@ export default function Result2(props: any) {
               <ReactApexChart
                 // @ts-ignore
                 options={donutChart.options}
-                series={donutChart.series}
+                series={props.result.colSums}
                 type="donut"
                 height={347}
               />
@@ -271,9 +186,8 @@ export default function Result2(props: any) {
             <h4 className={'graph-title'}>KALKULAČNÉ ČLENENIE NÁKLADOV</h4>
             {
               <ReactApexChart
-                // @ts-ignore
-                options={barChartCol.options}
-                series={barChartCol.series}
+                options={calculationOptions}
+                series={calculationSeries}
                 type="bar"
                 height={300}
               />

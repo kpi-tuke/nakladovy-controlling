@@ -1,12 +1,12 @@
-import TableDynamic from '../TableDynamic';
-import Result5 from '../results/Result5';
-import HeaderBar from '../HeaderBar';
+import TableDynamic from '../components/TableDynamic';
+import SortimentResult from '../components/results/SortimentResult';
+import HeaderBar from '../components/HeaderBar';
 import {selectSortiment, sortimentActions} from 'renderer/store/slice';
 import {useAppSelector} from 'renderer/store/hooks';
-import TextField from "../TextField";
+import TextField from "../components/TextField";
 import {useSortimentCalc} from 'renderer/calculations';
 
-export default function Task5() {
+export default function SortimentAnalysis() {
 
   const {headers, values, data, items, text} = useAppSelector(selectSortiment);
 
@@ -31,7 +31,7 @@ export default function Task5() {
         actions={sortimentActions}
       />
 
-      <Result5 result={{headers, ...result}}/>
+      <SortimentResult result={{headers, ...result}}/>
 
       <TextField text={text} action={sortimentActions.changeText}/>
     </div>
