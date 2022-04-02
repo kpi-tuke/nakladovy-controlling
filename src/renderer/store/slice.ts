@@ -48,7 +48,8 @@ const reducerFunctions = {
     state: { data: number[][] },
     action: PayloadAction<dataOnCords>
   ) => {
-    state.data[action.payload.row][action.payload.col] = action.payload.data;
+
+    state.data[action.payload.row][action.payload.col] = isNaN(action.payload.data) ? 0 : action.payload.data
   },
   addColumn: (state: { headers: string[]; items: string[]; data: number[][] }) => {
     state.headers.push((parseInt(state.headers[state.headers.length - 1]) + 1).toString());
@@ -76,7 +77,7 @@ const reducerFunctions = {
     })
     state.headers.splice(action.payload, 1);
   },
-  changeText: (state: {text: string}, action: PayloadAction<string>) => {
+  changeText: (state: { text: string }, action: PayloadAction<string>) => {
     state.text = action.payload
   }
 };
@@ -90,10 +91,10 @@ const initialSortimentState: BilanceState = {
     [0],
   ],
   items: [
-    'Priame náklady(€)',
+    'Priame náklady (€)',
     'Úplné vlastné náklady výkonu (€)',
-    'Predajná cena výkonu(jednotková)(€)',
-    'Objem výroby(množstvo)',
+    'Predajná cena (jednotková) (€)',
+    'Objem výroby (ks...)',
   ],
   values: [
     'Predajná cena jednotková',
@@ -133,7 +134,7 @@ const initialChainState: BilanceState = {
 };
 
 const initialCVPState: CVPState = {
-  headers: ['Výroba(ks, kg, ton, ...)', 'Cena/množstvo(€/ks, kg, ton, ...)', 'Variabilné náklady/množstvo(€/ks, kg, ton, ...)'],
+  headers: ['Objem produkcie (ks...)', 'Cena jednotková (€)', 'Variabilné náklady jednotkové (€)'],
   items: ['Výrobok A'],
   data: [[0, 0, 0,]],
   values: ['Výrobok A'],
@@ -151,7 +152,7 @@ const initialStructureState: BilanceState = {
 };
 
 const initialParetoState: BilanceState = {
-  headers: ['Náklady(€)'],
+  headers: ['Náklady (€)'],
   data: [[3998], [1307], [361], [82], [104], [1573], [5]],
   items: [
     'Chyby mechanického trieskového opracovania',
@@ -192,7 +193,7 @@ const chainSlice = createSlice({
   reducers: reducerFunctions,
 });
 
-const CVPSlice = createSlice( {
+const CVPSlice = createSlice({
   name: "CVP",
   initialState: initialCVPState,
   reducers: {
@@ -218,6 +219,17 @@ const paretoSlice = createSlice({
   reducers: reducerFunctions,
 });
 
+const reportSlice = createSlice({
+  name: "report",
+  initialState: [],
+  reducers: {
+    addTask: (state: string[], action: PayloadAction<string>) => {
+      if (!state.includes(action.payload))
+        state.push(action.payload)
+    }
+  }
+})
+
 export const bilanceActions = bilanceSlice.actions
 
 export const sortimentActions = sortimentSlice.actions
@@ -229,6 +241,8 @@ export const CVPActions = CVPSlice.actions;
 export const structureActions = structureSlice.actions;
 
 export const paretoActions = paretoSlice.actions;
+
+export const reportActions = reportSlice.actions;
 
 
 export const selectBilance = (state: RootState) => state.bilance;
@@ -243,6 +257,8 @@ export const selectStructure = (state: RootState) => state.structure;
 
 export const selectPareto = (state: RootState) => state.pareto;
 
+export const selectReport = (state: RootState) => state.report
+
 
 export const bilanceReducer = bilanceSlice.reducer
 
@@ -255,3 +271,5 @@ export const CVPReducer = CVPSlice.reducer;
 export const structureReducer = structureSlice.reducer;
 
 export const paretoReducer = paretoSlice.reducer;
+
+export const reportReducer = reportSlice.reducer;

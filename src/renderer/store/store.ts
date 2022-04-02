@@ -1,5 +1,13 @@
-import { configureStore } from '@reduxjs/toolkit'
-import { bilanceReducer, chainReducer, CVPReducer, paretoReducer, sortimentReducer, structureReducer } from './slice'
+import {configureStore} from '@reduxjs/toolkit'
+import {
+  bilanceReducer,
+  chainReducer,
+  CVPReducer,
+  paretoReducer,
+  reportReducer,
+  sortimentReducer,
+  structureReducer
+} from './slice'
 
 export const store = configureStore({
   reducer: {
@@ -8,7 +16,8 @@ export const store = configureStore({
     chain: chainReducer,
     cvp: CVPReducer,
     structure: structureReducer,
-    pareto: paretoReducer
+    pareto: paretoReducer,
+    report: reportReducer,
   },
 })
 

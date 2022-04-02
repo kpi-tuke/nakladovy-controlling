@@ -1,5 +1,5 @@
 import ReactApexChart from 'react-apexcharts';
-import TableStatic from "../TableStatic";
+import TableStatic from '../TableStatic';
 
 export default function Result3(props: any) {
   const lineGraph = {
@@ -9,7 +9,7 @@ export default function Result3(props: any) {
         data: props.result.costSumsForYears,
       },
       {
-        name: 'Tržby',
+        name: 'Výnosy',
         data: props.result.incomeSumsForYears,
       },
     ],
@@ -42,49 +42,13 @@ export default function Result3(props: any) {
       xaxis: {
         categories: props.result.headers,
       },
-      legend: {
-        horizontalAlign: 'center',
-        verticalAlign: 'center',
-      },
-    },
-  };
-
-  const chainGraph = {
-    series: [
-      {
-        name: 'Reťazový index',
-        data: props.result.chainIndexes,
-      },
-    ],
-    options: {
-      chart: {
-        type: 'line',
-        toolbar: {
-          show: false,
+      yaxis: [
+        {
+          title: {
+            text: 'ekonomická veličina (€)',
+          },
         },
-        zoom: {
-          enabled: false,
-        },
-      },
-      dataLabels: {
-        enabled: true,
-      },
-      stroke: {
-        curve: 'straight',
-      },
-      grid: {
-        borderColor: '#e7e7e7',
-        row: {
-          colors: ['#f3f3f3', 'transparent'],
-          opacity: 0.5,
-        },
-      },
-      markers: {
-        size: 1,
-      },
-      xaxis: {
-        categories: props.result.betweenYears,
-      },
+      ],
       legend: {
         horizontalAlign: 'center',
         verticalAlign: 'center',
@@ -111,6 +75,12 @@ export default function Result3(props: any) {
       },
       dataLabels: {
         enabled: true,
+        style: {
+          fontSize: '14px',
+          fontFamily: 'Helvetica, Arial, sans-serif',
+          fontWeight: 'bold',
+          colors: ['black'],
+        },
       },
       stroke: {
         curve: 'straight',
@@ -135,11 +105,11 @@ export default function Result3(props: any) {
     },
   };
 
-  const incomeDiffGraph = {
+  const chainIdxGraph = {
     series: [
       {
         name: 'Percento zmeny výnosov',
-        data: props.result.incomeDiff,
+        data: props.result.chainIndexes,
       },
     ],
     options: {
@@ -163,49 +133,12 @@ export default function Result3(props: any) {
       },
       dataLabels: {
         enabled: true,
-      },
-      stroke: {
-        show: true,
-        width: 2,
-        colors: ['transparent'],
-      },
-      xaxis: {
-        categories: props.result.betweenYears,
-      },
-      fill: {
-        opacity: 1,
-      },
-    },
-  };
-
-  const costDiffGraph = {
-    series: [
-      {
-        name: 'Percento zmeny nákladov',
-        data: props.result.costDiff,
-      },
-    ],
-    options: {
-      chart: {
-        type: 'bar',
-      },
-      colors: ['#00e396'],
-      plotOptions: {
-        bar: {
-          horizontal: false,
-          columnWidth: '55%',
-          endingShape: 'rounded',
+        style: {
+          fontSize: '14px',
+          fontFamily: 'Helvetica, Arial, sans-serif',
+          fontWeight: 'bold',
+          colors: ['black'],
         },
-      },
-      grid: {
-        borderColor: '#e7e7e7',
-        row: {
-          colors: ['#f3f3f3', 'transparent'],
-          opacity: 0.5,
-        },
-      },
-      dataLabels: {
-        enabled: true,
       },
       stroke: {
         show: true,
@@ -249,6 +182,12 @@ export default function Result3(props: any) {
       },
       dataLabels: {
         enabled: true,
+        style: {
+          fontSize: '14px',
+          fontFamily: 'Helvetica, Arial, sans-serif',
+          fontWeight: 'bold',
+          colors: ['black'],
+        },
       },
       stroke: {
         show: true,
@@ -266,131 +205,98 @@ export default function Result3(props: any) {
 
   return (
     <div>
+      <h1 className={'result-h1'}>Indexná analýza</h1>
 
-      <h1 className={"result-h1"}>Indexná analýza</h1>
-
-      <div
-        className={"table-card"}
-        style={{marginTop:50}}
-      >
+      <div className={'table-card'} style={{marginTop: 50}}>
         <TableStatic
-          corner={"Ekonomické ukazovatele"}
+          corner={'Ekonomické ukazovatele'}
+          header={[...props.result.headers]}
+          inputs={['(Ib) bázický index']}
+          data={[[...props.result.baseIndexes]]}
+        />
+        <TableStatic
+          corner={'Ekonomické ukazovatele'}
           header={[...props.result.betweenYears]}
           inputs={[
-            'Reťazový index',
-            'Percento zmeny nákladov',
-            'Percento zmeny výnosov',
-            'Koeficient reakcie',
+            '(Ir) reťazový index',
+            '(Pzn) percento zmeny nákladov (%)',
+            '(Pzv) percento zmeny výnosov (%)',
+            '(Kr) koeficient reakcie',
           ]}
           data={[
             [...props.result.chainIndexes],
-            [...(props.result.costDiff.map((value: number) => (value.toString() + "%")))],
-            [...(props.result.incomeDiff.map((value: number) => (value.toString() + "%")))],
+            [...props.result.costDiff.map((value: number) => value.toString())],
+            [
+              ...props.result.incomeDiff.map((value: number) =>
+                value.toString()
+              ),
+            ],
             [...props.result.reaction],
-
           ]}
         />
       </div>
 
-      <h1 className={"result-h1"}>Dashboarding</h1>
+      <h1 className={'result-h1'}>Dashboarding</h1>
 
-      <div
-        className={"graph-card"}
-      >
-        <h4 className={"graph-title"}>NÁKLADY A VÝNOSY</h4>
+      <div className={'graph-card'}>
+        <h4 className={'graph-title'}>TREND VÝVOJA NÁKLADOV A VÝNOSOV</h4>
         {
-          // @ts-ignore
-          <ReactApexChart options={lineGraph.options}
-                          series={lineGraph.series}
-                          type="line"
-                          height={400}
+
+          <ReactApexChart
+            // @ts-ignore
+            options={lineGraph.options}
+            series={lineGraph.series}
+            type="line"
+            height={300}
           />
         }
       </div>
 
-      <div
-        className={"graph-card"}
-      >
-        <h4 className={"graph-title"}>REŤAZOVÝ INDEX</h4>
-        {
-          // @ts-ignore
-          <ReactApexChart options={chainGraph.options}
-                          series={chainGraph.series}
-                          type="line"
-                          height={400}
-          />
-        }
-      </div>
+      <div className={'col-12'}>
+        <div className={'graph-card'} style={{marginRight: 25}}>
+          <h4 className={'graph-title'}>BÁZICKÝ INDEX</h4>
+          {
 
-      <div className={"row"}>
-        <div className={"col-6"}>
-          <div
-            className={"graph-card"}
-            style={{marginRight:25}}
-          >
-            <h4 className={"graph-title"}>BÁZICKÝ INDEX</h4>
-            {
+            <ReactApexChart
               // @ts-ignore
-              <ReactApexChart options={baseGraph.options}
-                              series={baseGraph.series}
-                              type="bar"
-                              height={400}
-              />
-            }
-          </div>
-        </div>
-
-        <div className={"col-6"}>
-          <div
-            className={"graph-card"}
-            style={{marginLeft:25}}
-          >
-            <h4 className={"graph-title"}>PERCENTO ZMENY VÝNOSOV</h4>
-            {
-              // @ts-ignore
-              <ReactApexChart options={incomeDiffGraph.options}
-                              series={incomeDiffGraph.series}
-                              type="bar"
-                              height={400}
-              />
-            }
-          </div>
+              options={baseGraph.options}
+              series={baseGraph.series}
+              type="bar"
+              height={300}
+            />
+          }
         </div>
       </div>
 
-      <div className={"row"}>
-        <div className={"col-6"}>
-          <div
-            className={"graph-card"}
-            style={{marginRight:25}}
-          >
-            <h4 className={"graph-title"}>PRECENTO ZMENY NÁKLADOV</h4>
-            {
-              // @ts-ignore
-              <ReactApexChart options={costDiffGraph.options}
-                              series={costDiffGraph.series}
-                              type="bar"
-                              height={400}
-              />
-            }
-          </div>
-        </div>
+      <div className={'col-12'}>
+        <div className={'graph-card'} style={{marginLeft: 25}}>
+          <h4 className={'graph-title'}>REŤAZOVÝ INDEX</h4>
+          {
 
-        <div className={"col-6"}>
-          <div
-            className={"graph-card"}
-            style={{marginLeft:25}}
-          >
-            <h4 className={"graph-title"}>KOFICIENT REAKCIE</h4>
-            {
+            <ReactApexChart
               // @ts-ignore
-              <ReactApexChart options={reactionGraph.options}
-                              series={reactionGraph.series}
-                              type="bar"
-                              height={400}
-              />
-            }
-          </div>
+              options={chainIdxGraph.options}
+              series={chainIdxGraph.series}
+              type="bar"
+              height={300}
+            />
+          }
+        </div>
+      </div>
+
+      <div className={'col-12'}>
+        <div className={'graph-card'} style={{marginLeft: 25}}>
+          <h4 className={'graph-title'}>KOFICIENT REAKCIE</h4>
+          {
+
+            <ReactApexChart
+              // @ts-ignore
+              options={reactionGraph.options}
+              series={reactionGraph.series}
+              type="bar"
+              height={300}
+            />
+          }
         </div>
       </div>
     </div>

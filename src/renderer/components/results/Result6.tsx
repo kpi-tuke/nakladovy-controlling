@@ -12,7 +12,7 @@ export default function Result6(props: any) {
       {
         name: 'Lorenzova krivka',
         type: 'line',
-        data: props.result.kumul,
+        data: props.result.percentagesKumul,
       },
     ],
     options: {
@@ -74,7 +74,7 @@ export default function Result6(props: any) {
           min: 0,
           max: props.result.sum,
           title: {
-            text: 'Náklady v (€)',
+            text: 'Náklady (€)',
           },
         },
         {
@@ -82,7 +82,7 @@ export default function Result6(props: any) {
           min: 0,
           max: 100,
           title: {
-            text: 'Štruktúra nákladov v (%)',
+            text: 'Štruktúra nákladov (%)',
           },
         },
       ],
@@ -106,12 +106,12 @@ export default function Result6(props: any) {
 
       <div className={"table-card"}>
         <TableStatic
-          corner={"Príčina"}
-          header={["Náklady(€)", "Náklady kumulované(€)", "Podiel(%)", "Podiel kumulovaný(%)"]}
+          corner={"Príčiny vzniku nákladov"}
+          header={["Náklady (€)", "Kumulované náklady (€)", "Štruktúra nákladov (%)", "Kumulovaná štruktúra nákladov (%)"]}
           inputs={[...props.result.causes]}
           data={
             props.result.values.map((value: string, idx: number) => {
-              return [value, props.result.valuesKumul[idx], props.result.percentages[idx], props.result.kumul[idx]]
+              return [value, props.result.valuesKumul[idx], props.result.percentages[idx], props.result.percentagesKumul[idx]]
             })
           }
         />
@@ -119,7 +119,7 @@ export default function Result6(props: any) {
       <h1 className={"result-h1"}>Dashboarding</h1>
 
       <div
-       className={"graph-card"}
+        className={"graph-card"}
       >
         <h4 className={"graph-title"}>PARETO ANALÝZA A LORENZOVA KRIVKA</h4>
         {

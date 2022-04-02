@@ -1,24 +1,24 @@
 import TableDynamic from '../TableDynamic';
 import Result6 from '../results/Result6';
 import HeaderBar from '../HeaderBar';
-import { useAppSelector } from 'renderer/store/hooks';
-import { paretoActions, selectPareto } from 'renderer/store/slice';
+import {useAppSelector} from 'renderer/store/hooks';
+import {paretoActions, selectPareto} from 'renderer/store/slice';
 import TextField from '../TextField';
-import { usePretoCalc } from 'renderer/calculations';
+import {usePretoCalc} from 'renderer/calculations';
 
 export default function Task6() {
-  const { headers, values, items, data, text } = useAppSelector(selectPareto);
+  const {headers, values, items, data, text} = useAppSelector(selectPareto);
 
   const result = usePretoCalc(data, items);
-  
+
   return (
     <div className={'task-container'}>
-      <HeaderBar title={'Pareto analýza nákladov'} />
+      <HeaderBar id={"6"} title={'Pareto analýza nákladov'}/>
 
       <h1 className={'result-h1'}>Vstupy</h1>
 
       <TableDynamic
-        corner={'Príčina'}
+        corner={'Príčiny vzniku nákladov'}
         headerType={'text'}
         header={headers}
         inputType={'input'}
@@ -31,9 +31,9 @@ export default function Task6() {
         dynCols={false}
         actions={paretoActions}
       />
-      <Result6 result={{ ...result }} />
+      <Result6 result={{...result}}/>
 
-      <TextField text={text} action={paretoActions.changeText} />
+      <TextField text={text} action={paretoActions.changeText}/>
     </div>
   );
 }

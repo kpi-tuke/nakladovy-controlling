@@ -2,22 +2,20 @@ import TableStatic from '../TableStatic';
 import ReactApexChart from 'react-apexcharts';
 
 export default function Result4(props: any) {
-
   return (
     <div>
+      <h1 className={'result-h1'}>
+        Analýza nulového bodu - kritický bod rentability{' '}
+      </h1>
 
-      <h1 className={"result-h1"}>Analýza nulového bodu - kritický bod rentability </h1>
-
-      <div
-        className={"table-card"}
-      >
+      <div className={'table-card'}>
         <TableStatic
-          corner={"Ekonomické ukazovatele"}
+          corner={'Ekonomické ukazovatele'}
           header={...props.result.items}
           inputs={[
-            'Nulový bod(€)',
-            'Nulový bod(množstvo)',
-            'Nulový bod Zmin =  ' + props.result.minProfit.toString() + "€" + ' v (množstvo)',
+            'Nulový bod (€)',
+            'Nulový bod (ks...)',
+            'Nulový bod Zmin (ks...)',
           ]}
           data={[
             [
@@ -39,34 +37,51 @@ export default function Result4(props: any) {
         />
       </div>
 
-      <h1 className={"result-h1"}>Dashboarding</h1>
+      <h1 className={'result-h1'}>Dashboarding</h1>
 
-      <div className={"row"}>
+      <div className={'row'}>
         {props.result.items.map((value: any, idx: number) => {
-
-          const costTotal: number[] = [0];
-          const incomeTotal: number[] = [0];
+          const costTotal: number[] = [];
+          const incomeTotal: number[] = [];
           const osX: number[] = [0];
 
-          costTotal.push(Math.round((props.result.costs[idx] * props.result.zeroTon[idx] + parseFloat(props.result.fixTotal)) * 100) / 100 )
-          costTotal.push(Math.round((props.result.costs[idx] * props.result.zeroProf[idx] + parseFloat(props.result.fixTotal)) * 100 ) / 100 )
-          costTotal.push(Math.round((props.result.costs[idx] * props.result.volumes[idx] + parseFloat(props.result.fixTotal)) * 100 ) / 100 )
+          if (props.result.zeroTon[idx] === 0)
+            if (props.result.volumes[idx] === 0) osX.push(5);
+            else osX.push(props.result.volumes[idx] * 2);
+          else osX.push(props.result.zeroTon[idx]);
 
-          incomeTotal.push(Math.round(props.result.prices[idx] * props.result.zeroTon[idx] * 100) / 100)
-          incomeTotal.push(Math.round(props.result.prices[idx] * props.result.zeroProf[idx] * 100) / 100)
-          incomeTotal.push(Math.round(props.result.prices[idx] * props.result.volumes[idx] * 100) / 100)
+          if (props.result.zeroProf[idx] === props.result.zeroTon[idx]) {
+            if (props.result.zeroProf[idx] === 0) osX.push(osX[1] * 2);
+            else osX.push(props.result.zeroTon[idx] * 2);
+          } else osX.push(props.result.zeroProf[idx]);
 
-          osX.push(Math.round(props.result.zeroTon[idx]))
-          osX.push(Math.round(props.result.zeroProf[idx]))
-          osX.push(Math.round(props.result.volumes[idx]))
+          if (props.result.volumes[idx] === 0)
+            osX.push(Math.max(...osX) + Math.max(...osX) * 0.3);
+          else osX.push(props.result.volumes[idx]);
 
-          costTotal.sort(function(a, b) {
+          osX.push(Math.max(...osX) + Math.max(...osX) * 0.3)
+
+          osX.map((vol: number) => {
+            costTotal.push(
+              Math.round(
+                (props.result.costs[idx] * vol +
+                  parseFloat(props.result.fixTotal)) *
+                100
+              ) / 100
+            );
+
+            incomeTotal.push(
+              Math.round(props.result.prices[idx] * vol * 100) / 100
+            );
+          });
+
+          costTotal.sort(function (a, b) {
             return a - b;
           });
-          osX.sort(function(a, b) {
+          incomeTotal.sort(function (a, b) {
             return a - b;
           });
-          incomeTotal.sort(function(a, b) {
+          osX.sort(function (a, b) {
             return a - b;
           });
 
@@ -99,17 +114,14 @@ export default function Result4(props: any) {
                   opacity: 0.5,
                 },
               },
-
               xaxis: {
-                categories: osX,
+                categories: osX.map((x: number) => x.toString()),
               },
-
-
               annotations: {
                 points: [
                   {
-                    x: Math.round(props.result.zeroTon[idx]),
-                    y: Math.round(props.result.zeroEur[idx]),
+                    x: props.result.zeroTon[idx].toString(),
+                    y: props.result.zeroEur[idx],
                     marker: {
                       size: 8,
                     },
@@ -121,7 +133,7 @@ export default function Result4(props: any) {
                 ],
                 xaxis: [
                   {
-                    x: Math.round(props.result.zeroProf[idx]),
+                    x: props.result.zeroProf[idx].toString(),
                     borderColor: '#775DD0',
                     label: {
                       style: {
@@ -134,23 +146,24 @@ export default function Result4(props: any) {
                 ],
               },
               legend: {
-                horizontalAlign: 'right',
+                horizontalAlign: 'center',
               },
             },
           };
 
           return (
-            <div key={idx} className={"col-12"}>
-              <div className={"graph-card"}
-                   // style={idx % 2 === 0 ? {marginRight: 25} : {marginLeft: 25}}
-              >
-                <h4 className={"graph-title"}>{value.toUpperCase()}</h4>
+            <div key={idx} className={'col-12'}>
+              <div className={'graph-card'}>
+                <h4 className={'graph-title'}>
+                  {'NULOVÝ BOD: ' + value.toUpperCase()}
+                </h4>
                 {
-                  // @ts-ignore
-                  <ReactApexChart options={lineGraph.options}
-                                  series={lineGraph.series}
-                                  type="line"
-                                  height={500}
+                  <ReactApexChart
+                    // @ts-ignore
+                    options={lineGraph.options}
+                    series={lineGraph.series}
+                    type="line"
+                    height={300}
                   />
                 }
               </div>

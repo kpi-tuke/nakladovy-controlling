@@ -1,6 +1,6 @@
 import ReactApexChart from 'react-apexcharts';
 import InfoCard from '../InfoCard';
-import TableStatic from "../TableStatic";
+import TableStatic from '../TableStatic';
 
 export default function Result2(props: any) {
   const barChartRow = {
@@ -25,6 +25,15 @@ export default function Result2(props: any) {
           distributed: true,
         },
       },
+      dataLabels: {
+        enabled: true,
+        style: {
+          fontSize: '14px',
+          fontFamily: 'Helvetica, Arial, sans-serif',
+          fontWeight: 'bold',
+          colors: ['black'],
+        },
+      },
       grid: {
         borderColor: '#e7e7e7',
         row: {
@@ -38,12 +47,13 @@ export default function Result2(props: any) {
           trim: true,
         },
       },
-      yaxis: [{
-        title: {
-          text: 'náklady v (€)',
+      yaxis: [
+        {
+          title: {
+            text: 'Náklady (€)',
+          },
         },
-
-      }],
+      ],
     },
   };
 
@@ -62,6 +72,15 @@ export default function Result2(props: any) {
       },
       legend: {
         show: false,
+      },
+      dataLabels: {
+        enabled: true,
+        style: {
+          fontSize: '14px',
+          fontFamily: 'Helvetica, Arial, sans-serif',
+          fontWeight: 'bold',
+          colors: ['black'],
+        },
       },
       grid: {
         borderColor: '#e7e7e7',
@@ -82,12 +101,13 @@ export default function Result2(props: any) {
           trim: true,
         },
       },
-      yaxis: [{
-        title: {
-          text: 'náklady v (€)',
+      yaxis: [
+        {
+          title: {
+            text: 'Náklady (€)',
+          },
         },
-
-      }],
+      ],
     },
   };
 
@@ -98,8 +118,8 @@ export default function Result2(props: any) {
         type: 'pie',
       },
       legend: {
-        show:true,
-        position: "bottom"
+        show: true,
+        position: 'bottom',
       },
       fill: {
         type: 'gradient',
@@ -115,7 +135,8 @@ export default function Result2(props: any) {
         type: 'donut',
       },
       legend: {
-        show:true
+        show: true,
+        position: 'bottom',
       },
       fill: {
         type: 'gradient',
@@ -125,60 +146,67 @@ export default function Result2(props: any) {
   };
 
   return (
-    <div style={{padding: 30}}>
-      <h1 className={"result-h1"}>Analýza ukazovateľov</h1>
+    <div style={{ padding: 30 }}>
+      <h1 className={'result-h1'}>Analýza ukazovateľov</h1>
 
       <InfoCard
-      header={'CELKOVÉ NÁKLADY'}
-      value={props.result.totalCost.toString() + "€"}
+        header={'CELKOVÉ NÁKLADY'}
+        value={props.result.totalCost.toString() + '€'}
       />
 
-      <div
-        className={"table-card"}
-        style={{marginTop:50}}
-      >
+      <div className={'table-card'} style={{ marginTop: 50 }}>
         <TableStatic
-          header={[...props.result.items, "SPOLU"]}
-          inputs={[
-            'Nj - náklady jednotkové (€)',
-            "Štruktúra Š (%)"
-          ]}
+          header={[...props.result.items, 'SPOLU']}
+          inputs={['Nj - náklady jednotkové (€)', 'Štruktúra Š (%)']}
           data={[
-            [...(props.result.rowSums.map((value: number) => (value.toString() + "€"))), (props.result.totalCost.toString() + "€")],
-            [...(props.result.rowSums.map((value: number) => {
-              if (props.result.totalCost === 0) return "100%"
-              return (Math.round(value / props.result.totalCost * 10000)/100).toString() + "%"
-            })), "100%"],
+            [
+              ...props.result.rowSums.map((value: number) => value.toString()),
+              props.result.totalCost.toString(),
+            ],
+            [
+              ...props.result.rowSums.map((value: number) => {
+                if (props.result.totalCost === 0) return '100';
+                return (
+                  Math.round((value / props.result.totalCost) * 10000) / 100
+                ).toString();
+              }),
+              '100',
+            ],
           ]}
         />
 
         <TableStatic
-          header={[...props.result.headers, "SPOLU"]}
-          inputs={[
-            'Nj - náklady jednotkové (€)',
-            "Štruktúra Š (%)"
-          ]}
+          header={[...props.result.headers, 'SPOLU']}
+          inputs={['Nj - náklady jednotkové (€)', 'Štruktúra Š (%)']}
           data={[
-            [...(props.result.colSums.map((value: number) => (value.toString() + "€"))),  (props.result.totalCost.toString() + "€")],
-            [...(props.result.colSums.map((value: number) => {
-              if (props.result.totalCost === 0) return "100%"
-              return (Math.round(value / props.result.totalCost * 10000)/100).toString() + "%"
-            })), "100%"],
+            [
+              ...props.result.colSums.map((value: number) => value.toString()),
+              props.result.totalCost.toString(),
+            ],
+            [
+              ...props.result.colSums.map((value: number) => {
+                if (props.result.totalCost === 0) return '100';
+                return (
+                  Math.round((value / props.result.totalCost) * 10000) / 100
+                ).toString();
+              }),
+              '100',
+            ],
           ]}
         />
       </div>
 
-      <h1 className={"result-h1"}>Dashboarding</h1>
+      <h1 className={'result-h1'}>Dashboarding</h1>
 
-      <div className={"row"}>
-        <div className={"col-6"}>
+      <div className={'row'}>
+        <div className={'col-6'}>
           <div
-            className={"graph-card"}
+            className={'graph-card'}
             style={{
               marginRight: 25,
             }}
           >
-            <h4 className={"graph-title"}>ŠTRUKTÚRNA ANALÝZA NÁKLADOVÝCH DRUHOV</h4>
+            <h4 className={'graph-title'}>ŠTRUKTÚRA NÁKLADOVÝCH DRUHOV</h4>
             {
               <ReactApexChart
                 // @ts-ignore
@@ -191,14 +219,14 @@ export default function Result2(props: any) {
           </div>
         </div>
 
-        <div className={"col-6"}>
+        <div className={'col-6'}>
           <div
-            className={"graph-card"}
+            className={'graph-card'}
             style={{
               marginRight: 25,
             }}
           >
-            <h4 className={"graph-title"}>DRUHOVÉ ČLENENIE NÁKLADOV</h4>
+            <h4 className={'graph-title'}>DRUHOVÉ ČLENENIE NÁKLADOV</h4>
             {
               <ReactApexChart
                 // @ts-ignore
@@ -212,35 +240,35 @@ export default function Result2(props: any) {
         </div>
       </div>
 
-      <div className={"row"}>
-        <div className={"col-6"}>
+      <div className={'row'}>
+        <div className={'col-6'}>
           <div
-            className={"graph-card"}
+            className={'graph-card'}
             style={{
               marginRight: 25,
             }}
           >
-            <h4 className={"graph-title"}>ŠTRUKTÚRNA ANALÝZA KALKULAČNÝCH POLOŽIEK</h4>
+            <h4 className={'graph-title'}>ŠTRUKTÚRA KALKULAČNÝCH POLOŽIEK</h4>
             {
               <ReactApexChart
                 // @ts-ignore
                 options={donutChart.options}
                 series={donutChart.series}
                 type="donut"
-                height={300}
+                height={347}
               />
             }
           </div>
         </div>
 
-        <div className={"col-6"}>
+        <div className={'col-6'}>
           <div
-            className={"graph-card"}
+            className={'graph-card'}
             style={{
               marginRight: 25,
             }}
           >
-            <h4 className={"graph-title"}>KALKULAČNÉ ČLENENIE NÁKLADOV</h4>
+            <h4 className={'graph-title'}>KALKULAČNÉ ČLENENIE NÁKLADOV</h4>
             {
               <ReactApexChart
                 // @ts-ignore

@@ -4,7 +4,6 @@ import ReactApexChart from 'react-apexcharts';
 export default function Result5(props: any) {
   let series = [];
   for (let index = 0; index < props.result.headers.length; index++) {
-    // @ts-ignore
     series.push({
       name: props.result.headers[index].toString(),
       data: [props.result.rentIncome[index], props.result.rentCost[index]],
@@ -13,39 +12,19 @@ export default function Result5(props: any) {
 
   let series2: any[] = [];
   for (let index = 0; index < props.result.headers.length; index++) {
-    // @ts-ignore
     series2.push({
       name: props.result.headers[index].toString(),
       data: [props.result.marginGross[index]],
     });
   }
 
-  let series3: any[] = [];
+  let series3: any[] = []
   for (let index = 0; index < props.result.headers.length; index++) {
-    // @ts-ignore
     series3.push({
       name: props.result.headers[index].toString(),
       data: [props.result.allowance[index]],
     });
   }
-
-  // let series4: any[] = [];
-  // for (let index = 0; index < props.result.headers.length; index++) {
-  //   // @ts-ignore
-  //   series4.push({
-  //     name: props.result.headers[index].toString(),
-  //     data: [props.result.marginProfit[index]],
-  //   });
-  // }
-
-  // let series5: any[] = [];
-  // for (let index = 0; index < props.result.headers.length; index++) {
-  //   // @ts-ignore
-  //   series5.push({
-  //     name: props.result.headers[index].toString(),
-  //     data: [props.result.profit[index]],
-  //   });
-  // }
 
   const colGraph = {
     series: series,
@@ -70,6 +49,12 @@ export default function Result5(props: any) {
       },
       dataLabels: {
         enabled: true,
+        style: {
+          fontSize: '14px',
+          fontFamily: 'Helvetica, Arial, sans-serif',
+          fontWeight: 'bold',
+          colors: ["black"]
+        },
       },
       stroke: {
         show: true,
@@ -79,6 +64,12 @@ export default function Result5(props: any) {
       xaxis: {
         categories: ['Rentabilita tržieb', 'Rentabilita nákladov'],
       },
+      yaxis: [{
+        title: {
+          text: 'rentabilita (%)',
+        },
+
+      }],
       fill: {
         opacity: 1,
       },
@@ -86,11 +77,7 @@ export default function Result5(props: any) {
   };
 
   const colGraph2 = {
-    // @ts-ignore
-    // series: series2,
-    series: [{
-      data: props.result.marginGross,
-    }],
+    series: series2,
     options: {
       chart: {
         type: 'bar',
@@ -101,7 +88,6 @@ export default function Result5(props: any) {
           horizontal: false,
           columnWidth: '75%',
           endingShape: 'rounded',
-          distributed: true,
         },
       },
       grid: {
@@ -113,6 +99,12 @@ export default function Result5(props: any) {
       },
       dataLabels: {
         enabled: true,
+        style: {
+          fontSize: '14px',
+          fontFamily: 'Helvetica, Arial, sans-serif',
+          fontWeight: 'bold',
+          colors: ["black"]
+        },
       },
       stroke: {
         show: true,
@@ -120,8 +112,7 @@ export default function Result5(props: any) {
         colors: ['transparent'],
       },
       xaxis: {
-        // categories: ['Hrubé rozpätie'],
-        categories: props.result.headers
+        categories: [""],
       },
       yaxis: [{
         title: {
@@ -136,7 +127,6 @@ export default function Result5(props: any) {
   };
 
   const colGraph3 = {
-    // @ts-ignore
     series: series3,
     options: {
       chart: {
@@ -159,6 +149,12 @@ export default function Result5(props: any) {
       },
       dataLabels: {
         enabled: true,
+        style: {
+          fontSize: '14px',
+          fontFamily: 'Helvetica, Arial, sans-serif',
+          fontWeight: 'bold',
+          colors: ["black"]
+        },
       },
       stroke: {
         show: true,
@@ -166,105 +162,18 @@ export default function Result5(props: any) {
         colors: ['transparent'],
       },
       xaxis: {
-        categories: ['Príspevok na úhradu'],
+        categories: [''],
       },
       yaxis: [{
         title: {
           text: 'ekonomický ukazovateľ (€)',
         },
-
       }],
       fill: {
         opacity: 1,
       },
     },
   };
-
-  // const colGraph4 = {
-  //   // @ts-ignore
-  //   series: series4,
-  //   options: {
-  //     chart: {
-  //       type: 'bar',
-  //       height: 350,
-  //     },
-  //     plotOptions: {
-  //       bar: {
-  //         horizontal: false,
-  //         columnWidth: '55%',
-  //         endingShape: 'rounded',
-  //       },
-  //     },
-  //     title: {
-  //       text: 'Zisková prirážka',
-  //       align: 'center',
-  //     },
-  //     grid: {
-  //       borderColor: '#e7e7e7',
-  //       row: {
-  //         colors: ['#f3f3f3', 'transparent'],
-  //         opacity: 0.5,
-  //       },
-  //     },
-  //     dataLabels: {
-  //       enabled: false,
-  //     },
-  //     stroke: {
-  //       show: true,
-  //       width: 2,
-  //       colors: ['transparent'],
-  //     },
-  //     xaxis: {
-  //       categories: ['Zisková prirážka'],
-  //     },
-  //     fill: {
-  //       opacity: 1,
-  //     },
-  //   },
-  // };
-
-  // const colGraph5 = {
-  //   // @ts-ignore
-  //   series: series5,
-  //   options: {
-  //     chart: {
-  //       type: 'bar',
-  //       height: 350,
-  //     },
-  //     plotOptions: {
-  //       bar: {
-  //         horizontal: false,
-  //         columnWidth: '55%',
-  //         endingShape: 'rounded',
-  //       },
-  //     },
-  //     title: {
-  //       text: 'Zisk',
-  //       align: 'center',
-  //     },
-  //     grid: {
-  //       borderColor: '#e7e7e7',
-  //       row: {
-  //         colors: ['#f3f3f3', 'transparent'],
-  //         opacity: 0.5,
-  //       },
-  //     },
-  //     dataLabels: {
-  //       enabled: false,
-  //     },
-  //     stroke: {
-  //       show: true,
-  //       width: 2,
-  //       colors: ['transparent'],
-  //     },
-  //     xaxis: {
-  //       categories: ['Zisk'],
-  //     },
-  //     fill: {
-  //       opacity: 1,
-  //     },
-  //   },
-  // };
 
   return (
     <div>
@@ -278,10 +187,12 @@ export default function Result5(props: any) {
           corner={"Ukazovatele sortimentnej analýzy"}
           header={[...props.result.headers]}
           inputs={[
-            'Rentabilita tržieb(%)',
-            'Rentabilita nákladov(%)',
-            'Hrubé rozpätie(€)',
-            'Príspevok na úhradu(€)',
+            'Rentabilita tržieb (%)',
+            'Rentabilita nákladov (%)',
+            'Hrubé rozpätie (€)',
+            'Príspevok na úhradu (€)',
+            'Zisková prirážka (€)',
+            'Zisk pri pôvodnej výrobnej štruktúre (€)'
           ]}
           data={[
             [
@@ -296,18 +207,6 @@ export default function Result5(props: any) {
             [
               ...props.result.allowance
             ],
-          ]}
-        />
-      </div>
-
-      <div
-        className={"table-card"}
-      >
-        <TableStatic
-          corner={"Ukazovatele sortimentnej analýzy"}
-          header={[...props.result.headers]}
-          inputs={['Zisková prirážka(€)', 'Zisk pri pôvodnej výrobnej štruktúre(€)']}
-          data={[
             [
               ...props.result.marginProfit
             ],
@@ -338,7 +237,7 @@ export default function Result5(props: any) {
         <div className={"col-6"}>
           <div
             className={"graph-card"}
-            style={{marginRight:25}}
+            style={{marginRight: 25}}
           >
             <h4 className={"graph-title"}>HRUBÉ ROZPÄTIE</h4>
             {
@@ -355,7 +254,7 @@ export default function Result5(props: any) {
         <div className={"col-6"}>
           <div
             className={"graph-card"}
-            style={{marginLeft:25}}
+            style={{marginLeft: 25}}
           >
             <h4 className={"graph-title"}>PRÍSPEVOK NA ÚHRADU</h4>
             {

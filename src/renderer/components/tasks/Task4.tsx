@@ -3,20 +3,20 @@ import Result4 from '../results/Result4';
 import SingleInput from '../SingleInput';
 import HeaderBar from '../HeaderBar';
 import {CVPActions, selectCVP} from 'renderer/store/slice';
-import { useAppSelector } from 'renderer/store/hooks';
+import {useAppSelector} from 'renderer/store/hooks';
 import TextField from "../TextField";
-import { useCVPCalc } from 'renderer/calculations';
+import {useCVPCalc} from 'renderer/calculations';
 
 export default function Task4() {
 
-  const { headers, data, items, values, fixTotal, minProfit, text } =
+  const {headers, data, items, values, fixTotal, minProfit, text} =
     useAppSelector(selectCVP);
-    
+
   const result = useCVPCalc(data, fixTotal, minProfit)
 
   return (
     <div className={'task-container'}>
-      <HeaderBar title={'CVP analýza'} />
+      <HeaderBar id={"4"} title={'CVP analýza'}/>
 
       <h1 className={"result-h1"}>Vstupy</h1>
 
@@ -40,7 +40,7 @@ export default function Task4() {
           <SingleInput
             input={CVPActions.setFixTotal}
             value={fixTotal}
-            title={'CELKOVÉ FIXNÉ NÁKLADY(€)'}
+            title={'FIXNÉ NÁKLADY(€)'}
           />
         </div>
 
@@ -53,7 +53,7 @@ export default function Task4() {
         </div>
       </div>
 
-      <Result4 result={{items, ...result}} />
+      <Result4 result={{items, ...result}}/>
 
       <TextField text={text} action={CVPActions.changeText}/>
     </div>

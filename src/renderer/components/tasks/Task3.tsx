@@ -3,22 +3,23 @@ import HeaderBar from '../HeaderBar';
 import groupedOptions from '../chartOfAccounts';
 import TableDynamic from '../TableDynamic';
 import {chainActions, selectChain} from 'renderer/store/slice';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 import TextField from "../TextField";
-import { useChainCalc } from 'renderer/calculations';
+import {useChainCalc} from 'renderer/calculations';
 
 export default function Task3() {
 
-  const { headers, items, data, values, text } = useSelector(selectChain);
-  
+  const {headers, items, data, values, text} = useSelector(selectChain);
+
   const result = useChainCalc(data, headers, values)
-  
+
   return (
     <div className={'task-container'}>
 
       <h1 className={"result-h1"}>Vstupy</h1>
 
       <HeaderBar
+        id={"3"}
         title={'Analýza reťazových a bázických indexov druhových nákladov '}
       />
 
@@ -37,7 +38,7 @@ export default function Task3() {
         base={true}
       />
 
-      <Result3 result={{...result}} />
+      <Result3 result={{...result}}/>
 
       <TextField text={text} action={chainActions.changeText}/>
     </div>

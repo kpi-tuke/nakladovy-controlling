@@ -9,6 +9,11 @@ body {
   font-size: medium;
 }
 
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
 a {
   text-decoration: none;
 }
@@ -34,7 +39,7 @@ a {
 
 .graph-card {
   background-color: white;
-  padding: 25px;
+  padding: 10px;
   box-shadow: 0 0 3px lightgray;
   margin-bottom: 50px;
 }
@@ -175,7 +180,7 @@ a {
   text-align: center;
   background-color: white;
   color: grey;
-  font-weight:normal;
+  font-weight: normal;
 }
 
 .add-cell:hover {
@@ -190,6 +195,32 @@ a {
 
 .graph-title {
   text-align: center;
+  margin: 15px 0 0;
+}
+
+.header-button {
+
+
+  border-color: white;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 5px;
+  margin-right: 20px;
+  padding: 10px;
+  color: white;
+  font-weight: bold;
+  background-color: #1a98ff;
+  text-align: center;
+  cursor: pointer;
+}
+
+.header-button:hover {
+  background-color: #007adc
+}
+
+.header-button:active {
+  background-color: #1a98ff;
+  transform: translateY(1px);
 }
 
 .row {
@@ -213,12 +244,24 @@ a {
   grid-column: span 4;
 }
 
+.col-5 {
+  grid-column: span 5;
+}
+
 .col-6 {
   grid-column: span 6;
 }
 
+.col-7 {
+  grid-column: span 7;
+}
+
 .col-8 {
   grid-column: span 8;
+}
+
+.col-9 {
+  grid-column: span 9;
 }
 
 .col-10 {
