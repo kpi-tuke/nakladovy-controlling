@@ -24,10 +24,10 @@ test('useBilanceCalc test1', () => {
     costData: [2663789, 3005396],
     incomeData: [5601048, 6317942],
     profitData: [2937259, 3312546],
-    incomeProfitabilityData: [0.52, 0.52],
-    costProfitabilityData: [1.1, 1.1],
-    costEfficiencyData: [2.1, 2.1],
-    costIndicatorData: [0.48, 0.48],
+    incomeProfitabilityData: [52.44, 52.43],
+    costProfitabilityData: [110.27, 110.22],
+    costEfficiencyData: [210.27, 210.22],
+    costIndicatorData: [47.56, 47.57],
   });
 });
 
@@ -47,10 +47,10 @@ test('useBilanceCalc test2', () => {
     costData: [58625, 63625, 50516, 48400],
     incomeData: [68145, 78436, 52898, 49008],
     profitData: [9520, 14811, 2382, 608],
-    incomeProfitabilityData: [0.14, 0.19, 0.05, 0.01],
-    costProfitabilityData: [0.16, 0.23, 0.05, 0.01],
-    costEfficiencyData: [1.16, 1.23, 1.05, 1.01],
-    costIndicatorData: [0.86, 0.81, 0.95, 0.99],
+    incomeProfitabilityData: [13.97, 18.88, 4.5, 1.24],
+    costProfitabilityData: [16.24, 23.28, 4.72, 1.26],
+    costEfficiencyData: [116.24, 123.28, 104.72, 101.26],
+    costIndicatorData: [86.03, 81.12, 95.5, 98.76],
   });
 });
 
@@ -140,7 +140,7 @@ test('useCVPCalc test2', () => {
   });
 });
 
-test('useSortimentCalc', () => {
+test('useSortimentCalc test1', () => {
   expect(
     useSortimentCalc([
       [985, 1215],
@@ -154,11 +154,11 @@ test('useSortimentCalc', () => {
     marginProfit: [955, 1019],
     marginGross: [1715, 1385],
     allowance: [0.64, 0.53],
-    profit: [7640000, 4076000],
+    profit: [11460000, 12228000],
   });
 });
 
-test('useSortimentCalc test1', () => {
+test('useSortimentCalc test2', () => {
   expect(
     useSortimentCalc([
       [39.6, 38.36, 35.27, 31.82, 29.3],
@@ -172,7 +172,7 @@ test('useSortimentCalc test1', () => {
     marginProfit: [32.06, 29.74, 25.52, 24.33, 20.21],
     marginGross: [35.64, 33.32, 29.1, 27.91, 23.79],
     allowance: [0.47, 0.46, 0.45, 0.47, 0.45],
-    profit: [4387282.76, 1277898.06, 1055354.08, 6102401.94, 2951852.39],
+    profit: [19814554.76, 18380688.04, 15772533.92, 15037059.18, 12490709.66],
   });
 });
 
@@ -192,17 +192,17 @@ test('useParetoCalc test1', () => {
     )
   ).toEqual({
     causes: [
-      'Chyby mechanického trieskového opracovania',
-      'Chyby kompletizácie, balenia',
-      'Chyby tvárnenia materiálu',
-      'Materiálové chyby',
-      'Chyby povrchu a povrchovej úpravy',
-      'Chyby zvárania',
-      'Chyby dokumentácie',
+      ["Chyby", "mechanického", "trieskového", "opracovania"],
+      ["Chyby", "kompletizácie,", "balenia"],
+      ["Chyby", "tvárnenia", "materiálu"],
+      ["Materiálové", "chyby"],
+      ["Chyby", "povrchu", "a", "povrchovej", "úpravy"],
+      ["Chyby", "zvárania"],
+      ["Chyby", "dokumentácie"],
     ],
     percentages: [53.81, 21.17, 17.59, 4.86, 1.4, 1.1, 0.07],
     values: [3998, 1573, 1307, 361, 104, 82, 5],
-    kumul: [53.81, 74.98, 92.57, 97.43, 98.83, 99.93, 100],
+    percentagesKumul: [53.81, 74.98, 92.57, 97.43, 98.83, 99.93, 100],
     valuesKumul: [3998, 5571, 6878, 7239, 7343, 7425, 7430],
     sum: 7430,
   });
@@ -215,16 +215,16 @@ test('useParetoCalc test2 decimal numbers', () => {
       [
         'Chyby mechanického trieskového opracovania',
         'Chyby tvárnenia materiálu',
-      ]
+      ],
     )
   ).toEqual({
     causes: [
-      'Chyby mechanického trieskového opracovania',
-      'Chyby tvárnenia materiálu',
+      ["Chyby", "mechanického", "trieskového", "opracovania"],
+      ["Chyby", "tvárnenia", "materiálu"],
     ],
     percentages: [83.76, 16.24],
     values: [9.8, 1.9],
-    kumul: [83.76, 100],
+    percentagesKumul: [83.76, 100],
     valuesKumul: [ 9.8, 11.7],
     sum: 11.7,
   });
