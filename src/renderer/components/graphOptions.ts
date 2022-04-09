@@ -45,6 +45,11 @@ export const colGraph = (osX: string[], titleY?: string): ApexOptions => {
     chart: {
       type: 'bar',
     },
+    plotOptions: {
+      bar: {
+        columnWidth:"90%"
+      }
+    },
     dataLabels: {
       enabled: true,
         style: {
@@ -68,7 +73,7 @@ export const colGraph = (osX: string[], titleY?: string): ApexOptions => {
       size: 1,
     },
     xaxis: {
-      categories: osX,
+      categories: osX.map((cause: string) => cause.split(" ")),
     },
     yaxis: [{
       title: {

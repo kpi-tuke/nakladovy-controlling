@@ -2,7 +2,7 @@ import TableDynamic from '../components/TableDynamic';
 import StructureResult from '../components/results/StructureResult';
 import HeaderBar from '../components/HeaderBar';
 import {selectStructure, structureActions} from 'renderer/store/slice';
-import {costs} from '../chartOfAccounts';
+import groupedOptions from '../chartOfAccounts';
 import TextField from '../components/TextField';
 import {useStructureCalc} from 'renderer/calculations';
 import {useAppSelector} from 'renderer/store/hooks';
@@ -19,7 +19,7 @@ export default function StructureAnalysis() {
     {value: 12, label: 'Odbytová réžia'},
     {value: 13, label: 'Zásobovacia réžia'},
     {value: 14, label: 'Dopravná réžia'},
-  ];
+  ]
 
   const result = useStructureCalc(data);
 
@@ -38,7 +38,7 @@ export default function StructureAnalysis() {
         data={data}
         dynRows={true}
         dynCols={true}
-        selectRow={costs}
+        selectRow={[groupedOptions[0]]}
         selectCol={selectCol}
         actions={structureActions}
       />

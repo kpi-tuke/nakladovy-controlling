@@ -1,4 +1,3 @@
-import '../ScreenStyle.css';
 import SelectCard from './SelectCard';
 import HeaderBar from './HeaderBar';
 
@@ -16,6 +15,7 @@ export default function TaskSelector() {
         title={'NÁKLADOVÝ CONTROLLING'}
         back={true}
         addToReport={true}
+        printToPDF={true}
       />
       <div className={'row'} style={{marginBottom: '10vh'}}>
         <SelectCard
@@ -67,7 +67,7 @@ export default function TaskSelector() {
       <div className={'row'}>
         <SelectCard
           to={'/evaluation'}
-          head={'Výsledný report'}
+          head={'Ekonomické a grafické zhodnotenie analýz'}
           body={'Výsledok.'}
         />
       </div>

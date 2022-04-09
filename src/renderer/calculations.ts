@@ -322,7 +322,6 @@ export function usePretoCalc(data: number[][], items: any) {
   let percentagesKumul: number[] = [];
   let sum: number = 0;
   let causes: string[] = [];
-  let splitedCauses: string[][] = []
   for (let i = 0; i < items.length; i++) {
     percentages.push(0);
     percentagesKumul.push(0);
@@ -349,12 +348,8 @@ export function usePretoCalc(data: number[][], items: any) {
     idx++;
   }
 
-  causes.map((cause: string) => {
-    splitedCauses.push(cause.split(" "))
-  })
-
   return {
-    causes: splitedCauses,
+    causes,
     percentages,
     values,
     percentagesKumul,
@@ -367,7 +362,7 @@ const divideArrays = (numerator: number[], denominator: number[]): number[] => {
   let arr: number[] = [];
   for (let i = 0; i < numerator.length; i++) {
     if (numerator[i] === 0 || denominator[i] === 0) arr.push(0);
-    else arr.push(Math.round((10000 * numerator[i]) / denominator[i]) / 100);
+    else arr.push(Math.round((100 * numerator[i]) / denominator[i]) / 100);
   }
   return arr;
 };

@@ -1,6 +1,5 @@
 import {ChangeEvent} from 'react';
 import {useAppDispatch} from 'renderer/store/hooks';
-import '../ScreenStyle.css';
 
 export default function SingleInput(props: any) {
   const dispatch = useAppDispatch();

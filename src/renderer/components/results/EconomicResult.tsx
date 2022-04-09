@@ -1,7 +1,5 @@
-import '../../ScreenStyle.css';
 import ReactApexChart from 'react-apexcharts';
 import TableStatic from '../TableStatic';
-import InfoCard from '../InfoCard';
 import { colGraph, lineGraph } from '../graphOptions';
 import { ApexOptions } from 'apexcharts';
 
@@ -47,35 +45,14 @@ export default function EconomicResult(props: any) {
     <div>
       <h1 className={'result-h1'}>Analýza ekonomických ukazovateľov</h1>
 
-      <div className={'row'}>
-        <div className={'col-4'}>
-          <InfoCard
-            header={'VÝNOSY CELKOM'}
-            value={props.result.incomeTotal.toString() + '€'}
-          />
-        </div>
-
-        <div className={'col-4'}>
-          <InfoCard
-            header={'NÁKLADY CELKOM'}
-            value={props.result.costTotal.toString() + '€'}
-          />
-        </div>
-
-        <div className={'col-4'}>
-          <InfoCard
-            header={'ZISK CELKOM'}
-            value={props.result.profitTotal.toString() + '€'}
-          />
-        </div>
-      </div>
-
       <div className={'table-card'} style={{ marginTop: 50 }}>
         <TableStatic
           corner={'Ekonomické ukazovatele'}
           header={[...props.result.headers]}
           inputs={[
             'Zisk (€)',
+            "Náklady celkom (€)",
+            "Výnosy celkom (€)",
             'Rentabilita výnosov (%)',
             'Rentabilita nákladov (%)',
             'Nákladová účinnosť (%)',
@@ -83,6 +60,8 @@ export default function EconomicResult(props: any) {
           ]}
           data={[
             [...props.result.profitData],
+            [...props.result.costData],
+            [...props.result.incomeData],
             [...props.result.incomeProfitabilityData],
             [...props.result.costProfitabilityData],
             [...props.result.costEfficiencyData],

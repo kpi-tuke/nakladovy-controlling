@@ -2,7 +2,7 @@ import IndexResult from '../components/results/IndexResult';
 import HeaderBar from '../components/HeaderBar';
 import groupedOptions from '../chartOfAccounts';
 import TableDynamic from '../components/TableDynamic';
-import {chainActions, selectChain} from 'renderer/store/slice';
+import {indexActions, selectChain} from 'renderer/store/slice';
 import {useSelector} from 'react-redux';
 import TextField from "../components/TextField";
 import {useChainCalc} from 'renderer/calculations';
@@ -20,7 +20,7 @@ export default function IndexAnalysis() {
 
       <HeaderBar
         id={"3"}
-        title={'Analýza reťazových a bázických indexov druhových nákladov '}
+        title={'Analýza reťazových a bázických indexov'}
       />
 
       <TableDynamic
@@ -34,13 +34,13 @@ export default function IndexAnalysis() {
         dynRows={true}
         dynCols={true}
         selectRow={groupedOptions}
-        actions={chainActions}
+        actions={indexActions}
         base={true}
       />
 
       <IndexResult result={{...result}}/>
 
-      <TextField text={text} action={chainActions.changeText}/>
+      <TextField text={text} action={indexActions.changeText}/>
     </div>
   );
 }

@@ -39,36 +39,12 @@ export default function ParetoResult(props: any) {
           {
             y: 80,
             yAxisIndex: 1,
-            borderColor: '#775DD0',
-            label: {
-              style: {
-                color: '#fa023f',
-              },
-              text: 'Minimálny zisk',
-            },
+            borderColor: 'orange',
+            strokeDashArray: 0,
           },
-        ],
-        xaxis: [
-          {
-            x: 100,
-            xAxisIndex: 0,
-            borderColor: '#775DD0',
-            label: {
-              style: {
-                color: '#fa023f',
-              },
-              text: 'Minimálny zisk',
-            },
-          },
-        ],
+        ]
       },
-      labels: props.result.causes,
-      xaxis: {
-        type: 'category',
-        labels: {
-          trim: true,
-        },
-      },
+      labels: props.result.causes.map((cause: string) => cause.split(" ")),
       yaxis: [
         {
           min: 0,

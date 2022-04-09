@@ -1,5 +1,5 @@
 import EconomicResult from '../components/results/EconomicResult';
-import {bilanceActions, selectBilance} from 'renderer/store/slice';
+import {economicActions, selectEconomic} from 'renderer/store/slice';
 import HeaderBar from '../components/HeaderBar';
 import groupedOptions from '../chartOfAccounts';
 import TableDynamic from '../components/TableDynamic';
@@ -8,7 +8,7 @@ import {useBilanceCalc} from 'renderer/calculations';
 import {useAppSelector} from 'renderer/store/hooks';
 
 export default function EconomicAnalysis() {
-  const {headers, items, data, values, text} = useAppSelector(selectBilance);
+  const {headers, items, data, values, text} = useAppSelector(selectEconomic);
 
   const result = useBilanceCalc(data, values);
 
@@ -28,12 +28,12 @@ export default function EconomicAnalysis() {
         dynRows={true}
         dynCols={true}
         selectRow={groupedOptions}
-        actions={bilanceActions}
+        actions={economicActions}
       />
 
-      <EconomicResult result={{...useAppSelector(selectBilance), ...result}}/>
+      <EconomicResult result={{headers, ...result}}/>
 
-      <TextField text={text} action={bilanceActions.changeText}/>
+      <TextField id={"save"} text={text} action={economicActions.changeText}/>
     </div>
   );
 }

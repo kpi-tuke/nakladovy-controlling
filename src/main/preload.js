@@ -20,4 +20,7 @@ contextBridge.exposeInMainWorld('electron', {
       }
     },
   },
+  saveFile: (fileName) => {
+    ipcRenderer.send("printToPDF", fileName)
+  }
 });

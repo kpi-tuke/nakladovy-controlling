@@ -11,11 +11,12 @@
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 import path from 'path';
-import {app, BrowserWindow, ipcMain, shell} from 'electron';
-import {autoUpdater} from 'electron-updater';
+import {app, BrowserWindow, dialog, ipcMain, shell} from 'electron';
+import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import MenuBuilder from './menu';
-import {resolveHtmlPath} from './util';
+import { resolveHtmlPath } from './util';
+import fs from 'fs';
 
 export default class AppUpdater {
   constructor() {
@@ -31,6 +32,57 @@ ipcMain.on('ipc-example', async (event, arg) => {
   const msgTemplate = (pingPong: string) => `IPC test: ${pingPong}`;
   console.log(msgTemplate(arg));
   event.reply('ipc-example', msgTemplate('pong'));
+});
+
+ipcMain.on('printToPDF', async (event, arg: any) => {
+
+  const options = {
+    marginsType: 0,
+    pageSize: 'A4',
+    printBackground: true,
+    printSelectionOnly: false,
+    landscape: false,
+  };
+
+  const file = await dialog.showSaveDialog({
+    title: 'Zvoľte umiestnenie súboru',
+    buttonLabel: 'Uložiť',
+    defaultPath: arg,
+    filters: [
+      {
+        name: 'PDF',
+        extensions: ["pdf"]
+      }, ],
+    properties: []
+  })
+
+  if (!file.canceled) {
+    // @ts-ignore
+    mainWindow.webContents
+      .printToPDF(options)
+      .then((data) => {
+        // @ts-ignore
+        fs.open(file.filePath.toString(), "w+", function (err) {
+          if (err) {
+            console.log(err);
+          } else {
+            console.log('PDF Opened Successfully');
+          }
+        } )
+        // @ts-ignore
+        fs.writeFile(file.filePath.toString(), data, function (err) {
+          if (err) {
+            console.log(err);
+          } else {
+            console.log('PDF Generated Successfully');
+          }
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+  event.reply('printToPDF', 'saved');
 });
 
 if (process.env.NODE_ENV === 'production') {
@@ -78,14 +130,14 @@ const createWindow = async () => {
     icon: getAssetPath('icon.png'),
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
-      //nodeIntegration: true,
-      //enableRemoteModule: true,
-      //contextIsolation: false,
+      nodeIntegration: true,
+      // @ts-ignore
+      enableRemoteModule: true,
+      // contextIsolation: false,
     },
   });
 
   mainWindow.loadURL(resolveHtmlPath('index.html'));
-
   mainWindow.on('ready-to-show', () => {
     if (!mainWindow) {
       throw new Error('"mainWindow" is not defined');

@@ -1,4 +1,4 @@
-import {MemoryRouter as Router, Redirect, Route, Switch} from 'react-router-dom';
+import {BrowserRouter as Router, Route, Routes, Navigate} from 'react-router-dom';
 import TaskSelector from "./components/TaskSelector";
 import StructureAnalysis from "./pages/StructureAnalysis";
 import IndexAnalysis from './pages/IndexAnalysis';
@@ -9,23 +9,27 @@ import {Provider} from "react-redux";
 import {store} from "./store/store";
 import EconomicAnalysis from './pages/EconomicAnalysis';
 import Evaluation from './components/Evaluation';
+import "./ScreenStyle.css"
 
 export default function App() {
 
   return (
     <Provider store={store}>
       <Router>
-        <Switch>
-          <Route path="/taskselect" component={TaskSelector}/>
-          <Route path="/task6" component={ParetoAnalysis}/>
-          <Route path="/task5" component={SortimentAnalysis}/>
-          <Route path="/task4" component={CVPAnalysis}/>
-          <Route path="/task3" component={IndexAnalysis}/>
-          <Route path="/task2" component={StructureAnalysis}/>
-          <Route path="/task1" component={EconomicAnalysis}/>
-          <Route path="/evaluation" component={Evaluation}/>
-        </Switch>
-        <Redirect from="/" to="/taskselect"/>
+        <Routes>
+          <Route path="/taskselect" element={<TaskSelector/>}/>
+          <Route path="/task6" element={<ParetoAnalysis/>}/>
+          <Route path="/task5" element={<SortimentAnalysis/>}/>
+          <Route path="/task4" element={<CVPAnalysis/>}/>
+          <Route path="/task3" element={<IndexAnalysis/>}/>
+          <Route path="/task2" element={<StructureAnalysis/>}/>
+          <Route path="/task1" element={<EconomicAnalysis/>}/>
+          <Route path="/evaluation" element={<Evaluation/>}/>
+          <Route
+            path="*"
+            element={<Navigate to="/taskselect" replace />}
+          />
+        </Routes>
       </Router>
     </Provider>
   );

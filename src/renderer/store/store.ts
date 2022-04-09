@@ -1,6 +1,6 @@
 import {configureStore} from '@reduxjs/toolkit'
 import {
-  bilanceReducer,
+  economicReducer,
   chainReducer,
   CVPReducer,
   paretoReducer,
@@ -11,7 +11,7 @@ import {
 
 export const store = configureStore({
   reducer: {
-    bilance: bilanceReducer,
+    economic: economicReducer,
     sortiment: sortimentReducer,
     chain: chainReducer,
     cvp: CVPReducer,

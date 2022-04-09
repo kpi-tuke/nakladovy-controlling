@@ -1,5 +1,4 @@
 import {Link} from 'react-router-dom';
-import '../ScreenStyle.css';
 
 export default function (props: any) {
   return (

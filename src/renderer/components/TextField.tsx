@@ -1,4 +1,3 @@
-import '../ScreenStyle.css';
 import {useAppDispatch} from '../store/hooks';
 
 export default function TextField(props: any) {
