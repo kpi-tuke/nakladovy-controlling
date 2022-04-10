@@ -12,8 +12,9 @@ export default function HeaderBar(props: any) {
   }
 
   function printToPDF(id: string) {
+    console.log(window.devicePixelRatio)
     // @ts-ignore
-    window.electron.saveFile(id, (arg) => console.log(arg));
+    window.electron.saveFile(id, window.devicePixelRatio, (arg) => console.log(arg));
   }
 
   function goBack() {

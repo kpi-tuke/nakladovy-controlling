@@ -74,28 +74,24 @@ export default function EconomicResult(props: any) {
 
       <div className={'graph-card'}>
         <h4 className={'graph-title'}>TREND VÝVOJA EKONOMICKÝCH VELIČÍN</h4>
-        {
           <ReactApexChart
             options={lineOptions}
             series={lineSeries}
             type="line"
             height={300}
           />
-        }
       </div>
 
       <div className={'graph-card'}>
         <h4 className={'graph-title'}>
           EKONOMICKÉ UKAZOVATELE V SLEDOVANOM OBDOBÍ
         </h4>
-        {
           <ReactApexChart
             options={colOptions}
             series={colSeries}
             type="bar"
             height={300}
           />
-        }
       </div>
     </div>
   );

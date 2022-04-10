@@ -278,8 +278,33 @@ a {
 
 @media print {
   body {
-    background-color: #26da59;
-    color: red;
+    background-color: white;
+  }
+
+  .header-bar {
+    display: none;
+    visibility: hidden;
+  }
+
+  .delete-cell {
+    display: none;
+    visibility: hidden;
+  }
+
+  .add-cell {
+    display: none;
+    visibility: hidden;
+  }
+
+  .task-container {
+    height: 100%;
+    padding: 0 30px 30px;
+    background-color: white;
+  }
+
+  .table-card {
+    background-color: white;
+    padding: 0;
   }
 }
 

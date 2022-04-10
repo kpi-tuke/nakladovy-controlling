@@ -60,6 +60,7 @@ export default function TableDynamic(props: any) {
     dispatch(props.actions.deleteColumn(col));
   };
 
+  let maxCols = props.selectCol ? props.selectCol.length : 100;
   return (
     <div className={'table-card row'}>
       <div className={'col-4'}>
@@ -156,7 +157,7 @@ export default function TableDynamic(props: any) {
                     )}
                   </th>
                 ))}
-                {props.dynCols && props.header.length < 8 && (
+                {props.dynCols && props.header.length < maxCols && (
                   <th className={'add-cell'} onClick={addColumn}>
                     +
                   </th>

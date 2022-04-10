@@ -18,6 +18,8 @@ export default function ParetoResult(props: any) {
     options: {
       chart: {
         type: 'bar',
+        redrawOnParentResize: true,
+        redrawOnWindowResize: true,
       },
       stroke: {
         curve: 'straight',

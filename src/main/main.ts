@@ -34,8 +34,11 @@ ipcMain.on('ipc-example', async (event, arg) => {
   event.reply('ipc-example', msgTemplate('pong'));
 });
 
-ipcMain.on('printToPDF', async (event, arg: any) => {
-
+ipcMain.on('printToPDF', async (event, arg: any, dpi: number) => {
+  // @ts-ignore
+  console.log(arg)
+  console.log(dpi)
+  mainWindow?.setSize(750, 500)
   const options = {
     marginsType: 0,
     pageSize: 'A4',
