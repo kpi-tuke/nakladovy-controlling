@@ -118,7 +118,6 @@ a {
 }
 
 .table-head {
-  height: 50px;
   background-color: #e6f7ff;
 }
 
@@ -128,6 +127,7 @@ a {
   font-weight: bold;
   font-size: 16px;
   height: 50px;
+  min-width: 200px;
   border-bottom: 1px solid lightgrey;
   border-right: 1px solid lightgrey;
 }
@@ -136,10 +136,10 @@ a {
   border-bottom: 1px solid lightgrey;
   border-right: 1px solid lightgrey;
   height: 50px;
-  width: auto;
-  min-width: 100px;
-  padding-left: 5px;
-  padding-right: 5px;
+  width: 5vw;
+  min-width: 50px;
+  padding-left: 15px;
+  padding-right: 15px;
 }
 
 .table-select-head {
@@ -152,8 +152,7 @@ a {
 
 .table-input-head {
   border: 0;
-  width: 95%;
-  height: 95%;
+  width: 100%;
   text-align: center;
   font-size: 15px;
   background-color: #e6f7ff;
@@ -162,8 +161,7 @@ a {
 
 .table-input {
   border: 0;
-  width: 95%;
-  height: 95%;
+  width: 100%;
   font-size: 15px;
   text-align: center;
   outline-width: 0;
@@ -172,6 +170,7 @@ a {
 .delete-cell {
   border: 1px solid lightgrey;
   text-align: center;
+  width: 1vw;
 }
 
 .delete-cell:hover {
@@ -281,6 +280,10 @@ a {
     background-color: white;
   }
 
+  .info-card {
+    box-shadow: none;
+  }
+
   .header-bar {
     display: none;
     visibility: hidden;
@@ -298,18 +301,32 @@ a {
 
   .task-container {
     height: 100%;
-    padding: 0 30px 30px;
+    padding: 0 0 0;
     background-color: white;
   }
 
   .table-card {
-    background-color: white;
-    padding: 0;
+    box-shadow: none;
+  }
+  .table-cell {
+    height: 4vh;
   }
 
-  .graph-card{
-    box-shadow: 0 0 0 ;
+  .table-corner {
+    height: 4vh;
   }
+
+  .graph-card {
+    box-shadow: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .text-input {
+    box-shadow: none;
+  }
+
+
 }
 
 

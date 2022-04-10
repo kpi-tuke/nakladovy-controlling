@@ -34,11 +34,16 @@ ipcMain.on('ipc-example', async (event, arg) => {
   event.reply('ipc-example', msgTemplate('pong'));
 });
 
-ipcMain.on('printToPDF', async (event, arg: any, dpi: number) => {
+ipcMain.on('printToPDF', async (event, arg: any) => {
+
+  if (mainWindow?.isFullScreen())
+    mainWindow?.setFullScreen(false)
+  if (mainWindow?.isMaximized())
+    mainWindow?.unmaximize()
   // @ts-ignore
-  console.log(arg)
-  console.log(dpi)
-  mainWindow?.setSize(750, 500)
+  const [width, height] = mainWindow?.getSize()
+  mainWindow?.setSize(850, height)
+
   const options = {
     marginsType: 0,
     pageSize: 'A4',
@@ -60,10 +65,10 @@ ipcMain.on('printToPDF', async (event, arg: any, dpi: number) => {
   })
 
   if (!file.canceled) {
-    // @ts-ignore
-    mainWindow.webContents
+    mainWindow?.webContents
       .printToPDF(options)
       .then((data) => {
+
         // @ts-ignore
         fs.open(file.filePath.toString(), "w+", function (err) {
           if (err) {
@@ -80,11 +85,13 @@ ipcMain.on('printToPDF', async (event, arg: any, dpi: number) => {
             console.log('PDF Generated Successfully');
           }
         });
+        mainWindow?.setSize(width, height)
       })
       .catch((error) => {
         console.log(error);
       });
   }
+
   event.reply('printToPDF', 'saved');
 });
 

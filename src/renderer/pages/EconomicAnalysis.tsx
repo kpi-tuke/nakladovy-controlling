@@ -33,7 +33,7 @@ export default function EconomicAnalysis() {
 
       <EconomicResult result={{headers, ...result}}/>
 
-      <TextField id={"save"} text={text} action={economicActions.changeText}/>
+      <TextField text={text} action={economicActions.changeText}/>
     </div>
   );
 }

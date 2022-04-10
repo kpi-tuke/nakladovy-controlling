@@ -1,6 +1,6 @@
 export default function TableStatic(props: any) {
   return (
-    <div style={{overflow: 'visible'}}>
+    <div style={{overflow: 'auto'}}>
       <table>
         <thead>
         <tr className={"table-head"}>
