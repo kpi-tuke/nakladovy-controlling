@@ -1,13 +1,13 @@
 {
-  "name": "electron-react-boilerplate",
-  "productName": "electron-react-boilerplate",
-  "version": "4.3.1",
-  "description": "Electron application boilerplate based on React, React Router, Webpack, React Hot Loader for rapid application development",
+  "name": "cost-controlling",
+  "productName": "Nákladový controlling",
+  "version": "1.0.0",
+  "description": "Aplikácia pre nákladový controlling",
   "main": "./dist/main/main.js",
   "author": {
-    "name": "Electron React Boilerplate Maintainers",
-    "email": "electronreactboilerplate@gmail.com",
-    "url": "https://github.com/electron-react-boilerplate"
+    "name": "AurelHolotnak",
+    "email": "aholotnak@gmail.com",
+    "url": "https://github.com/AurelHolotnak"
   },
   "scripts": {
     "electron-rebuild": "node -r ts-node/register ../../.erb/scripts/electron-rebuild.js",
