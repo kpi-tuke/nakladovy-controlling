@@ -1,4 +1,4 @@
-import {BrowserRouter as Router, Route, Routes, Navigate} from 'react-router-dom';
+import {HashRouter as Router, Route, Routes, Navigate} from 'react-router-dom';
 import TaskSelector from "./components/TaskSelector";
 import StructureAnalysis from "./pages/StructureAnalysis";
 import IndexAnalysis from './pages/IndexAnalysis';
@@ -17,6 +17,9 @@ export default function App() {
     <Provider store={store}>
       <Router>
         <Routes>
+          <Route path="/index.html" element={<TaskSelector/>}/>
+          <Route path="" element={<TaskSelector/>}/>
+          <Route path="/" element={<TaskSelector/>}/>
           <Route path="/taskselect" element={<TaskSelector/>}/>
           <Route path="/task6" element={<ParetoAnalysis/>}/>
           <Route path="/task5" element={<SortimentAnalysis/>}/>
