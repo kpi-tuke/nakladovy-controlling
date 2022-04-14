@@ -1,5 +1,4 @@
 import ReactApexChart from 'react-apexcharts';
-import InfoCard from '../InfoCard';
 import TableStatic from '../TableStatic';
 import { colGraph } from '../graphOptions';
 
@@ -65,11 +64,6 @@ export default function StructureResult(props: any) {
     <div style={{ padding: 30 }}>
       <h1 className={'result-h1'}>Analýza ukazovateľov</h1>
 
-      <InfoCard
-        header={'CELKOVÉ NÁKLADY'}
-        value={props.result.totalCost.toString() + '€'}
-      />
-
       <div className={'table-card'} style={{ marginTop: 50 }}>
         <TableStatic
           header={[...props.result.items, 'SPOLU']}
@@ -112,7 +106,7 @@ export default function StructureResult(props: any) {
         />
       </div>
 
-      <h1 className={'result-h1'}>Dashboarding</h1>
+      <h1 className={'result-h1 new-page'}>Dashboarding</h1>
 
       <div className={'row'}>
         <div className={'col-6'}>

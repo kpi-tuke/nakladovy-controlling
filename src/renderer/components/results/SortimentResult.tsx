@@ -36,7 +36,7 @@ export default function SortimentResult(props: any) {
   const allowanceOptions: ApexOptions = colGraph([''], '(€)');
 
   return (
-    <div>
+    <div className={'new-page'}>
       <h1 className={'result-h1'}>Ukazovatele sortimentnej analýzy</h1>
 
       <div className={'table-card'}>
@@ -62,7 +62,7 @@ export default function SortimentResult(props: any) {
         />
       </div>
 
-      <h1 className={'result-h1'}>Dashboarding</h1>
+      <h1 className={'result-h1 new-page'}>Dashboarding</h1>
 
       <div className={'graph-card'}>
         <h4 className={'graph-title'}>UKAZOVATELE SORTIMENTNEJ ANALÝZY</h4>
@@ -71,39 +71,32 @@ export default function SortimentResult(props: any) {
             options={rentabilityOptions}
             series={series}
             type="bar"
-            height={400}
+            height={300}
+          />
+        }
+      </div>
+      <div className={'graph-card'}>
+        <h4 className={'graph-title'}>HRUBÉ ROZPÄTIE</h4>
+        {
+          <ReactApexChart
+            options={marginOptions}
+            series={series2}
+            type="bar"
+            height={300}
           />
         }
       </div>
 
-      <div className={'row'}>
-        <div className={'col-6'}>
-          <div className={'graph-card'} style={{ marginRight: 25 }}>
-            <h4 className={'graph-title'}>HRUBÉ ROZPÄTIE</h4>
-            {
-              <ReactApexChart
-                options={marginOptions}
-                series={series2}
-                type="bar"
-                height={400}
-              />
-            }
-          </div>
-        </div>
-
-        <div className={'col-6'}>
-          <div className={'graph-card'} style={{ marginLeft: 25 }}>
-            <h4 className={'graph-title'}>PRÍSPEVOK NA ÚHRADU</h4>
-            {
-              <ReactApexChart
-                options={allowanceOptions}
-                series={series3}
-                type="bar"
-                height={400}
-              />
-            }
-          </div>
-        </div>
+      <div className={'graph-card new-page'}>
+        <h4 className={'graph-title'}>PRÍSPEVOK NA ÚHRADU</h4>
+        {
+          <ReactApexChart
+            options={allowanceOptions}
+            series={series3}
+            type="bar"
+            height={300}
+          />
+        }
       </div>
     </div>
   );

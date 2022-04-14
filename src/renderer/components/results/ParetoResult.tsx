@@ -78,7 +78,7 @@ export default function ParetoResult(props: any) {
   };
 
   return (
-    <div>
+    <div className={"new-page"}>
       <h1 className={'result-h1'}>Analýza ukazovateľov</h1>
 
       <div className={'table-card'}>
@@ -101,7 +101,7 @@ export default function ParetoResult(props: any) {
           })}
         />
       </div>
-      <h1 className={'result-h1'}>Dashboarding</h1>
+      <h1 className={'result-h1 new-page'}>Dashboarding</h1>
 
       <div className={'graph-card'}>
         <h4 className={'graph-title'}>PARETO ANALÝZA A LORENZOVA KRIVKA</h4>

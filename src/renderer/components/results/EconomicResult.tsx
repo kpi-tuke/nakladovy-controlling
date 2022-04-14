@@ -42,7 +42,7 @@ export default function EconomicResult(props: any) {
   const colOptions: ApexOptions = colGraph(props.result.headers);
 
   return (
-    <div>
+    <div className={"new-page"}>
       <h1 className={'result-h1'}>Analýza ekonomických ukazovateľov</h1>
 
       <div className={'table-card'} style={{ marginTop: 50 }}>
@@ -53,10 +53,10 @@ export default function EconomicResult(props: any) {
             'Zisk (€)',
             "Náklady celkom (€)",
             "Výnosy celkom (€)",
-            'Rentabilita výnosov (%)',
-            'Rentabilita nákladov (%)',
-            'Nákladová účinnosť (%)',
-            'Nákladovosť (%)',
+            'Rentabilita výnosov',
+            'Rentabilita nákladov',
+            'Nákladová účinnosť',
+            'Nákladovosť',
           ]}
           data={[
             [...props.result.profitData],
@@ -70,7 +70,7 @@ export default function EconomicResult(props: any) {
         />
       </div>
 
-      <h1 className={'result-h1'}>Dashboarding</h1>
+      <h1 className={'result-h1 new-page'}>Dashboarding</h1>
 
       <div className={'graph-card'}>
         <h4 className={'graph-title'}>TREND VÝVOJA EKONOMICKÝCH VELIČÍN</h4>

@@ -51,10 +51,10 @@ export default function IndexResult(props: any) {
   };
 
   return (
-    <div>
+    <div className={"new-page"}>
       <h1 className={'result-h1'}>Indexná analýza</h1>
 
-      <div className={'table-card'} style={{ marginTop: 50 }}>
+      <div className={'table-card'}>
         <TableStatic
           corner={'Ekonomické ukazovatele'}
           header={[...props.result.headers]}
@@ -83,7 +83,7 @@ export default function IndexResult(props: any) {
         />
       </div>
 
-      <h1 className={'result-h1'}>Dashboarding</h1>
+      <h1 className={'result-h1 new-page'}>Dashboarding</h1>
 
       <div className={'graph-card'}>
         <h4 className={'graph-title'}>TREND VÝVOJA NÁKLADOV A VÝNOSOV</h4>
@@ -108,8 +108,8 @@ export default function IndexResult(props: any) {
           />
         }
       </div>
-      <div className={'row'}>
-        <div className={'graph-card col-6'} style={{ marginRight: 20 }}>
+
+        <div className={'graph-card col-12 new-page'}>
           <h4 className={'graph-title'}>REŤAZOVÝ INDEX</h4>
           {
             <ReactApexChart
@@ -121,7 +121,7 @@ export default function IndexResult(props: any) {
           }
         </div>
 
-        <div className={'graph-card col-6'} style={{ marginLeft: 20 }}>
+        <div className={'graph-card col-12'}>
           <h4 className={'graph-title'}>KOFICIENT REAKCIE</h4>
           {
             <ReactApexChart
@@ -132,7 +132,7 @@ export default function IndexResult(props: any) {
             />
           }
         </div>
-      </div>
+
     </div>
   );
 }

@@ -35,11 +35,16 @@ ipcMain.on('ipc-example', async (event, arg) => {
 });
 
 ipcMain.on('printToPDF', async (event, arg: any) => {
-
-  if (mainWindow?.isFullScreen())
+  let maximized = false
+  let fullScreened = false
+  if (mainWindow?.isFullScreen()) {
     mainWindow?.setFullScreen(false)
-  if (mainWindow?.isMaximized())
+    fullScreened = true
+  }
+  if (mainWindow?.isMaximized()) {
     mainWindow?.unmaximize()
+    maximized = true
+  }
   // @ts-ignore
   const [width, height] = mainWindow?.getSize()
   mainWindow?.setSize(850, height)
@@ -85,13 +90,15 @@ ipcMain.on('printToPDF', async (event, arg: any) => {
             console.log('PDF Generated Successfully');
           }
         });
-        mainWindow?.setSize(width, height)
+
       })
       .catch((error) => {
         console.log(error);
       });
   }
-
+  if(maximized) mainWindow?.maximize()
+  if(fullScreened) mainWindow?.setFullScreen(true)
+  else mainWindow?.setSize(width, height)
   event.reply('printToPDF', 'saved');
 });
 

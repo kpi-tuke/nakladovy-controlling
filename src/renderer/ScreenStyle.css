@@ -30,7 +30,8 @@ a {
   margin-left: 20px;
   padding-top: 20px;
   color: #1a98ff;
-  font-size: large;
+  font-size: 16px;
+  text-align: center;
 }
 
 .info-value {
@@ -48,9 +49,10 @@ a {
 }
 
 .single-input {
-  width: 75%;
+  width: 70%;
   height: 30px;
-  margin: 10%;
+  margin-left: 15%;
+  margin-bottom: 20px;
   text-align: center;
   outline-width: 0;
 }
@@ -127,20 +129,24 @@ a {
   font-weight: bold;
   font-size: 16px;
   height: 50px;
-  min-width: 200px;
-  border-bottom: 1px solid lightgrey;
-  border-right: 1px solid lightgrey;
+  border: 1px solid lightgrey;
+}
+
+.table-data {
+  overflow: auto;
 }
 
 .table-cell {
-  border-bottom: 1px solid lightgrey;
-  border-right: 1px solid lightgrey;
+  border: 1px solid lightgrey;
   height: 50px;
-  width: 5vw;
-  min-width: 50px;
-  padding-left: 15px;
-  padding-right: 15px;
+  max-height: 50px;
+  width: 12vw;
+  min-width: 12vw;
+  max-width: 12vw;
+  padding-left: 5px;
+  padding-right: 5px;
 }
+
 
 .table-select-head {
   text-align: center;
@@ -164,7 +170,6 @@ a {
   width: 100%;
   font-size: 15px;
   text-align: center;
-  outline-width: 0;
 }
 
 .delete-cell {
@@ -275,6 +280,29 @@ a {
   grid-column: span 12;
 }
 
+
+.col-t {
+  grid-column: span 1;
+}
+
+.print-hidden {
+  display: none;
+  visibility: hidden;
+}
+
+.hide {
+  display: grid;
+  visibility: visible;
+}
+
+.new-page {
+  page-break-before: always;
+}
+
+.new-page-after {
+  page-break-after: always;
+}
+
 @media print {
   body {
     background-color: white;
@@ -307,26 +335,41 @@ a {
 
   .table-card {
     box-shadow: none;
-  }
-  .table-cell {
-    height: 4vh;
+    border: 0 solid lightgray ;
   }
 
-  .table-corner {
-    height: 4vh;
+  .table-data {
+    overflow: unset;
   }
 
   .graph-card {
     box-shadow: none;
     padding: 0;
-    margin: 0;
+    margin: 0 0 10px;
   }
 
   .text-input {
     box-shadow: none;
   }
 
+  .col-t {
+    grid-column: span 12;
+  }
 
+  .print-hidden {
+    display: grid;
+    visibility: visible;
+  }
+
+  .hide {
+    display: none;
+    visibility: hidden;
+  }
+
+  .result-h1 {
+    text-align: center;
+    margin: 25px;
+  }
 }
 
 

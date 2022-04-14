@@ -8,7 +8,7 @@ export default function TextField(props: any) {
   }
 
   return (
-    <div>
+    <div className={props.newPage && "new-page"}>
       <h1 className={'result-h1'}>Záver a zhodnotenie analýzy</h1>
 
       <textarea
