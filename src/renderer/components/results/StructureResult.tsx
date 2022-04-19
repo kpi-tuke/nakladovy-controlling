@@ -113,7 +113,7 @@ export default function StructureResult(props: any) {
           <div
             className={'graph-card'}
             style={{
-              marginRight: 25,
+              marginRight: 20,
             }}
           >
             <h4 className={'graph-title'}>ŠTRUKTÚRA NÁKLADOVÝCH DRUHOV</h4>
@@ -133,7 +133,7 @@ export default function StructureResult(props: any) {
           <div
             className={'graph-card'}
             style={{
-              marginRight: 25,
+              marginLeft: 20,
             }}
           >
             <h4 className={'graph-title'}>DRUHOVÉ ČLENENIE NÁKLADOV</h4>
@@ -154,7 +154,7 @@ export default function StructureResult(props: any) {
           <div
             className={'graph-card'}
             style={{
-              marginRight: 25,
+              marginRight: 20,
             }}
           >
             <h4 className={'graph-title'}>ŠTRUKTÚRA KALKULAČNÝCH POLOŽIEK</h4>
@@ -174,7 +174,7 @@ export default function StructureResult(props: any) {
           <div
             className={'graph-card'}
             style={{
-              marginRight: 25,
+              marginLeft: 20,
             }}
           >
             <h4 className={'graph-title'}>KALKULAČNÉ ČLENENIE NÁKLADOV</h4>

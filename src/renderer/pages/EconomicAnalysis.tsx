@@ -7,14 +7,14 @@ import TextField from '../components/TextField';
 import {useBilanceCalc} from 'renderer/calculations';
 import {useAppSelector} from 'renderer/store/hooks';
 
-export default function EconomicAnalysis() {
+export default function EconomicAnalysis(props:any) {
   const {headers, items, data, values, text} = useAppSelector(selectEconomic);
 
   const result = useBilanceCalc(data, values);
 
   return (
     <div className={'task-container'}>
-      <HeaderBar id={"1"} title={'Ekonomická analýza hospodárenia'}/>
+      {!props.hideHeader && <HeaderBar id={"1"} title={'Ekonomická analýza hospodárenia'}  back={"taskselect"}/>}
 
       <h1 className={'result-h1'}>Vstupy</h1>
 

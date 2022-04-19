@@ -6,7 +6,7 @@ import {useAppSelector} from 'renderer/store/hooks';
 import TextField from "../components/TextField";
 import {useSortimentCalc} from 'renderer/calculations';
 
-export default function SortimentAnalysis() {
+export default function SortimentAnalysis(props:any) {
 
   const {headers, values, data, items, text} = useAppSelector(selectSortiment);
 
@@ -14,7 +14,7 @@ export default function SortimentAnalysis() {
 
   return (
     <div className={"task-container"}>
-      <HeaderBar id={"5"} title={'Sortimentná analýza'}/>
+      {!props.hideHeader && <HeaderBar id={"5"} title={'Sortimentná analýza'}  back={"taskselect"}/>}
 
       <h1 className={"result-h1"}>Vstupy</h1>
 

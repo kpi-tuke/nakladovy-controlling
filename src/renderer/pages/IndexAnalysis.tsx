@@ -7,7 +7,7 @@ import {useSelector} from 'react-redux';
 import TextField from "../components/TextField";
 import {useChainCalc} from 'renderer/calculations';
 
-export default function IndexAnalysis() {
+export default function IndexAnalysis(props:any) {
 
   const {headers, items, data, values, text} = useSelector(selectChain);
 
@@ -18,10 +18,11 @@ export default function IndexAnalysis() {
 
       <h1 className={"result-h1"}>Vstupy</h1>
 
-      <HeaderBar
+      {!props.hideHeader &&<HeaderBar
         id={"3"}
         title={'Analýza reťazových a bázických indexov'}
-      />
+        back={"taskselect"}
+      />}
 
       <TableDynamic
         corner={'Ekonomická položka'}

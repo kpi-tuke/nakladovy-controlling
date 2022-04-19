@@ -7,7 +7,7 @@ import { useAppSelector } from 'renderer/store/hooks';
 import TextField from '../components/TextField';
 import { useCVPCalc } from 'renderer/calculations';
 
-export default function CVPAnalysis() {
+export default function CVPAnalysis(props:any) {
   const { headers, data, items, values, fixTotal, minProfit, text } =
     useAppSelector(selectCVP);
 
@@ -15,7 +15,7 @@ export default function CVPAnalysis() {
 
   return (
     <div className={'task-container'}>
-      <HeaderBar id={'4'} title={'CVP analýza'} />
+      {!props.hideHeader && <HeaderBar id={'4'} title={'CVP analýza'} back={"taskselect"}/>}
 
       <h1 className={'result-h1'}>Vstupy</h1>
 

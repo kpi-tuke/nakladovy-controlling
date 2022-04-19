@@ -11,7 +11,7 @@
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 import path from 'path';
-import {app, BrowserWindow, dialog, ipcMain, shell} from 'electron';
+import { app, BrowserWindow, dialog, ipcMain, shell } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import MenuBuilder from './menu';
@@ -34,20 +34,56 @@ ipcMain.on('ipc-example', async (event, arg) => {
   event.reply('ipc-example', msgTemplate('pong'));
 });
 
-ipcMain.on('printToPDF', async (event, arg: any) => {
-  let maximized = false
-  let fullScreened = false
+ipcMain.on('save', async (event, state) => {
+  console.log(state);
+  const file = await dialog.showSaveDialog({
+    title: 'Zvoľte umiestnenie súboru',
+    buttonLabel: 'Uložiť',
+    defaultPath: "nákladový_controlling",
+    filters: [
+      {
+        name: 'JSON',
+        extensions: ['json'],
+      },
+    ],
+    properties: [],
+  });
+
+  if (!file.canceled) {
+    // @ts-ignore
+    fs.open(file.filePath.toString(), 'w+', function (err) {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log('Opened Successfully');
+      }
+    });
+    // @ts-ignore
+    fs.writeFile(file.filePath.toString(), state, function (err) {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log('Saved Successfully');
+      }
+    });
+  }
+  event.reply('save', 'saved');
+});
+
+ipcMain.on('printToPDF', async (event, fileName: string) => {
+  let maximized = false;
+  let fullScreened = false;
   if (mainWindow?.isFullScreen()) {
-    mainWindow?.setFullScreen(false)
-    fullScreened = true
+    mainWindow?.setFullScreen(false);
+    fullScreened = true;
   }
   if (mainWindow?.isMaximized()) {
-    mainWindow?.unmaximize()
-    maximized = true
+    mainWindow?.unmaximize();
+    maximized = true;
   }
   // @ts-ignore
-  const [width, height] = mainWindow?.getSize()
-  mainWindow?.setSize(850, height)
+  const [width, height] = mainWindow?.getSize();
+  mainWindow?.setSize(850, height);
 
   const options = {
     marginsType: 0,
@@ -60,28 +96,28 @@ ipcMain.on('printToPDF', async (event, arg: any) => {
   const file = await dialog.showSaveDialog({
     title: 'Zvoľte umiestnenie súboru',
     buttonLabel: 'Uložiť',
-    defaultPath: arg,
+    defaultPath: fileName,
     filters: [
       {
         name: 'PDF',
-        extensions: ["pdf"]
-      }, ],
-    properties: []
-  })
+        extensions: ['pdf'],
+      },
+    ],
+    properties: [],
+  });
 
   if (!file.canceled) {
     mainWindow?.webContents
       .printToPDF(options)
       .then((data) => {
-
         // @ts-ignore
-        fs.open(file.filePath.toString(), "w+", function (err) {
+        fs.open(file.filePath.toString(), 'w+', function (err) {
           if (err) {
             console.log(err);
           } else {
             console.log('PDF Opened Successfully');
           }
-        } )
+        });
         // @ts-ignore
         fs.writeFile(file.filePath.toString(), data, function (err) {
           if (err) {
@@ -90,16 +126,15 @@ ipcMain.on('printToPDF', async (event, arg: any) => {
             console.log('PDF Generated Successfully');
           }
         });
-
       })
       .catch((error) => {
         console.log(error);
       });
   }
-  if(maximized) mainWindow?.maximize()
-  if(fullScreened) mainWindow?.setFullScreen(true)
-  else mainWindow?.setSize(width, height)
-  event.reply('printToPDF', 'saved');
+  if (maximized) mainWindow?.maximize();
+  if (fullScreened) mainWindow?.setFullScreen(true);
+  else mainWindow?.setSize(width, height);
+  event.reply('printToPDF', 'printed');
 });
 
 if (process.env.NODE_ENV === 'production') {

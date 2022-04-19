@@ -89,6 +89,7 @@ export default function TableDynamic(props: any) {
       <div className={'col-4'}>
         {separatedHeaders.map((_table, idx) => (
           <table
+            key={idx + "input"}
             className={idx > 0 ? 'print-hidden' : ''}
             style={{ borderCollapse: 'collapse', width: '100%' }}
           >
@@ -151,7 +152,7 @@ export default function TableDynamic(props: any) {
       <div className={'table-data col-8 row'}>
         {separatedData.map((table, idx) => (
           <table
-            key={idx}
+            key={idx+"data"}
             className={'col-t'}
             style={{ borderCollapse: 'collapse' }}
           >

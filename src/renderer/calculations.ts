@@ -254,14 +254,12 @@ export function useSortimentCalc(data: number[][]) {
       100;
 
     if (totalCost[col] === 0) {
-      console.log('delenie nulou');
       rentCost[col] = 0;
     } else
       rentCost[col] =
         Math.round((marginProfit[col] / totalCost[col]) * 10000) / 100;
 
     if (price[col] === 0) {
-      console.log('delenie nulou');
       rentIncome[col] = 0;
     } else
       rentIncome[col] =
@@ -272,7 +270,6 @@ export function useSortimentCalc(data: number[][]) {
       100;
 
     if (price[col] === 0) {
-      console.log('delenie nulou');
       allowance[col] = 0;
     } else
       allowance[col] =

@@ -1,6 +1,14 @@
 import { useNavigate } from 'react-router-dom';
-import { useAppDispatch } from '../store/hooks';
-import { reportActions } from '../store/slice';
+import {useAppDispatch, useAppSelector} from '../store/hooks';
+import {
+  reportActions,
+  selectChain,
+  selectCVP,
+  selectEconomic, selectPareto,
+  selectReport,
+  selectSortiment,
+  selectStructure
+} from '../store/slice';
 
 export default function HeaderBar(props: any) {
   const dispatch = useAppDispatch();
@@ -12,13 +20,27 @@ export default function HeaderBar(props: any) {
   }
 
   function printToPDF(id: string) {
-    console.log(window.devicePixelRatio)
     // @ts-ignore
-    window.electron.saveFile(id, window.devicePixelRatio, (arg) => console.log(arg));
+    window.electron.printToPdf(id, (arg) => console.log(arg));
   }
 
-  function goBack() {
-    navigate("/taskselect")
+  function goBackTo(to: string) {
+    navigate("/" + to)
+  }
+
+  const economic = useAppSelector(selectEconomic);
+  const structure = useAppSelector(selectStructure);
+  const cvp = useAppSelector(selectCVP);
+  const sortiment = useAppSelector(selectSortiment);
+  const chain = useAppSelector(selectChain);
+  const pareto = useAppSelector(selectPareto);
+  const { tasks } = useAppSelector(selectReport);
+
+  function save() {
+    const json = JSON.stringify({economic, sortiment, structure, chain, cvp, pareto, tasks})
+
+    // @ts-ignore
+    window.electron.saveProject(json)
   }
 
   return (
@@ -40,18 +62,26 @@ export default function HeaderBar(props: any) {
             >
               + Tlačiť do PDF
             </div>
-
         )}
+        {props.save && (
+          <div
+            className={'col-6 header-button'}
+            onClick={save}
+          >
+            + Uložiť
+          </div>
+        )}
+
       </div>
 
       <div className={'col-6 header-title'}>{props.title}</div>
 
       <div className={'row col-3'}>
-        {!props.back && (
+        {props.back && (
           <>
             <div className={"col-4"}/>
             <div className={"col-4"}/>
-            <div className={'col-4 header-button'} onClick={goBack}>
+            <div className={'col-4 header-button'} onClick={() => goBackTo(props.back)}>
               ← Späť
             </div></>
         )}

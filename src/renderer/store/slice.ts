@@ -184,19 +184,50 @@ const initialParetoState: defaultState = {
 const economicSlice = createSlice({
   name: 'economic',
   initialState: initialEconomicState,
-  reducers: reducerFunctions,
+  reducers: {
+    ...reducerFunctions,
+    // @ts-ignore
+    reset : (state) => {
+      state.headers = initialEconomicState.headers
+      state.data = initialEconomicState.data
+      state.items = initialEconomicState.items
+      state.values = initialEconomicState.values
+      state.text = initialEconomicState.text
+    }
+  },
 });
 
 const sortimentSlice = createSlice({
   name: 'sortiment',
   initialState: initialSortimentState,
-  reducers: reducerFunctions,
+  reducers: {
+    ...reducerFunctions,
+    // @ts-ignore
+    reset : (state) => {
+      state.headers = initialSortimentState.headers
+      state.data = initialSortimentState.data
+      state.items = initialSortimentState.items
+      state.values = initialSortimentState.values
+      state.text = initialSortimentState.text
+    }
+  },
 });
 
+// @ts-ignore
 const indexSlice = createSlice({
   name: 'chain',
   initialState: initialIndexState,
-  reducers: reducerFunctions,
+  reducers: {
+    ...reducerFunctions,
+    // @ts-ignore
+    reset : (state) => {
+      state.headers = initialIndexState.headers
+      state.data = initialIndexState.data
+      state.items = initialIndexState.items
+      state.values = initialIndexState.values
+      state.text = initialIndexState.text
+    }
+  },
 });
 
 const CVPSlice = createSlice({
@@ -216,28 +247,60 @@ const CVPSlice = createSlice({
     ) => {
       state.minProfit = action.payload;
     },
+    // @ts-ignore
+    reset : (state) => {
+      state.headers = initialCVPState.headers
+      state.data = initialCVPState.data
+      state.items = initialCVPState.items
+      state.values = initialCVPState.values
+      state.text = initialCVPState.text
+    }
   },
 });
 
 const structureSlice = createSlice({
   name: 'structure',
   initialState: initialStructureState,
-  reducers: reducerFunctions,
+  reducers: {
+    ...reducerFunctions,
+    // @ts-ignore
+    reset : (state) => {
+      state.headers = initialStructureState.headers
+      state.data = initialStructureState.data
+      state.items = initialStructureState.items
+      state.values = initialStructureState.values
+      state.text = initialStructureState.text
+    }
+  },
 });
 
 const paretoSlice = createSlice({
   name: 'pareto',
   initialState: initialParetoState,
-  reducers: reducerFunctions,
+  reducers: {
+    ...reducerFunctions,
+    reset : (state) => {
+      state.headers = initialParetoState.headers
+      state.data = initialParetoState.data
+      state.items = initialParetoState.items
+      state.values = initialParetoState.values
+      state.text = initialParetoState.text
+    }
+  },
 });
 
 const reportSlice = createSlice({
   name: 'report',
-  initialState: [],
+  initialState: {tasks: []},
   reducers: {
-    addTask: (state: string[], action: PayloadAction<string>) => {
-      if (!state.includes(action.payload)) state.push(action.payload);
+    addTask: (state, action: PayloadAction<string>) => {
+      // @ts-ignore
+      if (!state.tasks.includes(action.payload)) state.tasks.push(action.payload);
     },
+    // @ts-ignore
+    reset : (state) => {
+      state.tasks = []
+    }
   },
 });
 

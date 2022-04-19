@@ -7,7 +7,7 @@ import TextField from '../components/TextField';
 import {useStructureCalc} from 'renderer/calculations';
 import {useAppSelector} from 'renderer/store/hooks';
 
-export default function StructureAnalysis() {
+export default function StructureAnalysis(props:any) {
   const {headers, items, data, text} = useAppSelector(selectStructure);
 
   const selectCol = [
@@ -25,7 +25,7 @@ export default function StructureAnalysis() {
 
   return (
     <div className={'task-container'}>
-      <HeaderBar id={"2"} title={'Štruktúrna analýza'}/>
+      {!props.hideHeader && <HeaderBar id={"2"} title={'Štruktúrna analýza'}  back={"taskselect"}/>}
 
       <h1 className={'result-h1'}>Vstupy</h1>
 

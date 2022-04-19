@@ -6,14 +6,14 @@ import {paretoActions, selectPareto} from 'renderer/store/slice';
 import TextField from '../components/TextField';
 import {usePretoCalc} from 'renderer/calculations';
 
-export default function ParetoAnalysis() {
+export default function ParetoAnalysis(props:any) {
   const {headers, values, items, data, text} = useAppSelector(selectPareto);
 
   const result = usePretoCalc(data, items);
 
   return (
     <div className={'task-container'}>
-      <HeaderBar id={"6"} title={'Pareto analýza nákladov'}/>
+      {!props.hideHeader && <HeaderBar id={"6"} title={'Pareto analýza nákladov'}  back={"taskselect"}/>}
 
       <h1 className={'result-h1'}>Vstupy</h1>
 

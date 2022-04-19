@@ -18,6 +18,31 @@ a {
   text-decoration: none;
 }
 
+.welcome {
+  padding-top: 50px;
+  background-color: #f2f1f6;
+  height: 100vh;
+}
+
+.welcome-item {
+  background-color: white;
+  padding: 2%;
+  box-shadow: 0 0 3px lightgray;
+  margin-inline: 3%;
+  margin-top: 25px;
+  cursor: pointer;
+  text-align: center;
+}
+
+.welcome-h1 {
+  text-align: center;
+}
+
+.welcome-h2 {
+  color: #1a98ff;
+  font-weight: normal;
+}
+
 .info-card {
   background-color: white;
   padding: 0;
@@ -104,6 +129,7 @@ a {
   height: 200px;
   width: 100%;
   border: 0;
+  margin-bottom: 0;
   box-shadow: 0 0 3px lightgrey;
 }
 
@@ -331,6 +357,7 @@ a {
     height: 100%;
     padding: 0 0 0;
     background-color: white;
+    page-break-before: always;
   }
 
   .table-card {
@@ -350,6 +377,7 @@ a {
 
   .text-input {
     box-shadow: none;
+    height: 150px;
   }
 
   .col-t {
@@ -368,7 +396,7 @@ a {
 
   .result-h1 {
     text-align: center;
-    margin: 25px;
+    margin: 0 25px 25px;
   }
 }
 

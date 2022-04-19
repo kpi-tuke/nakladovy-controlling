@@ -1,7 +1,10 @@
-import SelectCard from './SelectCard';
-import HeaderBar from './HeaderBar';
+import SelectCard from '../components/SelectCard';
+import HeaderBar from '../components/HeaderBar';
+import { useAppSelector } from '../store/hooks';
+import { selectReport } from '../store/slice';
 
-export default function TaskSelector() {
+export default function TaskSelection() {
+  const {tasks} = useAppSelector(selectReport);
   return (
     <div
       style={{
@@ -13,11 +16,12 @@ export default function TaskSelector() {
     >
       <HeaderBar
         title={'NÁKLADOVÝ CONTROLLING'}
-        back={true}
+        back={"welcome"}
         addToReport={true}
         printToPDF={true}
+        save={true}
       />
-      <div className={'row'} style={{marginBottom: '10vh'}}>
+      <div className={'row'} style={{ marginBottom: '10vh' }}>
         <SelectCard
           to={'/task1'}
           head={'Ekonomická analýza hospodárenia'}
@@ -43,7 +47,7 @@ export default function TaskSelector() {
         />
       </div>
 
-      <div className={'row'} style={{marginBottom: '10vh'}}>
+      <div className={'row'} style={{ marginBottom: '10vh' }}>
         <SelectCard
           to={'/task5'}
           head={'Sortimentná analýza'}
@@ -64,13 +68,15 @@ export default function TaskSelector() {
           body={'Sledovanie príčin vzniku nákladov na základe pravidla 80/20.'}
         />
       </div>
-      <div className={'row'}>
-        <SelectCard
-          to={'/evaluation'}
-          head={'Ekonomické a grafické zhodnotenie analýz'}
-          body={'Výsledok.'}
-        />
-      </div>
+      {tasks.length > 0 && (
+        <div className={'row'}>
+          <SelectCard
+            to={'/evaluation'}
+            head={'Ekonomické a grafické zhodnotenie analýz'}
+            body={'Výsledok.'}
+          />
+        </div>
+      )}
     </div>
   );
 }
