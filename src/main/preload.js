@@ -25,5 +25,14 @@ contextBridge.exposeInMainWorld('electron', {
   },
   saveProject: (state) => {
     ipcRenderer.send("save", state)
-  }
+  },
+  openProject: () => {
+    ipcRenderer.send("open")
+  },
+  onOpen(channel, func) {
+    const validChannels = ['open'];
+    if (validChannels.includes(channel)) {
+      ipcRenderer.on(channel, (event, ...args) => func(...args));
+    }
+  },
 });

@@ -34,12 +34,47 @@ ipcMain.on('ipc-example', async (event, arg) => {
   event.reply('ipc-example', msgTemplate('pong'));
 });
 
+ipcMain.on('open', async (event) => {
+  const file = await dialog
+    .showOpenDialog({
+      title: 'Zvoľte súbor',
+      buttonLabel: 'Otvoriť',
+      filters: [
+        {
+          name: 'JSON',
+          extensions: ['json'],
+        },
+      ],
+      properties: ['openFile'],
+    })
+
+  if (!file.canceled) {
+    // @ts-ignore
+    fs.open(file.filePaths[0], 'r', function (err) {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log('Opened Successfully');
+      }
+    });
+    // @ts-ignore
+    fs.readFile(file.filePaths[0], "utf8", function (err, data) {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log(data);
+        event.reply('open', data);
+      }
+    });
+  }
+});
+
 ipcMain.on('save', async (event, state) => {
   console.log(state);
   const file = await dialog.showSaveDialog({
     title: 'Zvoľte umiestnenie súboru',
     buttonLabel: 'Uložiť',
-    defaultPath: "nákladový_controlling",
+    defaultPath: 'nákladový_controlling',
     filters: [
       {
         name: 'JSON',

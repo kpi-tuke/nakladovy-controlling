@@ -26,6 +26,23 @@ export default function WelcomePage() {
     navigate('/taskselect');
   }
 
+  function openProject() {
+    // @ts-ignore
+    window.electron.openProject()
+    // @ts-ignore
+    window.electron.onOpen("open", (arg)=> {
+      const json = JSON.parse(arg)
+      dispatch(economicActions.open(json.economic))
+      dispatch(structureActions.open(json.structure))
+      dispatch(CVPActions.open(json.cvp))
+      dispatch(indexActions.open(json.chain))
+      dispatch(sortimentActions.open(json.sortiment))
+      dispatch(paretoActions.open(json.pareto))
+      dispatch(reportActions.open(json.tasks))
+      navigate('/taskselect');
+    })
+  }
+
   return (
     <div className={'welcome'}>
       <HeaderBar
@@ -42,7 +59,7 @@ export default function WelcomePage() {
           <div className={'welcome-item'}>
             <h2 className={'welcome-h2'}>Nedávno otvorené</h2>
           </div>
-          <div className={'welcome-item'}>
+          <div className={'welcome-item'} onClick={openProject}>
             <h2 className={'welcome-h2'}>Otvoriť projekt</h2>
           </div>
           <div className={'welcome-item'}>

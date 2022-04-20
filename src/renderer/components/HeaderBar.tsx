@@ -38,7 +38,6 @@ export default function HeaderBar(props: any) {
 
   function save() {
     const json = JSON.stringify({economic, sortiment, structure, chain, cvp, pareto, tasks})
-
     // @ts-ignore
     window.electron.saveProject(json)
   }

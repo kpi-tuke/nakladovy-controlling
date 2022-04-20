@@ -92,6 +92,25 @@ const reducerFunctions = {
   },
 };
 
+const open = {
+  open: (
+    state: {
+      headers: string[];
+      data: number[][];
+      items: string[];
+      values: string[];
+      text: string;
+    },
+    action: PayloadAction<defaultState>
+  ) => {
+    state.headers = action.payload.headers;
+    state.data = action.payload.data;
+    state.items = action.payload.items;
+    state.values = action.payload.values;
+    state.text = action.payload.text;
+  },
+};
+
 const initialSortimentState: defaultState = {
   headers: ['VýrobokA'],
   data: [[0], [0], [0], [0]],
@@ -187,14 +206,16 @@ const economicSlice = createSlice({
   reducers: {
     ...reducerFunctions,
     // @ts-ignore
-    reset : (state) => {
-      state.headers = initialEconomicState.headers
-      state.data = initialEconomicState.data
-      state.items = initialEconomicState.items
-      state.values = initialEconomicState.values
-      state.text = initialEconomicState.text
-    }
+    reset: (state) => {
+      state.headers = initialEconomicState.headers;
+      state.data = initialEconomicState.data;
+      state.items = initialEconomicState.items;
+      state.values = initialEconomicState.values;
+      state.text = initialEconomicState.text;
+    },
+    ...open,
   },
+
 });
 
 const sortimentSlice = createSlice({
@@ -203,13 +224,14 @@ const sortimentSlice = createSlice({
   reducers: {
     ...reducerFunctions,
     // @ts-ignore
-    reset : (state) => {
-      state.headers = initialSortimentState.headers
-      state.data = initialSortimentState.data
-      state.items = initialSortimentState.items
-      state.values = initialSortimentState.values
-      state.text = initialSortimentState.text
-    }
+    reset: (state) => {
+      state.headers = initialSortimentState.headers;
+      state.data = initialSortimentState.data;
+      state.items = initialSortimentState.items;
+      state.values = initialSortimentState.values;
+      state.text = initialSortimentState.text;
+    },
+    ...open
   },
 });
 
@@ -220,13 +242,14 @@ const indexSlice = createSlice({
   reducers: {
     ...reducerFunctions,
     // @ts-ignore
-    reset : (state) => {
-      state.headers = initialIndexState.headers
-      state.data = initialIndexState.data
-      state.items = initialIndexState.items
-      state.values = initialIndexState.values
-      state.text = initialIndexState.text
-    }
+    reset: (state) => {
+      state.headers = initialIndexState.headers;
+      state.data = initialIndexState.data;
+      state.items = initialIndexState.items;
+      state.values = initialIndexState.values;
+      state.text = initialIndexState.text;
+    },
+    ...open
   },
 });
 
@@ -248,12 +271,21 @@ const CVPSlice = createSlice({
       state.minProfit = action.payload;
     },
     // @ts-ignore
-    reset : (state) => {
-      state.headers = initialCVPState.headers
-      state.data = initialCVPState.data
-      state.items = initialCVPState.items
-      state.values = initialCVPState.values
-      state.text = initialCVPState.text
+    reset: (state) => {
+      state.headers = initialCVPState.headers;
+      state.data = initialCVPState.data;
+      state.items = initialCVPState.items;
+      state.values = initialCVPState.values;
+      state.text = initialCVPState.text;
+    },
+    open : (state, action: PayloadAction<CVPState>) => {
+      state.headers = action.payload.headers
+      state.data = action.payload.data
+      state.items = action.payload.items
+      state.values = action.payload.values
+      state.text = action.payload.text
+      state.fixTotal = action.payload.fixTotal
+      state.minProfit = action.payload.minProfit
     }
   },
 });
@@ -264,13 +296,14 @@ const structureSlice = createSlice({
   reducers: {
     ...reducerFunctions,
     // @ts-ignore
-    reset : (state) => {
-      state.headers = initialStructureState.headers
-      state.data = initialStructureState.data
-      state.items = initialStructureState.items
-      state.values = initialStructureState.values
-      state.text = initialStructureState.text
-    }
+    reset: (state) => {
+      state.headers = initialStructureState.headers;
+      state.data = initialStructureState.data;
+      state.items = initialStructureState.items;
+      state.values = initialStructureState.values;
+      state.text = initialStructureState.text;
+    },
+    ...open
   },
 });
 
@@ -279,27 +312,34 @@ const paretoSlice = createSlice({
   initialState: initialParetoState,
   reducers: {
     ...reducerFunctions,
-    reset : (state) => {
-      state.headers = initialParetoState.headers
-      state.data = initialParetoState.data
-      state.items = initialParetoState.items
-      state.values = initialParetoState.values
-      state.text = initialParetoState.text
-    }
+    reset: (state) => {
+      state.headers = initialParetoState.headers;
+      state.data = initialParetoState.data;
+      state.items = initialParetoState.items;
+      state.values = initialParetoState.values;
+      state.text = initialParetoState.text;
+    },
+    ...open
   },
 });
 
 const reportSlice = createSlice({
   name: 'report',
-  initialState: {tasks: []},
+  initialState: { tasks: [] },
   reducers: {
     addTask: (state, action: PayloadAction<string>) => {
       // @ts-ignore
-      if (!state.tasks.includes(action.payload)) state.tasks.push(action.payload);
+      if (!state.tasks.includes(action.payload))
+        // @ts-ignore
+        state.tasks.push(action.payload);
     },
     // @ts-ignore
-    reset : (state) => {
-      state.tasks = []
+    reset: (state) => {
+      state.tasks = [];
+    },
+    open: (state, action: PayloadAction<string[]>) => {
+      // @ts-ignore
+      state.tasks = action.payload
     }
   },
 });
