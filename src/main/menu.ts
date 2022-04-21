@@ -1,5 +1,4 @@
 import {app, BrowserWindow, Menu, MenuItemConstructorOptions, shell,} from 'electron';
-import {openProject} from "./main";
 
 interface DarwinMenuItemConstructorOptions extends MenuItemConstructorOptions {
   selector?: string;
@@ -195,9 +194,6 @@ export default class MenuBuilder {
           {
             label: '&Open',
             accelerator: 'Ctrl+O',
-            click: () => {
-              openProject(undefined)
-            },
           },
           {
             label: '&Close',
