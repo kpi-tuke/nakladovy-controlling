@@ -7,15 +7,10 @@ export default function TaskSelection() {
   const {tasks} = useAppSelector(selectReport);
   return (
     <div
-      style={{
-        paddingTop: 100,
-        paddingLeft: 50,
-        backgroundColor: '#f2f1f6',
-        height: '100vh',
-      }}
+      className={"selection-container"}
     >
       <HeaderBar
-        title={'NÁKLADOVÝ CONTROLLING'}
+        title={'Výber analýzy'}
         back={"welcome"}
         addToReport={true}
         printToPDF={true}

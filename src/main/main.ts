@@ -35,18 +35,17 @@ ipcMain.on('ipc-example', async (event, arg) => {
 });
 
 ipcMain.on('open', async (event) => {
-  const file = await dialog
-    .showOpenDialog({
-      title: 'Zvoľte súbor',
-      buttonLabel: 'Otvoriť',
-      filters: [
-        {
-          name: 'JSON',
-          extensions: ['json'],
-        },
-      ],
-      properties: ['openFile'],
-    })
+  const file = await dialog.showOpenDialog({
+    title: 'Zvoľte súbor',
+    buttonLabel: 'Otvoriť',
+    filters: [
+      {
+        name: 'JSON',
+        extensions: ['json'],
+      },
+    ],
+    properties: ['openFile'],
+  });
 
   if (!file.canceled) {
     // @ts-ignore
@@ -58,11 +57,12 @@ ipcMain.on('open', async (event) => {
       }
     });
     // @ts-ignore
-    fs.readFile(file.filePaths[0], "utf8", function (err, data) {
+    fs.readFile(file.filePaths[0], 'utf8', function (err, data) {
       if (err) {
         console.log(err);
       } else {
         console.log(data);
+
         event.reply('open', data);
       }
     });
@@ -170,6 +170,10 @@ ipcMain.on('printToPDF', async (event, fileName: string) => {
   if (fullScreened) mainWindow?.setFullScreen(true);
   else mainWindow?.setSize(width, height);
   event.reply('printToPDF', 'printed');
+});
+
+ipcMain.on('quit', async () => {
+  mainWindow?.close();
 });
 
 if (process.env.NODE_ENV === 'production') {

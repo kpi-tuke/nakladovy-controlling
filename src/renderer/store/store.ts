@@ -6,7 +6,8 @@ import {
   paretoReducer,
   reportReducer,
   sortimentReducer,
-  structureReducer
+  structureReducer,
+  projectReducer
 } from './slice'
 
 export const store = configureStore({
@@ -18,6 +19,7 @@ export const store = configureStore({
     structure: structureReducer,
     pareto: paretoReducer,
     report: reportReducer,
+    project: projectReducer
   },
 })
 

@@ -200,6 +200,16 @@ const initialParetoState: defaultState = {
   text: '',
 };
 
+const projectSlice = createSlice({
+  name: "project",
+  initialState: {created: false},
+  reducers: {
+    setCreated: state => {
+      state.created = true
+    }
+  }
+})
+
 const economicSlice = createSlice({
   name: 'economic',
   initialState: initialEconomicState,
@@ -344,6 +354,8 @@ const reportSlice = createSlice({
   },
 });
 
+export const projectActions = projectSlice.actions;
+
 export const economicActions = economicSlice.actions;
 
 export const sortimentActions = sortimentSlice.actions;
@@ -358,6 +370,8 @@ export const paretoActions = paretoSlice.actions;
 
 export const reportActions = reportSlice.actions;
 
+export const selectProject = (state: RootState) => state.project;
+
 export const selectEconomic = (state: RootState) => state.economic;
 
 export const selectSortiment = (state: RootState) => state.sortiment;
@@ -371,6 +385,8 @@ export const selectStructure = (state: RootState) => state.structure;
 export const selectPareto = (state: RootState) => state.pareto;
 
 export const selectReport = (state: RootState) => state.report;
+
+export const projectReducer = projectSlice.reducer;
 
 export const economicReducer = economicSlice.reducer;
 

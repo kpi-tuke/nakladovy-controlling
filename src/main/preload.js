@@ -35,4 +35,7 @@ contextBridge.exposeInMainWorld('electron', {
       ipcRenderer.on(channel, (event, ...args) => func(...args));
     }
   },
+  quit: () => {
+    ipcRenderer.send("quit")
+  }
 });
