@@ -4,7 +4,7 @@ import { useAppDispatch } from 'renderer/store/hooks';
 
 export default function TableDynamic(props: any) {
   const dispatch = useAppDispatch();
-  // tlačitko na zoradenie rokov
+
   const customStyles = {
     control: (provided: any) => ({
       ...provided,
@@ -33,7 +33,7 @@ export default function TableDynamic(props: any) {
 
   const handleChangeHeader = function (e: any, idx: number) {
     dispatch(
-      props.actions.setHeadersOnIndex({ data: e.label || e.value, index: idx })
+      props.actions.setHeadersOnIndex({ data: e.value, index: idx })
     );
   };
 
@@ -87,7 +87,6 @@ export default function TableDynamic(props: any) {
   let maxCols = props.selectCol ? props.selectCol.length : 1000;
   return (
     <>
-      <h1 className={'result-h1'}>Vstupy</h1>
       <div className={'table-card row hideInPrint'}>
         <div className={'col-4'}>
           <table style={{ width: '100%', borderCollapse:"collapse" }}>

@@ -5,11 +5,42 @@ import groupedOptions from '../chartOfAccounts';
 import TableDynamic from '../components/TableDynamic';
 import TextField from '../components/TextField';
 import {useBilanceCalc} from 'renderer/calculations';
-import {useAppSelector} from 'renderer/store/hooks';
+import {useAppDispatch, useAppSelector} from 'renderer/store/hooks';
 
 export default function EconomicAnalysis(props:any) {
   const {headers, items, data, values, text} = useAppSelector(selectEconomic);
   const result = useBilanceCalc(data, values);
+  const dispatch = useAppDispatch()
+
+  function sortTable() {
+    let tableCols: Map<string, number[]> = new Map<string, number[]>();
+    for (let i = 0; i < headers.length; i++) {
+      if(isNaN(parseInt(headers[i]))) {
+        return
+      }
+      let col: number[] = data.map((value) => value[i])
+      tableCols.set(headers[i], col);
+    }
+    let map: Map<string, number[]> = new Map(
+      [...tableCols.entries()].sort((a, b) => parseInt(a[0]) - parseInt(b[0]))
+    );
+
+    let newHeaders: string[] = []
+
+
+    let newData: number[][] = []
+    for (let row = 0; row < items.length; row++) {
+      let col = 0
+      newData.push([])
+      for (const [key, value] of map.entries()) {
+        newHeaders[col] = key;
+        newData[row][col] = value[row]
+        col++
+      }
+    }
+    dispatch(economicActions.open({headers: newHeaders, data: newData, items, values, text}))
+  }
+
 
 
   return (
@@ -17,7 +48,12 @@ export default function EconomicAnalysis(props:any) {
       {
         !props.hideHeader && <HeaderBar id={"1"} title={'Ekonomická analýza hospodárenia'}  back={"taskselect"}/>
       }
-
+      <div className={"row"}>
+        <div className={"col-5"}/>
+        <h1 className={'col-2 result-h1'}>Vstupy</h1>
+        <div className={"col-4"}/>
+          <div className={"col-1 sort-button"} onClick={sortTable}>Zoradiť</div>
+      </div>
       <TableDynamic
         corner={'Ekonomická položka (Náklady(€) /Výnosy(€))'}
         headerType={'input'}

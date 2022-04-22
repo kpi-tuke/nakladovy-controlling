@@ -17,7 +17,7 @@ export default function CVPAnalysis(props:any) {
     <div className={'task-container'}>
       {!props.hideHeader && <HeaderBar id={'4'} title={'CVP analýza'} back={"taskselect"}/>}
 
-
+      <h1 className={'result-h1'}>Vstupy</h1>
 
       <div>
         <TableDynamic
@@ -34,14 +34,15 @@ export default function CVPAnalysis(props:any) {
         />
 
         <div className={'row'}>
-          <div className={'col-6'}>
+          <div className={"col-2"}/>
+          <div className={'col-4'}>
             <SingleInput
               input={CVPActions.setFixTotal}
               value={fixTotal}
               title={'FIXNÉ NÁKLADY(€)'}
             />
           </div>
-          <div className={'col-6'}>
+          <div className={'col-4'}>
             <SingleInput
               input={CVPActions.setMinProfit}
               value={minProfit}

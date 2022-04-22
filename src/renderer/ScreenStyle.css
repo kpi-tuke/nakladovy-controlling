@@ -55,7 +55,6 @@ a {
   box-shadow: 0 0 3px lightgray;
   margin-inline: 3%;
   max-width: 400px;
-  margin-top: 143px;
 }
 
 .info-title {
@@ -203,6 +202,7 @@ a {
   font-size: 15px;
   background-color: #e6f7ff;
   outline-width: 0;
+  font-weight: bold;
 }
 
 .table-input {
@@ -246,6 +246,29 @@ a {
 .graph-title {
   text-align: center;
   margin: 15px 0 0;
+}
+
+.sort-button {
+  border-color: lightgrey;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 5px;
+  margin: 50px 20px;
+  padding: 10px;
+  color: black;
+  font-weight: normal;
+  background-color: #e6f7ff;
+  text-align: center;
+  cursor: pointer;
+}
+
+.sort-button:hover {
+  background-color: white;
+}
+
+.sort-button:active {
+  background-color: #1a98ff;
+  transform: translateY(1px);
 }
 
 .header-button {
@@ -407,7 +430,7 @@ a {
   .graph-card {
     box-shadow: none;
     padding: 0;
-    margin: 0 0 10px;
+    margin: 0 0 20px;
   }
 
   .text-input {

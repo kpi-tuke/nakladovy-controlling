@@ -92,7 +92,7 @@ export default function IndexResult(props: any) {
             options={line}
             series={lineSeries}
             type="line"
-            height={300}
+            height={320}
           />
         }
       </div>
@@ -104,31 +104,31 @@ export default function IndexResult(props: any) {
             options={baseOptions}
             series={baseSeries}
             type="bar"
-            height={300}
+            height={320}
           />
         }
       </div>
 
-        <div className={'graph-card col-12 new-page'}>
+        <div className={'graph-card col-12'}>
           <h4 className={'graph-title'}>REŤAZOVÝ INDEX</h4>
           {
             <ReactApexChart
               options={chainOptions}
               series={chainSeries}
               type="bar"
-              height={300}
+              height={320}
             />
           }
         </div>
 
-        <div className={'graph-card col-12'}>
+        <div className={'graph-card col-12 new-page-after'}>
           <h4 className={'graph-title'}>KOFICIENT REAKCIE</h4>
           {
             <ReactApexChart
               options={reactionOptions}
               series={reactionSeries}
               type="bar"
-              height={300}
+              height={320}
             />
           }
         </div>

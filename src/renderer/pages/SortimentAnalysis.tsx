@@ -16,6 +16,8 @@ export default function SortimentAnalysis(props:any) {
     <div className={"task-container"}>
       {!props.hideHeader && <HeaderBar id={"5"} title={'Sortimentná analýza'}  back={"taskselect"}/>}
 
+      <h1 className={'result-h1'}>Vstupy</h1>
+
       <TableDynamic
         corner={'Ekonomická položka'}
         headerType={'input'}
