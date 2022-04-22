@@ -1,7 +1,11 @@
 import ReactApexChart from 'react-apexcharts';
 import TableStatic from '../TableStatic';
+import {useMatchPrint} from "../../Hooks";
 
 export default function ParetoResult(props: any) {
+
+  const matches = useMatchPrint()
+
   const barChart = {
     series: [
       {
@@ -18,8 +22,9 @@ export default function ParetoResult(props: any) {
     options: {
       chart: {
         type: 'bar',
-        redrawOnParentResize: true,
-        redrawOnWindowResize: true,
+        toolbar: {
+          show: !matches,
+        },
       },
       stroke: {
         curve: 'straight',
@@ -106,7 +111,6 @@ export default function ParetoResult(props: any) {
       <div className={'graph-card'}>
         <h4 className={'graph-title'}>PARETO ANALÝZA A LORENZOVA KRIVKA</h4>
         {
-
           <ReactApexChart
             // @ts-ignore
             options={barChart.options}
@@ -116,6 +120,8 @@ export default function ParetoResult(props: any) {
           />
         }
       </div>
+
+
     </div>
   );
 }

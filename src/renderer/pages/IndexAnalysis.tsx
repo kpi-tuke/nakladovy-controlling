@@ -15,8 +15,7 @@ export default function IndexAnalysis(props:any) {
 
   return (
     <div className={'task-container'}>
-
-      <h1 className={"result-h1"}>Vstupy</h1>
+      
 
       {!props.hideHeader &&<HeaderBar
         id={"3"}

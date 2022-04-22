@@ -27,8 +27,6 @@ export default function StructureAnalysis(props:any) {
     <div className={'task-container'}>
       {!props.hideHeader && <HeaderBar id={"2"} title={'Štruktúrna analýza'}  back={"taskselect"}/>}
 
-      <h1 className={'result-h1'}>Vstupy</h1>
-
       <TableDynamic
         corner={'↓Nákladové druhy | Kalkulačné položky→'}
         headerType={'select'}

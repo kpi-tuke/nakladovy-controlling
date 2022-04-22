@@ -17,42 +17,9 @@ export default function CVPAnalysis(props:any) {
     <div className={'task-container'}>
       {!props.hideHeader && <HeaderBar id={'4'} title={'CVP analýza'} back={"taskselect"}/>}
 
-      <h1 className={'result-h1'}>Vstupy</h1>
 
-      <div className={"row hide"}>
-        <div className={"col-8"}>
-          <TableDynamic
-            corner={'Výrobok'}
-            headerType={'text'}
-            header={headers}
-            inputType={'input'}
-            inputs={items}
-            data={data}
-            values={values}
-            dynRows={true}
-            dynCols={false}
-            actions={CVPActions}
-          />
-        </div>
 
-        <div className={"col-2"}>
-          <SingleInput
-            input={CVPActions.setFixTotal}
-            value={fixTotal}
-            title={'FIXNÉ NÁKLADY(€)'}
-          />
-        </div>
-
-        <div className={"col-2"}>
-          <SingleInput
-            input={CVPActions.setMinProfit}
-            value={minProfit}
-            title={'MINIMÁLNY ZISK(€)'}
-          />
-        </div>
-      </div>
-
-      <div className={'print-hidden'}>
+      <div>
         <TableDynamic
           corner={'Výrobok'}
           headerType={'text'}

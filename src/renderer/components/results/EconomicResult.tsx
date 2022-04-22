@@ -4,6 +4,7 @@ import { colGraph, lineGraph } from '../graphOptions';
 import { ApexOptions } from 'apexcharts';
 
 export default function EconomicResult(props: any) {
+
   const lineSeries = [
     {
       name: 'Náklady',

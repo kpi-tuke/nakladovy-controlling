@@ -19,19 +19,25 @@ a {
 }
 
 .welcome {
-  padding-top: 50px;
+  padding: 20vh 20vw;
   background-color: #f2f1f6;
-  height: 100vh;
+  height: 60vh;
 }
 
 .welcome-item {
   background-color: white;
   padding: 1px;
   box-shadow: 0 0 3px lightgray;
-  margin-inline: 3%;
-  margin-top: 25px;
+  margin-top: 3vh;
+  margin-inline: 10px;
   cursor: pointer;
   text-align: center;
+}
+
+.welcome-text {
+  background-color: white;
+  padding: 30px;
+  box-shadow: 0 0 3px lightgray;
 }
 
 .welcome-h1 {
@@ -49,6 +55,7 @@ a {
   box-shadow: 0 0 3px lightgray;
   margin-inline: 3%;
   max-width: 400px;
+  margin-top: 143px;
 }
 
 .info-title {
@@ -95,7 +102,7 @@ a {
   text-align: center;
 }
 
-.select-h1 {
+.select-h2 {
   margin: auto;
   color: white;
 }
@@ -209,11 +216,12 @@ a {
   border: 1px solid lightgrey;
   text-align: center;
   width: 1vw;
+  cursor: pointer;
 }
 
 .delete-cell:hover {
   color: white;
-  background-color: #ff3939;
+  background-color: #ff4e4e;
 }
 
 .add-cell {
@@ -222,6 +230,7 @@ a {
   background-color: white;
   color: grey;
   font-weight: normal;
+  cursor: pointer;
 }
 
 .add-cell:hover {
@@ -240,7 +249,6 @@ a {
 }
 
 .header-button {
-
   border-color: white;
   border-width: 1px;
   border-style: solid;
@@ -252,6 +260,10 @@ a {
   background-color: #1a98ff;
   text-align: center;
   cursor: pointer;
+}
+
+.header-button-remove {
+  background-color: #ff4e4e;
 }
 
 .header-button:hover {
@@ -336,9 +348,25 @@ a {
   page-break-after: always;
 }
 
+.hideInScreen {
+  display: none;
+  visibility: hidden;
+}
+
 @media print {
+  /*zopakovat stlpec so vstupmy*/
   body {
     background-color: white;
+  }
+
+  .hideInPrint {
+    display: none;
+    visibility: hidden;
+  }
+
+  .hideInScreen{
+    display: grid;
+    visibility: visible;
   }
 
   .info-card {
@@ -389,16 +417,6 @@ a {
 
   .col-t {
     grid-column: span 12;
-  }
-
-  .print-hidden {
-    display: grid;
-    visibility: visible;
-  }
-
-  .hide {
-    display: none;
-    visibility: hidden;
   }
 
   .result-h1 {

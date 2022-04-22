@@ -32,6 +32,7 @@ export default function StructureResult(props: any) {
       chart: {
         type: 'pie',
       },
+      colors: ['#2E93fA', "#59edbb", '#FF9800',  '#E91E63', '#66DA26', "#a796e0",  "#fff923", "#eda859", '#546E7A', ],
       legend: {
         show: true,
         position: 'bottom',
@@ -49,6 +50,7 @@ export default function StructureResult(props: any) {
       chart: {
         type: 'donut',
       },
+      colors: ['#2E93fA', "#59edbb",'#FF9800',  '#E91E63', '#66DA26', "#a796e0",  "#fff923", "#eda859", '#546E7A', ],
       legend: {
         show: true,
         position: 'bottom',

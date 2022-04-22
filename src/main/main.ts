@@ -106,19 +106,19 @@ ipcMain.on('save', async (event, state) => {
 });
 
 ipcMain.on('printToPDF', async (event, fileName: string) => {
-  let maximized = false;
-  let fullScreened = false;
-  if (mainWindow?.isFullScreen()) {
-    mainWindow?.setFullScreen(false);
-    fullScreened = true;
-  }
-  if (mainWindow?.isMaximized()) {
-    mainWindow?.unmaximize();
-    maximized = true;
-  }
-  // @ts-ignore
-  const [width, height] = mainWindow?.getSize();
-  mainWindow?.setSize(850, height);
+  // let maximized = false;
+  // let fullScreened = false;
+  // if (mainWindow?.isFullScreen()) {
+  //   mainWindow?.setFullScreen(false);
+  //   fullScreened = true;
+  // }
+  // if (mainWindow?.isMaximized()) {
+  //   mainWindow?.unmaximize();
+  //   maximized = true;
+  // }
+  // // @ts-ignore
+  // const [width, height] = mainWindow?.getSize();
+  // mainWindow?.setSize(850, height);
 
   const options = {
     marginsType: 0,
@@ -166,9 +166,9 @@ ipcMain.on('printToPDF', async (event, fileName: string) => {
         console.log(error);
       });
   }
-  if (maximized) mainWindow?.maximize();
-  if (fullScreened) mainWindow?.setFullScreen(true);
-  else mainWindow?.setSize(width, height);
+  // if (maximized) mainWindow?.maximize();
+  // if (fullScreened) mainWindow?.setFullScreen(true);
+  // else mainWindow?.setSize(width, height);
   event.reply('printToPDF', 'printed');
 });
 

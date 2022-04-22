@@ -54,7 +54,7 @@ export default function WelcomePage() {
 
   function quit() {
     // @ts-ignore
-    window.electron.quit()
+    window.electron.quit();
   }
 
   return (
@@ -65,42 +65,51 @@ export default function WelcomePage() {
         printToPDF={true}
       />
 
-      <div className={'row'} style={{ paddingLeft: 100 }}>
-        <div className={'col-3'} style={{ marginTop: 50 }}>
+      <div>
+        <div className={'welcome-text'}>
+          <p>
+            Vitajte v aplikácii pre nákladový controlling. Tento software slúži
+            na zjednodušenie Vašej práce na predmete Manažérske účtovníctvo.
+            Obsahuje rôzne typy nákladových analýz v ktorých môžete zadávať
+            vstupy z účtovnej výsledovky. Následne z týchto vstupov aplikácia
+            vypočíta príslušne ekonomické ukazovatele a vykresli grafický
+            priebeh vývoja. Výsledok je možné uložiť vo formáte PDF.
+          </p>
+        </div>
+        <div className={"row"}>
           {project.created && (
-            <div className={'welcome-item'} onClick={continueProject}>
-              <h2 className={'welcome-h2'}>Pokračovať</h2>
-            </div>
+            <>
+              <div className={"col-2"}/>
+              <div className={'col-8 welcome-item'} onClick={continueProject}>
+                <h2 className={'welcome-h2'}>Pokračovať</h2>
+              </div>
+              <div className={"col-2"}/>
+            </>
           )}
-          <div className={'welcome-item'} onClick={newProject}>
+        </div>
+
+        <div className={'row'} >
+
+          <div className={"col-2"}/>
+          <div className={'col-4 welcome-item'} onClick={newProject}>
             <h2 className={'welcome-h2'}>Nový projekt</h2>
           </div>
-          <div className={'welcome-item'} onClick={openProject}>
+          <div className={'col-4 welcome-item'} onClick={openProject}>
             <h2 className={'welcome-h2'}>Otvoriť projekt</h2>
           </div>
-          <div className={'welcome-item'}>
+          <div className={"col-2"}/>
+        </div>
+        <div className={"row"}>
+          <div className={"col-2"}/>
+          <div className={'col-4 welcome-item'}>
             <h2 className={'welcome-h2'}>Manuál</h2>
           </div>
-          <div className={'welcome-item'} onClick={quit}>
+          <div className={'col-4 welcome-item'} onClick={quit}>
             <h2 className={'welcome-h2'}>Ukončiť</h2>
           </div>
+          <div className={"col-2"}/>
         </div>
-        <div className={'col-9'} style={{ margin: 50 }}>
-          <div className={'welcome-item'}>
-            <h1 className={'welcome-h1'}>
-              Aplikácia pre nákladový controlling
-            </h1>
-            <p>
-              Vitajte v aplikácii pre nákladový controlling. Tento software
-              slúži na zjednodušenie Vašej práce na predmete Manažérske
-              účtovníctvo. Obsahuje rôzne typy nákladových analýz v ktorých
-              môžete zadávať vstupy z účtovnej výsledovky. Následne z týchto
-              vstupov aplikácia vypočíta príslušne ekonomické ukazovatele a
-              vykresli grafický priebeh vývoja. Výsledok je možné uložiť vo
-              formáte PDF.
-            </p>
-          </div>
-        </div>
+
       </div>
     </div>
   );

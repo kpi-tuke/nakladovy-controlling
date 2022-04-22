@@ -14,8 +14,7 @@ export default function ParetoAnalysis(props:any) {
   return (
     <div className={'task-container'}>
       {!props.hideHeader && <HeaderBar id={"6"} title={'Pareto analýza nákladov'}  back={"taskselect"}/>}
-
-      <h1 className={'result-h1'}>Vstupy</h1>
+      
 
       <TableDynamic
         corner={'Príčiny vzniku nákladov'}

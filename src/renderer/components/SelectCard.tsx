@@ -5,9 +5,9 @@ export default function (props: any) {
     <div className={'col-4 select-card'}>
       <Link to={props.to}>
         <div className={'select-head'}>
-          <h1 className={"select-h1"}>
+          <h2 className={"select-h2"}>
             {props.head}
-          </h1>
+          </h2>
         </div>
         <div className={"select-body"}>
           <p className={"select-text"}>

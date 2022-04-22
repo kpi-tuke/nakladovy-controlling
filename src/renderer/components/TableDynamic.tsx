@@ -4,7 +4,7 @@ import { useAppDispatch } from 'renderer/store/hooks';
 
 export default function TableDynamic(props: any) {
   const dispatch = useAppDispatch();
-
+  // tlačitko na zoradenie rokov
   const customStyles = {
     control: (provided: any) => ({
       ...provided,
@@ -63,7 +63,8 @@ export default function TableDynamic(props: any) {
   let separatedData: number[][][] = [];
   let separatedHeaders: string[][] = [];
 
-  let numOfTables = Math.ceil(props.data[0].length / 5);
+  const colsInTable: number = 6
+  let numOfTables = Math.ceil(props.data[0].length / colsInTable);
 
   for (let i = 0; i < numOfTables; i++) {
     separatedData.push([]);
@@ -75,7 +76,7 @@ export default function TableDynamic(props: any) {
 
   let table: number = 0;
   for (let y = 0; y < props.data[0].length; y++) {
-    if (y % 5 === 0 && y !== 0) table++;
+    if (y % colsInTable === 0 && y !== 0) table++;
     for (let x = 0; x < props.data.length; x++) {
       separatedData[table][x].push(props.data[x][y]);
     }
@@ -85,15 +86,163 @@ export default function TableDynamic(props: any) {
 
   let maxCols = props.selectCol ? props.selectCol.length : 1000;
   return (
-    <div className={'table-card row'}>
-      <div className={'col-4'}>
-        {separatedHeaders.map((_table, idx) => (
-          <table
-            key={idx + "input"}
-            className={idx > 0 ? 'print-hidden' : ''}
-            style={{ borderCollapse: 'collapse', width: '100%' }}
-          >
+    <>
+      <h1 className={'result-h1'}>Vstupy</h1>
+      <div className={'table-card row hideInPrint'}>
+        <div className={'col-4'}>
+          <table style={{ width: '100%', borderCollapse:"collapse" }}>
             <tbody>
+            <tr className={'table-head'}>
+              <td className={'table-corner'}>{props.corner}</td>
+            </tr>
+            {props.inputs.map((value: string, row: number) => {
+              return (
+                <tr key={row}>
+                  <td className={'table-cell'} key={value + row.toString()}>
+                    {props.inputType === 'select' ? (
+                      <Select
+                        styles={customStyles}
+                        value={{ label: value }}
+                        options={props.selectRow.map(
+                          (selection: { label: any; options: any[] }) => ({
+                            label: selection.label,
+                            options: selection.options.filter(
+                              (opt: any) => !props.inputs.includes(opt.label)
+                            ),
+                          })
+                        )}
+                        onChange={(e) => handleChangeInput(e, row)}
+                      />
+                    ) : props.inputType === 'input' ? (
+                      <input
+                        className={'table-input'}
+                        type="text"
+                        defaultValue={value}
+                        onBlur={(e) => handleChangeInput(e.target, row)}
+                      />
+                    ) : (
+                      value
+                    )}
+                  </td>
+                </tr>
+              );
+            })}
+            {props.dynRows ? (
+              <tr>
+                <td
+                  className={'add-cell'}
+                  style={{ textAlign: 'center' }}
+                  onClick={addRow}
+                >
+                  +
+                </td>
+              </tr>
+            ) : (
+              <tr>
+                <td />
+              </tr>
+            )}
+            </tbody>
+          </table>
+        </div>
+
+        <div className={'col-8'} style={{ width: '100%' }}>
+          <div style={{ overflow: 'auto' }}>
+            <table style={{ borderCollapse:"collapse"}}>
+              <thead>
+              <tr className={'table-head'}>
+                {props.header.map((value: string, idx: number) => (
+                  <th key={idx} className={'table-cell'}>
+                    {props.headerType === 'select' ? (
+                      <select
+                        className={'table-select-head'}
+                        value={value}
+                        onChange={(e) => handleChangeHeader(e.target, idx)}
+                      >
+                        {props.selectCol.map(
+                          (option: { value: number; label: string }) =>
+                            !props.header.includes(option.label) && (
+                              <option key={option.value} value={option.label}>
+                                {option.label}
+                              </option>
+                            )
+                        )}
+                        <option key={0} value={value} hidden={true}>
+                          {value}
+                        </option>
+                      </select>
+                    ) : props.headerType === 'input' ? (
+                      <input
+                        className={'table-input-head'}
+                        type="text"
+                        value={value}
+                        onChange={(e) => handleChangeHeader(e.target, idx)}
+                      />
+                    ) : (
+                      value
+                    )}
+                  </th>
+                ))}
+                {props.dynCols && props.header.length < maxCols && (
+                  <th className={'add-cell'} onClick={addColumn}>
+                    +
+                  </th>
+                )}
+              </tr>
+              </thead>
+              <tbody>
+              {props.data.map((rowData: number[], row: number) => (
+                <tr key={row}>
+                  {rowData.map((value: number, col: number) => (
+                    <td className={'table-cell'} key={row + ':' + col}>
+                      <input
+                        type="number"
+                        className={'table-input'}
+                        value={value}
+                        onChange={(e) => handleChangeData(e, row, col)}
+                        onWheel={(event) => event.currentTarget.blur()}
+                      />
+                    </td>
+                  ))}
+                  {props.dynRows && (
+                    <td
+                      className={'delete-cell'}
+                      onClick={() => deleteRow(row)}
+                    >
+                      🗑
+                    </td>
+                  )}
+                </tr>
+              ))}
+              <tr>
+                {props.dynCols &&
+                  //@ts-ignore
+                  props.data[0].map((_value: number, col: number) => {
+                    return (
+                      <td
+                        className={'delete-cell'}
+                        key={col}
+                        onClick={() => deleteColumn(col)}
+                      >
+                        🗑
+                      </td>
+                    );
+                  })}
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div className={'table-card row hideInScreen'}>
+        <div className={'col-4'}>
+          {separatedHeaders.map((_table, idx) => (
+            <table
+              key={idx + "input"}
+              style={{borderCollapse: 'collapse', width: '100%'}}
+            >
+              <tbody>
               <tr className={'table-head'}>
                 <td className={'table-corner'}>{props.corner}</td>
               </tr>
@@ -104,7 +253,7 @@ export default function TableDynamic(props: any) {
                       {props.inputType === 'select' ? (
                         <Select
                           styles={customStyles}
-                          value={{ label: value }}
+                          value={{label: value}}
                           options={props.selectRow.map(
                             (selection: { label: any; options: any[] }) => ({
                               label: selection.label,
@@ -133,7 +282,7 @@ export default function TableDynamic(props: any) {
                 <tr>
                   <td
                     className={'add-cell'}
-                    style={{ textAlign: 'center' }}
+                    style={{textAlign: 'center'}}
                     onClick={addRow}
                   >
                     +
@@ -141,22 +290,22 @@ export default function TableDynamic(props: any) {
                 </tr>
               ) : (
                 <tr>
-                  <td />
+                  <td/>
                 </tr>
               )}
-            </tbody>
-          </table>
-        ))}
-      </div>
+              </tbody>
+            </table>
+          ))}
+        </div>
 
-      <div className={'table-data col-8 row'}>
-        {separatedData.map((table, idx) => (
-          <table
-            key={idx+"data"}
-            className={'col-t'}
-            style={{ borderCollapse: 'collapse' }}
-          >
-            <thead>
+        <div className={'table-data col-8 row'}>
+          {separatedData.map((table, idx) => (
+            <table
+              key={idx + "data"}
+              className={'col-12'}
+              style={{borderCollapse: 'collapse'}}
+            >
+              <thead>
               <tr className={'table-head'}>
                 {separatedHeaders[idx].map((value: string, col: number) => (
                   <th key={col} className={'table-cell'}>
@@ -165,7 +314,7 @@ export default function TableDynamic(props: any) {
                         className={'table-select-head'}
                         value={value}
                         onChange={(e) =>
-                          handleChangeHeader(e.target, col + 5 * idx)
+                          handleChangeHeader(e.target, col + colsInTable * idx)
                         }
                       >
                         {props.selectCol.map(
@@ -186,7 +335,7 @@ export default function TableDynamic(props: any) {
                         type="text"
                         value={value}
                         onChange={(e) =>
-                          handleChangeHeader(e.target, col + 5 * idx)
+                          handleChangeHeader(e.target, col + colsInTable * idx)
                         }
                       />
                     ) : (
@@ -202,8 +351,8 @@ export default function TableDynamic(props: any) {
                     </th>
                   )}
               </tr>
-            </thead>
-            <tbody>
+              </thead>
+              <tbody>
               {table.map((rowData: number[], row: number) => (
                 <tr key={row}>
                   {rowData.map((value: number, col: number) => (
@@ -213,7 +362,7 @@ export default function TableDynamic(props: any) {
                         className={'table-input'}
                         value={value}
                         onChange={(e) =>
-                          handleChangeData(e, row, col + 5 * idx)
+                          handleChangeData(e, row, col + colsInTable * idx)
                         }
                         onWheel={(event) => event.currentTarget.blur()}
                       />
@@ -244,10 +393,11 @@ export default function TableDynamic(props: any) {
                     );
                   })}
               </tr>
-            </tbody>
-          </table>
-        ))}
+              </tbody>
+            </table>
+          ))}
+        </div>
       </div>
-    </div>
+    </>
   );
 }

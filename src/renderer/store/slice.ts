@@ -343,6 +343,13 @@ const reportSlice = createSlice({
         // @ts-ignore
         state.tasks.push(action.payload);
     },
+    removeTask: (state, action: PayloadAction<string>) => {
+      // @ts-ignore
+      if (state.tasks.includes(action.payload))
+        // @ts-ignore
+        state.tasks = state.tasks.filter((id: string) => id !== action.payload);
+        console.log(state.tasks)
+    },
     // @ts-ignore
     reset: (state) => {
       state.tasks = [];

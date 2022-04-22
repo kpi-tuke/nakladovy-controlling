@@ -1,8 +1,8 @@
 export default function TableStatic(props: any) {
   let separatedData: number[][][] = [];
   let separatedHeaders: string[][] = [];
-
-  let numOfTables = Math.ceil(props.data[0].length / 6);
+  const colsInTable = 9
+  let numOfTables = Math.ceil(props.data[0].length / colsInTable);
 
   for (let i = 0; i < numOfTables; i++) {
     separatedData.push([]);
@@ -13,8 +13,9 @@ export default function TableStatic(props: any) {
   }
 
   let table: number = 0;
+
   for (let y = 0; y < props.data[0].length; y++) {
-    if (y % 6 === 0 && y !== 0) table++;
+    if (y % colsInTable === 0 && y !== 0) table++;
     for (let x = 0; x < props.data.length; x++) {
       separatedData[table][x].push(props.data[x][y]);
     }
@@ -22,17 +23,13 @@ export default function TableStatic(props: any) {
   }
 
   return (
-    <div className={'table-data row'}>
-      {separatedData.map((table, index) => (
-        <table
-          key={index}
-          className={'col-t'}
-          style={{ borderCollapse: 'collapse' }}
-        >
+    <>
+      <div className={'table-data row hideInPrint'}>
+        <table style={{ borderCollapse: 'collapse', width: '100%' }}>
           <thead>
             <tr className={'table-head'}>
-              {index === 0 && <th className={'table-cell'}>{props.corner}</th>}
-              {separatedHeaders[index].map((value: string, idx: number) => {
+              <th className={'table-cell'}>{props.corner}</th>
+              {props.header.map((value: string, idx: number) => {
                 return (
                   <th className={'table-cell'} key={idx}>
                     {value}
@@ -43,16 +40,14 @@ export default function TableStatic(props: any) {
           </thead>
 
           <tbody>
-            {table.map((tableRow: number[], row: number) => {
+            {props.inputs.map((value: number, row: number) => {
               return (
                 <tr key={row.toString()}>
-                  {index === 0 && (
-                    <td className={'table-cell'} key={row}>
-                      {props.inputs[row]}
-                    </td>
-                  )}
+                  <td className={'table-cell'} key={value.toString()}>
+                    {value.toString()}
+                  </td>
 
-                  {tableRow.map((value: number, col: number) => {
+                  {props.data[row].map((value: number, col: number) => {
                     return (
                       <td
                         className={'table-cell'}
@@ -68,7 +63,54 @@ export default function TableStatic(props: any) {
             })}
           </tbody>
         </table>
-      ))}
-    </div>
+      </div>
+
+      <div className={'table-data row hideInScreen'}>
+        {separatedData.map((table, index) => (
+          <table
+            key={index}
+            className={'col-12'}
+            style={{ borderCollapse: 'collapse' }}
+          >
+            <thead>
+              <tr className={'table-head'}>
+                <th className={'table-cell'}>{props.corner}</th>
+                {separatedHeaders[index].map((value: string, idx: number) => {
+                  return (
+                    <th className={'table-cell'} key={idx}>
+                      {value}
+                    </th>
+                  );
+                })}
+              </tr>
+            </thead>
+
+            <tbody>
+              {table.map((tableRow: number[], row: number) => {
+                return (
+                  <tr key={row.toString()}>
+                    <td className={'table-cell'} key={row}>
+                      {props.inputs[row]}
+                    </td>
+
+                    {tableRow.map((value: number, col: number) => {
+                      return (
+                        <td
+                          className={'table-cell'}
+                          style={{ textAlign: 'center' }}
+                          key={row.toString() + ':' + col.toString()}
+                        >
+                          {value.toString()}
+                        </td>
+                      );
+                    })}
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        ))}
+      </div>
+    </>
   );
 }
