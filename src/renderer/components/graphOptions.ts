@@ -1,9 +1,6 @@
 import { ApexOptions } from 'apexcharts';
-import {useMatchPrint} from "../Hooks";
 
 export const lineGraph = (osX: string[]): ApexOptions => {
-
-  const matches = useMatchPrint()
 
   return {
     chart: {
@@ -12,10 +9,20 @@ export const lineGraph = (osX: string[]): ApexOptions => {
         enabled: false,
       },
       toolbar: {
-        show: !matches,
+        show: false,
       },
     },
-    colors: ['#2E93fA', "#59edbb", '#FF9800',  '#E91E63', '#66DA26', "#a796e0",  "#fff923", "#eda859", '#546E7A', ],
+    colors: [
+      '#2E93fA',
+      '#59edbb',
+      '#FF9800',
+      '#E91E63',
+      '#66DA26',
+      '#a796e0',
+      '#fff923',
+      '#eda859',
+      '#546E7A',
+    ],
     dataLabels: {
       enabled: true,
     },
@@ -45,28 +52,41 @@ export const lineGraph = (osX: string[]): ApexOptions => {
     legend: {
       horizontalAlign: 'center',
     },
-  }
-}
+  };
+};
 
 export const colGraph = (osX: string[], titleY?: string): ApexOptions => {
-
-  const matches = useMatchPrint()
 
   return {
     chart: {
       type: 'bar',
-      toolbar: {
-        show: !matches,
+      zoom: {
+        enabled: false,
       },
+      toolbar: {
+        show: false,
+      },
+      redrawOnParentResize: true,
+      redrawOnWindowResize: true,
     },
-    colors: ['#2E93fA', "#59edbb", '#FF9800', '#E91E63', '#66DA26', "#a796e0",  "#fff923", "#eda859", '#546E7A', ],
+    colors: [
+      '#2E93fA',
+      '#59edbb',
+      '#FF9800',
+      '#E91E63',
+      '#66DA26',
+      '#a796e0',
+      '#fff923',
+      '#eda859',
+      '#546E7A',
+    ],
     dataLabels: {
       enabled: true,
-        style: {
+      style: {
         fontSize: '14px',
-          fontFamily: 'Helvetica, Arial, sans-serif',
-          fontWeight: 'bold',
-          colors: ['black'],
+        fontFamily: 'Helvetica, Arial, sans-serif',
+        fontWeight: 'bold',
+        colors: ['black'],
       },
     },
     stroke: {
@@ -74,30 +94,36 @@ export const colGraph = (osX: string[], titleY?: string): ApexOptions => {
     },
     grid: {
       borderColor: '#e7e7e7',
-        row: {
+      row: {
         colors: ['#f3f3f3', 'transparent'],
-          opacity: 0.5,
+        opacity: 0.5,
       },
     },
     markers: {
       size: 1,
     },
     xaxis: {
-      categories: osX.map((cause: string) => cause.split(" ")),
+      categories: osX.map((cause: string) => cause.split(' ')),
     },
-    yaxis: [{
-      title: {
-        text: titleY
-      }
-    }],
+    yaxis: [
+      {
+        title: {
+          text: titleY,
+        },
+      },
+    ],
     legend: {
       horizontalAlign: 'center',
     },
-  }
-}
+  };
+};
 
-export const CVPGraph = (osX: string[], matches: boolean,zeroEur: number, zeroTon: number, zeroProf: number ): ApexOptions => {
-
+export const CVPGraph = (
+  osX: string[],
+  zeroEur: number,
+  zeroTon: number,
+  zeroProf: number
+): ApexOptions => {
   return {
     chart: {
       type: 'line',
@@ -105,10 +131,20 @@ export const CVPGraph = (osX: string[], matches: boolean,zeroEur: number, zeroTo
         enabled: false,
       },
       toolbar: {
-        show: !matches,
+        show: false,
       },
     },
-    colors: ['#2E93fA', "#59edbb", '#FF9800',  '#E91E63', '#66DA26', "#a796e0",  "#fff923", "#eda859", '#546E7A', ],
+    colors: [
+      '#2E93fA',
+      '#59edbb',
+      '#FF9800',
+      '#E91E63',
+      '#66DA26',
+      '#a796e0',
+      '#fff923',
+      '#eda859',
+      '#546E7A',
+    ],
     dataLabels: {
       enabled: true,
     },
@@ -167,5 +203,5 @@ export const CVPGraph = (osX: string[], matches: boolean,zeroEur: number, zeroTo
     legend: {
       horizontalAlign: 'center',
     },
-  }
-}
+  };
+};

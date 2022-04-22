@@ -3,6 +3,7 @@ import TableStatic from '../TableStatic';
 import { colGraph } from '../graphOptions';
 
 export default function StructureResult(props: any) {
+
   const genericSeries = [
     {
       data: props.result.rowSums,
@@ -16,12 +17,12 @@ export default function StructureResult(props: any) {
   ];
 
   const genericOptions = {
-    ...colGraph(props.result.items, 'Náklady (€)'),
+    ...colGraph(props.result.items, 'Náklady (€)', ),
     legend: { show: false },
     plotOptions: { bar: { distributed: true } },
   };
   const calculationOptions = {
-    ...colGraph(props.result.headers, 'Náklady (€)'),
+    ...colGraph(props.result.headers,'Náklady (€)',),
     legend: { show: false },
     plotOptions: { bar: { distributed: true } },
   };
@@ -62,8 +63,9 @@ export default function StructureResult(props: any) {
     },
   };
 
+
   return (
-    <div style={{ padding: 30 }}>
+    <div className={"new-page-after new-page"}>
       <h1 className={'result-h1'}>Analýza ukazovateľov</h1>
 
       <div className={'table-card'} style={{ marginTop: 50 }}>
@@ -111,12 +113,9 @@ export default function StructureResult(props: any) {
       <h1 className={'result-h1 new-page'}>Dashboarding</h1>
 
       <div className={'row'}>
-        <div className={'col-6'}>
+
           <div
-            className={'graph-card'}
-            style={{
-              marginRight: 20,
-            }}
+            className={'col-t graph-card mi'}
           >
             <h4 className={'graph-title'}>ŠTRUKTÚRA NÁKLADOVÝCH DRUHOV</h4>
             {
@@ -125,18 +124,15 @@ export default function StructureResult(props: any) {
                 options={pieChart.options}
                 series={props.result.rowSums}
                 type="pie"
-                height={347}
+                height={457}
               />
             }
           </div>
-        </div>
 
-        <div className={'col-6'}>
+
+
           <div
-            className={'graph-card'}
-            style={{
-              marginLeft: 20,
-            }}
+            className={'col-t graph-card mi'}
           >
             <h4 className={'graph-title'}>DRUHOVÉ ČLENENIE NÁKLADOV</h4>
             {
@@ -144,20 +140,17 @@ export default function StructureResult(props: any) {
                 options={genericOptions}
                 series={genericSeries}
                 type="bar"
-                height={300}
+                height={400}
               />
             }
           </div>
-        </div>
+
       </div>
 
-      <div className={'row'}>
-        <div className={'col-6'}>
+      <div className={'row new-page'}>
+
           <div
-            className={'graph-card'}
-            style={{
-              marginRight: 20,
-            }}
+            className={'col-t mi graph-card'}
           >
             <h4 className={'graph-title'}>ŠTRUKTÚRA KALKULAČNÝCH POLOŽIEK</h4>
             {
@@ -166,18 +159,15 @@ export default function StructureResult(props: any) {
                 options={donutChart.options}
                 series={props.result.colSums}
                 type="donut"
-                height={347}
+                height={457}
               />
             }
           </div>
-        </div>
 
-        <div className={'col-6'}>
+
+
           <div
-            className={'graph-card'}
-            style={{
-              marginLeft: 20,
-            }}
+            className={'col-t graph-card mi'}
           >
             <h4 className={'graph-title'}>KALKULAČNÉ ČLENENIE NÁKLADOV</h4>
             {
@@ -185,11 +175,11 @@ export default function StructureResult(props: any) {
                 options={calculationOptions}
                 series={calculationSeries}
                 type="bar"
-                height={300}
+                height={400}
               />
             }
           </div>
-        </div>
+
       </div>
     </div>
   );

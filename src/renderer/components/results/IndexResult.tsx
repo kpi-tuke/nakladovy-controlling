@@ -4,6 +4,7 @@ import { colGraph, lineGraph } from '../graphOptions';
 import { ApexOptions } from 'apexcharts';
 
 export default function IndexResult(props: any) {
+
   const lineSeries = [
     {
       name: 'Náklady',
@@ -51,7 +52,7 @@ export default function IndexResult(props: any) {
   };
 
   return (
-    <div className={"new-page"}>
+    <div className={'new-page'}>
       <h1 className={'result-h1'}>Indexná analýza</h1>
 
       <div className={'table-card'}>
@@ -92,7 +93,7 @@ export default function IndexResult(props: any) {
             options={line}
             series={lineSeries}
             type="line"
-            height={320}
+            height={450}
           />
         }
       </div>
@@ -104,31 +105,31 @@ export default function IndexResult(props: any) {
             options={baseOptions}
             series={baseSeries}
             type="bar"
-            height={320}
+            height={450}
           />
         }
       </div>
 
-        <div className={'graph-card col-12'}>
-          <h4 className={'graph-title'}>REŤAZOVÝ INDEX</h4>
-          {
-            <ReactApexChart
-              options={chainOptions}
-              series={chainSeries}
-              type="bar"
-              height={320}
-            />
-          }
-        </div>
+      <div className={'graph-card new-page'}>
+        <h4 className={'graph-title'}>REŤAZOVÝ INDEX</h4>
+        {
+          <ReactApexChart
+            options={chainOptions}
+            series={chainSeries}
+            type="bar"
+            height={450}
+          />
+        }
+      </div>
 
-        <div className={'graph-card col-12 new-page-after'}>
+        <div className={'graph-card new-page-after'}>
           <h4 className={'graph-title'}>KOFICIENT REAKCIE</h4>
           {
             <ReactApexChart
               options={reactionOptions}
               series={reactionSeries}
               type="bar"
-              height={320}
+              height={450}
             />
           }
         </div>

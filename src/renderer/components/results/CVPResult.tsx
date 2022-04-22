@@ -1,12 +1,14 @@
 import TableStatic from '../TableStatic';
 import ReactApexChart from 'react-apexcharts';
-import {CVPGraph} from '../graphOptions';
+import { CVPGraph } from '../graphOptions';
 import { ApexOptions } from 'apexcharts';
-import {useMatchPrint} from "../../Hooks";
 
 export default function CVPResult(props: any) {
-  const graphs: { value: string; graph: ApexOptions; series: { name: string; data: number[]; }[]; }[] = []
-  const matches = useMatchPrint()
+  const graphs: {
+    value: string;
+    graph: ApexOptions;
+    series: { name: string; data: number[] }[];
+  }[] = [];
   props.result.items.map((value: any, idx: number) => {
     const costTotal: number[] = [];
     const incomeTotal: number[] = [];
@@ -33,15 +35,12 @@ export default function CVPResult(props: any) {
     osX.map((vol: number) => {
       costTotal.push(
         Math.round(
-          (props.result.costs[idx] * vol +
-            parseFloat(props.result.fixTotal)) *
-          100
+          (props.result.costs[idx] * vol + parseFloat(props.result.fixTotal)) *
+            100
         ) / 100
       );
 
-      incomeTotal.push(
-        Math.round(props.result.prices[idx] * vol * 100) / 100
-      );
+      incomeTotal.push(Math.round(props.result.prices[idx] * vol * 100) / 100);
     });
 
     costTotal.sort(function (a, b) {
@@ -56,10 +55,9 @@ export default function CVPResult(props: any) {
 
     const graph: ApexOptions = CVPGraph(
       osX.map((x: number) => x.toString()),
-      matches,
       props.result.zeroEur[idx],
       props.result.zeroTon[idx],
-      props.result.zeroProf[idx],
+      props.result.zeroProf[idx]
     );
     const series = [
       {
@@ -70,15 +68,17 @@ export default function CVPResult(props: any) {
         name: 'Výnosy',
         data: incomeTotal,
       },
-    ]
+    ];
     graphs.push({
-      value, graph, series
-    })
-  })
-  console.log(graphs.length)
+      value,
+      graph,
+      series,
+    });
+  });
+
   return (
-    <div className={(graphs.length % 3 === 0 ? "new-page-after" : "")}>
-      <h1 className={'result-h1'}>
+    <div className={graphs.length % 2 === 0 ? 'new-page-after' : ''}>
+      <h1 className={'result-h1 new-page'}>
         Analýza nulového bodu - kritický bod rentability{' '}
       </h1>
 
@@ -113,29 +113,23 @@ export default function CVPResult(props: any) {
 
       <h1 className={'result-h1 new-page'}>Dashboarding</h1>
 
-      {graphs.map((graph, idx) =>
-        (<div
-            className={
-              'row ' +
-              (idx % 3 === 0 && idx !== 0 && 'new-page')
-            }
-          >
-            <div key={idx} className={'col-12'}>
-              <div className={'graph-card'}>
-                <h4 className={'graph-title'}>
-                  {'NULOVÝ BOD: ' + graph.value.toUpperCase()}
-                </h4>
-                <ReactApexChart
-                  options={graph.graph}
-                  series={graph.series}
-                  type="line"
-                  height={420}
-                />
-              </div>
+      {graphs.map((graph, idx) => (
+        <div className={idx % 2 === 0 && idx !== 0 ? 'new-page' : ''}>
+          <div key={idx} className={'col-12'}>
+            <div className={'graph-card'}>
+              <h4 className={'graph-title'}>
+                {'NULOVÝ BOD: ' + graph.value.toUpperCase()}
+              </h4>
+              <ReactApexChart
+                options={graph.graph}
+                series={graph.series}
+                type="line"
+                height={420}
+              />
             </div>
           </div>
-        ))
-      }
+        </div>
+      ))}
     </div>
   );
 }

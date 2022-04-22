@@ -71,7 +71,7 @@ export default function SortimentResult(props: any) {
             options={rentabilityOptions}
             series={series}
             type="bar"
-            height={300}
+            height={450}
           />
         }
       </div>
@@ -82,7 +82,7 @@ export default function SortimentResult(props: any) {
             options={marginOptions}
             series={series2}
             type="bar"
-            height={300}
+            height={450}
           />
         }
       </div>
@@ -94,7 +94,7 @@ export default function SortimentResult(props: any) {
             options={allowanceOptions}
             series={series3}
             type="bar"
-            height={300}
+            height={450}
           />
         }
       </div>

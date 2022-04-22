@@ -1,7 +1,7 @@
 export default function TableStatic(props: any) {
   let separatedData: number[][][] = [];
   let separatedHeaders: string[][] = [];
-  const colsInTable = 9
+  const colsInTable = 6
   let numOfTables = Math.ceil(props.data[0].length / colsInTable);
 
   for (let i = 0; i < numOfTables; i++) {

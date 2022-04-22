@@ -63,7 +63,7 @@ export default function TableDynamic(props: any) {
   let separatedData: number[][][] = [];
   let separatedHeaders: string[][] = [];
 
-  const colsInTable: number = 6
+  const colsInTable: number = 5
   let numOfTables = Math.ceil(props.data[0].length / colsInTable);
 
   for (let i = 0; i < numOfTables; i++) {

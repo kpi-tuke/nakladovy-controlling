@@ -189,6 +189,8 @@ a {
 
 .table-select-head {
   text-align: center;
+  font-weight: bold;
+  font-size: medium;
   background-color: #e6f7ff;
   border: 0;
   height: 100%;
@@ -350,7 +352,7 @@ a {
 
 
 .col-t {
-  grid-column: span 1;
+  grid-column: span 6;
 }
 
 .print-hidden {
@@ -374,6 +376,16 @@ a {
 .hideInScreen {
   display: none;
   visibility: hidden;
+}
+
+.mi{
+  margin-inline: 20px;
+}
+
+@media (max-width: 1000px) {
+  .col-t {
+    grid-column: span 12;
+  }
 }
 
 @media print {
@@ -413,7 +425,7 @@ a {
 
   .task-container {
     height: 100%;
-    padding: 0 0 0;
+    padding: 0 0 0 0;
     background-color: white;
     page-break-before: always;
   }
@@ -427,10 +439,14 @@ a {
     overflow: unset;
   }
 
+  .mi{
+    margin-inline: 0;
+  }
+
   .graph-card {
     box-shadow: none;
     padding: 0;
-    margin: 0 0 20px;
+    margin: 0 0 30px;
   }
 
   .text-input {
@@ -445,6 +461,11 @@ a {
   .result-h1 {
     text-align: center;
     margin: 0 25px 25px;
+  }
+
+  .sort-button {
+    display: none;
+    visibility: hidden;
   }
 }
 

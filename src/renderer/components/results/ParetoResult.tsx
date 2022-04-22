@@ -1,11 +1,7 @@
 import ReactApexChart from 'react-apexcharts';
 import TableStatic from '../TableStatic';
-import {useMatchPrint} from "../../Hooks";
 
 export default function ParetoResult(props: any) {
-
-  const matches = useMatchPrint()
-
   const barChart = {
     series: [
       {
@@ -23,7 +19,7 @@ export default function ParetoResult(props: any) {
       chart: {
         type: 'bar',
         toolbar: {
-          show: !matches,
+          show: false,
         },
       },
       stroke: {
@@ -49,9 +45,9 @@ export default function ParetoResult(props: any) {
             borderColor: 'orange',
             strokeDashArray: 0,
           },
-        ]
+        ],
       },
-      labels: props.result.causes.map((cause: string) => cause.split(" ")),
+      labels: props.result.causes.map((cause: string) => cause.split(' ')),
       yaxis: [
         {
           min: 0,
@@ -83,7 +79,7 @@ export default function ParetoResult(props: any) {
   };
 
   return (
-    <div className={"new-page"}>
+    <div className={'new-page'}>
       <h1 className={'result-h1'}>Analýza ukazovateľov</h1>
 
       <div className={'table-card'}>
@@ -120,8 +116,6 @@ export default function ParetoResult(props: any) {
           />
         }
       </div>
-
-
     </div>
   );
 }
