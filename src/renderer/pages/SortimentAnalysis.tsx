@@ -4,13 +4,13 @@ import HeaderBar from '../components/HeaderBar';
 import {selectSortiment, sortimentActions} from 'renderer/store/slice';
 import {useAppSelector} from 'renderer/store/hooks';
 import TextField from "../components/TextField";
-import {useSortimentCalc} from 'renderer/calculations';
+import {sortimentResult} from 'renderer/calculations';
 
 export default function SortimentAnalysis(props:any) {
 
   const {headers, values, data, items, text} = useAppSelector(selectSortiment);
 
-  const result = useSortimentCalc(data)
+  const result = sortimentResult(data)
 
   return (
     <div className={"task-container"}>

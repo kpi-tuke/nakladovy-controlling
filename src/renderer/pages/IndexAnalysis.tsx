@@ -5,14 +5,14 @@ import TableDynamic from '../components/TableDynamic';
 import { indexActions, selectChain} from 'renderer/store/slice';
 import {useSelector} from 'react-redux';
 import TextField from "../components/TextField";
-import {useChainCalc} from 'renderer/calculations';
+import {indexResult} from 'renderer/calculations';
 import {useAppDispatch} from "../store/hooks";
 
 export default function IndexAnalysis(props:any) {
 
   const {headers, items, data, values, text} = useSelector(selectChain);
   const dispatch = useAppDispatch()
-  const result = useChainCalc(data, headers, values)
+  const result = indexResult(data, headers, values)
 
   function sortTable() {
     let tableCols: Map<string, number[]> = new Map<string, number[]>();

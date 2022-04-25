@@ -4,12 +4,12 @@ import HeaderBar from '../components/HeaderBar';
 import groupedOptions from '../chartOfAccounts';
 import TableDynamic from '../components/TableDynamic';
 import TextField from '../components/TextField';
-import {useBilanceCalc} from 'renderer/calculations';
+import {economicResult} from 'renderer/calculations';
 import {useAppDispatch, useAppSelector} from 'renderer/store/hooks';
 
 export default function EconomicAnalysis(props:any) {
   const {headers, items, data, values, text} = useAppSelector(selectEconomic);
-  const result = useBilanceCalc(data, values);
+  const result = economicResult(data, values);
   const dispatch = useAppDispatch()
 
   function sortTable() {

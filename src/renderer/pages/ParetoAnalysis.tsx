@@ -4,12 +4,12 @@ import HeaderBar from '../components/HeaderBar';
 import {useAppSelector} from 'renderer/store/hooks';
 import {paretoActions, selectPareto} from 'renderer/store/slice';
 import TextField from '../components/TextField';
-import {usePretoCalc} from 'renderer/calculations';
+import {pretoResult} from 'renderer/calculations';
 
 export default function ParetoAnalysis(props:any) {
   const {headers, values, items, data, text} = useAppSelector(selectPareto);
 
-  const result = usePretoCalc(data, items);
+  const result = pretoResult(data, items);
 
   return (
     <div className={'task-container'}>

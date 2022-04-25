@@ -5,13 +5,13 @@ import HeaderBar from '../components/HeaderBar';
 import { CVPActions, selectCVP } from 'renderer/store/slice';
 import { useAppSelector } from 'renderer/store/hooks';
 import TextField from '../components/TextField';
-import { useCVPCalc } from 'renderer/calculations';
+import { cvpResult } from 'renderer/calculations';
 
 export default function CVPAnalysis(props:any) {
   const { headers, data, items, values, fixTotal, minProfit, text } =
     useAppSelector(selectCVP);
 
-  const result = useCVPCalc(data, fixTotal, minProfit);
+  const result = cvpResult(data, fixTotal, minProfit);
 
   return (
     <div className={'task-container'}>

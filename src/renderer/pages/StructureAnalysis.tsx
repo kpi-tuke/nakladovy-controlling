@@ -4,7 +4,7 @@ import HeaderBar from '../components/HeaderBar';
 import {selectStructure, structureActions} from 'renderer/store/slice';
 import groupedOptions from '../chartOfAccounts';
 import TextField from '../components/TextField';
-import {useStructureCalc} from 'renderer/calculations';
+import {structureResult} from 'renderer/calculations';
 import {useAppSelector} from 'renderer/store/hooks';
 
 export default function StructureAnalysis(props:any) {
@@ -21,7 +21,7 @@ export default function StructureAnalysis(props:any) {
     {value: 14, label: 'Dopravná réžia'},
   ]
 
-  const result = useStructureCalc(data);
+  const result = structureResult(data);
 
   return (
     <div className={'task-container'}>

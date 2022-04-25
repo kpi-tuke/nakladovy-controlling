@@ -1,15 +1,15 @@
 import {
-  useBilanceCalc,
-  useChainCalc,
-  useCVPCalc,
-  usePretoCalc,
-  useSortimentCalc,
-  useStructureCalc,
+  economicResult,
+  indexResult,
+  cvpResult,
+  pretoResult,
+  sortimentResult,
+  structureResult,
 } from '../renderer/calculations';
 
 test('useBilanceCalc test1', () => {
   expect(
-    useBilanceCalc(
+    economicResult(
       [
         [1307569, 1442146],
         [1356220, 1563250],
@@ -33,7 +33,7 @@ test('useBilanceCalc test1', () => {
 
 test('useBilanceCalc test2', () => {
   expect(
-    useBilanceCalc(
+    economicResult(
       [
         [68145, 78436, 52898, 49008],
         [58625, 63625, 50516, 48400],
@@ -56,7 +56,7 @@ test('useBilanceCalc test2', () => {
 
 test('useStructureCalc test', () => {
   expect(
-    useStructureCalc([
+    structureResult([
       [584, 0, 52, 6],
       [0, 0, 60, 10],
       [0, 45, 42, 29],
@@ -73,7 +73,7 @@ test('useStructureCalc test', () => {
 
 test('useChainCalc test', () => {
   expect(
-    useChainCalc(
+    indexResult(
       [
         [1307569, 1356220, 1442146],
         [0, 5601048, 6317942],
@@ -98,7 +98,7 @@ test('useChainCalc test', () => {
 
 test('useCVPCalc test1', () => {
   expect(
-    useCVPCalc(
+    cvpResult(
       [
         [8600, 8, 5.6],
         [5300, 15, 6.8],
@@ -120,7 +120,7 @@ test('useCVPCalc test1', () => {
 
 test('useCVPCalc test2', () => {
   expect(
-    useCVPCalc(
+    cvpResult(
       [
         [20, 10, 7],
         [30, 5, 3],
@@ -142,7 +142,7 @@ test('useCVPCalc test2', () => {
 
 test('useSortimentCalc test1', () => {
   expect(
-    useSortimentCalc([
+    sortimentResult([
       [985, 1215],
       [1745, 1581],
       [2700, 2600],
@@ -160,7 +160,7 @@ test('useSortimentCalc test1', () => {
 
 test('useSortimentCalc test2', () => {
   expect(
-    useSortimentCalc([
+    sortimentResult([
       [39.6, 38.36, 35.27, 31.82, 29.3],
       [43.18, 41.94, 38.85, 35.4, 32.88],
       [75.24, 71.68, 64.37, 59.73, 53.09],
@@ -178,7 +178,7 @@ test('useSortimentCalc test2', () => {
 
 test('useParetoCalc test1', () => {
   expect(
-    usePretoCalc(
+    pretoResult(
       [[3998], [1307], [361], [82], [104], [1573], [5]],
       [
         'Chyby mechanického trieskového opracovania',
@@ -210,7 +210,7 @@ test('useParetoCalc test1', () => {
 
 test('useParetoCalc test2 decimal numbers', () => {
   expect(
-    usePretoCalc(
+    pretoResult(
       [[9.8], [1.9]],
       [
         'Chyby mechanického trieskového opracovania',
