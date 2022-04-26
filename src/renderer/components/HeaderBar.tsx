@@ -77,7 +77,7 @@ export default function HeaderBar(props: any) {
         )}
       </div>
 
-      <div className={'col-6 header-title'}>{props.title}</div>
+      <div className={'col-6-12 header-title'}>{props.title}</div>
 
       <div className={'row col-3'}>
         {!props.addToReport ? (

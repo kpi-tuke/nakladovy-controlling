@@ -56,13 +56,13 @@ const reducerFunctions = {
       : action.payload.data;
   },
   addColumn: (state: { headers: string[]; data: number[][] }): void => {
-    state.headers.push('---');
+    state.headers.push('');
     state.data.map((rowData: any) => {
       rowData.push(0);
     });
   },
   addRow: (state: { items: string[]; data: number[][] }) => {
-    state.items.push('---');
+    state.items.push('');
     let arr: any[] = [];
     for (let i = 0; i < state.data[0].length; i++) {
       arr.push(0);

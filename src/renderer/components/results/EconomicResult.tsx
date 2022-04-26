@@ -3,43 +3,67 @@ import TableStatic from '../TableStatic';
 import { colGraph, lineGraph } from '../graphOptions';
 import { ApexOptions } from 'apexcharts';
 
-export default function EconomicResult(props: any) {
+export interface r {
+  headers: string[];
+  costData: number[];
+  incomeData: number[];
+  profitData: number[];
+  incomeProfitabilityData: number[];
+  costProfitabilityData: number[];
+  costEfficiencyData: number[];
+  costIndicatorData: number[];
+}
+
+export default function EconomicResult({
+  result: {
+    headers,
+    costData,
+    incomeData,
+    profitData,
+    incomeProfitabilityData,
+    costProfitabilityData,
+    costEfficiencyData,
+    costIndicatorData,
+  },
+}: {
+  result: r;
+}) {
   const lineSeries = [
     {
       name: 'Náklady',
-      data: props.result.costData,
+      data: costData,
     },
     {
       name: 'Výnosy',
-      data: props.result.incomeData,
+      data: incomeData,
     },
     {
       name: 'Zisk',
-      data: props.result.profitData,
+      data: profitData,
     },
   ];
 
   const colSeries = [
     {
       name: 'Rentabilita výnosov',
-      data: props.result.incomeProfitabilityData,
+      data: incomeProfitabilityData,
     },
     {
       name: 'Rentabilita nákladov',
-      data: props.result.costProfitabilityData,
+      data: costProfitabilityData,
     },
     {
       name: 'Nákladová účinnosť',
-      data: props.result.costEfficiencyData,
+      data: costEfficiencyData,
     },
     {
       name: 'Nákladovosť',
-      data: props.result.costIndicatorData,
+      data: costIndicatorData,
     },
   ];
 
-  const lineOptions: ApexOptions = lineGraph(props.result.headers);
-  const colOptions: ApexOptions = colGraph(props.result.headers);
+  const lineOptions: ApexOptions = lineGraph(headers);
+  const colOptions: ApexOptions = colGraph(headers);
 
   return (
     <div className={'new-page'}>
@@ -48,7 +72,7 @@ export default function EconomicResult(props: any) {
       <div className={'table-card'} style={{ marginTop: 50 }}>
         <TableStatic
           corner={'Ekonomické ukazovatele'}
-          header={[...props.result.headers]}
+          header={[...headers]}
           inputs={[
             'Zisk (€)',
             'Náklady celkom (€)',
@@ -59,13 +83,13 @@ export default function EconomicResult(props: any) {
             'Nákladovosť',
           ]}
           data={[
-            [...props.result.profitData],
-            [...props.result.costData],
-            [...props.result.incomeData],
-            [...props.result.incomeProfitabilityData],
-            [...props.result.costProfitabilityData],
-            [...props.result.costEfficiencyData],
-            [...props.result.costIndicatorData],
+            [...profitData],
+            [...costData],
+            [...incomeData],
+            [...incomeProfitabilityData],
+            [...costProfitabilityData],
+            [...costEfficiencyData],
+            [...costIndicatorData],
           ]}
         />
       </div>

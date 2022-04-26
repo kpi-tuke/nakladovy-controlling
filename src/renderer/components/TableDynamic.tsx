@@ -22,6 +22,9 @@ export default function TableDynamic(props: any) {
     row: number,
     col: number
   ) {
+    console.log(event.target.value)
+    if (event.target.value.startsWith("0") && !event.target.value.startsWith("0."))
+      event.target.value =  event.target.value.slice(1)
     dispatch(
       props.actions.setDataOnIndex({
         data: Math.round(parseFloat(event.target.value) * 100) / 100,

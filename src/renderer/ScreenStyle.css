@@ -330,6 +330,10 @@ a {
   grid-column: span 6;
 }
 
+.col-6-12 {
+  grid-column: span 6;
+}
+
 .col-7 {
   grid-column: span 7;
 }
@@ -409,9 +413,20 @@ a {
   }
 
   .header-bar {
+    position: relative;
+    background-color: white;
+  }
+
+  .header-title {
+    color: #1a98ff;
+    font-size: 38px;
+  }
+
+  .header-button {
     display: none;
     visibility: hidden;
   }
+
 
   .delete-cell {
     display: none;
@@ -458,9 +473,13 @@ a {
     grid-column: span 12;
   }
 
+  .col-6-12 {
+    grid-column: span 12;
+  }
+
   .result-h1 {
     text-align: center;
-    margin: 0 25px 25px;
+    margin: 20px 0 25px;
   }
 
   .sort-button {
