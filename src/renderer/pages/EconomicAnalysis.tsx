@@ -1,39 +1,69 @@
 import EconomicResult from '../components/results/EconomicResult';
-import {economicActions, selectEconomic} from 'renderer/store/slice';
+import { economicActions, selectEconomic } from 'renderer/store/slice';
 import HeaderBar from '../components/HeaderBar';
 import groupedOptions from '../chartOfAccounts';
 import TableDynamic from '../components/TableDynamic';
 import TextField from '../components/TextField';
-import {economicResult, sortTable} from 'renderer/calculations';
-import {useAppDispatch, useAppSelector} from 'renderer/store/hooks';
+import { economicResult, sortTable } from 'renderer/calculations';
+import { useAppDispatch, useAppSelector } from 'renderer/store/hooks';
 
-
-export default function EconomicAnalysis(props:any) {
-  const {headers, items, data, values, text} = useAppSelector(selectEconomic);
-  const dispatch = useAppDispatch()
+export default function EconomicAnalysis(props: any) {
+  const { headers, items, data, values, text } = useAppSelector(selectEconomic);
+  const dispatch = useAppDispatch();
 
   function sort() {
     if (new Set(headers).size === headers.length) {
-      const {newHeaders, newData} = sortTable(headers, data, 0)
-      dispatch(economicActions.open({headers: newHeaders, data: newData, items, values, text}))
+      const { newHeaders, newData } = sortTable(headers, data, 0);
+      dispatch(
+        economicActions.open({
+          headers: newHeaders,
+          data: newData,
+          items,
+          values,
+          text,
+        })
+      );
     }
   }
 
   return (
     <div className={'task-container'}>
-      {
-        !props.hideHeader && <HeaderBar id={"1"} title={'Ekonomická analýza hospodárenia'}  back={"taskselect"}/>
-      }
-      <div className={"row"}>
-        <div className={"col-5"}/>
-        <h1 className={'col-2 result-h1'}>Vstupy</h1>
-        <div className={"col-4"}/>
-          <div className={"col-1 sort-button"} onClick={sort}>Zoradiť</div>
-      </div>
-      {new Set(headers).size !== headers.length && (
-        <div className={"row"}>
-          <div className={"col-12"} style={{textAlign: "center", color: "red"}}>Duplikované hodnoty</div></div>
+      {!props.hideHeader && (
+        <HeaderBar
+          id={'1'}
+          title={'Ekonomická analýza hospodárenia'}
+          back={'taskselect'}
+        />
       )}
+      <div className={'row'}>
+        <div className={'col-5'} />
+        <div className={'col-2'}>
+          <h1 className={'result-h1'}>Vstupy</h1>
+        </div>
+        <div className={'col-4'} />
+        <div className={'col-1 sort-button'} onClick={sort}>
+          Zoradiť
+        </div>
+      </div>
+
+      <div className={'row hideInPrint'}>
+        {new Set(headers).size !== headers.length ? (
+          <div
+            className={'col-12'}
+            style={{ textAlign: 'center', color: 'red', height:30 }}
+          >
+            Pozor! Duplikované hodnoty.
+          </div>
+        )
+        : (<div
+            className={'col-12'}
+            style={{ textAlign: 'center', color: 'red', height:30 }}
+          >
+            <p></p>
+          </div>)
+        }
+      </div>
+
       <TableDynamic
         corner={'Ekonomická položka (Náklady(€) /Výnosy(€))'}
         headerType={'input'}
@@ -47,9 +77,9 @@ export default function EconomicAnalysis(props:any) {
         actions={economicActions}
       />
 
-      <EconomicResult result={{headers, ...economicResult(data, values)}}/>
+      <EconomicResult result={{ headers, ...economicResult(data, values) }} />
 
-      <TextField text={text} action={economicActions.changeText}/>
+      <TextField text={text} action={economicActions.changeText} />
     </div>
   );
 }

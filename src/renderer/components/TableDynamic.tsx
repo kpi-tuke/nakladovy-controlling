@@ -1,6 +1,7 @@
 import { ChangeEvent } from 'react';
 import Select from 'react-select';
 import { useAppDispatch } from 'renderer/store/hooks';
+import {splitTable} from "../calculations";
 
 export default function TableDynamic(props: any) {
   const dispatch = useAppDispatch();
@@ -63,29 +64,8 @@ export default function TableDynamic(props: any) {
     dispatch(props.actions.deleteColumn(col));
   };
 
-  let separatedData: number[][][] = [];
-  let separatedHeaders: string[][] = [];
-
-  const colsInTable: number = 5
-  let numOfTables = Math.ceil(props.data[0].length / colsInTable);
-
-  for (let i = 0; i < numOfTables; i++) {
-    separatedData.push([]);
-    separatedHeaders.push([]);
-    for (let j = 0; j < props.data.length; j++) {
-      separatedData[i].push([]);
-    }
-  }
-
-  let table: number = 0;
-  for (let y = 0; y < props.data[0].length; y++) {
-    if (y % colsInTable === 0 && y !== 0) table++;
-    for (let x = 0; x < props.data.length; x++) {
-      separatedData[table][x].push(props.data[x][y]);
-    }
-    separatedHeaders[table].push(props.header[y]);
-  }
-  // [ [1,2,3], [4,5,6], [7,8,9] ] => [ [ [1,2],[4,5],[7,8] ], [ [3],[6],[9] ] ]
+  const colsPerTable = 5
+  const {separatedHeaders, separatedData} = splitTable(colsPerTable, props.header, props.data)
 
   let maxCols = props.selectCol ? props.selectCol.length : 1000;
   return (
@@ -100,7 +80,7 @@ export default function TableDynamic(props: any) {
             {props.inputs.map((value: string, row: number) => {
               return (
                 <tr key={row}>
-                  <td className={'table-cell'} key={value + row.toString()}>
+                  <td className={'table-cell'} style={{borderBottomColor: row === props.inputs.length-1 && props.dynRows ? "#65c565" : "lightgray"}} key={value + row.toString()}>
                     {props.inputType === 'select' ? (
                       <Select
                         styles={customStyles}
@@ -154,7 +134,7 @@ export default function TableDynamic(props: any) {
               <thead>
               <tr className={'table-head'}>
                 {props.header.map((value: string, idx: number) => (
-                  <th key={idx} className={'table-cell'}>
+                  <th key={idx} className={props.headerType === "textCVP" ? "table-cell-cvp" : 'table-cell'} style={{borderRightColor: idx === props.header.length-1 && props.dynCols ? "#65c565" : "lightgray"}}>
                     {props.headerType === 'select' ? (
                       <select
                         className={'table-select-head'}
@@ -196,7 +176,7 @@ export default function TableDynamic(props: any) {
               {props.data.map((rowData: number[], row: number) => (
                 <tr key={row}>
                   {rowData.map((value: number, col: number) => (
-                    <td className={'table-cell'} key={row + ':' + col}>
+                    <td className={'table-cell'} style={{borderBottomColor: row === props.data.length-1 && props.dynCols ? "#ff4e4e" : "lightgray", borderRightColor: col === rowData.length-1 && props.dynRows ? "#ff4e4e" : "lightgray"}} key={row + ':' + col}>
                       <input
                         type="number"
                         className={'table-input'}
@@ -211,14 +191,14 @@ export default function TableDynamic(props: any) {
                       className={'delete-cell'}
                       onClick={() => deleteRow(row)}
                     >
-                      🗑
+                      -
                     </td>
                   )}
                 </tr>
               ))}
-              <tr>
-                {props.dynCols &&
-                  //@ts-ignore
+              {props.dynCols &&
+                <tr>
+                  {
                   props.data[0].map((_value: number, col: number) => {
                     return (
                       <td
@@ -226,11 +206,11 @@ export default function TableDynamic(props: any) {
                         key={col}
                         onClick={() => deleteColumn(col)}
                       >
-                        🗑
+                        -
                       </td>
                     );
                   })}
-              </tr>
+              </tr>}
               </tbody>
             </table>
           </div>
@@ -246,7 +226,7 @@ export default function TableDynamic(props: any) {
             >
               <tbody>
               <tr className={'table-head'}>
-                <td className={'table-corner'}>{props.corner}</td>
+                <td className={'table-corner'} style={props.headerType === "textCVP" ? {height: 63}: {}}>{props.corner}</td>
               </tr>
               {props.inputs.map((value: string, row: number) => {
                 return (
@@ -316,7 +296,7 @@ export default function TableDynamic(props: any) {
                         className={'table-select-head'}
                         value={value}
                         onChange={(e) =>
-                          handleChangeHeader(e.target, col + colsInTable * idx)
+                          handleChangeHeader(e.target, col + colsPerTable * idx)
                         }
                       >
                         {props.selectCol.map(
@@ -337,7 +317,7 @@ export default function TableDynamic(props: any) {
                         type="text"
                         value={value}
                         onChange={(e) =>
-                          handleChangeHeader(e.target, col + colsInTable * idx)
+                          handleChangeHeader(e.target, col + colsPerTable * idx)
                         }
                       />
                     ) : (
@@ -345,13 +325,6 @@ export default function TableDynamic(props: any) {
                     )}
                   </th>
                 ))}
-                {idx === numOfTables - 1 &&
-                  props.dynCols &&
-                  props.header.length < maxCols && (
-                    <th className={'add-cell'} onClick={addColumn}>
-                      +
-                    </th>
-                  )}
               </tr>
               </thead>
               <tbody>
@@ -364,20 +337,12 @@ export default function TableDynamic(props: any) {
                         className={'table-input'}
                         value={value}
                         onChange={(e) =>
-                          handleChangeData(e, row, col + colsInTable * idx)
+                          handleChangeData(e, row, col + colsPerTable * idx)
                         }
                         onWheel={(event) => event.currentTarget.blur()}
                       />
                     </td>
                   ))}
-                  {idx === numOfTables - 1 && props.dynRows && (
-                    <td
-                      className={'delete-cell'}
-                      onClick={() => deleteRow(row)}
-                    >
-                      🗑
-                    </td>
-                  )}
                 </tr>
               ))}
               <tr>

@@ -86,7 +86,7 @@ export default function ParetoResult(props: any) {
         <TableStatic
           corner={'Príčiny vzniku nákladov'}
           header={[
-            'Náklady (€)',
+            '(N) - náklady (€)',
             'Kumulované náklady (€)',
             'Štruktúra nákladov (%)',
             'Kumulovaná štruktúra nákladov (%)',

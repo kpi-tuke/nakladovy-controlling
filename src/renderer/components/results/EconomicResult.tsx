@@ -63,7 +63,7 @@ export default function EconomicResult({
   ];
 
   const lineOptions: ApexOptions = lineGraph(headers);
-  const colOptions: ApexOptions = colGraph(headers);
+  const colOptions: ApexOptions = colGraph(headers, "koeficient");
 
   return (
     <div className={'new-page'}>
@@ -74,13 +74,13 @@ export default function EconomicResult({
           corner={'Ekonomické ukazovatele'}
           header={[...headers]}
           inputs={[
-            'Zisk (€)',
-            'Náklady celkom (€)',
-            'Výnosy celkom (€)',
-            'Rentabilita výnosov',
-            'Rentabilita nákladov',
-            'Nákladová účinnosť',
-            'Nákladovosť',
+            ['(Z) - zisk (€)', "V - N"],
+            ['(N) - náklady celkom (€)', `\\sum N `],
+            ['(V) - výnosy celkom (€)', `\\sum V `],
+            ['(Rv) - rentabilita výnosov', `R_{v}=\\frac{Z}{V}`],
+            ['(Rn) - rentabilita nákladov', `R_{n}=\\frac{Z}{N}`],
+            ['(Nú) - nákladová účinnosť', `N_{u}=\\frac{V}{N}`],
+            ['(n) - nákladovosť', `n=\\frac{N}{V}`],
           ]}
           data={[
             [...profitData],

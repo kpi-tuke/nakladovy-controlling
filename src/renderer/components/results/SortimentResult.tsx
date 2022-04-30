@@ -30,10 +30,10 @@ export default function SortimentResult(props: any) {
 
   const rentabilityOptions: ApexOptions = colGraph(
     ['Rentabilita tržieb', 'Rentabilita nákladov'],
-    '(%)'
+    'ekonomický ukazovatel (%)'
   );
-  const marginOptions: ApexOptions = colGraph([''], '(€)');
-  const allowanceOptions: ApexOptions = colGraph([''], '(€)');
+  const marginOptions: ApexOptions = colGraph([''], 'ekonomický ukazovatel (€)');
+  const allowanceOptions: ApexOptions = colGraph([''], 'ekonomický ukazovatel (€)');
 
   return (
     <div className={'new-page'}>
@@ -44,12 +44,12 @@ export default function SortimentResult(props: any) {
           corner={'Ukazovatele sortimentnej analýzy'}
           header={[...props.result.headers]}
           inputs={[
-            'Rentabilita tržieb (%)',
-            'Rentabilita nákladov (%)',
-            'Hrubé rozpätie (€)',
-            'Príspevok na úhradu (€)',
-            'Zisková prirážka (€)',
-            'Zisk pri pôvodnej výrobnej štruktúre (€)',
+            ['(Rt) - rentabilita tržieb (%)', `R_{t}=\\frac{ZP}{P_{cj}}\\times 100`],
+            ['(Rn) - rentabilita nákladov (%)', `R_{n}=\\frac{ZP}{ÚVN}\\times 100`],
+            ['(Hr) - hrubé rozpätie (€)', `H_{r}={P_{cj}}-{P_{n}}`],
+            ['(Pú) - príspevok na úhradu (€)', `P_{ú}=1-\\frac{P_{n}}{P_{cj}}`],
+            ['(ZP) - Zisková prirážka (€)', `ZP = P_{cj} - ÚVN`],
+            ['(Z) - Zisk pri pôvodnej výrobnej štruktúre (€)', `Z =((P_{cj} - P_{n}) - (ÚVN - P_{n})) \\times Q`],
           ]}
           data={[
             [...props.result.rentIncome],

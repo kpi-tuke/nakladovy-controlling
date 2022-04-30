@@ -1,3 +1,7 @@
+// import MathJax from "react-mathjax"
+
+import MathJax from "react-mathjax";
+
 export default function TableStatic(props: any) {
   let separatedData: number[][][] = [];
   let separatedHeaders: string[][] = [];
@@ -40,18 +44,23 @@ export default function TableStatic(props: any) {
           </thead>
 
           <tbody>
-            {props.inputs.map((value: number, row: number) => {
+            {props.inputs.map((value: string[], row: number) => {
               return (
                 <tr key={row.toString()}>
-                  <td className={'table-cell'} key={value.toString()}>
-                    {value.toString()}
+                  <td className={'table-cell'} style={{textAlign: "left"}} key={value[0]}>
+                    {value[0]}
+                    {value[1] !== "" && <span className={"tooltiptext"}><MathJax.Provider>
+                      <MathJax.Node formula={value[1]}/>
+                    </MathJax.Provider>
+                    </span>
+                    }
                   </td>
 
                   {props.data[row].map((value: number, col: number) => {
                     return (
                       <td
                         className={'table-cell'}
-                        style={{ textAlign: 'center' }}
+                        style={value < 0 ? {color:"red"} : {}}
                         key={row.toString() + ':' + col.toString()}
                       >
                         {value.toString()}

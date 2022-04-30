@@ -9,7 +9,7 @@ export const lineGraph = (osX: string[]): ApexOptions => {
         enabled: false,
       },
       toolbar: {
-        show: false,
+        show: true,
       },
     },
     colors: [
@@ -55,7 +55,7 @@ export const lineGraph = (osX: string[]): ApexOptions => {
   };
 };
 
-export const colGraph = (osX: string[], titleY?: string): ApexOptions => {
+export const colGraph = (osX: string[], titleY?: string, titleX?: string): ApexOptions => {
 
   return {
     chart: {
@@ -64,7 +64,7 @@ export const colGraph = (osX: string[], titleY?: string): ApexOptions => {
         enabled: false,
       },
       toolbar: {
-        show: false,
+        show: true,
       },
       redrawOnParentResize: true,
       redrawOnWindowResize: true,
@@ -104,6 +104,9 @@ export const colGraph = (osX: string[], titleY?: string): ApexOptions => {
     },
     xaxis: {
       categories: osX.map((cause: string) => cause.split(' ')),
+      title: {
+        text: titleX,
+      },
     },
     yaxis: [
       {
@@ -120,7 +123,6 @@ export const colGraph = (osX: string[], titleY?: string): ApexOptions => {
 
 export const CVPGraph = (
   osX: string[],
-  zeroEur: number,
   zeroTon: number,
   zeroProf: number
 ): ApexOptions => {
@@ -131,7 +133,7 @@ export const CVPGraph = (
         enabled: false,
       },
       toolbar: {
-        show: false,
+        show: true,
       },
     },
     colors: [
@@ -159,29 +161,37 @@ export const CVPGraph = (
       },
     },
     annotations: {
-      points: [
-        {
-          x: zeroTon.toString(),
-          y: zeroEur,
-          marker: {
-            size: 8,
-          },
-          label: {
-            borderColor: '#FF4560',
-            text: 'Nulový bod',
-          },
-        },
-      ],
       xaxis: [
         {
           x: zeroProf.toString(),
-          borderColor: '#775DD0',
+          borderColor: '#FF9800',
+
           label: {
+            offsetY: 10,
             style: {
-              color: '#fa023f',
+              background: '#FF9800',
+              color: 'white',
+              fontSize: '14px',
+              fontWeight: "bold"
             },
             orientation: 'horizontal',
-            text: 'Minimálny zisk',
+            text: 'Minimálny zisk'
+          },
+        },
+        {
+          x: zeroTon.toString(),
+          borderColor: '#FF4e4e',
+          label: {
+            offsetY: 10,
+            borderColor: '#FF4e4e',
+            text: 'Nulový bod',
+            orientation: 'horizontal',
+            style: {
+              background: "#ff4e4e",
+              color: "white",
+              fontSize: '14px',
+              fontWeight: "bold"
+            }
           },
         },
       ],
@@ -192,6 +202,9 @@ export const CVPGraph = (
     },
     xaxis: {
       categories: osX,
+      title: {
+        text: "objem produkcie jednotky (ks...)",
+      }
     },
     yaxis: [
       {

@@ -21,8 +21,8 @@ export default function CVPAnalysis(props:any) {
 
       <div>
         <TableDynamic
-          corner={'Výrobok'}
-          headerType={'text'}
+          corner={'Názov výrobku'}
+          headerType={'textCVP'}
           header={headers}
           inputType={'input'}
           inputs={items}

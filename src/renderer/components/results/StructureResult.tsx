@@ -71,7 +71,10 @@ export default function StructureResult(props: any) {
       <div className={'table-card'} style={{ marginTop: 50 }}>
         <TableStatic
           header={[...props.result.items, 'SPOLU']}
-          inputs={['Nj - náklady jednotkové (€)', 'Štruktúra Š (%)']}
+          inputs={[
+            ['(Nj) - náklady jednotkové (€)', ""],
+            ['(Š) - štruktúra (%)', ""]
+          ]}
           data={[
             [
               ...props.result.rowSums.map((value: number) => value.toString()),
@@ -91,7 +94,10 @@ export default function StructureResult(props: any) {
 
         <TableStatic
           header={[...props.result.headers, 'SPOLU']}
-          inputs={['Nj - náklady jednotkové (€)', 'Štruktúra Š (%)']}
+          inputs={[
+            ['(Nj) - náklady jednotkové (€)', ""],
+            ['(Š) - štruktúra (%)', ""]
+          ]}
           data={[
             [
               ...props.result.colSums.map((value: number) => value.toString()),

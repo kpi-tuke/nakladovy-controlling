@@ -45,7 +45,7 @@ export default function IndexAnalysis(props:any) {
       )}
 
       <TableDynamic
-        corner={'Ekonomická položka'}
+        corner={'Ekonomická položka (€)'}
         headerType={'input'}
         header={headers}
         inputType={'select'}

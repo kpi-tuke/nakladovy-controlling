@@ -1,11 +1,10 @@
 import ReactApexChart from 'react-apexcharts';
 import TableStatic from '../TableStatic';
-import { colGraph, lineGraph } from '../graphOptions';
+import { colGraph } from '../graphOptions';
 import { ApexOptions } from 'apexcharts';
 
 export default function IndexResult(props: any) {
-
-  const lineSeries = [
+  const economicSeries = [
     {
       name: 'Náklady',
       data: props.result.costSumsForYears,
@@ -30,6 +29,20 @@ export default function IndexResult(props: any) {
     },
   ];
 
+  const costDiffSeries = [
+    {
+      name: 'Percento zment nákladov',
+      data: props.result.costDiff,
+    },
+  ];
+
+  const incomeDiffSeries = [
+    {
+      name: 'Percento zmeny výnosov',
+      data: props.result.incomeDiff,
+    },
+  ];
+
   const reactionSeries = [
     {
       name: 'Koeficient reakcie',
@@ -37,7 +50,10 @@ export default function IndexResult(props: any) {
     },
   ];
 
-  const line: ApexOptions = lineGraph(props.result.headers);
+  const economicOptions: ApexOptions = colGraph(
+    props.result.headers,
+    'ekonomická veličina (€)'
+  );
   const baseOptions: ApexOptions = {
     ...colGraph(props.result.headers),
     colors: ['#2E93fA'],
@@ -45,6 +61,14 @@ export default function IndexResult(props: any) {
   const chainOptions: ApexOptions = {
     ...colGraph(props.result.betweenYears),
     colors: ['#66DA26', '#E91E63'],
+  };
+  const costDiffOptions: ApexOptions = {
+    ...colGraph(props.result.betweenYears),
+    colors: ['#FF9800'],
+  };
+  const incomeDiffOptions: ApexOptions = {
+    ...colGraph(props.result.betweenYears),
+    colors: ['#546E7A'],
   };
   const reactionOptions: ApexOptions = {
     ...colGraph(props.result.betweenYears),
@@ -59,17 +83,17 @@ export default function IndexResult(props: any) {
         <TableStatic
           corner={'Ekonomické ukazovatele'}
           header={[...props.result.headers]}
-          inputs={['(Ib) bázický index']}
+          inputs={[['(Ib) - bázický index', `I_{b} = \\frac{N_{i}}{N_{b}}`]]}
           data={[[...props.result.baseIndexes]]}
         />
         <TableStatic
           corner={'Ekonomické ukazovatele'}
           header={[...props.result.betweenYears]}
           inputs={[
-            '(Ir) reťazový index',
-            '(Pzn) percento zmeny nákladov (%)',
-            '(Pzv) percento zmeny výnosov (%)',
-            '(Kr) koeficient reakcie',
+            ['(Ir) - reťazový index', `I_{r} = \\frac{N_{i+1}}{N_{i}}`],
+            ['(Pzn) - percento zmeny nákladov (%)', `P_{zn} = = (\\frac{N_{i+1}}{N_{i}} \\times) - 100`],
+            ['(Pzv) - percento zmeny výnosov (%)', `P_{zn} = = (\\frac{V_{i+1}}{V_{i}} \\times) - 100`],
+            ['(Kr) - koeficient reakcie', `K_{r} = \\frac{P_{zn}}{P_{zv}}`],
           ]}
           data={[
             [...props.result.chainIndexes],
@@ -87,13 +111,13 @@ export default function IndexResult(props: any) {
       <h1 className={'result-h1 new-page'}>Dashboarding</h1>
 
       <div className={'graph-card'}>
-        <h4 className={'graph-title'}>TREND VÝVOJA NÁKLADOV A VÝNOSOV</h4>
+        <h4 className={'graph-title'}>VÝVOJ EKONOMICKÝCH VELIČÍN</h4>
         {
           <ReactApexChart
-            options={line}
-            series={lineSeries}
-            type="line"
-            height={450}
+            options={economicOptions}
+            series={economicSeries}
+            type="bar"
+            height={420}
           />
         }
       </div>
@@ -105,7 +129,7 @@ export default function IndexResult(props: any) {
             options={baseOptions}
             series={baseSeries}
             type="bar"
-            height={450}
+            height={420}
           />
         }
       </div>
@@ -122,18 +146,39 @@ export default function IndexResult(props: any) {
         }
       </div>
 
-        <div className={'graph-card new-page-after'}>
-          <h4 className={'graph-title'}>KOFICIENT REAKCIE</h4>
-          {
-            <ReactApexChart
-              options={reactionOptions}
-              series={reactionSeries}
-              type="bar"
-              height={450}
-            />
-          }
-        </div>
-
+      <div className={'graph-card new-page-after'}>
+        <h4 className={'graph-title'}>PERCENTO ZMENY NÁKLADOV</h4>
+        {
+          <ReactApexChart
+            options={costDiffOptions}
+            series={costDiffSeries}
+            type="bar"
+            height={450}
+          />
+        }
+      </div>
+      <div className={'graph-card'}>
+        <h4 className={'graph-title'}>PERCENTO ZMENY VÝNOSOV</h4>
+        {
+          <ReactApexChart
+            options={incomeDiffOptions}
+            series={incomeDiffSeries}
+            type="bar"
+            height={450}
+          />
+        }
+      </div>
+      <div className={'graph-card'}>
+        <h4 className={'graph-title'}>KOFICIENT REAKCIE</h4>
+        {
+          <ReactApexChart
+            options={reactionOptions}
+            series={reactionSeries}
+            type="bar"
+            height={450}
+          />
+        }
+      </div>
     </div>
   );
 }

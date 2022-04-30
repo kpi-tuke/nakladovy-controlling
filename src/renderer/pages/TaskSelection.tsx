@@ -10,7 +10,7 @@ export default function TaskSelection() {
       className={"selection-container"}
     >
       <HeaderBar
-        title={'Výber analýzy'}
+        title={'Ekonomické analýzy'}
         back={"welcome"}
         addToReport={true}
         printToPDF={true}

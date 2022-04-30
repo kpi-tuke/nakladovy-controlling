@@ -160,8 +160,14 @@ export function sortimentResult(data: number[][]) {
   let allowance: number[] = subtractArrays(price.map(() => 1), divideArrays(directCost, price))
   let totalVolume: number = volume.reduce((a, b) => a + b, 0);
   let profit: number[] = subtractArrays(
-    subtractArrays(price.map((value) => value * totalVolume), directCost.map((value) => value * totalVolume)),
-    subtractArrays(totalCost.map((value) => value * totalVolume), directCost.map((value) => value * totalVolume))
+    subtractArrays(
+      price.map((value) => value * totalVolume),
+      directCost.map((value) => value * totalVolume)
+    ),
+    subtractArrays(
+      totalCost.map((value) => value * totalVolume),
+      directCost.map((value) => value * totalVolume)
+    )
   )
   let rentCost: number[] = divideArrays(marginProfit, totalCost);
   let rentIncome: number[] = divideArrays(marginProfit, price);
@@ -278,4 +284,30 @@ export function sortTable(headers: string[], data: number[][], offset: number) {
     }
   }
   return {newHeaders, newData}
+}
+
+// [ [1,2,3], [4,5,6], [7,8,9] ] => [ [ [1,2],[4,5],[7,8] ], [ [3],[6],[9] ] ]
+export function splitTable(colsPerTable: number, header: string[], data: number[][]) {
+  let numberOfTables = Math.ceil(data[0].length / colsPerTable);
+  let separatedData: number[][][] = [];
+  let separatedHeaders: string[][] = [];
+
+  for (let i = 0; i < numberOfTables; i++) {
+    separatedData.push([]);
+    separatedHeaders.push([]);
+    for (let j = 0; j < data.length; j++) {
+      separatedData[i].push([]);
+    }
+  }
+
+  let tableNumber: number = 0;
+  for (let col = 0; col < data[0].length; col++) {
+    if (col % colsPerTable === 0 && col !== 0) tableNumber++;
+    for (let row = 0; row < data.length; row++) {
+      separatedData[tableNumber][row].push(data[row][col]);
+    }
+    separatedHeaders[tableNumber].push(header[col]);
+  }
+
+  return {separatedHeaders, separatedData}
 }

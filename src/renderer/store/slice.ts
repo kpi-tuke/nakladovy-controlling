@@ -115,10 +115,10 @@ const initialSortimentState: defaultState = {
   headers: ['VýrobokA'],
   data: [[0], [0], [0], [0]],
   items: [
-    'Priame náklady (€)',
-    'Úplné vlastné náklady výkonu (€)',
-    'Predajná cena (jednotková) (€)',
-    'Objem výroby (ks...)',
+    '(Pn) - priame náklady (€)',
+    '(ÚVN) -  úplné vlastné náklady výkonu (€)',
+    '(Pcj) - Predajná cena (jednotková) (€)',
+    '(Q) - Objem výroby (ks...)',
   ],
   values: [
     'Predajná cena jednotková',
@@ -156,9 +156,9 @@ const initialIndexState: defaultState = {
 
 const initialCVPState: CVPState = {
   headers: [
-    'Objem produkcie (ks...)',
-    'Cena jednotková (€)',
-    'Variabilné náklady jednotkové (€)',
+    '(Q) - objem produkcie (ks...)',
+    '(Pcj) - predajná cena jednotková (€)',
+    '(Nvj) - variabilné náklady jednotkové (€)',
   ],
   items: ['Výrobok A'],
   data: [[0, 0, 0]],
@@ -177,7 +177,7 @@ const initialStructureState: defaultState = {
 };
 
 const initialParetoState: defaultState = {
-  headers: ['Náklady (€)'],
+  headers: ['(N) - náklady (€)'],
   data: [[3998], [1307], [361], [82], [104], [1573], [5]],
   items: [
     'Chyby mechanického trieskového opracovania',

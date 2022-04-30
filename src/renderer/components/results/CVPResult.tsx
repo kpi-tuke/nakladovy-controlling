@@ -55,7 +55,6 @@ export default function CVPResult(props: any) {
 
     const graph: ApexOptions = CVPGraph(
       osX.map((x: number) => x.toString()),
-      props.result.zeroEur[idx],
       props.result.zeroTon[idx],
       props.result.zeroProf[idx]
     );
@@ -87,9 +86,9 @@ export default function CVPResult(props: any) {
           corner={'Ekonomické ukazovatele'}
           header={...props.result.items}
           inputs={[
-            'Nulový bod (€)',
-            'Nulový bod (ks...)',
-            'Nulový bod Zmin (ks...)',
+            ['(No) - nulový bod (€)', `N_{0}=\\frac{F{n}}{1-\\frac{N_{vj}}{P_{cj}}}`],
+            ['(No) - nulový bod (ks...)', `N_{0}=\\frac{F_{n}}{P_{cj}-N_{vj}}`],
+            ['(No) - nulový bod Zmin (ks...)', `N_{0}=\\frac{F_{n}+Z_{min}}{P_{cj}-N_{vj}}`],
           ]}
           data={[
             [

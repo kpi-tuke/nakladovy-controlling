@@ -68,12 +68,14 @@ export default function WelcomePage() {
       <div>
         <div className={'welcome-text'}>
           <p>
-            Vitajte v aplikácii pre nákladový controlling. Tento software slúži
-            na zjednodušenie Vašej práce na predmete Manažérske účtovníctvo.
-            Obsahuje rôzne typy nákladových analýz v ktorých môžete zadávať
-            vstupy z účtovnej výsledovky. Následne z týchto vstupov aplikácia
-            vypočíta príslušne ekonomické ukazovatele a vykresli grafický
-            priebeh vývoja. Výsledok je možné uložiť vo formáte PDF.
+            Vitajte v aplikácii pre Nákladový Controlling.
+            Táto softvérová aplikácia slúži na riešenie praktických
+            príkladov a prípadových štúdií zameraných na využívanie
+            ekonomických analýz v rámci manažérskeho rozhodovania.
+            Obsahuje rôzne typy ekonomických analýz orientovaných
+            na ekonomickú veličinu – náklady.
+            Výstupy jednotlivých ekonomických analýz obsahujú
+            grafické metódy a sú realizované vo formáte pdf.
           </p>
         </div>
         <div className={"row"}>
