@@ -1,11 +1,11 @@
 // import MathJax from "react-mathjax"
 
-import MathJax from "react-mathjax";
+import MathJax from 'react-mathjax';
 
 export default function TableStatic(props: any) {
   let separatedData: number[][][] = [];
   let separatedHeaders: string[][] = [];
-  const colsInTable = 6
+  const colsInTable = 6;
   let numOfTables = Math.ceil(props.data[0].length / colsInTable);
 
   for (let i = 0; i < numOfTables; i++) {
@@ -32,10 +32,16 @@ export default function TableStatic(props: any) {
         <table style={{ borderCollapse: 'collapse', width: '100%' }}>
           <thead>
             <tr className={'table-head'}>
-              <th className={'table-cell'}>{props.corner}</th>
+              <th className={'table-cell'} style={{ textAlign: 'center' }}>
+                {props.corner}
+              </th>
               {props.header.map((value: string, idx: number) => {
                 return (
-                  <th className={'table-cell'} key={idx}>
+                  <th
+                    className={'table-cell'}
+                    style={{ textAlign: 'center' }}
+                    key={idx}
+                  >
                     {value}
                   </th>
                 );
@@ -47,20 +53,30 @@ export default function TableStatic(props: any) {
             {props.inputs.map((value: string[], row: number) => {
               return (
                 <tr key={row.toString()}>
-                  <td className={'table-cell'} style={{textAlign: "left"}} key={value[0]}>
+                  <td
+                    className={'table-cell'}
+                    style={{ textAlign: 'left' }}
+                    key={value[0]}
+                  >
                     {value[0]}
-                    {value[1] !== "" && <span className={"tooltiptext"}><MathJax.Provider>
-                      <MathJax.Node formula={value[1]}/>
-                    </MathJax.Provider>
-                    </span>
-                    }
+                    {value[1] !== '' && (
+                      <span className={'tooltiptext'}>
+                        <MathJax.Provider>
+                          <MathJax.Node formula={value[1]} />
+                        </MathJax.Provider>
+                      </span>
+                    )}
                   </td>
 
                   {props.data[row].map((value: number, col: number) => {
                     return (
                       <td
                         className={'table-cell'}
-                        style={value < 0 ? {color:"red"} : {}}
+                        style={
+                          value < 0
+                            ? { color: 'red', textAlign: 'center' }
+                            : { textAlign: 'center' }
+                        }
                         key={row.toString() + ':' + col.toString()}
                       >
                         {value.toString()}
@@ -79,14 +95,18 @@ export default function TableStatic(props: any) {
           <table
             key={index}
             className={'col-12'}
-            style={{ borderCollapse: 'collapse' }}
+            style={{ borderCollapse: 'collapse', borderSpacing: 0 }}
           >
             <thead>
               <tr className={'table-head'}>
                 <th className={'table-cell'}>{props.corner}</th>
                 {separatedHeaders[index].map((value: string, idx: number) => {
                   return (
-                    <th className={'table-cell'} key={idx}>
+                    <th
+                      className={'table-cell'}
+                      style={{ textAlign: 'center' }}
+                      key={idx}
+                    >
                       {value}
                     </th>
                   );
@@ -99,7 +119,7 @@ export default function TableStatic(props: any) {
                 return (
                   <tr key={row.toString()}>
                     <td className={'table-cell'} key={row}>
-                      {props.inputs[row]}
+                      {props.inputs[row][0]}
                     </td>
 
                     {tableRow.map((value: number, col: number) => {

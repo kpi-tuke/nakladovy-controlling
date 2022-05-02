@@ -1,6 +1,6 @@
 import ReactApexChart from 'react-apexcharts';
 import TableStatic from '../TableStatic';
-import { colGraph } from '../graphOptions';
+import { useColGraph } from '../graphOptions';
 import { ApexOptions } from 'apexcharts';
 
 export default function IndexResult(props: any) {
@@ -50,28 +50,28 @@ export default function IndexResult(props: any) {
     },
   ];
 
-  const economicOptions: ApexOptions = colGraph(
+  const economicOptions: ApexOptions = useColGraph(
     props.result.headers,
     'ekonomická veličina (€)'
   );
   const baseOptions: ApexOptions = {
-    ...colGraph(props.result.headers),
+    ...useColGraph(props.result.headers),
     colors: ['#2E93fA'],
   };
   const chainOptions: ApexOptions = {
-    ...colGraph(props.result.betweenYears),
+    ...useColGraph(props.result.betweenYears),
     colors: ['#66DA26', '#E91E63'],
   };
   const costDiffOptions: ApexOptions = {
-    ...colGraph(props.result.betweenYears),
+    ...useColGraph(props.result.betweenYears),
     colors: ['#FF9800'],
   };
   const incomeDiffOptions: ApexOptions = {
-    ...colGraph(props.result.betweenYears),
+    ...useColGraph(props.result.betweenYears),
     colors: ['#546E7A'],
   };
   const reactionOptions: ApexOptions = {
-    ...colGraph(props.result.betweenYears),
+    ...useColGraph(props.result.betweenYears),
     colors: ['#E91E63'],
   };
 

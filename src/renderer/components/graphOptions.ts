@@ -1,6 +1,17 @@
 import { ApexOptions } from 'apexcharts';
+import {useEffect, useState} from "react";
 
-export const lineGraph = (osX: string[]): ApexOptions => {
+export const useLineGraph = (osX: string[]): ApexOptions => {
+
+  const [matches, setMatches] = useState(
+    window.matchMedia("(min-width: 768px)").matches
+  )
+
+  useEffect(() => {
+    window
+      .matchMedia("(min-width: 768px)")
+      .addEventListener('change', e => setMatches( e.matches ));
+  }, []);
 
   return {
     chart: {
@@ -9,7 +20,7 @@ export const lineGraph = (osX: string[]): ApexOptions => {
         enabled: false,
       },
       toolbar: {
-        show: true,
+        show: matches,
       },
     },
     colors: [
@@ -55,7 +66,17 @@ export const lineGraph = (osX: string[]): ApexOptions => {
   };
 };
 
-export const colGraph = (osX: string[], titleY?: string, titleX?: string): ApexOptions => {
+export const useColGraph = (osX: string[], titleY?: string, titleX?: string): ApexOptions => {
+
+  const [matches, setMatches] = useState(
+    window.matchMedia("(min-width: 768px)").matches
+  )
+
+  useEffect(() => {
+    window
+      .matchMedia("(min-width: 768px)")
+      .addEventListener('change', e => setMatches( e.matches ));
+  }, []);
 
   return {
     chart: {
@@ -64,7 +85,7 @@ export const colGraph = (osX: string[], titleY?: string, titleX?: string): ApexO
         enabled: false,
       },
       toolbar: {
-        show: true,
+        show: matches,
       },
       redrawOnParentResize: true,
       redrawOnWindowResize: true,
@@ -121,11 +142,22 @@ export const colGraph = (osX: string[], titleY?: string, titleX?: string): ApexO
   };
 };
 
-export const CVPGraph = (
+export const useCVPGraph = (
   osX: string[],
   zeroTon: number,
   zeroProf: number
 ): ApexOptions => {
+
+  const [matches, setMatches] = useState(
+    window.matchMedia("(min-width: 768px)").matches
+  )
+
+  useEffect(() => {
+    window
+      .matchMedia("(min-width: 768px)")
+      .addEventListener('change', e => setMatches( e.matches ));
+  }, []);
+
   return {
     chart: {
       type: 'line',
@@ -133,7 +165,7 @@ export const CVPGraph = (
         enabled: false,
       },
       toolbar: {
-        show: true,
+        show: matches,
       },
     },
     colors: [

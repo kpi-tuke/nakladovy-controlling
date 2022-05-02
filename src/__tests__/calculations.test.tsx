@@ -2,7 +2,7 @@ import {
   economicResult,
   indexResult,
   cvpResult,
-  pretoResult,
+  paretoResult,
   sortimentResult,
   structureResult,
 } from '../renderer/calculations';
@@ -178,7 +178,7 @@ test('useSortimentCalc test2', () => {
 
 test('useParetoCalc test1', () => {
   expect(
-    pretoResult(
+    paretoResult(
       [[3998], [1307], [361], [82], [104], [1573], [5]],
       [
         'Chyby mechanického trieskového opracovania',
@@ -210,7 +210,7 @@ test('useParetoCalc test1', () => {
 
 test('useParetoCalc test2 decimal numbers', () => {
   expect(
-    pretoResult(
+    paretoResult(
       [[9.8], [1.9]],
       [
         'Chyby mechanického trieskového opracovania',

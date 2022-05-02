@@ -12,7 +12,6 @@ export default function TextField(props: any) {
       <h1 className={'result-h1'}>Záver a zhodnotenie analýzy</h1>
 
       <textarea
-        className={"text-input"}
         defaultValue={props.text}
         onChange={(e) => changeText(e.target)}
       />

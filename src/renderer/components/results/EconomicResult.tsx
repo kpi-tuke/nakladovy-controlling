@@ -1,6 +1,6 @@
 import ReactApexChart from 'react-apexcharts';
 import TableStatic from '../TableStatic';
-import { colGraph, lineGraph } from '../graphOptions';
+import { useColGraph, useLineGraph } from '../graphOptions';
 import { ApexOptions } from 'apexcharts';
 
 export interface r {
@@ -62,8 +62,8 @@ export default function EconomicResult({
     },
   ];
 
-  const lineOptions: ApexOptions = lineGraph(headers);
-  const colOptions: ApexOptions = colGraph(headers, "koeficient");
+  const lineOptions: ApexOptions = useLineGraph(headers);
+  const colOptions: ApexOptions = useColGraph(headers, "koeficient");
 
   return (
     <div className={'new-page'}>
@@ -102,7 +102,7 @@ export default function EconomicResult({
           options={lineOptions}
           series={lineSeries}
           type="line"
-          height={450}
+          height={420}
         />
       </div>
 
@@ -114,7 +114,7 @@ export default function EconomicResult({
           options={colOptions}
           series={colSeries}
           type="bar"
-          height={450}
+          height={420}
         />
       </div>
     </div>

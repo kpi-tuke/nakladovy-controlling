@@ -112,7 +112,7 @@ const open = {
 };
 
 const initialSortimentState: defaultState = {
-  headers: ['VýrobokA'],
+  headers: ['Výrobok A'],
   data: [[0], [0], [0], [0]],
   items: [
     '(Pn) - priame náklady (€)',
@@ -178,24 +178,12 @@ const initialStructureState: defaultState = {
 
 const initialParetoState: defaultState = {
   headers: ['(N) - náklady (€)'],
-  data: [[3998], [1307], [361], [82], [104], [1573], [5]],
+  data: [[0]],
   items: [
-    'Chyby mechanického trieskového opracovania',
-    'Chyby tvárnenia materiálu',
-    'Materiálové chyby',
-    'Chyby zvárania',
-    'Chyby povrchu a povrchovej úpravy',
-    'Chyby kompletizácie, balenia',
-    'Chyby dokumentácie',
+    'Názov chyby',
   ],
   values: [
-    'Chyby mechanického trieskového opracovania',
-    'Chyby tvárnenia materiálu',
-    'Materiálové chyby',
-    'Chyby zvárania',
-    'Chyby povrchu a povrchovej úpravy',
-    'Chyby kompletizácie, balenia',
-    'Chyby dokumentácie',
+    'Názov chyby',
   ],
   text: '',
 };

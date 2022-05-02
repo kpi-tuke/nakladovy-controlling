@@ -183,7 +183,7 @@ a {
   max-width: 12vw;
   padding-left: 5px;
   padding-right: 5px;
-  text-align: center;
+  text-align: left;
 }
 
 .table-cell-cvp {
@@ -413,6 +413,16 @@ a {
   margin-inline: 20px;
 }
 
+textarea {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  box-shadow: none;
+  height: 150px;
+  width: 100%;
+  resize: none;
+  border: 0;
+}
+
 @media (max-width: 1000px) {
   .col-t {
     grid-column: span 12;
@@ -433,6 +443,16 @@ a {
   .hideInScreen{
     display: grid;
     visibility: visible;
+  }
+
+  span {
+    display: none;
+    visibility: hidden;
+  }
+
+  .tooltiptext {
+    display: none;
+    visibility: hidden;
   }
 
   .info-card {
@@ -489,11 +509,6 @@ a {
     box-shadow: none;
     padding: 0;
     margin: 0 0 30px;
-  }
-
-  .text-input {
-    box-shadow: none;
-    height: 150px;
   }
 
   .col-t {

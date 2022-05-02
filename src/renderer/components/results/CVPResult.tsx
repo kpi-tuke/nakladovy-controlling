@@ -1,6 +1,6 @@
 import TableStatic from '../TableStatic';
 import ReactApexChart from 'react-apexcharts';
-import { CVPGraph } from '../graphOptions';
+import { useCVPGraph } from '../graphOptions';
 import { ApexOptions } from 'apexcharts';
 
 export default function CVPResult(props: any) {
@@ -53,7 +53,7 @@ export default function CVPResult(props: any) {
       return a - b;
     });
 
-    const graph: ApexOptions = CVPGraph(
+    const graph: ApexOptions = useCVPGraph(
       osX.map((x: number) => x.toString()),
       props.result.zeroTon[idx],
       props.result.zeroProf[idx]

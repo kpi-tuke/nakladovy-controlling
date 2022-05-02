@@ -28,7 +28,7 @@ export default function TableDynamic(props: any) {
       event.target.value =  event.target.value.slice(1)
     dispatch(
       props.actions.setDataOnIndex({
-        data: Math.round(parseFloat(event.target.value) * 100) / 100,
+        data: Math.abs(Math.round(parseFloat(event.target.value) * 100) / 100),
         row,
         col,
       })
@@ -72,7 +72,7 @@ export default function TableDynamic(props: any) {
     <>
       <div className={'table-card row hideInPrint'}>
         <div className={'col-4'}>
-          <table style={{ width: '100%', borderCollapse:"collapse" }}>
+          <table style={{ width: '100%', borderCollapse:"collapse", borderSpacing:0 }}>
             <tbody>
             <tr className={'table-head'}>
               <td className={'table-corner'}>{props.corner}</td>
@@ -129,8 +129,8 @@ export default function TableDynamic(props: any) {
         </div>
 
         <div className={'col-8'} style={{ width: '100%' }}>
-          <div style={{ overflow: 'auto' }}>
-            <table style={{ borderCollapse:"collapse"}}>
+          <div className={"table-data"}>
+            <table style={{ borderCollapse:"collapse", borderSpacing:0}}>
               <thead>
               <tr className={'table-head'}>
                 {props.header.map((value: string, idx: number) => (

@@ -182,7 +182,7 @@ export function sortimentResult(data: number[][]) {
   };
 }
 
-export function pretoResult(data: number[][], items: string[]) {
+export function paretoResult(data: number[][], items: string[]) {
   let valuesWithCauses: Map<string, number> = new Map<string, number>();
   let values: number[] = [];
   let valuesKumul: number[] = [];

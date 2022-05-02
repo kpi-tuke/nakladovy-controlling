@@ -1,7 +1,7 @@
 import TableStatic from '../TableStatic';
 import ReactApexChart from 'react-apexcharts';
 import { ApexOptions } from 'apexcharts';
-import { colGraph } from '../graphOptions';
+import { useColGraph } from '../graphOptions';
 
 export default function SortimentResult(props: any) {
   let series = [];
@@ -28,12 +28,12 @@ export default function SortimentResult(props: any) {
     });
   }
 
-  const rentabilityOptions: ApexOptions = colGraph(
+  const rentabilityOptions: ApexOptions = useColGraph(
     ['Rentabilita tržieb', 'Rentabilita nákladov'],
     'ekonomický ukazovatel (%)'
   );
-  const marginOptions: ApexOptions = colGraph([''], 'ekonomický ukazovatel (€)');
-  const allowanceOptions: ApexOptions = colGraph([''], 'ekonomický ukazovatel (€)');
+  const marginOptions: ApexOptions = useColGraph([''], 'ekonomický ukazovatel (€)');
+  const allowanceOptions: ApexOptions = useColGraph([''], 'ekonomický ukazovatel (€)');
 
   return (
     <div className={'new-page'}>

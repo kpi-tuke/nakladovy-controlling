@@ -1,6 +1,6 @@
 import ReactApexChart from 'react-apexcharts';
 import TableStatic from '../TableStatic';
-import { colGraph } from '../graphOptions';
+import { useColGraph } from '../graphOptions';
 
 export default function StructureResult(props: any) {
 
@@ -17,12 +17,12 @@ export default function StructureResult(props: any) {
   ];
 
   const genericOptions = {
-    ...colGraph(props.result.items, 'Náklady (€)', ),
+    ...useColGraph(props.result.items, 'Náklady (€)', ),
     legend: { show: false },
     plotOptions: { bar: { distributed: true } },
   };
   const calculationOptions = {
-    ...colGraph(props.result.headers,'Náklady (€)',),
+    ...useColGraph(props.result.headers,'Náklady (€)',),
     legend: { show: false },
     plotOptions: { bar: { distributed: true } },
   };
