@@ -48,6 +48,11 @@ export default function TableDynamic(props: any) {
     dispatch(props.actions.setValuesOnIndex({ data: e.value, index: idx }));
   };
 
+  const handleChangeAccount = function (e: any, idx: number) {
+    dispatch(props.actions.changeAccount({ data: e.value, index: idx }));
+  };
+
+
   const addColumn = () => {
     dispatch(props.actions.addColumn());
   };
@@ -73,30 +78,37 @@ export default function TableDynamic(props: any) {
 
   let maxCols = props.selectCol ? props.selectCol.length : 1000;
 
-  let availableInputOptions = props.selectRow !== undefined && props.selectRow.map(
-    (selection: { label: any; options: any[] }) => ({
+  let availableInputOptions =
+    props.selectRow !== undefined &&
+    props.selectRow.map((selection: { label: any; options: any[] }) => ({
       label: selection.label,
       options: selection.options.filter(
         (opt: any) => !props.inputs.includes(opt.label)
       ),
-    })
-  );
+    }));
 
-  let availableHeadersOptions = props.selectCol !== undefined && props.selectCol
-    .filter(
-      (option: { value: number; label: string }) =>
-        !props.header.includes(option.label)
-    )
-    .map((option: any) => option.label);
+  let availableHeadersOptions =
+    props.selectCol !== undefined &&
+    props.selectCol
+      .filter(
+        (option: { value: number; label: string }) =>
+          !props.header.includes(option.label)
+      )
+      .map((option: any) => option.label);
+
+
 
   return (
     <>
       <div className={'table-card row hideInPrint'}>
-        <div className={'col-4'}>
+        <div className={'col-5'}>
           <table className={'table'} style={{ width: '100%' }}>
             <tbody>
               <tr className={'table-head'}>
                 <td className={'table-corner'}>{props.corner}</td>
+                {props.analytic && (
+                  <td className={'table-analytic'}>Analytický účet</td>
+                )}
               </tr>
               {props.inputs.map((value: string, row: number) => {
                 return (
@@ -129,12 +141,31 @@ export default function TableDynamic(props: any) {
                         value
                       )}
                     </td>
+                    {props.analytic && (
+                      <td
+                        className={'table-cell-analytic'}
+                        style={{
+                          borderBottomColor:
+                            row === props.inputs.length - 1 && props.dynRows
+                              ? '#65c565'
+                              : 'lightgray',
+                        }}
+                      >
+                        <input
+                          className={'table-input'}
+                          type="text"
+                          defaultValue={props.accounts[row]}
+                          onBlur={(e) => handleChangeAccount(e.target, row)}
+                        />
+                      </td>
+                    )}
                   </tr>
                 );
               })}
               {props.dynRows ? (
                 <tr>
                   <td
+                    colSpan={2}
                     className={'add-cell'}
                     style={{ textAlign: 'center' }}
                     onClick={addRow}
@@ -151,7 +182,7 @@ export default function TableDynamic(props: any) {
           </table>
         </div>
 
-        <div className={'col-8'} style={{ width: '100%' }}>
+        <div className={'col-7'} style={{ width: '100%' }}>
           <div className={'table-data'}>
             <table className={'table'}>
               <thead>
@@ -267,7 +298,7 @@ export default function TableDynamic(props: any) {
       </div>
 
       <div className={'table-card row hideInScreen'}>
-        <div className={'col-4'}>
+        <div className={'col-5'}>
           {separatedHeaders.map((_table, idx) => (
             <table
               key={idx + 'input'}
@@ -297,13 +328,17 @@ export default function TableDynamic(props: any) {
           ))}
         </div>
 
-        <div className={'table-data col-8 row'}>
+        <div className={'table-data col-7 row'}>
           {separatedData.map((table, idx) => (
             <table key={idx + 'data'} className={'col-12 table'}>
               <thead>
                 <tr className={'table-head'}>
                   {separatedHeaders[idx].map((value: string, col: number) => (
-                    <th key={col} className={'table-cell'} style={{textAlign: "center"}}>
+                    <th
+                      key={col}
+                      className={'table-cell'}
+                      style={{ textAlign: 'center' }}
+                    >
                       {value}
                     </th>
                   ))}
@@ -313,7 +348,11 @@ export default function TableDynamic(props: any) {
                 {table.map((rowData: number[], row: number) => (
                   <tr key={row}>
                     {rowData.map((value: number, col: number) => (
-                      <td className={'table-cell'} style={{textAlign:"center"}} key={row + ':' + col}>
+                      <td
+                        className={'table-cell'}
+                        style={{ textAlign: 'center' }}
+                        key={row + ':' + col}
+                      >
                         {value}
                       </td>
                     ))}

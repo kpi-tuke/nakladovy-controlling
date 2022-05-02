@@ -7,19 +7,24 @@ import {useSelector} from 'react-redux';
 import TextField from "../components/TextField";
 import {indexResult, sortTable} from 'renderer/calculations';
 import {useAppDispatch} from "../store/hooks";
+import {useState} from "react";
 
 export default function IndexAnalysis(props:any) {
 
-  const {headers, items, data, values, text} = useSelector(selectChain);
+  const {headers, items, data, values, text, accounts} = useSelector(selectChain);
   const dispatch = useAppDispatch()
   const result = indexResult(data, headers, values)
-
+  const [analytic, setAnalytic] = useState<boolean>(false)
 
   function sort() {
     if (new Set(headers).size === headers.length) {
       const {newHeaders, newData} = sortTable(headers, data, 1)
-      dispatch(indexActions.open({headers: newHeaders, data: newData, items, values, text}))
+      dispatch(indexActions.open({headers: newHeaders, data: newData, items, values, text, accounts}))
     }
+  }
+
+  function toggleAnalytic() {
+    setAnalytic(!analytic)
   }
 
   return (
@@ -32,7 +37,8 @@ export default function IndexAnalysis(props:any) {
       />}
 
       <div className={"row"}>
-        <div className={"col-5"}/>
+        <div className={'col-3 sort-button'} onClick={toggleAnalytic}>Pridať analytické účty</div>
+        <div className={'col-2'} />
         <h1 className={'col-2 result-h1'}>Vstupy</h1>
         <div className={"col-4"}/>
         <div className={"col-1 sort-button"} onClick={sort}>Zoradiť</div>
@@ -52,6 +58,8 @@ export default function IndexAnalysis(props:any) {
         inputs={items}
         data={data}
         values={values}
+        accounts={accounts}
+        analytic={analytic}
         dynRows={true}
         dynCols={true}
         selectRow={groupedOptions}

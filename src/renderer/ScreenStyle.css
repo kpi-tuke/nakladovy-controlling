@@ -175,6 +175,17 @@ a {
   border: 1px solid lightgrey;
 }
 
+.table-analytic {
+  text-align: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 16px;
+  height: 50px;
+  width: 2vw;
+  max-width: 2vw;
+  border: 1px solid lightgrey;
+}
+
 .table-data {
   overflow: auto;
 }
@@ -186,6 +197,18 @@ a {
   width: 12vw;
   min-width: 12vw;
   max-width: 12vw;
+  padding-left: 5px;
+  padding-right: 5px;
+  text-align: left;
+}
+
+.table-cell-analytic {
+  border: 1px solid lightgrey;
+  height: 50px;
+  max-height: 50px;
+  width: 2vw;
+  min-width: 2vw;
+  max-width: 2vw;
   padding-left: 5px;
   padding-right: 5px;
   text-align: left;
@@ -492,6 +515,18 @@ textarea {
 
   .table-data {
     overflow: unset;
+  }
+
+  .table-cell-analytic {
+    width: 1vw;
+    max-width: 1vw;
+    min-width: 1vw;
+  }
+
+  .table-analytic {
+    width: 1vw;
+    max-width: 1vw;
+    min-width: 1vw;
   }
 
   textarea {

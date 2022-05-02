@@ -6,11 +6,12 @@ import TableDynamic from '../components/TableDynamic';
 import TextField from '../components/TextField';
 import { economicResult, sortTable } from 'renderer/calculations';
 import { useAppDispatch, useAppSelector } from 'renderer/store/hooks';
+import {useState} from "react";
 
 export default function EconomicAnalysis(props: any) {
-  const { headers, items, data, values, text } = useAppSelector(selectEconomic);
+  const { headers, items, data, values, text, accounts } = useAppSelector(selectEconomic);
   const dispatch = useAppDispatch();
-
+  const [analytic, setAnalytic] = useState<boolean>(false)
   function sort() {
     if (new Set(headers).size === headers.length) {
       const { newHeaders, newData } = sortTable(headers, data, 0);
@@ -21,9 +22,14 @@ export default function EconomicAnalysis(props: any) {
           items,
           values,
           text,
+          accounts
         })
       );
     }
+  }
+
+  function toggleAnalytic() {
+    setAnalytic(!analytic)
   }
 
   return (
@@ -36,7 +42,9 @@ export default function EconomicAnalysis(props: any) {
         />
       )}
       <div className={'row'} style={{ height: 120}}>
-        <div className={'col-5'} />
+        <div className={'col-3 sort-button'} onClick={toggleAnalytic}>{analytic ? "Odobrať" : "Pridať"} analytické účty</div>
+        <div className={'col-2 hideInScreen'} />
+        <div className={'col-2'} />
         <div className={'col-2'}>
           <h1 className={'result-h1'}>Vstupy</h1>
         </div>
@@ -71,6 +79,8 @@ export default function EconomicAnalysis(props: any) {
         inputType={'select'}
         inputs={items}
         data={data}
+        analytic={analytic}
+        accounts={accounts}
         dynRows={true}
         dynCols={true}
         selectRow={groupedOptions}

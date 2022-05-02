@@ -7,6 +7,7 @@ export interface defaultState {
   items: string[];
   values: string[];
   text: string;
+  accounts: string[];
 }
 
 export interface CVPState extends defaultState {
@@ -61,8 +62,9 @@ const reducerFunctions = {
       rowData.push(0);
     });
   },
-  addRow: (state: { items: string[]; data: number[][] }) => {
+  addRow: (state: { items: string[]; data: number[][]; accounts: string[] }) => {
     state.items.push('');
+    state.accounts.push("")
     let arr: any[] = [];
     for (let i = 0; i < state.data[0].length; i++) {
       arr.push(0);
@@ -111,6 +113,12 @@ const open = {
   },
 };
 
+const changeAccount = {
+  changeAccount: (state: {accounts: string[]}, action: PayloadAction<dataOnIndex>) => {
+    state.accounts[action.payload.index] = action.payload.data
+  }
+}
+
 const initialSortimentState: defaultState = {
   headers: ['Výrobok A'],
   data: [[0], [0], [0], [0]],
@@ -127,6 +135,7 @@ const initialSortimentState: defaultState = {
     'Objem výroby',
   ],
   text: '',
+  accounts: [""],
 };
 
 const initialEconomicState: defaultState = {
@@ -138,6 +147,7 @@ const initialEconomicState: defaultState = {
   ],
   values: ['501', '666'],
   text: '',
+  accounts: [""],
 };
 
 const initialIndexState: defaultState = {
@@ -152,6 +162,7 @@ const initialIndexState: defaultState = {
   ],
   values: ['501', '666'],
   text: '',
+  accounts: [""],
 };
 
 const initialCVPState: CVPState = {
@@ -164,6 +175,7 @@ const initialCVPState: CVPState = {
   data: [[0, 0, 0]],
   values: ['Výrobok A'],
   text: '',
+  accounts: [""],
   fixTotal: 0,
   minProfit: 0,
 };
@@ -174,6 +186,7 @@ const initialStructureState: defaultState = {
   items: ['501 – Spotreba materiálu'],
   values: ['1'],
   text: '',
+  accounts: [""],
 };
 
 const initialParetoState: defaultState = {
@@ -186,6 +199,7 @@ const initialParetoState: defaultState = {
     'Názov chyby',
   ],
   text: '',
+  accounts: [""],
 };
 
 const projectSlice = createSlice({
@@ -212,6 +226,7 @@ const economicSlice = createSlice({
       state.text = initialEconomicState.text;
     },
     ...open,
+    ...changeAccount,
   },
 
 });
@@ -247,7 +262,8 @@ const indexSlice = createSlice({
       state.values = initialIndexState.values;
       state.text = initialIndexState.text;
     },
-    ...open
+    ...open,
+    ...changeAccount,
   },
 });
 
