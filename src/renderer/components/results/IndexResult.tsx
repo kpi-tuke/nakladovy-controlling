@@ -134,50 +134,54 @@ export default function IndexResult(props: any) {
         }
       </div>
 
-      <div className={'graph-card new-page'}>
-        <h4 className={'graph-title'}>REŤAZOVÝ INDEX</h4>
-        {
-          <ReactApexChart
-            options={chainOptions}
-            series={chainSeries}
-            type="bar"
-            height={450}
-          />
-        }
-      </div>
+      <div className={"row"}>
+        <div className={'col-t graph-card new-page'}>
+          <h4 className={'graph-title'}>REŤAZOVÝ INDEX</h4>
+          {
+            <ReactApexChart
+              options={chainOptions}
+              series={chainSeries}
+              type="bar"
+              height={450}
+            />
+          }
+        </div>
 
-      <div className={'graph-card new-page-after'}>
-        <h4 className={'graph-title'}>PERCENTO ZMENY NÁKLADOV</h4>
-        {
-          <ReactApexChart
-            options={costDiffOptions}
-            series={costDiffSeries}
-            type="bar"
-            height={450}
-          />
-        }
+        <div className={'col-t graph-card new-page-after'}>
+          <h4 className={'graph-title'}>PERCENTO ZMENY NÁKLADOV</h4>
+          {
+            <ReactApexChart
+              options={costDiffOptions}
+              series={costDiffSeries}
+              type="bar"
+              height={450}
+            />
+          }
+        </div>
       </div>
-      <div className={'graph-card'}>
-        <h4 className={'graph-title'}>PERCENTO ZMENY VÝNOSOV</h4>
-        {
-          <ReactApexChart
-            options={incomeDiffOptions}
-            series={incomeDiffSeries}
-            type="bar"
-            height={450}
-          />
-        }
-      </div>
-      <div className={'graph-card'}>
-        <h4 className={'graph-title'}>KOFICIENT REAKCIE</h4>
-        {
-          <ReactApexChart
-            options={reactionOptions}
-            series={reactionSeries}
-            type="bar"
-            height={450}
-          />
-        }
+      <div className={"row new-page-after"}>
+        <div className={'col-t graph-card'} >
+          <h4 className={'graph-title'}>PERCENTO ZMENY VÝNOSOV</h4>
+          {
+            <ReactApexChart
+              options={incomeDiffOptions}
+              series={incomeDiffSeries}
+              type="bar"
+              height={450}
+            />
+          }
+        </div>
+        <div className={'col-t graph-card'}>
+          <h4 className={'graph-title'}>KOFICIENT REAKCIE</h4>
+          {
+            <ReactApexChart
+              options={reactionOptions}
+              series={reactionSeries}
+              type="bar"
+              height={450}
+            />
+          }
+        </div>
       </div>
     </div>
   );

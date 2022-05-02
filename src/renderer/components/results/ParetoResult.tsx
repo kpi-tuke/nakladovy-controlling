@@ -76,6 +76,10 @@ export default function ParetoResult(props: any) {
     markers: {
       size: 1,
     },
+    legend: {
+      show: true,
+    },
+
   };
 
   return (
@@ -91,7 +95,7 @@ export default function ParetoResult(props: any) {
             'Štruktúra nákladov (%)',
             'Kumulovaná štruktúra nákladov (%)',
           ]}
-          inputs={[...props.result.causes]}
+          inputs={[...props.result.causes.map((value: string) => [value, ""])]}
           data={props.result.values.map((value: string, idx: number) => {
             return [
               value,

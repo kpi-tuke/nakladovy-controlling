@@ -123,7 +123,7 @@ export default function HeaderBar(props: any) {
             )}
 
             <div className={'col-6 header-button'} onClick={save}>
-              Uložiť
+              🖫 Uložiť
             </div>
           </>
         )}

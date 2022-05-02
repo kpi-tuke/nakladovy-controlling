@@ -105,17 +105,18 @@ export default function EconomicResult({
           height={420}
         />
       </div>
-
-      <div className={'graph-card new-page-after'}>
-        <h4 className={'graph-title'}>
-          EKONOMICKÉ UKAZOVATELE V SLEDOVANOM OBDOBÍ
-        </h4>
-        <ReactApexChart
-          options={colOptions}
-          series={colSeries}
-          type="bar"
-          height={420}
-        />
+      <div className={"row"}>
+        <div className={'col-12 graph-card new-page-after'}>
+          <h4 className={'graph-title'}>
+            EKONOMICKÉ UKAZOVATELE V SLEDOVANOM OBDOBÍ
+          </h4>
+          <ReactApexChart
+            options={colOptions}
+            series={colSeries}
+            type="bar"
+            height={420}
+          />
+        </div>
       </div>
     </div>
   );

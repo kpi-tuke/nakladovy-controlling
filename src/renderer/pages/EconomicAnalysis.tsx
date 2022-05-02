@@ -35,7 +35,7 @@ export default function EconomicAnalysis(props: any) {
           back={'taskselect'}
         />
       )}
-      <div className={'row'}>
+      <div className={'row'} style={{ height: 120}}>
         <div className={'col-5'} />
         <div className={'col-2'}>
           <h1 className={'result-h1'}>Vstupy</h1>

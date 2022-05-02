@@ -2,8 +2,20 @@ import TableStatic from '../TableStatic';
 import ReactApexChart from 'react-apexcharts';
 import { useCVPGraph } from '../graphOptions';
 import { ApexOptions } from 'apexcharts';
+import {useEffect, useState} from "react";
 
 export default function CVPResult(props: any) {
+
+  const [matches, setMatches] = useState(
+    window.matchMedia("(min-width: 768px)").matches
+  )
+
+  useEffect(() => {
+    window
+      .matchMedia("(min-width: 768px)")
+      .addEventListener('change', e => setMatches( e.matches ));
+  }, []);
+
   const graphs: {
     value: string;
     graph: ApexOptions;
@@ -56,7 +68,8 @@ export default function CVPResult(props: any) {
     const graph: ApexOptions = useCVPGraph(
       osX.map((x: number) => x.toString()),
       props.result.zeroTon[idx],
-      props.result.zeroProf[idx]
+      props.result.zeroProf[idx],
+      matches
     );
     const series = [
       {

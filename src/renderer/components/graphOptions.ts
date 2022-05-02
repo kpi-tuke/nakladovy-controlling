@@ -145,18 +145,11 @@ export const useColGraph = (osX: string[], titleY?: string, titleX?: string): Ap
 export const useCVPGraph = (
   osX: string[],
   zeroTon: number,
-  zeroProf: number
+  zeroProf: number,
+  matches: boolean
 ): ApexOptions => {
 
-  const [matches, setMatches] = useState(
-    window.matchMedia("(min-width: 768px)").matches
-  )
 
-  useEffect(() => {
-    window
-      .matchMedia("(min-width: 768px)")
-      .addEventListener('change', e => setMatches( e.matches ));
-  }, []);
 
   return {
     chart: {

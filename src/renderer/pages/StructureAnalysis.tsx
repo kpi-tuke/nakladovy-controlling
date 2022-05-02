@@ -13,7 +13,7 @@ export default function StructureAnalysis(props:any) {
   const selectCol = [
     {value: 7, label: 'Priamy materiál'},
     {value: 8, label: 'Priame mzdy'},
-    {value: 9, label: 'Ostatné priame náklady'},
+    {value: 9, label: 'Ostatné náklady'},
     {value: 10, label: 'Výrobná réžia'},
     {value: 11, label: 'Správna réžia'},
     {value: 12, label: 'Odbytová réžia'},

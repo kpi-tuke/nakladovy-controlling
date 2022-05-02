@@ -206,10 +206,19 @@ export function paretoResult(data: number[][], items: string[]) {
   let val: number = 0;
 
   for (const [key, value] of map.entries()) {
-    temp = parseFloat((temp + (value * 100) / sum).toFixed(12));
+    if (sum === 0 )
+      temp = 0
+    else
+      temp = parseFloat((temp + (value * 100) / sum).toFixed(12));
+
     val = parseFloat((val + value).toFixed(12));
     valuesKumul[idx] = val;
-    percentages[idx] = Math.round((value * 10000) / sum) / 100;
+
+    if (sum === 0 )
+      percentages[idx] = 0
+    else
+      percentages[idx] = Math.round((value * 10000) / sum) / 100;
+
     percentagesKumul[idx] = Math.round(temp * 100) / 100;
     causes.push(key);
     values.push(value);

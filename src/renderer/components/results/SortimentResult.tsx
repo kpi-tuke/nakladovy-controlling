@@ -71,32 +71,34 @@ export default function SortimentResult(props: any) {
             options={rentabilityOptions}
             series={series}
             type="bar"
-            height={450}
+            height={420}
           />
         }
       </div>
-      <div className={'graph-card'}>
-        <h4 className={'graph-title'}>HRUBÉ ROZPÄTIE</h4>
-        {
-          <ReactApexChart
-            options={marginOptions}
-            series={series2}
-            type="bar"
-            height={450}
-          />
-        }
-      </div>
+      <div className={"row"}>
+        <div className={'col-t graph-card'}>
+          <h4 className={'graph-title'}>HRUBÉ ROZPÄTIE</h4>
+          {
+            <ReactApexChart
+              options={marginOptions}
+              series={series2}
+              type="bar"
+              height={420}
+            />
+          }
+        </div>
 
-      <div className={'graph-card new-page'}>
-        <h4 className={'graph-title'}>PRÍSPEVOK NA ÚHRADU</h4>
-        {
-          <ReactApexChart
-            options={allowanceOptions}
-            series={series3}
-            type="bar"
-            height={450}
-          />
-        }
+        <div className={'col-t graph-card new-page'}>
+          <h4 className={'graph-title'}>PRÍSPEVOK NA ÚHRADU</h4>
+          {
+            <ReactApexChart
+              options={allowanceOptions}
+              series={series3}
+              type="bar"
+              height={420}
+            />
+          }
+        </div>
       </div>
     </div>
   );
