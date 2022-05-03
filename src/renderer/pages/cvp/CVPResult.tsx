@@ -1,6 +1,6 @@
-import TableStatic from '../TableStatic';
+import TableStatic from '../../components/TableStatic';
 import ReactApexChart from 'react-apexcharts';
-import { useCVPGraph } from '../graphOptions';
+import { useCVPGraph } from '../../components/graphOptions';
 import { ApexOptions } from 'apexcharts';
 import {useEffect, useState} from "react";
 
@@ -21,6 +21,7 @@ export default function CVPResult(props: any) {
     graph: ApexOptions;
     series: { name: string; data: number[] }[];
   }[] = [];
+
   props.result.items.map((value: any, idx: number) => {
     const costTotal: number[] = [];
     const incomeTotal: number[] = [];
@@ -126,8 +127,8 @@ export default function CVPResult(props: any) {
       <h1 className={'result-h1 new-page'}>Dashboarding</h1>
 
       {graphs.map((graph, idx) => (
-        <div className={idx % 2 === 0 && idx !== 0 ? 'new-page' : ''}>
-          <div key={idx} className={'col-12'}>
+        <div key={idx} className={idx % 2 === 0 && idx !== 0 ? 'new-page' : ''}>
+          <div className={'col-12'}>
             <div className={'graph-card'}>
               <h4 className={'graph-title'}>
                 {'NULOVÝ BOD: ' + graph.value.toUpperCase()}

@@ -1,11 +1,11 @@
-import TableDynamic from '../components/TableDynamic';
-import CVPResult from '../components/results/CVPResult';
-import SingleInput from '../components/SingleInput';
-import HeaderBar from '../components/HeaderBar';
-import { CVPActions, selectCVP } from 'renderer/store/slice';
+import TableDynamic from '../../components/TableDynamic';
+import CVPResult from './CVPResult';
+import SingleInput from '../../components/SingleInput';
+import HeaderBar from '../../components/HeaderBar';
 import { useAppSelector } from 'renderer/store/hooks';
-import TextField from '../components/TextField';
+import TextField from '../../components/TextField';
 import { cvpResult } from 'renderer/calculations';
+import {CVPActions, selectCVP} from "./cvpSlice";
 
 export default function CVPAnalysis(props:any) {
   const { headers, data, items, values, fixTotal, minProfit, text } =

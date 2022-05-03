@@ -2,16 +2,16 @@ import HeaderBar from '../components/HeaderBar';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import {
-  CVPActions,
-  economicActions,
-  indexActions,
-  paretoActions,
   projectActions,
-  reportActions,
   selectProject,
-  sortimentActions,
-  structureActions,
-} from '../store/slice';
+} from '../store/projectSlice';
+import {CVPActions} from "./cvp/cvpSlice";
+import {economicActions} from "./economic/economicSlice";
+import {indexActions} from "./index/indexSlice";
+import {paretoActions} from "./pareto/paretoSlice";
+import {sortimentActions} from "./sortiment/sortimentSlice";
+import {structureActions} from "./structure/structureSlice";
+import {evaluationActions} from "./evaluation/evaluationSlice";
 
 export default function WelcomePage() {
   const navigate = useNavigate();
@@ -24,7 +24,7 @@ export default function WelcomePage() {
     dispatch(indexActions.reset());
     dispatch(sortimentActions.reset());
     dispatch(paretoActions.reset());
-    dispatch(reportActions.reset());
+    dispatch(evaluationActions.reset());
     dispatch(projectActions.setCreated());
     navigate('/taskselect');
   }
@@ -35,13 +35,13 @@ export default function WelcomePage() {
     // @ts-ignore
     window.electron.onOpen('open', (arg) => {
       const json = JSON.parse(arg);
-      dispatch(economicActions.open(json.economic));
-      dispatch(structureActions.open(json.structure));
-      dispatch(CVPActions.open(json.cvp));
-      dispatch(indexActions.open(json.chain));
-      dispatch(sortimentActions.open(json.sortiment));
-      dispatch(paretoActions.open(json.pareto));
-      dispatch(reportActions.open(json.tasks));
+      dispatch(economicActions.openProject(json.economic));
+      dispatch(structureActions.openProject(json.structure));
+      dispatch(CVPActions.openProject(json.cvp));
+      dispatch(indexActions.openProject(json.chain));
+      dispatch(sortimentActions.openProject(json.sortiment));
+      dispatch(paretoActions.openProject(json.pareto));
+      dispatch(evaluationActions.openProject(json.tasks));
       navigate('/taskselect');
     });
   }

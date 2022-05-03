@@ -1,10 +1,10 @@
 import SelectCard from '../components/SelectCard';
 import HeaderBar from '../components/HeaderBar';
 import { useAppSelector } from '../store/hooks';
-import { selectReport } from '../store/slice';
+import {selectEvaluation} from "./evaluation/evaluationSlice";
 
 export default function TaskSelection() {
-  const {tasks} = useAppSelector(selectReport);
+  const {tasks} = useAppSelector(selectEvaluation);
   return (
     <div
       className={"selection-container"}

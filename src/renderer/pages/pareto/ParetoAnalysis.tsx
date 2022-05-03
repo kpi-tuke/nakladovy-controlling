@@ -1,10 +1,10 @@
-import TableDynamic from '../components/TableDynamic';
-import ParetoResult from '../components/results/ParetoResult';
-import HeaderBar from '../components/HeaderBar';
+import TableDynamic from '../../components/TableDynamic';
+import ParetoResult from './ParetoResult';
+import HeaderBar from '../../components/HeaderBar';
 import {useAppSelector} from 'renderer/store/hooks';
-import {paretoActions, selectPareto} from 'renderer/store/slice';
-import TextField from '../components/TextField';
+import TextField from '../../components/TextField';
 import {paretoResult} from 'renderer/calculations';
+import {paretoActions, selectPareto} from "./paretoSlice";
 
 export default function ParetoAnalysis(props:any) {
   const {headers, values, items, data, text} = useAppSelector(selectPareto);

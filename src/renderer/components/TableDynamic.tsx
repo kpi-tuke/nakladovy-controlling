@@ -298,7 +298,7 @@ export default function TableDynamic(props: any) {
       </div>
 
       <div className={'table-card row hideInScreen'}>
-        <div className={'col-5'}>
+        <div className={'col-4'}>
           {separatedHeaders.map((_table, idx) => (
             <table
               key={idx + 'input'}
@@ -328,7 +328,7 @@ export default function TableDynamic(props: any) {
           ))}
         </div>
 
-        <div className={'table-data col-7 row'}>
+        <div className={'table-data col-8 row'}>
           {separatedData.map((table, idx) => (
             <table key={idx + 'data'} className={'col-12 table'}>
               <thead>

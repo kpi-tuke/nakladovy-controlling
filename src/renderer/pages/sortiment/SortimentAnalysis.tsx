@@ -1,10 +1,10 @@
-import TableDynamic from '../components/TableDynamic';
-import SortimentResult from '../components/results/SortimentResult';
-import HeaderBar from '../components/HeaderBar';
-import {selectSortiment, sortimentActions} from 'renderer/store/slice';
+import TableDynamic from '../../components/TableDynamic';
+import SortimentResult from './SortimentResult';
+import HeaderBar from '../../components/HeaderBar';
 import {useAppSelector} from 'renderer/store/hooks';
-import TextField from "../components/TextField";
+import TextField from "../../components/TextField";
 import {sortimentResult} from 'renderer/calculations';
+import {selectSortiment, sortimentActions} from "./sortimentSlice";
 
 export default function SortimentAnalysis(props:any) {
 

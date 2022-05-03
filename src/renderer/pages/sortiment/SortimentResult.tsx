@@ -1,7 +1,7 @@
-import TableStatic from '../TableStatic';
+import TableStatic from '../../components/TableStatic';
 import ReactApexChart from 'react-apexcharts';
 import { ApexOptions } from 'apexcharts';
-import { useColGraph } from '../graphOptions';
+import { useColGraph } from '../../components/graphOptions';
 
 export default function SortimentResult(props: any) {
   let series = [];

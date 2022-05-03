@@ -1,5 +1,5 @@
 import ReactApexChart from 'react-apexcharts';
-import TableStatic from '../TableStatic';
+import TableStatic from '../../components/TableStatic';
 
 export default function ParetoResult(props: any) {
   const barChart = {

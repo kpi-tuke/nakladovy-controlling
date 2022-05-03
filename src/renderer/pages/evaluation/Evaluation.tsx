@@ -1,15 +1,15 @@
-import HeaderBar from '../components/HeaderBar';
-import { useAppSelector } from '../store/hooks';
-import { selectReport } from '../store/slice';
-import EconomicAnalysis from './EconomicAnalysis';
-import StructureAnalysis from './StructureAnalysis';
-import CVPAnalysis from './CVPAnalysis';
-import IndexAnalysis from './IndexAnalysis';
-import ParetoAnalysis from './ParetoAnalysis';
-import SortimentAnalysis from './SortimentAnalysis';
+import HeaderBar from '../../components/HeaderBar';
+import { useAppSelector } from '../../store/hooks';
+import EconomicAnalysis from '../economic/EconomicAnalysis';
+import StructureAnalysis from '../structure/StructureAnalysis';
+import CVPAnalysis from '../cvp/CVPAnalysis';
+import IndexAnalysis from '../index/IndexAnalysis';
+import ParetoAnalysis from '../pareto/ParetoAnalysis';
+import SortimentAnalysis from '../sortiment/SortimentAnalysis';
+import {selectEvaluation} from "./evaluationSlice";
 
 export default function Evaluation() {
-  const { tasks } = useAppSelector(selectReport);
+  const { tasks } = useAppSelector(selectEvaluation);
 
   return (
     <div>

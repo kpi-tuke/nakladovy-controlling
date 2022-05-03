@@ -1,24 +1,24 @@
 import {configureStore} from '@reduxjs/toolkit'
 import {
-  economicReducer,
-  chainReducer,
-  CVPReducer,
-  paretoReducer,
-  reportReducer,
-  sortimentReducer,
-  structureReducer,
   projectReducer
-} from './slice'
+} from './projectSlice'
+import {CVPReducer} from "../pages/cvp/cvpSlice";
+import {economicReducer} from "../pages/economic/economicSlice";
+import {indexReducer} from "../pages/index/indexSlice";
+import {paretoReducer} from "../pages/pareto/paretoSlice";
+import {sortimentReducer} from "../pages/sortiment/sortimentSlice";
+import {structureReducer} from "../pages/structure/structureSlice";
+import {evaluationReducer} from "../pages/evaluation/evaluationSlice";
 
 export const store = configureStore({
   reducer: {
     economic: economicReducer,
     sortiment: sortimentReducer,
-    chain: chainReducer,
+    index: indexReducer,
     cvp: CVPReducer,
     structure: structureReducer,
     pareto: paretoReducer,
-    report: reportReducer,
+    evaluation: evaluationReducer,
     project: projectReducer
   },
 })

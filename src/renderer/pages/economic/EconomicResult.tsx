@@ -1,6 +1,6 @@
 import ReactApexChart from 'react-apexcharts';
-import TableStatic from '../TableStatic';
-import { useColGraph, useLineGraph } from '../graphOptions';
+import TableStatic from '../../components/TableStatic';
+import { useColGraph, useLineGraph } from '../../components/graphOptions';
 import { ApexOptions } from 'apexcharts';
 
 export interface r {
@@ -105,8 +105,8 @@ export default function EconomicResult({
           height={420}
         />
       </div>
-      <div className={"row"}>
-        <div className={'col-12 graph-card new-page-after'}>
+
+        <div className={'graph-card new-page-after'}>
           <h4 className={'graph-title'}>
             EKONOMICKÉ UKAZOVATELE V SLEDOVANOM OBDOBÍ
           </h4>
@@ -117,7 +117,7 @@ export default function EconomicResult({
             height={420}
           />
         </div>
-      </div>
+
     </div>
   );
 }

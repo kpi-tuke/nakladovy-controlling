@@ -1,14 +1,14 @@
 import {HashRouter as Router, Route, Routes, Navigate} from 'react-router-dom';
 import TaskSelection from "./pages/TaskSelection";
-import StructureAnalysis from "./pages/StructureAnalysis";
-import IndexAnalysis from './pages/IndexAnalysis';
-import CVPAnalysis from "./pages/CVPAnalysis";
-import SortimentAnalysis from "./pages/SortimentAnalysis";
-import ParetoAnalysis from "./pages/ParetoAnalysis";
+import StructureAnalysis from "./pages/structure/StructureAnalysis";
+import IndexAnalysis from './pages/index/IndexAnalysis';
+import CVPAnalysis from "./pages/cvp/CVPAnalysis";
+import SortimentAnalysis from "./pages/sortiment/SortimentAnalysis";
+import ParetoAnalysis from "./pages/pareto/ParetoAnalysis";
 import {Provider} from "react-redux";
 import {store} from "./store/store";
-import EconomicAnalysis from './pages/EconomicAnalysis';
-import Evaluation from './pages/Evaluation';
+import EconomicAnalysis from './pages/economic/EconomicAnalysis';
+import Evaluation from './pages/evaluation/Evaluation';
 import "./ScreenStyle.css"
 import WelcomePage from "./pages/WelcomePage";
 

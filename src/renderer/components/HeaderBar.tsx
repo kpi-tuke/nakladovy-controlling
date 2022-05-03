@@ -1,15 +1,12 @@
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
-import {
-  reportActions,
-  selectChain,
-  selectCVP,
-  selectEconomic,
-  selectPareto,
-  selectReport,
-  selectSortiment,
-  selectStructure,
-} from '../store/slice';
+import {selectCVP} from "../pages/cvp/cvpSlice";
+import {selectEconomic} from "../pages/economic/economicSlice";
+import {selectIndex} from "../pages/index/indexSlice";
+import {selectPareto} from "../pages/pareto/paretoSlice";
+import {selectSortiment} from "../pages/sortiment/sortimentSlice";
+import {selectStructure} from "../pages/structure/structureSlice";
+import {evaluationActions, selectEvaluation} from "../pages/evaluation/evaluationSlice";
 
 export default function HeaderBar(props: any) {
   const dispatch = useAppDispatch();
@@ -17,11 +14,11 @@ export default function HeaderBar(props: any) {
   const navigate = useNavigate();
 
   function addToReport(id: string) {
-    dispatch(reportActions.addTask(id));
+    dispatch(evaluationActions.addTask(id));
   }
 
   function removeFromReport(id: string) {
-    dispatch(reportActions.removeTask(id));
+    dispatch(evaluationActions.removeTask(id));
     console.log(id);
   }
 
@@ -38,9 +35,9 @@ export default function HeaderBar(props: any) {
   const structure = useAppSelector(selectStructure);
   const cvp = useAppSelector(selectCVP);
   const sortiment = useAppSelector(selectSortiment);
-  const chain = useAppSelector(selectChain);
+  const chain = useAppSelector(selectIndex);
   const pareto = useAppSelector(selectPareto);
-  const { tasks } = useAppSelector(selectReport);
+  const { tasks } = useAppSelector(selectEvaluation);
 
   function save() {
     const json = JSON.stringify({
