@@ -4,16 +4,17 @@ import groupedOptions from '../../chartOfAccounts';
 import TableDynamic from '../../components/TableDynamic';
 import {useSelector} from 'react-redux';
 import TextField from "../../components/TextField";
-import {indexResult, sortTable} from 'renderer/calculations';
 import {useAppDispatch} from "../../store/hooks";
 import {useState} from "react";
 import {indexActions, selectIndex} from "./indexSlice"
+import {indexCalculation} from "./indexCalculation";
+import {sortTable} from "../../helper";
 
 export default function IndexAnalysis(props:any) {
 
   const {headers, items, data, values, text, accounts} = useSelector(selectIndex);
   const dispatch = useAppDispatch()
-  const result = indexResult(data, headers, values)
+  const result = indexCalculation(data, headers, values)
   const [analytic, setAnalytic] = useState<boolean>(false)
 
   function sort() {

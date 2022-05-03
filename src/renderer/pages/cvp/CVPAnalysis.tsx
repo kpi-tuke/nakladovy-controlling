@@ -4,14 +4,14 @@ import SingleInput from '../../components/SingleInput';
 import HeaderBar from '../../components/HeaderBar';
 import { useAppSelector } from 'renderer/store/hooks';
 import TextField from '../../components/TextField';
-import { cvpResult } from 'renderer/calculations';
 import {CVPActions, selectCVP} from "./cvpSlice";
+import {cvpCalculation} from "./cvpCalculation";
 
 export default function CVPAnalysis(props:any) {
   const { headers, data, items, values, fixTotal, minProfit, text } =
     useAppSelector(selectCVP);
 
-  const result = cvpResult(data, fixTotal, minProfit);
+  const result = cvpCalculation(data, fixTotal, minProfit);
 
   return (
     <div className={'task-container'}>

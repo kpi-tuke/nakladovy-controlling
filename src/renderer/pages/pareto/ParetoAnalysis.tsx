@@ -3,13 +3,13 @@ import ParetoResult from './ParetoResult';
 import HeaderBar from '../../components/HeaderBar';
 import {useAppSelector} from 'renderer/store/hooks';
 import TextField from '../../components/TextField';
-import {paretoResult} from 'renderer/calculations';
 import {paretoActions, selectPareto} from "./paretoSlice";
+import {paretoCalculation} from "./paretoCalculation";
 
 export default function ParetoAnalysis(props:any) {
   const {headers, values, items, data, text} = useAppSelector(selectPareto);
 
-  const result = paretoResult(data, items);
+  const result = paretoCalculation(data, items);
 
   return (
     <div className={'task-container'}>

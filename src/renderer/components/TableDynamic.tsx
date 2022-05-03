@@ -1,7 +1,7 @@
 import { ChangeEvent } from 'react';
 import Select from 'react-select';
 import { useAppDispatch } from 'renderer/store/hooks';
-import { splitTable } from '../calculations';
+import {splitTable} from "../helper";
 
 export default function TableDynamic(props: any) {
   const dispatch = useAppDispatch();

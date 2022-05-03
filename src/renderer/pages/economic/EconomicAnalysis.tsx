@@ -3,10 +3,11 @@ import HeaderBar from '../../components/HeaderBar';
 import groupedOptions from '../../chartOfAccounts';
 import TableDynamic from '../../components/TableDynamic';
 import TextField from '../../components/TextField';
-import { economicResult, sortTable } from 'renderer/calculations';
 import { useAppDispatch, useAppSelector } from 'renderer/store/hooks';
 import { useState } from 'react';
 import {economicActions, selectEconomic} from "./economicSlice";
+import {sortTable} from "../../helper";
+import {economicCalculation} from "./economicCalculation";
 
 export default function EconomicAnalysis(props: any) {
   const { headers, items, data, values, text, accounts } =
@@ -90,7 +91,7 @@ export default function EconomicAnalysis(props: any) {
         actions={economicActions}
       />
 
-      <EconomicResult result={{ headers, ...economicResult(data, values) }} />
+      <EconomicResult result={{ headers, ...economicCalculation(data, values) }} />
 
       <TextField text={text} action={economicActions.changeText} />
     </div>
