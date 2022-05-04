@@ -3,6 +3,7 @@ import {changeAccount, defaultState, openProject, rootReducer} from "../../store
 import {RootState} from "../../store/store";
 
 const initialIndexState: defaultState = {
+  corner: "Ekonomická položka (€)",
   headers: ['Bázický rok', '2000', '2001'],
   data: [
     [0, 0, 0],

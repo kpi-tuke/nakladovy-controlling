@@ -8,6 +8,7 @@ export interface CVPState extends defaultState {
 }
 
 const initialCVPState: CVPState = {
+  corner: "Názov výrobku",
   headers: [
     '(Q) - objem produkcie (ks...)',
     '(Pcj) - predajná cena jednotková (€)',

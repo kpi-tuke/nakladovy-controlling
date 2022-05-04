@@ -2,29 +2,34 @@ import ReactApexChart from 'react-apexcharts';
 import TableStatic from '../../components/TableStatic';
 import { useColGraph } from '../../components/graphOptions';
 import { ApexOptions } from 'apexcharts';
+import {structureCalculation} from "./structureCalculation";
+import {useAppSelector} from "../../store/hooks";
+import {selectStructure} from "./structureSlice";
 
-export default function StructureResult(props: any) {
+export default function StructureResult() {
+  const {data, items, headers} = useAppSelector(selectStructure)
+  const {rowSums, totalCost, colSums} = structureCalculation(data)
   const genericSeries = [
     {
       name: "Druhové",
-      data: props.result.rowSums,
+      data: rowSums,
     },
   ];
 
   const calculationSeries = [
     {
       name: "Kalkulačné",
-      data: props.result.colSums,
+      data: colSums,
     },
   ];
 
   const genericOptions = {
-    ...useColGraph(props.result.items, 'Náklady (€)'),
+    ...useColGraph(items, 'Náklady (€)'),
     legend: { show: false },
     plotOptions: { bar: { distributed: true } },
   };
   const calculationOptions = {
-    ...useColGraph(props.result.headers, 'Náklady (€)'),
+    ...useColGraph(headers, 'Náklady (€)'),
     legend: { show: false },
     plotOptions: { bar: { distributed: true } },
   };
@@ -51,7 +56,7 @@ export default function StructureResult(props: any) {
     fill: {
       type: 'gradient',
     },
-    labels: props.result.items,
+    labels: items,
   };
   const donutChart: ApexOptions = {
     chart: {
@@ -75,7 +80,7 @@ export default function StructureResult(props: any) {
     fill: {
       type: 'gradient',
     },
-    labels: props.result.headers,
+    labels: headers,
   };
 
 
@@ -86,21 +91,21 @@ export default function StructureResult(props: any) {
       <div className={'table-card'} style={{ marginTop: 50 }}>
         <TableStatic
           corner={"Nákladové druhy"}
-          header={[...props.result.items, 'SPOLU']}
+          header={[...items, 'SPOLU']}
           inputs={[
             ['(Nj) - náklady jednotkové (€)', ''],
             ['(Š) - štruktúra (%)', ''],
           ]}
           data={[
             [
-              ...props.result.rowSums.map((value: number) => value.toString()),
-              props.result.totalCost.toString(),
+              ...rowSums.map((value: number) => value.toString()),
+              totalCost.toString(),
             ],
             [
-              ...props.result.rowSums.map((value: number) => {
-                if (props.result.totalCost === 0) return '100';
+              ...rowSums.map((value: number) => {
+                if (totalCost === 0) return '100';
                 return (
-                  Math.round((value / props.result.totalCost) * 10000) / 100
+                  Math.round((value / totalCost) * 10000) / 100
                 ).toString();
               }),
               '100',
@@ -110,21 +115,21 @@ export default function StructureResult(props: any) {
 
         <TableStatic
           corner={"Kalkulačné položky"}
-          header={[...props.result.headers, 'SPOLU']}
+          header={[...headers, 'SPOLU']}
           inputs={[
             ['(Nj) - náklady jednotkové (€)', ''],
             ['(Š) - štruktúra (%)', ''],
           ]}
           data={[
             [
-              ...props.result.colSums.map((value: number) => value.toString()),
-              props.result.totalCost.toString(),
+              ...colSums.map((value: number) => value.toString()),
+              totalCost.toString(),
             ],
             [
-              ...props.result.colSums.map((value: number) => {
-                if (props.result.totalCost === 0) return '100';
+              ...colSums.map((value: number) => {
+                if (totalCost === 0) return '100';
                 return (
-                  Math.round((value / props.result.totalCost) * 10000) / 100
+                  Math.round((value / totalCost) * 10000) / 100
                 ).toString();
               }),
               '100',
@@ -141,7 +146,7 @@ export default function StructureResult(props: any) {
           {
             <ReactApexChart
               options={pieChart}
-              series={props.result.colSums}
+              series={colSums}
               type="pie"
               height={457}
             />
@@ -166,7 +171,7 @@ export default function StructureResult(props: any) {
           {
             <ReactApexChart
               options={donutChart}
-              series={props.result.rowSums}
+              series={rowSums}
               type="donut"
               height={457}
             />

@@ -1,18 +1,23 @@
 import ReactApexChart from 'react-apexcharts';
 import TableStatic from '../../components/TableStatic';
+import {paretoCalculation} from "./paretoCalculation";
+import {useAppSelector} from "../../store/hooks";
+import {selectPareto} from "./paretoSlice";
 
-export default function ParetoResult(props: any) {
+export default function ParetoResult() {
+  const {data, items} = useAppSelector(selectPareto)
+  const {sum, values, valuesKumul, percentagesKumul, percentages, causes} = paretoCalculation(data, items)
   const barChart = {
     series: [
       {
         name: 'Pareto analyza',
         type: 'column',
-        data: props.result.values,
+        data: values,
       },
       {
         name: 'Lorenzova krivka',
         type: 'line',
-        data: props.result.percentagesKumul,
+        data: percentagesKumul,
       },
     ],
     options: {
@@ -47,11 +52,11 @@ export default function ParetoResult(props: any) {
           },
         ],
       },
-      labels: props.result.causes.map((cause: string) => cause.split(' ')),
+      labels: causes.map((cause: string) => cause.split(' ')),
       yaxis: [
         {
           min: 0,
-          max: props.result.sum,
+          max: sum,
           title: {
             text: 'Náklady (€)',
           },
@@ -95,13 +100,13 @@ export default function ParetoResult(props: any) {
             'Štruktúra nákladov (%)',
             'Kumulovaná štruktúra nákladov (%)',
           ]}
-          inputs={[...props.result.causes.map((value: string) => [value, ""])]}
-          data={props.result.values.map((value: string, idx: number) => {
+          inputs={[...causes.map((value: string) => [value, ""])]}
+          data={values.map((value: number, idx: number) => {
             return [
               value,
-              props.result.valuesKumul[idx],
-              props.result.percentages[idx],
-              props.result.percentagesKumul[idx],
+              valuesKumul[idx],
+              percentages[idx],
+              percentagesKumul[idx],
             ];
           })}
         />

@@ -1,6 +1,8 @@
 import { PayloadAction } from '@reduxjs/toolkit';
+import {WritableDraft} from "immer/dist/internal";
 
 export interface defaultState {
+  corner: string,
   headers: string[];
   data: number[][];
   items: string[];
@@ -18,6 +20,58 @@ export interface dataOnCords {
   data: number;
   row: number;
   col: number;
+}
+
+export type rootReducerType = {
+  changeAccount: (
+    state: { accounts: string[] },
+    action: { payload: dataOnIndex; type: string }
+  ) => void;
+  openProject: (
+    state: {
+      headers: string[];
+      data: number[][];
+      items: string[];
+      values: string[];
+      text: string;
+    },
+    action: { payload: defaultState; type: string }
+  ) => void;
+  reset: (state: WritableDraft<defaultState>) => void;
+  setHeadersOnIndex: (
+    state: { headers: string[] },
+    action: { payload: dataOnIndex; type: string }
+  ) => void;
+  setItemsOnIndex: (
+    state: { items: string[] },
+    action: { payload: dataOnIndex; type: string }
+  ) => void;
+  setValuesOnIndex: (
+    state: { values: string[] },
+    action: { payload: dataOnIndex; type: string }
+  ) => void;
+  setDataOnIndex: (
+    state: { data: number[][] },
+    action: { payload: dataOnCords; type: string }
+  ) => void;
+  addColumn: (state: { headers: string[]; data: number[][] }) => void;
+  addRow: (state: {
+    items: string[];
+    data: number[][];
+    accounts: string[];
+  }) => void;
+  deleteRow: (
+    state: { items: string[]; data: number[][] },
+    action: { payload: number; type: string }
+  ) => void;
+  deleteColumn: (
+    state: { headers: string[]; data: number[][] },
+    action: { payload: number; type: string }
+  ) => void;
+  changeText: (
+    state: { text: string },
+    action: { payload: string; type: string }
+  ) => void;
 }
 
 export const rootReducer = {

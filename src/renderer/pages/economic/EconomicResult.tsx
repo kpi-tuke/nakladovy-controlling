@@ -2,32 +2,13 @@ import ReactApexChart from 'react-apexcharts';
 import TableStatic from '../../components/TableStatic';
 import { useColGraph, useLineGraph } from '../../components/graphOptions';
 import { ApexOptions } from 'apexcharts';
+import {economicCalculation} from "./economicCalculation";
+import {useAppSelector} from "../../store/hooks";
+import {selectEconomic} from "./economicSlice";
 
-export interface r {
-  headers: string[];
-  costData: number[];
-  incomeData: number[];
-  profitData: number[];
-  incomeProfitabilityData: number[];
-  costProfitabilityData: number[];
-  costEfficiencyData: number[];
-  costIndicatorData: number[];
-}
-
-export default function EconomicResult({
-  result: {
-    headers,
-    costData,
-    incomeData,
-    profitData,
-    incomeProfitabilityData,
-    costProfitabilityData,
-    costEfficiencyData,
-    costIndicatorData,
-  },
-}: {
-  result: r;
-}) {
+export default function EconomicResult() {
+  const {headers, data, values} = useAppSelector(selectEconomic)
+  const {costData, incomeData, profitData, costProfitabilityData, incomeProfitabilityData, costEfficiencyData, costIndicatorData} = economicCalculation(data, values)
   const lineSeries = [
     {
       name: 'Náklady',

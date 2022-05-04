@@ -4,21 +4,20 @@ import HeaderBar from '../../components/HeaderBar';
 import {useAppSelector} from 'renderer/store/hooks';
 import TextField from '../../components/TextField';
 import {paretoActions, selectPareto} from "./paretoSlice";
-import {paretoCalculation} from "./paretoCalculation";
+import Title from "../../components/Title";
 
 export default function ParetoAnalysis(props:any) {
-  const {headers, values, items, data, text} = useAppSelector(selectPareto);
+  const { corner, headers, values, items, data, text} = useAppSelector(selectPareto);
 
-  const result = paretoCalculation(data, items);
 
   return (
     <div className={'task-container'}>
       {!props.hideHeader && <HeaderBar id={"6"} title={'Pareto analýza nákladov'}  back={"taskselect"}/>}
 
-      <h1 className={'result-h1'}>Vstupy</h1>
+      <Title/>
 
       <TableDynamic
-        corner={'Príčiny vzniku nákladov'}
+        corner={corner}
         headerType={'textCVP'}
         header={headers}
         inputType={'input'}
@@ -31,7 +30,7 @@ export default function ParetoAnalysis(props:any) {
         dynCols={false}
         actions={paretoActions}
       />
-      <ParetoResult result={{...result}}/>
+      <ParetoResult/>
 
       <TextField text={text} action={paretoActions.changeText}/>
     </div>

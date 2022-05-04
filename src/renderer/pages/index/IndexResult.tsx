@@ -2,76 +2,81 @@ import ReactApexChart from 'react-apexcharts';
 import TableStatic from '../../components/TableStatic';
 import { useColGraph } from '../../components/graphOptions';
 import { ApexOptions } from 'apexcharts';
+import {indexCalculation} from "./indexCalculation";
+import {useAppSelector} from "../../store/hooks";
+import {selectEconomic} from "../economic/economicSlice";
 
-export default function IndexResult(props: any) {
+export default function IndexResult() {
+  const {data, headers, values} = useAppSelector(selectEconomic)
+  const {chainIndexes, baseIndexes, newHeaders, costDiff, incomeDiff, costSumsForYears, incomeSumsForYears, betweenYears, reaction} = indexCalculation(data, headers, values)
   const economicSeries = [
     {
       name: 'Náklady',
-      data: props.result.costSumsForYears,
+      data: costSumsForYears,
     },
     {
       name: 'Výnosy',
-      data: props.result.incomeSumsForYears,
+      data: incomeSumsForYears,
     },
   ];
 
   const baseSeries = [
     {
       name: 'Bázický index',
-      data: props.result.baseIndexes,
+      data: baseIndexes,
     },
   ];
 
   const chainSeries = [
     {
       name: 'Percento zmeny výnosov',
-      data: props.result.chainIndexes,
+      data: chainIndexes,
     },
   ];
 
   const costDiffSeries = [
     {
       name: 'Percento zment nákladov',
-      data: props.result.costDiff,
+      data: costDiff,
     },
   ];
 
   const incomeDiffSeries = [
     {
       name: 'Percento zmeny výnosov',
-      data: props.result.incomeDiff,
+      data: incomeDiff,
     },
   ];
 
   const reactionSeries = [
     {
       name: 'Koeficient reakcie',
-      data: props.result.reaction,
+      data: reaction,
     },
   ];
 
   const economicOptions: ApexOptions = useColGraph(
-    props.result.headers,
+    newHeaders,
     'ekonomická veličina (€)'
   );
   const baseOptions: ApexOptions = {
-    ...useColGraph(props.result.headers),
+    ...useColGraph(newHeaders),
     colors: ['#2E93fA'],
   };
   const chainOptions: ApexOptions = {
-    ...useColGraph(props.result.betweenYears),
+    ...useColGraph(betweenYears),
     colors: ['#66DA26', '#E91E63'],
   };
   const costDiffOptions: ApexOptions = {
-    ...useColGraph(props.result.betweenYears),
+    ...useColGraph(betweenYears),
     colors: ['#FF9800'],
   };
   const incomeDiffOptions: ApexOptions = {
-    ...useColGraph(props.result.betweenYears),
+    ...useColGraph(betweenYears),
     colors: ['#546E7A'],
   };
   const reactionOptions: ApexOptions = {
-    ...useColGraph(props.result.betweenYears),
+    ...useColGraph(betweenYears),
     colors: ['#E91E63'],
   };
 
@@ -82,13 +87,13 @@ export default function IndexResult(props: any) {
       <div className={'table-card'}>
         <TableStatic
           corner={'Ekonomické ukazovatele'}
-          header={[...props.result.headers]}
+          header={[...newHeaders]}
           inputs={[['(Ib) - bázický index', `I_{b} = \\frac{N_{i}}{N_{b}}`]]}
-          data={[[...props.result.baseIndexes]]}
+          data={[[...baseIndexes]]}
         />
         <TableStatic
           corner={'Ekonomické ukazovatele'}
-          header={[...props.result.betweenYears]}
+          header={[...betweenYears]}
           inputs={[
             ['(Ir) - reťazový index', `I_{r} = \\frac{N_{i+1}}{N_{i}}`],
             ['(Pzn) - percento zmeny nákladov (%)', `P_{zn} = = (\\frac{N_{i+1}}{N_{i}} \\times) - 100`],
@@ -96,14 +101,14 @@ export default function IndexResult(props: any) {
             ['(Kr) - koeficient reakcie', `K_{r} = \\frac{P_{zn}}{P_{zv}}`],
           ]}
           data={[
-            [...props.result.chainIndexes],
-            [...props.result.costDiff.map((value: number) => value.toString())],
+            [...chainIndexes],
+            [...costDiff.map((value: number) => value.toString())],
             [
-              ...props.result.incomeDiff.map((value: number) =>
+              ...incomeDiff.map((value: number) =>
                 value.toString()
               ),
             ],
-            [...props.result.reaction],
+            [...reaction],
           ]}
         />
       </div>

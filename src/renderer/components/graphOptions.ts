@@ -1,17 +1,6 @@
 import { ApexOptions } from 'apexcharts';
-import {useEffect, useState} from "react";
 
 export const useLineGraph = (osX: string[]): ApexOptions => {
-
-  const [matches, setMatches] = useState(
-    window.matchMedia("(min-width: 768px)").matches
-  )
-
-  useEffect(() => {
-    window
-      .matchMedia("(min-width: 768px)")
-      .addEventListener('change', e => setMatches( e.matches ));
-  }, []);
 
   return {
     chart: {
@@ -20,7 +9,7 @@ export const useLineGraph = (osX: string[]): ApexOptions => {
         enabled: false,
       },
       toolbar: {
-        show: matches,
+        show: true,
       },
     },
     colors: [
@@ -68,16 +57,6 @@ export const useLineGraph = (osX: string[]): ApexOptions => {
 
 export const useColGraph = (osX: string[], titleY?: string, titleX?: string): ApexOptions => {
 
-  const [matches, setMatches] = useState(
-    window.matchMedia("(min-width: 768px)").matches
-  )
-
-  useEffect(() => {
-    window
-      .matchMedia("(min-width: 768px)")
-      .addEventListener('change', e => setMatches( e.matches ));
-  }, []);
-
   return {
     chart: {
       type: 'bar',
@@ -85,7 +64,7 @@ export const useColGraph = (osX: string[], titleY?: string, titleX?: string): Ap
         enabled: false,
       },
       toolbar: {
-        show: matches,
+        show: true,
       },
       redrawOnParentResize: true,
       redrawOnWindowResize: true,
@@ -146,7 +125,6 @@ export const useCVPGraph = (
   osX: string[],
   zeroTon: number,
   zeroProf: number,
-  matches: boolean
 ): ApexOptions => {
 
 
@@ -158,7 +136,7 @@ export const useCVPGraph = (
         enabled: false,
       },
       toolbar: {
-        show: matches,
+        show: true,
       },
     },
     colors: [

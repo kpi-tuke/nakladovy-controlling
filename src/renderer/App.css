@@ -1,0 +1,560 @@
+body {
+  padding: 0;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
+    Helvetica Neue, Arial, Noto Sans, sans-serif, Apple Color Emoji,
+    Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+  line-height: normal;
+  font-weight: normal;
+  font-stretch: normal;
+  font-variant: normal;
+  font-size: medium;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+.welcome {
+  padding: 20vh 20vw;
+  background-color: #f2f1f6;
+  height: 60vh;
+}
+
+.welcome-item {
+  background-color: #1a98ff;
+  padding: 1px;
+  margin-top: 3vh;
+  margin-inline: 10px;
+  cursor: pointer;
+  text-align: center;
+
+}
+
+.welcome-text {
+  background-color: white;
+  padding: 30px;
+  border: 1px solid lightgrey;
+}
+
+.welcome-h1 {
+  text-align: center;
+}
+
+.welcome-h2 {
+  color: white;
+}
+
+.info-card {
+  background-color: white;
+  padding: 0;
+
+  margin-inline: 3%;
+  max-width: 400px;
+}
+
+.info-title {
+  margin-left: 20px;
+  padding-top: 20px;
+  color: #1a98ff;
+  font-size: 16px;
+  text-align: center;
+}
+
+.info-value {
+  margin: 0 0 20px 0;
+  text-align: center;
+  font-weight: bold;
+  font-size: x-large;
+}
+
+.graph-card {
+  background-color: white;
+  padding: 10px;
+  border: 1px solid lightgrey;
+  margin-bottom: 50px;
+}
+
+.single-input {
+  width: 70%;
+  height: 30px;
+  margin-left: 15%;
+  margin-bottom: 20px;
+  text-align: center;
+  outline-width: 0;
+}
+
+.select-card {
+  background-color: white;
+  padding: 0;
+  margin-right: 50px;
+  border: 1px solid lightgrey;
+}
+
+.select-head {
+  padding: 20px;
+  background-color: #1a98ff;
+  text-align: center;
+}
+
+.select-h2 {
+  margin: auto;
+  color: white;
+}
+
+.select-body {
+  padding: 20px;
+}
+
+.select-text {
+  color: black;
+}
+
+.selection-container {
+  padding-top: 100px;
+  padding-left: 50px;
+  background-color: #f2f1f6;
+  height: 100vh;
+}
+
+.header-bar {
+  top: 0;
+  left: 0;
+  background-color: #1a98ff;
+  padding: 10px;
+  position: fixed;
+  width: 100%;
+  z-index: 1;
+}
+
+.header-title {
+  color: white;
+  font-size: xx-large;
+  text-align: center;
+  font-weight: bold;
+}
+
+.text-input {
+  height: 200px;
+  width: 100%;
+  border: 0;
+  margin-bottom: 0;
+}
+
+.task-container {
+  height: 100%;
+  padding: 50px 5% 30px;
+  background-color: #f8f9fa;
+}
+
+.table-card {
+  background-color: white;
+  padding: 0;
+  border: 1px solid lightgrey;
+}
+
+.table {
+  border-collapse: collapse;
+}
+
+.table-head {
+  background-color: #e6f7ff;
+}
+
+.table-corner {
+  text-align: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 16px;
+  height: 50px;
+  border: 1px solid lightgrey;
+}
+
+.table-analytic {
+  text-align: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 16px;
+  height: 50px;
+  width: 2vw;
+  max-width: 2vw;
+  border: 1px solid lightgrey;
+}
+
+.table-data {
+  overflow: auto;
+}
+
+.table-cell {
+  border: 1px solid lightgrey;
+  height: 50px;
+  max-height: 50px;
+  width: 12vw;
+  min-width: 12vw;
+  max-width: 12vw;
+  padding-left: 5px;
+  padding-right: 5px;
+  text-align: left;
+}
+
+.table-cell-analytic {
+  border: 1px solid lightgrey;
+  height: 50px;
+  max-height: 50px;
+  width: 2vw;
+  min-width: 2vw;
+  max-width: 2vw;
+  padding-left: 5px;
+  padding-right: 5px;
+  text-align: left;
+}
+
+.table-cell-cvp {
+  border: 1px solid lightgrey;
+  height: 50px;
+  max-height: 50px;
+  width: 19vw;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.table-cell .tooltiptext {
+  visibility: hidden;
+  background-color: white;
+  color: grey;
+  padding: 5px 10px;
+  margin-left: 10px;
+  border: 1px solid lightgrey;
+  position: absolute;
+  z-index: 1;
+}
+
+.table-cell:hover .tooltiptext {
+  visibility: visible;
+}
+
+.table-select-head {
+  text-align: center;
+  font-weight: bold;
+  font-size: medium;
+  background-color: #e6f7ff;
+  border: 0;
+  height: 100%;
+  width: 100%;
+}
+
+.table-input-head {
+  border: 0;
+  width: 100%;
+  text-align: center;
+  font-size: 15px;
+  background-color: #e6f7ff;
+  outline-width: 0;
+  font-weight: bold;
+}
+
+.table-input {
+  border: 0;
+  width: 98%;
+  height: 90%;
+  font-size: 15px;
+  text-align: center;
+}
+
+.delete-cell {
+  border: 1px solid #ff4e4e;
+  text-align: center;
+  width: 20px;
+  min-width: 20px;
+  cursor: pointer;
+  color: #ff4e4e;
+  font-weight: bold;
+}
+
+.delete-cell:hover {
+  color: white;
+  background-color: #ff4e4e;
+}
+
+.add-cell {
+  border: 1px solid #65c565;
+  text-align: center;
+  background-color: white;
+  color: #65c565;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.add-cell:hover {
+  color: white;
+  background-color: #65c565;
+}
+
+.result-h1 {
+  text-align: center;
+  margin: 60px 60px;
+}
+
+.graph-title {
+  text-align: center;
+  margin: 15px 0 0;
+}
+
+.sort-button {
+  border-color: lightgrey;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 5px;
+  margin: 60px 20px;
+  padding: 10px;
+  color: black;
+  font-weight: normal;
+  background-color: #e6f7ff;
+  text-align: center;
+  cursor: pointer;
+}
+
+.sort-button:hover {
+  background-color: white;
+}
+
+.sort-button:active {
+  background-color: #e6f7ff;
+  transform: translateY(1px);
+}
+
+.header-button {
+  border-color: white;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 5px;
+  margin-right: 20px;
+  padding-top: 10px;
+  color: white;
+  font-weight: bold;
+  background-color: #1a98ff;
+  text-align: center;
+  cursor: pointer;
+}
+
+.header-button-remove {
+  background-color: #ff4e4e;
+}
+
+.header-button:hover {
+  background-color: white;
+  color: #1a98ff;
+}
+
+.header-button:active {
+  background-color: #1a98ff;
+  transform: translateY(1px);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+}
+
+.col-1 {
+  grid-column: span 1;
+}
+
+.col-2 {
+  grid-column: span 2;
+}
+
+.col-3 {
+  grid-column: span 3;
+}
+
+.col-4 {
+  grid-column: span 4;
+}
+
+.col-5 {
+  grid-column: span 5;
+}
+
+.col-6 {
+  grid-column: span 6;
+}
+
+.col-6-12 {
+  grid-column: span 6;
+}
+
+.col-7 {
+  grid-column: span 7;
+}
+
+.col-8 {
+  grid-column: span 8;
+}
+
+.col-9 {
+  grid-column: span 9;
+}
+
+.col-10 {
+  grid-column: span 10;
+}
+
+.col-12 {
+  grid-column: span 12;
+}
+
+.col-t {
+  grid-column: span 6;
+}
+
+.space-left {
+  margin-left: 10px;
+}
+
+.space-right {
+  margin-right: 10px;
+}
+
+.print-hidden {
+  display: none;
+  visibility: hidden;
+}
+
+.hide {
+  display: grid;
+  visibility: visible;
+}
+
+.new-page {
+  page-break-before: always;
+}
+
+.new-page-after {
+  page-break-after: always;
+}
+
+.hideInScreen {
+  display: none;
+  visibility: hidden;
+}
+
+
+
+textarea {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  height: 150px;
+  width: 100%;
+  resize: none;
+  border: 1px solid lightgrey;
+}
+
+@media (max-width: 1000px) {
+  .col-t {
+    grid-column: span 12;
+  }
+
+  .space-left {
+    margin-left: 0;
+  }
+
+  .space-right {
+    margin-right: 0;
+  }
+}
+
+@media print {
+  body {
+    background-color: white;
+  }
+
+  .space-left {
+    margin-left: 0;
+  }
+
+  .space-right {
+    margin-right: 0;
+  }
+
+  .hideInPrint {
+    display: none;
+    visibility: hidden;
+  }
+
+  .hideInScreen {
+    display: grid;
+    visibility: visible;
+  }
+
+  .header-bar {
+    position: relative;
+    background-color: white;
+  }
+
+  .header-title {
+    color: #1a98ff;
+    font-size: 38px;
+  }
+
+  .header-button {
+    display: none;
+    visibility: hidden;
+  }
+
+  .task-container {
+    height: 100%;
+    padding: 0 0 0 0;
+    background-color: white;
+  }
+
+  .table-data {
+    overflow: unset;
+  }
+
+  .table-cell-analytic {
+    width: 1vw;
+    max-width: 1vw;
+    min-width: 1vw;
+  }
+
+  .table-analytic {
+    width: 1vw;
+    max-width: 1vw;
+    min-width: 1vw;
+  }
+
+  textarea {
+    border: 0;
+  }
+
+
+  .graph-card {
+    padding: 0;
+    margin: 0 0 30px;
+    border: 0;
+  }
+
+  .col-t {
+    grid-column: span 12;
+  }
+
+  .col-6-12 {
+    grid-column: span 12;
+  }
+
+  .result-h1 {
+    text-align: center;
+    margin: 20px 0 25px;
+  }
+
+  .sort-button {
+    display: none;
+    visibility: hidden;
+  }
+}

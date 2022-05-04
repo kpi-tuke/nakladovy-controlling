@@ -5,10 +5,10 @@ import groupedOptions from '../../chartOfAccounts';
 import TextField from '../../components/TextField';
 import {useAppSelector} from 'renderer/store/hooks';
 import {selectStructure, structureActions} from "./structureSlice";
-import {structureCalculation} from "./structureCalculation";
+import Title from "../../components/Title";
 
 export default function StructureAnalysis(props:any) {
-  const {headers, items, data, text} = useAppSelector(selectStructure);
+  const {corner, headers, items, data, text} = useAppSelector(selectStructure);
 
   const selectCol = [
     {value: 7, label: 'Priamy materiál'},
@@ -21,16 +21,14 @@ export default function StructureAnalysis(props:any) {
     {value: 14, label: 'Dopravná réžia'},
   ]
 
-  const result = structureCalculation(data);
-
   return (
     <div className={'task-container'}>
       {!props.hideHeader && <HeaderBar id={"2"} title={'Štruktúrna analýza'}  back={"taskselect"}/>}
 
-      <h1 className={'result-h1'}>Vstupy</h1>
+      <Title/>
 
       <TableDynamic
-        corner={'↓Nákladové druhy | Kalkulačné položky→'}
+        corner={corner}
         headerType={'select'}
         header={headers}
         inputType={'select'}
@@ -43,7 +41,7 @@ export default function StructureAnalysis(props:any) {
         actions={structureActions}
       />
 
-      <StructureResult result={{items, headers, ...result}}/>
+      <StructureResult/>
 
       <TextField text={text} action={structureActions.changeText}/>
     </div>

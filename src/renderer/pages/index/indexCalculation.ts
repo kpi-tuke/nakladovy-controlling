@@ -65,7 +65,7 @@ export function indexCalculation(data: number[][], headers: any, values: any) {
   }
 
   return {
-    headers: newHeaders,
+    newHeaders,
     costSumsForYears,
     incomeSumsForYears,
     costSumBase,

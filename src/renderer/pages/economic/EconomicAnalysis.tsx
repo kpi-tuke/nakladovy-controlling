@@ -1,37 +1,38 @@
-import EconomicResult from './EconomicResult';
+// import EconomicResult from './EconomicResult';
 import HeaderBar from '../../components/HeaderBar';
 import groupedOptions from '../../chartOfAccounts';
 import TableDynamic from '../../components/TableDynamic';
 import TextField from '../../components/TextField';
 import { useAppDispatch, useAppSelector } from 'renderer/store/hooks';
 import { useState } from 'react';
-import {economicActions, selectEconomic} from "./economicSlice";
-import {sortTable} from "../../helper";
-import {economicCalculation} from "./economicCalculation";
+import { economicActions, selectEconomic } from './economicSlice';
+import { sortTable } from '../../helper';
+// import { economicCalculation } from './economicCalculation';
+import Title from '../../components/Title';
 
 export default function EconomicAnalysis(props: any) {
-  const { headers, items, data, values, text, accounts } =
+  const { corner, headers, items, data, values, text, accounts } =
     useAppSelector(selectEconomic);
   const dispatch = useAppDispatch();
   const [analytic, setAnalytic] = useState<boolean>(false);
   function sort() {
-    if (new Set(headers).size === headers.length) {
-      const { newHeaders, newData } = sortTable(headers, data, 0);
-      dispatch(
-        economicActions.openProject({
-          headers: newHeaders,
-          data: newData,
-          items,
-          values,
-          text,
-          accounts,
-        })
-      );
-    }
+    const { newHeaders, newData } = sortTable(headers, data, 0);
+    dispatch(
+      economicActions.openProject({
+        corner: corner,
+        headers: newHeaders,
+        data: newData,
+        items,
+        values,
+        text,
+        accounts,
+      })
+    );
   }
 
   function toggleAnalytic() {
     setAnalytic(!analytic);
+    console.log(analytic);
   }
 
   return (
@@ -43,20 +44,13 @@ export default function EconomicAnalysis(props: any) {
           back={'taskselect'}
         />
       )}
-      <div className={'row'} style={{ height: 120 }}>
-        <div className={'col-3 sort-button'} onClick={toggleAnalytic}>
-          {analytic ? 'Odobrať' : 'Pridať'} analytické účty
-        </div>
-        <div className={'col-2 hideInScreen'} />
-        <div className={'col-2'} />
-        <div className={'col-2'}>
-          <h1 className={'result-h1'}>Vstupy</h1>
-        </div>
-        <div className={'col-4'} />
-        <div className={'col-1 sort-button'} onClick={sort}>
-          Zoradiť
-        </div>
-      </div>
+
+      <Title
+        sortable={true}
+        analytic={analytic}
+        toggleAnalytic={toggleAnalytic}
+        sort={sort}
+      />
 
       <div className={'row hideInPrint'}>
         {new Set(headers).size !== headers.length ? (
@@ -91,7 +85,9 @@ export default function EconomicAnalysis(props: any) {
         actions={economicActions}
       />
 
-      <EconomicResult result={{ headers, ...economicCalculation(data, values) }} />
+      {/*<EconomicResult*/}
+      {/*  result={{ headers, ...economicCalculation(data, values) }}*/}
+      {/*/>*/}
 
       <TextField text={text} action={economicActions.changeText} />
     </div>

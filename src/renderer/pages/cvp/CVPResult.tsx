@@ -2,58 +2,51 @@ import TableStatic from '../../components/TableStatic';
 import ReactApexChart from 'react-apexcharts';
 import { useCVPGraph } from '../../components/graphOptions';
 import { ApexOptions } from 'apexcharts';
-import {useEffect, useState} from "react";
+import {cvpCalculation} from "./cvpCalculation";
+import {useAppSelector} from "../../store/hooks";
+import {selectCVP} from "./cvpSlice";
 
-export default function CVPResult(props: any) {
-
-  const [matches, setMatches] = useState(
-    window.matchMedia("(min-width: 768px)").matches
-  )
-
-  useEffect(() => {
-    window
-      .matchMedia("(min-width: 768px)")
-      .addEventListener('change', e => setMatches( e.matches ));
-  }, []);
-
+export default function CVPResult() {
+  const {data, items, fixTotal, minProfit} = useAppSelector(selectCVP)
+  const { volumes, prices, zeroTon, zeroProf, zeroEur, costs } = cvpCalculation(data, fixTotal, minProfit)
   const graphs: {
     value: string;
     graph: ApexOptions;
     series: { name: string; data: number[] }[];
   }[] = [];
 
-  props.result.items.map((value: any, idx: number) => {
+  items.map((value: any, idx: number) => {
     const costTotal: number[] = [];
     const incomeTotal: number[] = [];
     const osX: number[] = [0];
 
-    if (props.result.zeroTon[idx] === 0)
-      if (props.result.volumes[idx] === 0) osX.push(5);
-      else osX.push(props.result.volumes[idx] * 2);
-    else osX.push(props.result.zeroTon[idx]);
+    if (zeroTon[idx] === 0)
+      if (volumes[idx] === 0) osX.push(5);
+      else osX.push(volumes[idx] * 2);
+    else osX.push(zeroTon[idx]);
 
-    if (props.result.zeroProf[idx] === props.result.zeroTon[idx]) {
-      if (props.result.zeroProf[idx] === 0) osX.push(osX[1] * 2);
-      else osX.push(props.result.zeroTon[idx] * 2);
-    } else osX.push(props.result.zeroProf[idx]);
+    if (zeroProf[idx] === zeroTon[idx]) {
+      if (zeroProf[idx] === 0) osX.push(osX[1] * 2);
+      else osX.push(zeroTon[idx] * 2);
+    } else osX.push(zeroProf[idx]);
 
-    if (props.result.volumes[idx] === 0)
+    if (volumes[idx] === 0)
       osX.push(Math.max(...osX) + Math.max(...osX) * 0.3);
-    else if (props.result.volumes[idx] === props.result.zeroTon[idx])
-      osX.push(Math.round(props.result.zeroTon[idx] / 2));
-    else osX.push(props.result.volumes[idx]);
+    else if (volumes[idx] === zeroTon[idx])
+      osX.push(Math.round(zeroTon[idx] / 2));
+    else osX.push(volumes[idx]);
 
     osX.push(Math.max(...osX) + Math.max(...osX) * 0.3);
 
     osX.map((vol: number) => {
       costTotal.push(
         Math.round(
-          (props.result.costs[idx] * vol + parseFloat(props.result.fixTotal)) *
+          (costs[idx] * vol + fixTotal) *
             100
         ) / 100
       );
 
-      incomeTotal.push(Math.round(props.result.prices[idx] * vol * 100) / 100);
+      incomeTotal.push(Math.round(prices[idx] * vol * 100) / 100);
     });
 
     costTotal.sort(function (a, b) {
@@ -68,9 +61,8 @@ export default function CVPResult(props: any) {
 
     const graph: ApexOptions = useCVPGraph(
       osX.map((x: number) => x.toString()),
-      props.result.zeroTon[idx],
-      props.result.zeroProf[idx],
-      matches
+      zeroTon[idx],
+      zeroProf[idx],
     );
     const series = [
       {
@@ -98,7 +90,7 @@ export default function CVPResult(props: any) {
       <div className={'table-card'}>
         <TableStatic
           corner={'Ekonomické ukazovatele'}
-          header={...props.result.items}
+          header={...items}
           inputs={[
             ['(No) - nulový bod (€)', `N_{0}=\\frac{F{n}}{1-\\frac{N_{vj}}{P_{cj}}}`],
             ['(No) - nulový bod (ks...)', `N_{0}=\\frac{F_{n}}{P_{cj}-N_{vj}}`],
@@ -106,17 +98,17 @@ export default function CVPResult(props: any) {
           ]}
           data={[
             [
-              ...props.result.zeroEur.map(
+              ...zeroEur.map(
                 (value: number) => Math.round(value * 100) / 100
               ),
             ],
             [
-              ...props.result.zeroTon.map(
+              ...zeroTon.map(
                 (value: number) => Math.round(value * 100) / 100
               ),
             ],
             [
-              ...props.result.zeroProf.map(
+              ...zeroProf.map(
                 (value: number) => Math.round(value * 100) / 100
               ),
             ],

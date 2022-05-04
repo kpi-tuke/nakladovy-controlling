@@ -103,13 +103,15 @@ export default function TableDynamic(props: any) {
       <div className={'table-card row hideInPrint'}>
         <div className={'col-5'}>
           <table className={'table'} style={{ width: '100%' }}>
+            <thead>
+            <tr className={'table-head'}>
+              <th className={'table-corner'}>{props.corner}</th>
+              {props.analytic && (
+                <th className={'table-analytic'}>Analytický účet</th>
+              )}
+            </tr>
+            </thead>
             <tbody>
-              <tr className={'table-head'}>
-                <td className={'table-corner'}>{props.corner}</td>
-                {props.analytic && (
-                  <td className={'table-analytic'}>Analytický účet</td>
-                )}
-              </tr>
               {props.inputs.map((value: string, row: number) => {
                 return (
                   <tr key={row}>
@@ -162,7 +164,7 @@ export default function TableDynamic(props: any) {
                   </tr>
                 );
               })}
-              {props.dynRows ? (
+              {props.dynRows && (
                 <tr>
                   <td
                     colSpan={2}
@@ -172,10 +174,6 @@ export default function TableDynamic(props: any) {
                   >
                     +
                   </td>
-                </tr>
-              ) : (
-                <tr>
-                  <td />
                 </tr>
               )}
             </tbody>

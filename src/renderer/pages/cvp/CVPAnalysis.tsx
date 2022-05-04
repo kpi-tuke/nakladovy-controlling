@@ -5,19 +5,17 @@ import HeaderBar from '../../components/HeaderBar';
 import { useAppSelector } from 'renderer/store/hooks';
 import TextField from '../../components/TextField';
 import {CVPActions, selectCVP} from "./cvpSlice";
-import {cvpCalculation} from "./cvpCalculation";
+import Title from "../../components/Title";
 
 export default function CVPAnalysis(props:any) {
   const { headers, data, items, values, fixTotal, minProfit, text } =
     useAppSelector(selectCVP);
 
-  const result = cvpCalculation(data, fixTotal, minProfit);
-
   return (
     <div className={'task-container'}>
       {!props.hideHeader && <HeaderBar id={'4'} title={'CVP analýza'} back={"taskselect"}/>}
 
-      <h1 className={'result-h1'}>Vstupy</h1>
+      <Title/>
 
       <div>
         <TableDynamic
@@ -52,7 +50,7 @@ export default function CVPAnalysis(props:any) {
         </div>
       </div>
 
-      <CVPResult result={{ items, ...result }} />
+      <CVPResult />
 
       <TextField text={text} action={CVPActions.changeText} />
     </div>

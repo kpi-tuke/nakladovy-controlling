@@ -2,29 +2,34 @@ import TableStatic from '../../components/TableStatic';
 import ReactApexChart from 'react-apexcharts';
 import { ApexOptions } from 'apexcharts';
 import { useColGraph } from '../../components/graphOptions';
+import {sortimentCalculation} from "./sortimentCalculation";
+import {useAppSelector} from "../../store/hooks";
+import {selectSortiment} from "./sortimentSlice";
 
-export default function SortimentResult(props: any) {
+export default function SortimentResult() {
+  const {headers, data} = useAppSelector(selectSortiment)
+  const {marginGross, marginProfit, profit, rentCost, rentIncome, allowance} = sortimentCalculation(data)
   let series = [];
-  for (let index = 0; index < props.result.headers.length; index++) {
+  for (let index = 0; index < headers.length; index++) {
     series.push({
-      name: props.result.headers[index].toString(),
-      data: [props.result.rentIncome[index], props.result.rentCost[index]],
+      name: headers[index].toString(),
+      data: [rentIncome[index], rentCost[index]],
     });
   }
 
   let series2: any[] = [];
-  for (let index = 0; index < props.result.headers.length; index++) {
+  for (let index = 0; index < headers.length; index++) {
     series2.push({
-      name: props.result.headers[index].toString(),
-      data: [props.result.marginGross[index]],
+      name: headers[index].toString(),
+      data: [marginGross[index]],
     });
   }
 
   let series3: any[] = [];
-  for (let index = 0; index < props.result.headers.length; index++) {
+  for (let index = 0; index < headers.length; index++) {
     series3.push({
-      name: props.result.headers[index].toString(),
-      data: [props.result.allowance[index]],
+      name: headers[index].toString(),
+      data: [allowance[index]],
     });
   }
 
@@ -42,7 +47,7 @@ export default function SortimentResult(props: any) {
       <div className={'table-card'}>
         <TableStatic
           corner={'Ukazovatele sortimentnej analýzy'}
-          header={[...props.result.headers]}
+          header={[...headers]}
           inputs={[
             ['(Rt) - rentabilita tržieb (%)', `R_{t}=\\frac{ZP}{P_{cj}}\\times 100`],
             ['(Rn) - rentabilita nákladov (%)', `R_{n}=\\frac{ZP}{ÚVN}\\times 100`],
@@ -52,12 +57,12 @@ export default function SortimentResult(props: any) {
             ['(Z) - Zisk pri pôvodnej výrobnej štruktúre (€)', `Z =((P_{cj} - P_{n}) - (ÚVN - P_{n})) \\times Q`],
           ]}
           data={[
-            [...props.result.rentIncome],
-            [...props.result.rentCost],
-            [...props.result.marginGross],
-            [...props.result.allowance],
-            [...props.result.marginProfit],
-            [...props.result.profit],
+            [...rentIncome],
+            [...rentCost],
+            [...marginGross],
+            [...allowance],
+            [...marginProfit],
+            [...profit],
           ]}
         />
       </div>

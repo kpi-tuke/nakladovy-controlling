@@ -3,6 +3,7 @@ import {RootState} from "../../store/store";
 import {defaultState, openProject, rootReducer} from "../../store/rootReducer";
 
 const initialSortimentState: defaultState = {
+  corner: "Ekonomická položka",
   headers: ['Výrobok A'],
   data: [[0], [0], [0], [0]],
   items: [

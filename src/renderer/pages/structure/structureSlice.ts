@@ -3,6 +3,7 @@ import {RootState} from "../../store/store";
 import {defaultState, openProject, rootReducer} from "../../store/rootReducer";
 
 const initialStructureState: defaultState = {
+  corner: "↓Nákladové druhy | Kalkulačné položky→",
   headers: ['Priamy materiál'],
   data: [[0]],
   items: ['501 – Spotreba materiálu'],

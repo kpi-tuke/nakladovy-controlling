@@ -4,22 +4,20 @@ import HeaderBar from '../../components/HeaderBar';
 import {useAppSelector} from 'renderer/store/hooks';
 import TextField from "../../components/TextField";
 import {selectSortiment, sortimentActions} from "./sortimentSlice";
-import {sortimentCalculation} from "./sortimentCalculation";
+import Title from "../../components/Title";
 
 export default function SortimentAnalysis(props:any) {
 
-  const {headers, values, data, items, text} = useAppSelector(selectSortiment);
-
-  const result = sortimentCalculation(data)
+  const {corner, headers, values, data, items, text} = useAppSelector(selectSortiment);
 
   return (
     <div className={"task-container"}>
       {!props.hideHeader && <HeaderBar id={"5"} title={'Sortimentná analýza'}  back={"taskselect"}/>}
 
-      <h1 className={'result-h1'}>Vstupy</h1>
+      <Title/>
 
       <TableDynamic
-        corner={'Ekonomická položka'}
+        corner={corner}
         headerType={'input'}
         header={headers}
         inputType={'text'}
@@ -31,7 +29,7 @@ export default function SortimentAnalysis(props:any) {
         actions={sortimentActions}
       />
 
-      <SortimentResult result={{headers, ...result}}/>
+      <SortimentResult/>
 
       <TextField text={text} action={sortimentActions.changeText}/>
     </div>

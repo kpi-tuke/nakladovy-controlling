@@ -3,6 +3,7 @@ import {defaultState, openProject, rootReducer} from "../../store/rootReducer";
 import {RootState} from "../../store/store";
 
 const initialParetoState: defaultState = {
+  corner: "Príčiny vzniku nákladov",
   headers: ['(N) - náklady (€)'],
   data: [[0]],
   items: [
