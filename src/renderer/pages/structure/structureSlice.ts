@@ -3,6 +3,8 @@ import {RootState} from "../../store/store";
 import {defaultState, openProject, rootReducer} from "../../store/rootReducer";
 
 const initialStructureState: defaultState = {
+  id: 2,
+  title: "Štruktúrna analýza",
   corner: "↓Nákladové druhy | Kalkulačné položky→",
   headers: ['Priamy materiál'],
   data: [[0]],
@@ -10,6 +12,10 @@ const initialStructureState: defaultState = {
   values: ['1'],
   text: '',
   accounts: [""],
+  sortable: false,
+  hasAnalytic: false,
+  dynRows: true,
+  dynCols: true,
 };
 
 const structureSlice = createSlice({

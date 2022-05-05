@@ -3,6 +3,8 @@ import {defaultState, openProject, rootReducer} from "../../store/rootReducer";
 import {RootState} from "../../store/store";
 
 const initialParetoState: defaultState = {
+  id: 6,
+  title: "Pareto analýza nákladov",
   corner: "Príčiny vzniku nákladov",
   headers: ['(N) - náklady (€)'],
   data: [[0]],
@@ -14,6 +16,9 @@ const initialParetoState: defaultState = {
   ],
   text: '',
   accounts: [""],
+  sortable: false,
+  hasAnalytic: false,
+  dynRows: true,
 };
 
 export const paretoSlice = createSlice({

@@ -1,10 +1,7 @@
 import SelectCard from '../components/SelectCard';
 import HeaderBar from '../components/HeaderBar';
-import { useAppSelector } from '../store/hooks';
-import {selectEvaluation} from "./evaluation/evaluationSlice";
 
 export default function TaskSelection() {
-  const {tasks} = useAppSelector(selectEvaluation);
   return (
     <div
       className={"selection-container"}
@@ -63,15 +60,6 @@ export default function TaskSelection() {
           body={'Sledovanie príčin vzniku nákladov na základe pravidla 80/20.'}
         />
       </div>
-      {tasks.length > 0 && (
-        <div className={'row'}>
-          <SelectCard
-            to={'/evaluation'}
-            head={'Ekonomické a grafické zhodnotenie analýz'}
-            body={'Výsledok.'}
-          />
-        </div>
-      )}
     </div>
   );
 }

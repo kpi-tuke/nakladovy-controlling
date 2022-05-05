@@ -8,6 +8,8 @@ export interface CVPState extends defaultState {
 }
 
 const initialCVPState: CVPState = {
+  id: 4,
+  title: "CVP analýza",
   corner: "Názov výrobku",
   headers: [
     '(Q) - objem produkcie (ks...)',
@@ -19,8 +21,11 @@ const initialCVPState: CVPState = {
   values: ['Výrobok A'],
   text: '',
   accounts: [""],
+  sortable: false,
+  hasAnalytic: false,
   fixTotal: 0,
   minProfit: 0,
+  dynRows: true
 };
 
 const CVPSlice = createSlice({

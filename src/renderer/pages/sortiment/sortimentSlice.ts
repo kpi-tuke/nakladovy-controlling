@@ -3,6 +3,8 @@ import {RootState} from "../../store/store";
 import {defaultState, openProject, rootReducer} from "../../store/rootReducer";
 
 const initialSortimentState: defaultState = {
+  id: 5,
+  title: "Sortimentná analýza",
   corner: "Ekonomická položka",
   headers: ['Výrobok A'],
   data: [[0], [0], [0], [0]],
@@ -20,6 +22,9 @@ const initialSortimentState: defaultState = {
   ],
   text: '',
   accounts: [""],
+  sortable: false,
+  hasAnalytic: false,
+  dynCols: true,
 };
 
 const sortimentSlice = createSlice({

@@ -3,6 +3,8 @@ import {changeAccount, defaultState, openProject, rootReducer} from "../../store
 import {RootState} from "../../store/store";
 
 const initialIndexState: defaultState = {
+  id: 3,
+  title: "Analýza reťazových a bázických indexov",
   corner: "Ekonomická položka (€)",
   headers: ['Bázický rok', '2000', '2001'],
   data: [
@@ -16,6 +18,10 @@ const initialIndexState: defaultState = {
   values: ['501', '666'],
   text: '',
   accounts: [""],
+  sortable: true,
+  hasAnalytic: true,
+  dynRows: true,
+  dynCols: true,
 };
 
 export const indexSlice = createSlice({

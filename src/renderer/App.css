@@ -139,6 +139,50 @@ a {
   font-weight: bold;
 }
 
+.header-button {
+  border-color: white;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 5px;
+  margin-right: 20px;
+  padding-top: 10px;
+  color: white;
+  font-weight: bold;
+  background-color: #1a98ff;
+  text-align: center;
+  cursor: pointer;
+}
+
+.header-button-remove {
+  background-color: #ff4e4e;
+}
+
+.header-button:hover {
+  background-color: white;
+  color: #1a98ff;
+}
+
+.header-button:active {
+  background-color: #1a98ff;
+  transform: translateY(1px);
+}
+
+.evaluation > .task-container >.header-bar {
+  position: relative;
+  background-color: #f8f9fa;
+  padding: 0;
+  margin-top: 6vh;
+  z-index: 0;
+}
+.evaluation > .task-container >.header-bar .header-button {
+  visibility: hidden;
+}
+
+.evaluation > .task-container > .header-bar > .header-title {
+  color: #1a98ff;
+  font-size: 40px;
+}
+
 .text-input {
   height: 200px;
   width: 100%;
@@ -328,34 +372,6 @@ a {
   transform: translateY(1px);
 }
 
-.header-button {
-  border-color: white;
-  border-width: 1px;
-  border-style: solid;
-  border-radius: 5px;
-  margin-right: 20px;
-  padding-top: 10px;
-  color: white;
-  font-weight: bold;
-  background-color: #1a98ff;
-  text-align: center;
-  cursor: pointer;
-}
-
-.header-button-remove {
-  background-color: #ff4e4e;
-}
-
-.header-button:hover {
-  background-color: white;
-  color: #1a98ff;
-}
-
-.header-button:active {
-  background-color: #1a98ff;
-  transform: translateY(1px);
-}
-
 .row {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
@@ -492,6 +508,11 @@ textarea {
     visibility: visible;
   }
 
+  .evaluation > .task-container >.header-bar {
+    visibility: visible;
+    background-color: white;
+  }
+
   .header-bar {
     position: relative;
     background-color: white;
@@ -500,6 +521,11 @@ textarea {
   .header-title {
     color: #1a98ff;
     font-size: 38px;
+  }
+
+  .evaluation > .header-bar > .header-title {
+    color: black;
+    font-size: 50px;
   }
 
   .header-button {

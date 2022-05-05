@@ -1,48 +1,34 @@
 import HeaderBar from '../../components/HeaderBar';
 import { useAppSelector } from '../../store/hooks';
-import EconomicAnalysis from '../economic/EconomicAnalysis';
-import StructureAnalysis from '../structure/StructureAnalysis';
-import CVPAnalysis from '../cvp/CVPAnalysis';
-import IndexAnalysis from '../index/IndexAnalysis';
-import ParetoAnalysis from '../pareto/ParetoAnalysis';
-import SortimentAnalysis from '../sortiment/SortimentAnalysis';
 import {selectEvaluation} from "./evaluationSlice";
 
-export default function Evaluation() {
+export default function Evaluation(props: any) {
   const { tasks } = useAppSelector(selectEvaluation);
-
   return (
-    <div>
-      {
-        // @ts-ignore
-        tasks.includes('1') && <EconomicAnalysis hideHeader={true} />
-      }
-      {
-        // @ts-ignore
-        tasks.includes('2') && <StructureAnalysis hideHeader={true} />
-      }
-      {
-        // @ts-ignore
-        tasks.includes('3') && <IndexAnalysis hideHeader={true} />
-      }
-      {
-        // @ts-ignore
-        tasks.includes('4') && <CVPAnalysis hideHeader={true} />
-      }
-      {
-        // @ts-ignore
-        tasks.includes('5') && <SortimentAnalysis hideHeader={true} />
-      }
-      {
-        // @ts-ignore
-        tasks.includes('6') && <ParetoAnalysis hideHeader={true} />
-      }
-
+    <div className={"evaluation"}>
       <HeaderBar
         addToReport={true}
         back={'taskselect'}
         title={'Vyhodnotenie'}
       />
+      {
+        tasks.includes(1) && <props.id1/>
+      }
+      {
+        tasks.includes(2) && <props.id2/>
+      }
+      {
+        tasks.includes(3) && <props.id3/>
+      }
+      {
+        tasks.includes(4) && <props.id4/>
+      }
+      {
+        tasks.includes(5) && <props.id5/>
+      }
+      {
+        tasks.includes(6) && <props.id6/>
+      }
     </div>
   );
 }

@@ -3,6 +3,8 @@ import {changeAccount, defaultState, openProject, rootReducer} from "../../store
 import {RootState} from "../../store/store";
 
 const initialEconomicState: defaultState = {
+  id: 1,
+  title: "Ekonomická analýza hospodárenia",
   corner: "Ekonomická položka (Náklady(€) /Výnosy(€))",
   headers: ['2000'],
   data: [[0], [0]],
@@ -13,6 +15,10 @@ const initialEconomicState: defaultState = {
   values: ['501', '666'],
   text: '',
   accounts: [""],
+  sortable: true,
+  hasAnalytic: true,
+  dynRows: true,
+  dynCols: true,
 };
 
 export const economicSlice = createSlice({

@@ -13,16 +13,16 @@ export default function HeaderBar(props: any) {
 
   const navigate = useNavigate();
 
-  function addToReport(id: string) {
+  function addToReport(id: number) {
     dispatch(evaluationActions.addTask(id));
   }
 
-  function removeFromReport(id: string) {
+  function removeFromReport(id: number) {
     dispatch(evaluationActions.removeTask(id));
     console.log(id);
   }
 
-  function printToPDF(id: string) {
+  function printToPDF(id: number) {
     // @ts-ignore
     window.electron.printToPdf(id, (arg) => console.log(arg));
   }

@@ -1,31 +1,29 @@
-import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {RootState} from "../../store/store";
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { RootState } from '../../store/store';
+
+const initialEvaluationState: { tasks: number[] } = {
+  tasks: [],
+};
 
 const evaluationSlice = createSlice({
   name: 'report',
-  initialState: { tasks: [] },
+  initialState: initialEvaluationState,
   reducers: {
-    addTask: (state, action: PayloadAction<string>) => {
-      // @ts-ignore
+    addTask: (state, action: PayloadAction<number>) => {
       if (!state.tasks.includes(action.payload))
-        // @ts-ignore
         state.tasks.push(action.payload);
     },
-    removeTask: (state, action: PayloadAction<string>) => {
-      // @ts-ignore
+    removeTask: (state, action: PayloadAction<number>) => {
       if (state.tasks.includes(action.payload))
-        // @ts-ignore
-        state.tasks = state.tasks.filter((id: string) => id !== action.payload);
-      console.log(state.tasks)
+        state.tasks = state.tasks.filter((id: number) => id !== action.payload);
     },
-    // @ts-ignore
+
     reset: (state) => {
       state.tasks = [];
     },
-    openProject: (state, action: PayloadAction<string[]>) => {
-      // @ts-ignore
-      state.tasks = action.payload
-    }
+    openProject: (state, action: PayloadAction<number[]>) => {
+      state.tasks = action.payload;
+    },
   },
 });
 
