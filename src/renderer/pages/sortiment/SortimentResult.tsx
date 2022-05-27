@@ -1,7 +1,7 @@
 import TableStatic from '../../components/TableStatic';
 import ReactApexChart from 'react-apexcharts';
 import { ApexOptions } from 'apexcharts';
-import { useColGraph } from '../../components/graphOptions';
+import { useColGraph } from '../../graphOptions';
 import {sortimentCalculation} from "./sortimentCalculation";
 import {useAppSelector} from "../../store/hooks";
 import {selectSortiment} from "./sortimentSlice";
@@ -80,6 +80,7 @@ export default function SortimentResult() {
           />
         }
       </div>
+
       <div className={"row"}>
         <div className={'col-t graph-card'}>
           <h4 className={'graph-title'}>HRUBÉ ROZPÄTIE</h4>

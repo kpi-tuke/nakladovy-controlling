@@ -6,7 +6,7 @@ import { indexReducer } from '../pages/index/indexSlice';
 import { paretoReducer } from '../pages/pareto/paretoSlice';
 import { sortimentReducer } from '../pages/sortiment/sortimentSlice';
 import { structureReducer } from '../pages/structure/structureSlice';
-import { evaluationReducer } from '../pages/evaluation/evaluationSlice';
+import { evaluationReducer } from '../pages/report/evaluationSlice';
 
 export const store = configureStore({
   reducer: {

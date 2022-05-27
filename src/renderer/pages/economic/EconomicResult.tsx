@@ -1,6 +1,6 @@
 import ReactApexChart from 'react-apexcharts';
 import TableStatic from '../../components/TableStatic';
-import { useColGraph, useLineGraph } from '../../components/graphOptions';
+import { useColGraph, useLineGraph } from '../../graphOptions';
 import { ApexOptions } from 'apexcharts';
 import {economicCalculation} from "./economicCalculation";
 import {useAppSelector} from "../../store/hooks";
@@ -44,6 +44,7 @@ export default function EconomicResult() {
   ];
 
   const lineOptions: ApexOptions = useLineGraph(headers);
+
   const colOptions: ApexOptions = useColGraph(headers, "koeficient");
 
   return (
@@ -87,7 +88,7 @@ export default function EconomicResult() {
         />
       </div>
 
-        <div className={'graph-card new-page-after'}>
+      <div className={'graph-card new-page-after'}>
           <h4 className={'graph-title'}>
             EKONOMICKÉ UKAZOVATELE V SLEDOVANOM OBDOBÍ
           </h4>

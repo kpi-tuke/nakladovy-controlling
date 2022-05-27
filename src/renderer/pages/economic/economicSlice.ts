@@ -41,3 +41,4 @@ export const economicSlice = createSlice({
 export const economicActions = economicSlice.actions;
 export const selectEconomic = (state: RootState) => state.economic;
 export const economicReducer = economicSlice.reducer;
+// economicSlice.getInitialState: () => State

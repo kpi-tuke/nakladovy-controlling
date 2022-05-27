@@ -1,6 +1,6 @@
 import ReactApexChart from 'react-apexcharts';
 import TableStatic from '../../components/TableStatic';
-import { useColGraph } from '../../components/graphOptions';
+import { useColGraph } from '../../graphOptions';
 import { ApexOptions } from 'apexcharts';
 import {indexCalculation} from "./indexCalculation";
 import {useAppSelector} from "../../store/hooks";

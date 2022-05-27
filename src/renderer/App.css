@@ -33,7 +33,10 @@ a {
   margin-inline: 10px;
   cursor: pointer;
   text-align: center;
+}
 
+.welcome-item > h2 {
+  color: white;
 }
 
 .welcome-text {

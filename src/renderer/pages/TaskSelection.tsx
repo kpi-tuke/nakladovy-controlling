@@ -9,8 +9,6 @@ export default function TaskSelection() {
       <HeaderBar
         title={'Ekonomické analýzy'}
         back={"welcome"}
-        addToReport={true}
-        printToPDF={true}
         save={true}
       />
       <div className={'row'} style={{ marginBottom: '10vh' }}>

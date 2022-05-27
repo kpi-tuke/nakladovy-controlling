@@ -6,7 +6,7 @@ import {selectIndex} from "../pages/index/indexSlice";
 import {selectPareto} from "../pages/pareto/paretoSlice";
 import {selectSortiment} from "../pages/sortiment/sortimentSlice";
 import {selectStructure} from "../pages/structure/structureSlice";
-import {evaluationActions, selectEvaluation} from "../pages/evaluation/evaluationSlice";
+import {evaluationActions, selectEvaluation} from "../pages/report/evaluationSlice";
 
 export default function HeaderBar(props: any) {
   const dispatch = useAppDispatch();
@@ -77,7 +77,7 @@ export default function HeaderBar(props: any) {
       <div className={'col-6-12 header-title'}>{props.title}</div>
 
       <div className={'row col-3'}>
-        {!props.addToReport ? (
+        {props.addToReport ? (
           // @ts-ignore
           tasks.includes(props.id) ? (
             <div
@@ -95,13 +95,13 @@ export default function HeaderBar(props: any) {
             </div>
           )
         ) : (
-          !props.printToPDF && (
+          props.printToPDF && (
             <>
               <div className={'col-6'} />
             </>
           )
         )}
-        {!props.printToPDF && (
+        {props.printToPDF && (
           <div
             className={'col-6 header-button'}
             onClick={() => printToPDF(props.title)}

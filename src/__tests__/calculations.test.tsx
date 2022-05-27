@@ -5,7 +5,7 @@ import {cvpCalculation} from "../renderer/pages/cvp/cvpCalculation";
 import {indexCalculation} from "../renderer/pages/index/indexCalculation";
 import {paretoCalculation} from "../renderer/pages/pareto/paretoCalculation";
 
-test('useBilanceCalc test1', () => {
+test('economicCalculation test1', () => {
   expect(
     economicCalculation(
       [
@@ -16,20 +16,17 @@ test('useBilanceCalc test1', () => {
       ['501', '502', '602']
     )
   ).toEqual({
-    costTotal: 5669185,
-    incomeTotal: 11918990,
-    profitTotal: 6249805,
     costData: [2663789, 3005396],
     incomeData: [5601048, 6317942],
     profitData: [2937259, 3312546],
-    incomeProfitabilityData: [52.44, 52.43],
-    costProfitabilityData: [110.27, 110.22],
-    costEfficiencyData: [210.27, 210.22],
-    costIndicatorData: [47.56, 47.57],
+    incomeProfitabilityData: [0.52, 0.52],
+    costProfitabilityData: [1.1, 1.1],
+    costEfficiencyData: [2.1, 2.1],
+    costIndicatorData: [0.48, 0.48],
   });
 });
 
-test('useBilanceCalc test2', () => {
+test('economicCalculation test2', () => {
   expect(
     economicCalculation(
       [
@@ -39,20 +36,17 @@ test('useBilanceCalc test2', () => {
       ['601', '501']
     )
   ).toEqual({
-    costTotal: 221166,
-    incomeTotal: 248487,
-    profitTotal: 27321,
     costData: [58625, 63625, 50516, 48400],
     incomeData: [68145, 78436, 52898, 49008],
     profitData: [9520, 14811, 2382, 608],
-    incomeProfitabilityData: [13.97, 18.88, 4.5, 1.24],
-    costProfitabilityData: [16.24, 23.28, 4.72, 1.26],
-    costEfficiencyData: [116.24, 123.28, 104.72, 101.26],
-    costIndicatorData: [86.03, 81.12, 95.5, 98.76],
+    incomeProfitabilityData: [0.14, 0.19, 0.05, 0.01],
+    costProfitabilityData: [0.16, 0.23, 0.05, 0.01],
+    costEfficiencyData: [1.16, 1.23, 1.05, 1.01],
+    costIndicatorData: [0.86, 0.81, 0.95, 0.99],
   });
 });
 
-test('useStructureCalc test', () => {
+test('structureCalculation test', () => {
   expect(
     structureCalculation([
       [584, 0, 52, 6],
@@ -69,7 +63,7 @@ test('useStructureCalc test', () => {
   });
 });
 
-test('useChainCalc test', () => {
+test('indexCalculation test', () => {
   expect(
     indexCalculation(
       [
@@ -80,11 +74,10 @@ test('useChainCalc test', () => {
       ['501', '601']
     )
   ).toEqual({
-    headers: ['2000', '2001'],
+    newHeaders: ['2000', '2001'],
     costSumsForYears: [1356220, 1442146],
     incomeSumsForYears: [5601048, 6317942],
     costSumBase: 1307569,
-    incomeSumBase: 0,
     chainIndexes: [1.06],
     baseIndexes: [1.04, 1.1],
     costDiff: [6.34],
@@ -94,7 +87,7 @@ test('useChainCalc test', () => {
   });
 });
 
-test('useCVPCalc test1', () => {
+test('CVPCalculation test1', () => {
   expect(
     cvpCalculation(
       [
@@ -110,13 +103,13 @@ test('useCVPCalc test1', () => {
     costs: [5.6, 6.8],
     fixTotal: 150870,
     minProfit: 54000,
-    zeroEur: [502900, 275981.71],
+    zeroEur: [502900, 274309.09],
     zeroTon: [62862.5, 18398.78],
     zeroProf: [85362.5, 24984.15],
   });
 });
 
-test('useCVPCalc test2', () => {
+test('CVPCalculation test2', () => {
   expect(
     cvpCalculation(
       [
@@ -138,7 +131,7 @@ test('useCVPCalc test2', () => {
   });
 });
 
-test('useSortimentCalc test1', () => {
+test('sortimentCalculation test1', () => {
   expect(
     sortimentCalculation([
       [985, 1215],
@@ -147,8 +140,8 @@ test('useSortimentCalc test1', () => {
       [8000, 4000],
     ])
   ).toEqual({
-    rentCost: [54.73, 64.45],
-    rentIncome: [35.37, 39.19],
+    rentCost: [0.55, 0.64],
+    rentIncome: [0.35, 0.39],
     marginProfit: [955, 1019],
     marginGross: [1715, 1385],
     allowance: [0.64, 0.53],
@@ -156,7 +149,7 @@ test('useSortimentCalc test1', () => {
   });
 });
 
-test('useSortimentCalc test2', () => {
+test('sortimentCalculation test2', () => {
   expect(
     sortimentCalculation([
       [39.6, 38.36, 35.27, 31.82, 29.3],
@@ -165,8 +158,8 @@ test('useSortimentCalc test2', () => {
       [136846, 42969, 41354, 250818, 146059],
     ])
   ).toEqual({
-    rentCost: [74.25, 70.91, 65.69, 68.73, 61.47],
-    rentIncome: [42.61, 41.49, 39.65, 40.73, 38.07],
+    rentCost: [0.74, 0.71, 0.66, 0.69, 0.61],
+    rentIncome: [0.43, 0.41, 0.4, 0.41, 0.38],
     marginProfit: [32.06, 29.74, 25.52, 24.33, 20.21],
     marginGross: [35.64, 33.32, 29.1, 27.91, 23.79],
     allowance: [0.47, 0.46, 0.45, 0.47, 0.45],
@@ -174,7 +167,7 @@ test('useSortimentCalc test2', () => {
   });
 });
 
-test('useParetoCalc test1', () => {
+test('paretoCalculation test1', () => {
   expect(
     paretoCalculation(
       [[3998], [1307], [361], [82], [104], [1573], [5]],
@@ -190,13 +183,13 @@ test('useParetoCalc test1', () => {
     )
   ).toEqual({
     causes: [
-      ["Chyby", "mechanického", "trieskového", "opracovania"],
-      ["Chyby", "kompletizácie,", "balenia"],
-      ["Chyby", "tvárnenia", "materiálu"],
-      ["Materiálové", "chyby"],
-      ["Chyby", "povrchu", "a", "povrchovej", "úpravy"],
-      ["Chyby", "zvárania"],
-      ["Chyby", "dokumentácie"],
+      'Chyby mechanického trieskového opracovania',
+      'Chyby kompletizácie, balenia',
+      'Chyby tvárnenia materiálu',
+      'Materiálové chyby',
+      'Chyby povrchu a povrchovej úpravy',
+      'Chyby zvárania',
+      'Chyby dokumentácie',
     ],
     percentages: [53.81, 21.17, 17.59, 4.86, 1.4, 1.1, 0.07],
     values: [3998, 1573, 1307, 361, 104, 82, 5],
@@ -206,7 +199,7 @@ test('useParetoCalc test1', () => {
   });
 });
 
-test('useParetoCalc test2 decimal numbers', () => {
+test('paretoCalculation test2 decimal numbers', () => {
   expect(
     paretoCalculation(
       [[9.8], [1.9]],
@@ -217,8 +210,8 @@ test('useParetoCalc test2 decimal numbers', () => {
     )
   ).toEqual({
     causes: [
-      ["Chyby", "mechanického", "trieskového", "opracovania"],
-      ["Chyby", "tvárnenia", "materiálu"],
+      'Chyby mechanického trieskového opracovania',
+      'Chyby tvárnenia materiálu',
     ],
     percentages: [83.76, 16.24],
     values: [9.8, 1.9],

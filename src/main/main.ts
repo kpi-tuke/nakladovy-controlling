@@ -224,7 +224,6 @@ const createWindow = async () => {
       nodeIntegration: true,
       // @ts-ignore
       enableRemoteModule: true,
-      // contextIsolation: false,
     },
   });
 

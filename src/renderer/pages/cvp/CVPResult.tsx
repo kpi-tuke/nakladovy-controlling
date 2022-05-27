@@ -1,6 +1,6 @@
 import TableStatic from '../../components/TableStatic';
 import ReactApexChart from 'react-apexcharts';
-import { useCVPGraph } from '../../components/graphOptions';
+import { useCVPGraph } from '../../graphOptions';
 import { ApexOptions } from 'apexcharts';
 import {cvpCalculation} from "./cvpCalculation";
 import {useAppSelector} from "../../store/hooks";

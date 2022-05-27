@@ -9,8 +9,8 @@ export default function HeaderInput({
 }) {
   const dispatch = useAppDispatch();
 
-  const handleChangeHeader = function (e: any, idx: number) {
-    dispatch(actions.setHeadersOnIndex({ data: e.value, index: idx }));
+  const handleChangeHeader = function (event: any, idx: number) {
+    dispatch(actions.setHeadersOnIndex({ data: event.value, index: idx }));
   };
 
   const addColumn = () => {

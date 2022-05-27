@@ -1,6 +1,6 @@
 import ReactApexChart from 'react-apexcharts';
 import TableStatic from '../../components/TableStatic';
-import { useColGraph } from '../../components/graphOptions';
+import { useColGraph } from '../../graphOptions';
 import { ApexOptions } from 'apexcharts';
 import {structureCalculation} from "./structureCalculation";
 import {useAppSelector} from "../../store/hooks";
@@ -37,6 +37,9 @@ export default function StructureResult() {
   const pieChart: ApexOptions = {
     chart: {
       type: 'pie',
+      toolbar: {
+        show: true,
+      },
     },
     colors: [
       '#2E93fA',
@@ -61,6 +64,9 @@ export default function StructureResult() {
   const donutChart: ApexOptions = {
     chart: {
       type: 'donut',
+      toolbar: {
+        show: true,
+      },
     },
     colors: [
       '#2E93fA',
@@ -146,12 +152,13 @@ export default function StructureResult() {
           {
             <ReactApexChart
               options={pieChart}
-              series={colSums}
+              series={rowSums}
               type="pie"
-              height={457}
+              height={407}
             />
           }
         </div>
+
         <div className={'col-t graph-card'}>
           <h4 className={'graph-title'}>DRUHOVÉ ČLENENIE NÁKLADOV</h4>
           {
@@ -159,7 +166,7 @@ export default function StructureResult() {
               options={genericOptions}
               series={genericSeries}
               type="bar"
-              height={400}
+              height={350}
             />
           }
         </div>
@@ -171,9 +178,9 @@ export default function StructureResult() {
           {
             <ReactApexChart
               options={donutChart}
-              series={rowSums}
+              series={colSums}
               type="donut"
-              height={457}
+              height={407}
             />
           }
         </div>
@@ -185,7 +192,7 @@ export default function StructureResult() {
               options={calculationOptions}
               series={calculationSeries}
               type="bar"
-              height={400}
+              height={350}
             />
           }
         </div>

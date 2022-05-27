@@ -2,10 +2,10 @@ import { HashRouter as Router, Route, Routes } from 'react-router-dom';
 import TaskSelection from './pages/TaskSelection';
 import { Provider } from 'react-redux';
 import { store } from './store/store';
-import Evaluation from './pages/evaluation/Evaluation';
+import Report from './pages/report/Report';
 import './App.css';
 import WelcomePage from './pages/WelcomePage';
-import withAnalysis from './pages/HOCAnalysis';
+import withAnalysis from './pages/withAnalysis';
 import IndexResult from './pages/index/IndexResult';
 import { indexActions, selectIndex } from './pages/index/indexSlice';
 import {
@@ -84,10 +84,16 @@ export default function App() {
           <Route path="/" element={<WelcomePage />} />
           <Route path="/welcome" element={<WelcomePage />} />
           <Route path="/taskselect" element={<TaskSelection />} />
+          <Route path="/task6" element={<ParetoAnalysis />} />
+          <Route path="/task5" element={<SortimentAnalysis />} />
+          <Route path="/task4" element={<CVPAnalysis />} />
+          <Route path="/task3" element={<IndexAnalysis />} />
+          <Route path="/task2" element={<StructureAnalysis />} />
+          <Route path="/task1" element={<EconomicAnalysis />} />
           <Route
             path="/evaluation"
             element={
-              <Evaluation
+              <Report
                 id1={EconomicAnalysis}
                 id2={StructureAnalysis}
                 id3={IndexAnalysis}
@@ -97,12 +103,6 @@ export default function App() {
               />
             }
           />
-          <Route path="/task6" element={<ParetoAnalysis />} />
-          <Route path="/task5" element={<SortimentAnalysis />} />
-          <Route path="/task4" element={<CVPAnalysis />} />
-          <Route path="/task3" element={<IndexAnalysis />} />
-          <Route path="/task2" element={<StructureAnalysis />} />
-          <Route path="/task1" element={<EconomicAnalysis />} />
         </Routes>
       </Router>
     </Provider>

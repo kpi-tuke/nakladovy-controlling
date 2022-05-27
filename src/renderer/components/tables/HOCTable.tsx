@@ -1,17 +1,17 @@
-import {ChangeEvent} from "react";
-import {useAppDispatch, useAppSelector} from "../../store/hooks";
+import { ChangeEvent, useState } from "react";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import PDFTable from "./PDFTable";
+import Title from "../Title";
+import { sortTable } from '../../helper';
 
 export default function withTable(
   TableInput: (props: any) => JSX.Element,
   TableDataHeader: (props: any) => JSX.Element,
   selector: any,
-  analytic: boolean,
   actions: any,
-  dynRows?: boolean,
-  dynCols?: boolean,
 ) {
   return () => {
+    const [analytic, setAnalytic] = useState<boolean>(false);
     const dispatch = useAppDispatch();
 
     const deleteRow = (row: number) => {
@@ -41,75 +41,103 @@ export default function withTable(
       );
     };
 
-    const {headers, data} = useAppSelector(selector)
-    return(
-          <>
-            <div className={'table-card row hideInPrint'}>
-              <TableInput selector={selector} analytic={analytic} actions={actions}/>
-              <div className={'col-7'} style={{ width: '100%' }}>
-                <div className={'table-data'}>
-                  <table className={'table'}>
-                    <TableDataHeader header={headers} dynCols={dynCols} actions={actions}/>
-                    <tbody>
-                    {data.map((rowData: number[], row: number) => (
-                      <tr key={row}>
-                        {rowData.map((value: number, col: number) => (
-                          <td
-                            className={'table-cell'}
-                            style={{
-                              borderBottomColor:
-                                row === data.length - 1 && dynCols
-                                  ? '#ff4e4e'
-                                  : 'lightgray',
-                              borderRightColor:
-                                col === rowData.length - 1 && dynRows
-                                  ? '#ff4e4e'
-                                  : 'lightgray',
-                            }}
-                            key={row + ':' + col}
-                          >
-                            <input
-                              type="number"
-                              className={'table-input'}
-                              defaultValue={value}
-                              onBlur={(e) => handleChangeData(e, row, col)}
-                              onWheel={(event) => event.currentTarget.blur()}
-                            />
-                          </td>
-                        ))}
-                        {dynRows && (
+    const { id, headers, data, corner, items, values, text, accounts, dynRows, dynCols, sortable, hasAnalytic } = useAppSelector(selector)
+    
+    function sort() {
+
+      const { newHeaders, newData } = sortTable(headers, data, id === 3 ? 1 : 0);
+      dispatch(
+        actions.openProject({
+          corner: corner,
+          headers: newHeaders,
+          data: newData,
+          items,
+          values,
+          text,
+          accounts,
+        })
+      );
+    }
+
+    function toggleAnalytic() {
+      setAnalytic(!analytic);
+    }
+    
+    return (
+      <>
+        <Title
+          sortable={sortable}
+          analytic={analytic}
+          hasAnalytic={hasAnalytic}
+          toggleAnalytic={toggleAnalytic}
+          sort={sort}
+        />
+        <div className={'table-card row hideInPrint'}>
+          <TableInput selector={selector} analytic={analytic} actions={actions} />
+          <div className={'col-7'} style={{ width: '100%' }}>
+            <div className={'table-data'}>
+              <table className={'table'}>
+                <TableDataHeader header={headers} dynCols={dynCols} actions={actions} />
+                <tbody>
+                  {data.map((rowData: number[], row: number) => (
+                    <tr key={row}>
+                      {rowData.map((value: number, col: number) => (
+                        <td
+                          className={'table-cell'}
+                          style={{
+                            borderBottomColor:
+                              row === data.length - 1 && dynCols
+                                ? '#ff4e4e'
+                                : 'lightgray',
+                            borderRightColor:
+                              col === rowData.length - 1 && dynRows
+                                ? '#ff4e4e'
+                                : 'lightgray',
+                          }}
+                          key={row + ':' + col}
+                        >
+                          <input
+                            type="number"
+                            className={'table-input'}
+                            defaultValue={value}
+                            onBlur={(e) => handleChangeData(e, row, col)}
+                            onWheel={(event) => event.currentTarget.blur()}
+                          />
+                        </td>
+                      ))}
+                      {dynRows && (
+                        <td
+                          className={'delete-cell'}
+                          onClick={() => deleteRow(row)}
+                        >
+                          -
+                        </td>
+                      )}
+                    </tr>
+                  ))}
+                  {dynCols && (
+                    <tr>
+                      {data[0].map((_value: number, col: number) => {
+                        return (
                           <td
                             className={'delete-cell'}
-                            onClick={() => deleteRow(row)}
+                            key={col}
+                            onClick={() => deleteColumn(col)}
                           >
                             -
                           </td>
-                        )}
-                      </tr>
-                    ))}
-                    {dynCols && (
-                      <tr>
-                        {data[0].map((_value: number, col: number) => {
-                          return (
-                            <td
-                              className={'delete-cell'}
-                              key={col}
-                              onClick={() => deleteColumn(col)}
-                            >
-                              -
-                            </td>
-                          );
-                        })}
-                      </tr>
-                    )}
-                    </tbody>
-                  </table>
-                </div>
-              </div>
+                        );
+                      })}
+                    </tr>
+                  )}
+                </tbody>
+              </table>
             </div>
+          </div>
+        </div>
 
-            <PDFTable selector={selector}/>
-          </>
-      )
+        <PDFTable selector={selector} />
+      </>
+    )
   }
 }

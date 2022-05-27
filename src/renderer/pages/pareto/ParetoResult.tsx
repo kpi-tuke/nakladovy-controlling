@@ -10,7 +10,7 @@ export default function ParetoResult() {
   const barChart = {
     series: [
       {
-        name: 'Pareto analyza',
+        name: 'Príčiny',
         type: 'column',
         data: values,
       },
@@ -24,7 +24,7 @@ export default function ParetoResult() {
       chart: {
         type: 'bar',
         toolbar: {
-          show: false,
+          show: true,
         },
       },
       stroke: {

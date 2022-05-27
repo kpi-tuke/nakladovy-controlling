@@ -2,14 +2,14 @@ import HeaderBar from '../../components/HeaderBar';
 import { useAppSelector } from '../../store/hooks';
 import {selectEvaluation} from "./evaluationSlice";
 
-export default function Evaluation(props: any) {
+export default function Report(props: any) {
   const { tasks } = useAppSelector(selectEvaluation);
   return (
     <div className={"evaluation"}>
       <HeaderBar
-        addToReport={true}
         back={'taskselect'}
         title={'Vyhodnotenie'}
+        printToPDF={true}
       />
       {
         tasks.includes(1) && <props.id1/>
