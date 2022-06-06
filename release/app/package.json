@@ -1,7 +1,7 @@
 {
   "name": "cost-controlling",
   "productName": "Nákladový controlling",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Aplikácia pre nákladový controlling",
   "main": "./dist/main/main.js",
   "author": {
