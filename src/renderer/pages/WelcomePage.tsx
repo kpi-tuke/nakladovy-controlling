@@ -42,6 +42,7 @@ export default function WelcomePage() {
       dispatch(sortimentActions.openProject(json.sortiment));
       dispatch(paretoActions.openProject(json.pareto));
       dispatch(evaluationActions.openProject(json.tasks));
+      dispatch(projectActions.setCreated());
       navigate('/taskselect');
     });
   }
@@ -50,6 +51,10 @@ export default function WelcomePage() {
 
   function continueProject() {
     navigate('/taskselect');
+  }
+
+  function manual() {
+    navigate('/manual');
   }
 
   function quit() {
@@ -92,7 +97,7 @@ export default function WelcomePage() {
           <h2>Otvoriť projekt</h2>
         </div>
 
-        <div className={'col-6 welcome-item'}>
+        <div className={'col-6 welcome-item'} onClick={manual}>
           <h2>Manuál</h2>
         </div>
 
@@ -102,6 +107,7 @@ export default function WelcomePage() {
 
       </div>
 
+      <p style={{position:"absolute", right:10, bottom:0}}>verzia 1.0.0</p>
     </div>
   );
 }

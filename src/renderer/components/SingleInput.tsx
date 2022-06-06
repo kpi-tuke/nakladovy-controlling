@@ -1,5 +1,6 @@
 import {ChangeEvent} from 'react';
-import {useAppDispatch} from 'renderer/store/hooks';
+import {useAppDispatch} from "../store/hooks";
+
 
 export default function SingleInput(props: any) {
   const dispatch = useAppDispatch();
@@ -10,7 +11,7 @@ export default function SingleInput(props: any) {
 
   return (
     <div
-      className={'info-card'}
+      className={'info-card col-6'}
     >
       <h2 className={"info-title"}>{props.title}</h2>
       <input

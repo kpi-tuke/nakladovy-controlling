@@ -9,7 +9,7 @@ export default function HeaderValue({
         {header.map((value: string, idx: number) => (
           <th
             key={idx}
-            className={'table-cell'}
+            className={'table-cell-value'}
             style={{ textAlign: "center"}}
           >
             {value}

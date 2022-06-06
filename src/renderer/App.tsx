@@ -33,6 +33,7 @@ import HeaderSelect from './components/tables/HeaderSelect';
 import HeaderValue from './components/tables/HeaderValue';
 import ItemInput from './components/tables/ItemInput';
 import ItemValue from './components/tables/ItemValue';
+import Manual from "./pages/Manual";
 
 export default function App() {
   const EconomicAnalysis: () => JSX.Element = withAnalysis(
@@ -84,6 +85,7 @@ export default function App() {
           <Route path="/" element={<WelcomePage />} />
           <Route path="/welcome" element={<WelcomePage />} />
           <Route path="/taskselect" element={<TaskSelection />} />
+          <Route path="/manual" element={<Manual />} />
           <Route path="/task6" element={<ParetoAnalysis />} />
           <Route path="/task5" element={<SortimentAnalysis />} />
           <Route path="/task4" element={<CVPAnalysis />} />

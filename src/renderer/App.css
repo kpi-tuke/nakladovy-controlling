@@ -55,10 +55,11 @@ a {
 
 .info-card {
   background-color: white;
-  padding: 0;
-
-  margin-inline: 3%;
+  margin-top: 50px;
+  border: 1px solid lightgrey;
   max-width: 400px;
+  min-width: 150px;
+  margin-inline: 10vw;
 }
 
 .info-title {
@@ -202,6 +203,7 @@ a {
 .table-card {
   background-color: white;
   padding: 0;
+  margin-top: 20px;
   border: 1px solid lightgrey;
 }
 
@@ -244,6 +246,17 @@ a {
   width: 12vw;
   min-width: 12vw;
   max-width: 12vw;
+  padding-left: 5px;
+  padding-right: 5px;
+  text-align: left;
+}
+
+.table-cell-value {
+  border: 1px solid lightgrey;
+  height: 50px;
+  max-height: 50px;
+  min-width: 180px;
+  width: 250px;
   padding-left: 5px;
   padding-right: 5px;
   text-align: left;

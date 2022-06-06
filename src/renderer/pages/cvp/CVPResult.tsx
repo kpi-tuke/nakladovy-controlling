@@ -4,7 +4,8 @@ import { useCVPGraph } from '../../graphOptions';
 import { ApexOptions } from 'apexcharts';
 import {cvpCalculation} from "./cvpCalculation";
 import {useAppSelector} from "../../store/hooks";
-import {selectCVP} from "./cvpSlice";
+import {CVPActions, selectCVP} from "./cvpSlice";
+import SingleInput from "../../components/SingleInput";
 
 export default function CVPResult() {
   const {data, items, fixTotal, minProfit} = useAppSelector(selectCVP)
@@ -83,6 +84,12 @@ export default function CVPResult() {
 
   return (
     <div className={graphs.length % 2 === 0 ? 'new-page-after' : ''}>
+
+      <div className={"row"}>
+        <SingleInput title={"FIXNÉ NÁKLADY"} value={fixTotal} input={CVPActions.setFixTotal}/>
+        <SingleInput title={"MINIMÁLNY ZISK"} vlaue={minProfit} input={CVPActions.setMinProfit}/>
+      </div>
+
       <h1 className={'result-h1 new-page'}>
         Analýza nulového bodu - kritický bod rentability{' '}
       </h1>
