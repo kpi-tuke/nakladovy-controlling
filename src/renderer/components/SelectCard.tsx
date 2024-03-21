@@ -1,9 +1,13 @@
 import { Link } from 'react-router-dom';
 
 export default function ({
-  to, head, body,
+  to,
+  head,
+  body,
 }: {
-  to: string; head: string; body: string;
+  to: string;
+  head: string;
+  body: string;
 }) {
   return (
     <div className={'col-4 select-card'}>

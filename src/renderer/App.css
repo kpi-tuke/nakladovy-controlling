@@ -21,36 +21,8 @@ a {
 }
 
 .welcome {
-  padding: 20vh 20vw;
   background-color: #f2f1f6;
-  height: 60vh;
-}
-
-.welcome-item {
-  background-color: #1a98ff;
-  padding: 1px;
-  margin-top: 3vh;
-  margin-inline: 10px;
-  cursor: pointer;
-  text-align: center;
-}
-
-.welcome-item > h2 {
-  color: white;
-}
-
-.welcome-text {
-  background-color: white;
-  padding: 30px;
-  border: 1px solid lightgrey;
-}
-
-.welcome-h1 {
-  text-align: center;
-}
-
-.welcome-h2 {
-  color: white;
+  height: 100vh;
 }
 
 .info-card {
@@ -171,14 +143,14 @@ a {
   transform: translateY(1px);
 }
 
-.evaluation > .task-container >.header-bar {
+.evaluation > .task-container > .header-bar {
   position: relative;
   background-color: #f8f9fa;
   padding: 0;
   margin-top: 6vh;
   z-index: 0;
 }
-.evaluation > .task-container >.header-bar .header-button {
+.evaluation > .task-container > .header-bar .header-button {
   visibility: hidden;
 }
 
@@ -476,8 +448,6 @@ a {
   visibility: hidden;
 }
 
-
-
 textarea {
   font-family: Arial, Helvetica, sans-serif;
   font-size: 14px;
@@ -524,7 +494,7 @@ textarea {
     visibility: visible;
   }
 
-  .evaluation > .task-container >.header-bar {
+  .evaluation > .task-container > .header-bar {
     visibility: visible;
     background-color: white;
   }
@@ -574,7 +544,6 @@ textarea {
   textarea {
     border: 0;
   }
-
 
   .graph-card {
     padding: 0;
