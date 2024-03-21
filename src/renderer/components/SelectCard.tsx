@@ -1,24 +1,27 @@
+import { Box, Card, CardContent, CardHeader, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
+import { AnalysisItem } from 'renderer/types/AnalysisItem';
 
-export default function ({
-  to,
-  head,
-  body,
-}: {
-  to: string;
-  head: string;
-  body: string;
-}) {
+const AnalysisCard: React.FC<AnalysisItem> = ({ to, title, description }) => {
   return (
-    <div className={'col-4 select-card'}>
-      <Link to={to}>
-        <div className={'select-head'}>
-          <h2 className={'select-h2'}>{head}</h2>
-        </div>
-        <div className={'select-body'}>
-          <p className={'select-text'}>{body}</p>
-        </div>
-      </Link>
-    </div>
+    <Link to={to}>
+      <Card sx={{ height: '100%' }}>
+        <CardHeader
+          title={title}
+          titleTypographyProps={{
+            sx: {
+              fontSize: 20,
+            },
+          }}
+          sx={{
+            backgroundColor: (theme) => theme.palette.primary.main,
+            color: '#fff',
+          }}
+        />
+        <CardContent>{description}</CardContent>
+      </Card>
+    </Link>
   );
-}
+};
+
+export default AnalysisCard;

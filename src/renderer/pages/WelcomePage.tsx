@@ -11,6 +11,8 @@ import { structureActions } from './structure/structureSlice';
 import { evaluationActions } from './report/evaluationSlice';
 import { Box, Button, Grid, Typography } from '@mui/material';
 import AppVersion from 'renderer/components/AppVersion';
+import Page from 'renderer/components/layout/Page';
+import PageContent from 'renderer/components/layout/PageContent';
 
 export default function WelcomePage() {
   const navigate = useNavigate();
@@ -58,65 +60,65 @@ export default function WelcomePage() {
   }
 
   return (
-    <div className={'welcome'}>
+    <Page>
       <HeaderBar title={'NÁKLADOVÝ CONTROLLING'} />
-
-      <Box
-        sx={{
-          height: '100%',
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          alignItems: 'center',
-          gap: 4,
-          padding: 8,
-        }}
-      >
+      <PageContent>
         <Box
           sx={{
-            background: 'white',
-            maxWidth: 800,
-            padding: 3,
-            borderRadius: 1,
+            height: '100%',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+            gap: 4,
           }}
         >
-          <Typography>
-            Vitajte v aplikácii pre Nákladový Controlling. Táto softvérová
-            aplikácia slúži na riešenie praktických príkladov a prípadových
-            štúdií zameraných na využívanie ekonomických analýz v rámci
-            manažérskeho rozhodovania. Obsahuje rôzne typy ekonomických analýz
-            orientovaných na ekonomickú veličinu - náklady. Výstupy jednotlivých
-            ekonomických analýz obsahujú grafické metódy a sú realizované vo
-            formáte pdf.
-          </Typography>
-        </Box>
+          <Box
+            sx={{
+              background: 'white',
+              maxWidth: 800,
+              padding: 3,
+              borderRadius: 1,
+            }}
+          >
+            <Typography>
+              Vitajte v aplikácii pre Nákladový Controlling. Táto softvérová
+              aplikácia slúži na riešenie praktických príkladov a prípadových
+              štúdií zameraných na využívanie ekonomických analýz v rámci
+              manažérskeho rozhodovania. Obsahuje rôzne typy ekonomických analýz
+              orientovaných na ekonomickú veličinu - náklady. Výstupy
+              jednotlivých ekonomických analýz obsahujú grafické metódy a sú
+              realizované vo formáte pdf.
+            </Typography>
+          </Box>
 
-        <Box>
-          <Grid container spacing={2}>
-            {created && (
-              <Grid item xs={12}>
-                <WelcomeButton onClick={continueProject}>
-                  Pokračovať
+          <Box>
+            <Grid container spacing={2}>
+              {created && (
+                <Grid item xs={12}>
+                  <WelcomeButton onClick={continueProject}>
+                    Pokračovať
+                  </WelcomeButton>
+                </Grid>
+              )}
+              <Grid item xs={12} md={6}>
+                <WelcomeButton onClick={newProject}>Nový projekt</WelcomeButton>
+              </Grid>
+              <Grid item xs={12} md={6}>
+                <WelcomeButton onClick={openProject}>
+                  Otvoriť projekt
                 </WelcomeButton>
               </Grid>
-            )}
-            <Grid item xs={12} md={6}>
-              <WelcomeButton onClick={newProject}>Nový projekt</WelcomeButton>
+              <Grid item xs={12}>
+                <WelcomeButton onClick={quit}>Ukončiť</WelcomeButton>
+              </Grid>
             </Grid>
-            <Grid item xs={12} md={6}>
-              <WelcomeButton onClick={openProject}>
-                Otvoriť projekt
-              </WelcomeButton>
-            </Grid>
-            <Grid item xs={12}>
-              <WelcomeButton onClick={quit}>Ukončiť</WelcomeButton>
-            </Grid>
-          </Grid>
+          </Box>
         </Box>
-      </Box>
 
-      <AppVersion />
-    </div>
+        <AppVersion />
+      </PageContent>
+    </Page>
   );
 }
 

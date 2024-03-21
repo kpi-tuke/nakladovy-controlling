@@ -1,63 +1,60 @@
-import SelectCard from '../components/SelectCard';
+import AnalysisCard from '../components/SelectCard';
 import HeaderBar from '../components/HeaderBar';
+import { Grid } from '@mui/material';
+import { AnalysisItem } from 'renderer/types/AnalysisItem';
+import Page from 'renderer/components/layout/Page';
+import PageContent from 'renderer/components/layout/PageContent';
+
+const items: AnalysisItem[] = [
+  {
+    to: '/task1',
+    title: 'Ekonomická analýza hospodárenia',
+    description:
+      'Hodnotenie úrovne hospodárenia podniku z hľadiska efektívnosti a hospodárnosti.',
+  },
+  {
+    to: '/task2',
+    title: 'Štruktúrna analýza',
+    description:
+      'Analýza štruktúry nákladov podľa druhového a kalkulačného členenia.',
+  },
+  {
+    to: '/task4',
+    title: 'CVP analýza',
+    description:
+      'Analýza zameraná na určenie kritického objemu výroby a stanovenie nulového bodu.',
+  },
+  {
+    to: '/task5',
+    title: 'Sortimentná analýza',
+    description:
+      'lýza ekonomických ukazovateľov pre optimálnu štruktúru výrobného sortimentu.',
+  },
+  {
+    to: '/task3',
+    title: 'Indexná analýza',
+    description: 'Zhodnotenie trendu vývoja druhových nákladov.',
+  },
+  {
+    to: '/task6',
+    title: 'Pareto analýza',
+    description: 'Sledovanie príčin vzniku nákladov na základe pravidla 80/20.',
+  },
+];
 
 export default function TaskSelection() {
   return (
-    <div
-      className={"selection-container"}
-    >
-      <HeaderBar
-        title={'Ekonomické analýzy'}
-        back={"welcome"}
-        save={true}
-      />
-      <div className={'row'} style={{ marginBottom: '10vh' }}>
-        <SelectCard
-          to={'/task1'}
-          head={'Ekonomická analýza hospodárenia'}
-          body={
-            'Hodnotenie úrovne hospodárenia podniku z hľadiska efektívnosti a hospodárnosti.'
-          }
-        />
-
-        <SelectCard
-          to={'/task2'}
-          head={'Štruktúrna analýza'}
-          body={
-            'Analýza štruktúry nákladov podľa druhového a kalkulačného členenia.'
-          }
-        />
-
-        <SelectCard
-          to={'/task4'}
-          head={'CVP analýza'}
-          body={
-            'Analýza zameraná na určenie kritického objemu výroby a stanovenie nulového bodu.'
-          }
-        />
-      </div>
-
-      <div className={'row'} style={{ marginBottom: '10vh' }}>
-        <SelectCard
-          to={'/task5'}
-          head={'Sortimentná analýza'}
-          body={
-            'Analýza ekonomických ukazovateľov pre optimálnu štruktúru výrobného sortimentu.'
-          }
-        />
-
-        <SelectCard
-          to={'/task3'}
-          head={'Indexná analýza'}
-          body={'Zhodnotenie trendu vývoja druhových nákladov.'}
-        />
-
-        <SelectCard
-          to={'/task6'}
-          head={'Pareto analýza'}
-          body={'Sledovanie príčin vzniku nákladov na základe pravidla 80/20.'}
-        />
-      </div>
-    </div>
+    <Page>
+      <HeaderBar title={'Ekonomické analýzy'} back={'welcome'} save={true} />
+      <PageContent>
+        <Grid container spacing={4}>
+          {items.map((item, index) => (
+            <Grid key={index} item xs={12} sm={6} md={4}>
+              <AnalysisCard {...item} />
+            </Grid>
+          ))}
+        </Grid>
+      </PageContent>
+    </Page>
   );
 }
