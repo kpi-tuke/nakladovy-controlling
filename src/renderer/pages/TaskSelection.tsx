@@ -14,30 +14,30 @@ const items: AnalysisItem[] = [
       'Hodnotenie úrovne hospodárenia podniku z hľadiska efektívnosti a hospodárnosti.',
   },
   {
-    to: '/task2',
+    to: RouteName.STRUCTURE_ANALYSIS,
     title: 'Štruktúrna analýza',
     description:
       'Analýza štruktúry nákladov podľa druhového a kalkulačného členenia.',
   },
   {
-    to: '/task4',
+    to: RouteName.CVP_ANALYSIS,
     title: 'CVP analýza',
     description:
       'Analýza zameraná na určenie kritického objemu výroby a stanovenie nulového bodu.',
   },
   {
-    to: '/task5',
+    to: RouteName.SORTIMENT_ANALYSIS,
     title: 'Sortimentná analýza',
     description:
       'lýza ekonomických ukazovateľov pre optimálnu štruktúru výrobného sortimentu.',
   },
   {
-    to: '/task3',
+    to: RouteName.INDEX_ANALYSIS,
     title: 'Indexná analýza',
     description: 'Zhodnotenie trendu vývoja druhových nákladov.',
   },
   {
-    to: '/task6',
+    to: RouteName.PERETO_ANALYSIS,
     title: 'Pareto analýza',
     description: 'Sledovanie príčin vzniku nákladov na základe pravidla 80/20.',
   },
