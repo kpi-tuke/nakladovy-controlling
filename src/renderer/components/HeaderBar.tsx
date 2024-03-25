@@ -1,17 +1,40 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
-import {selectCVP} from "../pages/cvp/cvpSlice";
-import {selectEconomic} from "../pages/economic/economicSlice";
-import {selectIndex} from "../pages/index/indexSlice";
-import {selectPareto} from "../pages/pareto/paretoSlice";
-import {selectSortiment} from "../pages/sortiment/sortimentSlice";
-import {selectStructure} from "../pages/structure/structureSlice";
-import {evaluationActions, selectEvaluation} from "../pages/report/evaluationSlice";
+import { selectCVP } from '../pages/cvp/cvpSlice';
+import { selectEconomic } from '../pages/economic/economicSlice';
+import { selectIndex } from '../pages/index/indexSlice';
+import { selectPareto } from '../pages/pareto/paretoSlice';
+import { selectSortiment } from '../pages/sortiment/sortimentSlice';
+import { selectStructure } from '../pages/structure/structureSlice';
+import {
+  evaluationActions,
+  selectEvaluation,
+} from '../pages/report/evaluationSlice';
+import { Button, Grid, IconButton, Typography } from '@mui/material';
+import { getRouteDetails, RouteName } from 'renderer/routes';
+import React from 'react';
+import {
+  ArrowBack,
+  Add,
+  Remove,
+  Print,
+  Save,
+  Summarize,
+} from '@mui/icons-material';
 
-export default function HeaderBar(props: any) {
+type Props = {
+  reportId: number;
+};
+
+// TODO: pouzit props tu
+const HeaderBar: React.FC<any> = ({ reportId }) => {
   const dispatch = useAppDispatch();
-
   const navigate = useNavigate();
+  const { pathname } = useLocation();
+
+  const routeDetails = React.useMemo(() => {
+    return getRouteDetails(pathname);
+  }, [pathname]);
 
   function addToReport(id: number) {
     dispatch(evaluationActions.addTask(id));
@@ -22,13 +45,14 @@ export default function HeaderBar(props: any) {
     console.log(id);
   }
 
-  function printToPDF(id: number) {
+  // TODO: tu to bolo ako NUMBER... neviem preco
+  function printToPDF(id: string) {
     // @ts-ignore
     window.electron.printToPdf(id, (arg) => console.log(arg));
   }
 
-  function goBackTo(to: string) {
-    navigate('/' + to);
+  function goBack() {
+    navigate(-1);
   }
 
   const economic = useAppSelector(selectEconomic);
@@ -58,73 +82,122 @@ export default function HeaderBar(props: any) {
   }
 
   return (
-    <div className={'header-bar row'}>
-      <div className={'row col-3'}>
-        {props.back && (
+    <Grid
+      container
+      sx={{
+        paddingLeft: 2,
+        paddingRight: 2,
+        alignItems: 'center',
+        height: '7vh',
+      }}
+    >
+      {/* Left side */}
+      <Grid item xs={2}>
+        {pathname !== RouteName.HOME && (
           <>
-            <div
-              className={'col-4 header-button'}
-              onClick={() => goBackTo(props.back)}
+            <IconButton
+              color="primary"
+              onClick={goBack}
+              sx={{
+                display: {
+                  md: 'none',
+                },
+              }}
             >
-              ← Späť
-            </div>
-            <div className={'col-4'} />
-            <div className={'col-4'} />
+              <ArrowBack />
+            </IconButton>
+            <Button
+              onClick={goBack}
+              startIcon={<ArrowBack />}
+              variant="outlined"
+              sx={{
+                display: {
+                  xs: 'none',
+                  md: 'flex',
+                },
+              }}
+            >
+              Späť
+            </Button>
           </>
         )}
-      </div>
+      </Grid>
 
-      <div className={'col-6-12 header-title'}>{props.title}</div>
+      {/* Middle side */}
+      <Grid item xs={8}>
+        <Typography
+          variant="h1"
+          sx={{
+            textAlign: 'center',
+            fontSize: 24,
+            fontWeight: 600,
+          }}
+        >
+          {routeDetails?.title}
+        </Typography>
+      </Grid>
 
-      <div className={'row col-3'}>
-        {props.addToReport ? (
-          // @ts-ignore
-          tasks.includes(props.id) ? (
-            <div
-              className={'col-6 header-button header-button-remove'}
-              onClick={() => removeFromReport(props.id)}
+      {/* Right side */}
+      <Grid
+        item
+        xs={2}
+        sx={{
+          display: 'flex',
+          justifyContent: 'flex-end',
+        }}
+      >
+        {routeDetails?.addToReport &&
+          (tasks.includes(reportId) ? (
+            <Button
+              variant="contained"
+              color="error"
+              startIcon={<Remove />}
+              onClick={() => removeFromReport(reportId)}
             >
-              - Odstrániť z reportu
-            </div>
+              Odstrániť z reportu
+            </Button>
           ) : (
-            <div
-              className={'col-6 header-button'}
-              onClick={() => addToReport(props.id)}
+            <Button
+              variant="contained"
+              color="success"
+              startIcon={<Add />}
+              onClick={() => addToReport(reportId)}
             >
-              + Zahrnúť v reporte
-            </div>
-          )
-        ) : (
-          props.printToPDF && (
-            <>
-              <div className={'col-6'} />
-            </>
-          )
-        )}
-        {props.printToPDF && (
-          <div
-            className={'col-6 header-button'}
-            onClick={() => printToPDF(props.title)}
+              Zahrnúť v reporte
+            </Button>
+          ))}
+
+        {routeDetails?.printToPDF && (
+          <Button
+            variant="contained"
+            color="secondary"
+            onClick={() => printToPDF(routeDetails?.title ?? '')}
+            startIcon={<Print />}
           >
-            ⎙ Tlačiť do PDF
-          </div>
+            Tlačiť do PDF
+          </Button>
         )}
-        {props.save && (
+
+        {routeDetails?.save && (
           <>
-            {tasks.length > 0 ? (
-              <div className={'col-6 header-button'} onClick={goToReport}>
+            {tasks.length > 0 && (
+              <Button
+                variant="contained"
+                onClick={goToReport}
+                startIcon={<Summarize />}
+              >
                 Report
-              </div>
-            ) : (
-              <div className={'col-6'} />
+              </Button>
             )}
 
-            <div className={'col-6 header-button'} onClick={save}>
-              🖫 Uložiť
-            </div>
+            <Button variant="contained" onClick={save} startIcon={<Save />}>
+              Uložiť
+            </Button>
           </>
         )}
-      </div>
-    </div>
+      </Grid>
+    </Grid>
   );
-}
+};
+
+export default HeaderBar;

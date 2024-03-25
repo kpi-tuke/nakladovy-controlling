@@ -9,7 +9,7 @@ const PageContent: React.FC<Props> = ({ children }) => {
   return (
     <Box
       sx={{
-        height: '90vh',
+        height: '93vh',
         display: 'flex',
         flexDirection: 'column',
         backgroundColor: '#f2f1f6',
