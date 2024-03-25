@@ -33,7 +33,7 @@ import HeaderSelect from './components/tables/HeaderSelect';
 import HeaderValue from './components/tables/HeaderValue';
 import ItemInput from './components/tables/ItemInput';
 import ItemValue from './components/tables/ItemValue';
-import Manual from "./pages/Manual";
+import { RouteName } from './routes';
 
 export default function App() {
   const EconomicAnalysis: () => JSX.Element = withAnalysis(
@@ -82,18 +82,28 @@ export default function App() {
     <Provider store={store}>
       <Router>
         <Routes>
-          <Route path="/" element={<WelcomePage />} />
-          <Route path="/welcome" element={<WelcomePage />} />
-          <Route path="/taskselect" element={<TaskSelection />} />
-          <Route path="/manual" element={<Manual />} />
-          <Route path="/task6" element={<ParetoAnalysis />} />
-          <Route path="/task5" element={<SortimentAnalysis />} />
-          <Route path="/task4" element={<CVPAnalysis />} />
-          <Route path="/task3" element={<IndexAnalysis />} />
-          <Route path="/task2" element={<StructureAnalysis />} />
-          <Route path="/task1" element={<EconomicAnalysis />} />
+          <Route path={RouteName.HOME} element={<WelcomePage />} />
+          <Route path={RouteName.SELECT} element={<TaskSelection />} />
           <Route
-            path="/evaluation"
+            path={RouteName.ECONOMIC_ANALYSIS}
+            element={<EconomicAnalysis />}
+          />
+          <Route
+            path={RouteName.PERETO_ANALYSIS}
+            element={<ParetoAnalysis />}
+          />
+          <Route
+            path={RouteName.SORTIMENT_ANALYSIS}
+            element={<SortimentAnalysis />}
+          />
+          <Route path={RouteName.CVP_ANALYSIS} element={<CVPAnalysis />} />
+          <Route path={RouteName.INDEX_ANALYSIS} element={<IndexAnalysis />} />
+          <Route
+            path={RouteName.STRUCTURE_ANALYSIS}
+            element={<StructureAnalysis />}
+          />
+          <Route
+            path={RouteName.EVALUATION}
             element={
               <Report
                 id1={EconomicAnalysis}

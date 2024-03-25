@@ -7,8 +7,15 @@ type Route = {
 };
 
 export enum RouteName {
-  HOME = '/welcome',
+  HOME = '/',
   SELECT = '/taskselect',
+  ECONOMIC_ANALYSIS = '/economicAnalysis',
+  PERETO_ANALYSIS = '/paretoAnalysis',
+  SORTIMENT_ANALYSIS = '/paretoAnalysis',
+  CVP_ANALYSIS = '/cvpAnalysis',
+  INDEX_ANALYSIS = '/indexAnalysis',
+  STRUCTURE_ANALYSIS = '/structureAnalysis',
+  EVALUATION = '/evaluation',
 }
 
 export const routes: Route[] = [

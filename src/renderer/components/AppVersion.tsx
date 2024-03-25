@@ -10,7 +10,7 @@ const AppVersion = () => {
         right: 10,
       }}
     >
-      verzia 1.0.0
+      verzia 2.0.0
     </Typography>
   );
 };

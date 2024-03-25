@@ -4,10 +4,11 @@ import { Grid } from '@mui/material';
 import { AnalysisItem } from 'renderer/types/AnalysisItem';
 import Page from 'renderer/components/layout/Page';
 import PageContent from 'renderer/components/layout/PageContent';
+import { RouteName } from 'renderer/routes';
 
 const items: AnalysisItem[] = [
   {
-    to: '/task1',
+    to: RouteName.ECONOMIC_ANALYSIS,
     title: 'Ekonomická analýza hospodárenia',
     description:
       'Hodnotenie úrovne hospodárenia podniku z hľadiska efektívnosti a hospodárnosti.',
