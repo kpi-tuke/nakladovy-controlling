@@ -78,7 +78,7 @@ const HeaderBar: React.FC<any> = ({ reportId }) => {
   }
 
   function goToReport() {
-    navigate('/evaluation');
+    navigate(RouteName.EVALUATION);
   }
 
   return (
@@ -92,7 +92,7 @@ const HeaderBar: React.FC<any> = ({ reportId }) => {
       }}
     >
       {/* Left side */}
-      <Grid item xs={2}>
+      <Grid item xs={4}>
         {pathname !== RouteName.HOME && (
           <>
             <IconButton
@@ -124,7 +124,7 @@ const HeaderBar: React.FC<any> = ({ reportId }) => {
       </Grid>
 
       {/* Middle side */}
-      <Grid item xs={8}>
+      <Grid item xs={4}>
         <Typography
           variant="h1"
           sx={{
@@ -140,59 +140,47 @@ const HeaderBar: React.FC<any> = ({ reportId }) => {
       {/* Right side */}
       <Grid
         item
-        xs={2}
+        xs={4}
         sx={{
           display: 'flex',
           justifyContent: 'flex-end',
+          gap: 2,
         }}
       >
         {routeDetails?.addToReport &&
           (tasks.includes(reportId) ? (
-            <Button
-              variant="contained"
-              color="error"
-              startIcon={<Remove />}
+            <ResponsiveButton
+              text="Odstrániť z reportu"
+              icon={<Remove />}
               onClick={() => removeFromReport(reportId)}
-            >
-              Odstrániť z reportu
-            </Button>
+            />
           ) : (
-            <Button
-              variant="contained"
-              color="success"
-              startIcon={<Add />}
+            <ResponsiveButton
+              text="Zahrnúť v reporte"
+              icon={<Add />}
               onClick={() => addToReport(reportId)}
-            >
-              Zahrnúť v reporte
-            </Button>
+            />
           ))}
 
         {routeDetails?.printToPDF && (
-          <Button
-            variant="contained"
-            color="secondary"
+          <ResponsiveButton
+            text="Tlačiť do PDF"
+            icon={<Print />}
             onClick={() => printToPDF(routeDetails?.title ?? '')}
-            startIcon={<Print />}
-          >
-            Tlačiť do PDF
-          </Button>
+          />
         )}
 
         {routeDetails?.save && (
           <>
             {tasks.length > 0 && (
-              <Button
-                variant="contained"
+              <ResponsiveButton
+                text="Report"
+                icon={<Summarize />}
                 onClick={goToReport}
-                startIcon={<Summarize />}
-              >
-                Report
-              </Button>
+              />
             )}
 
-            <Button variant="contained" onClick={save} startIcon={<Save />}>
-              Uložiť
-            </Button>
+            <ResponsiveButton text="Uložiť" onClick={save} icon={<Save />} />
           </>
         )}
       </Grid>
@@ -201,3 +189,39 @@ const HeaderBar: React.FC<any> = ({ reportId }) => {
 };
 
 export default HeaderBar;
+
+type ResponsiveButtonProps = {
+  text: string;
+  icon: React.ReactNode;
+  onClick: VoidFunction;
+};
+
+const ResponsiveButton: React.FC<ResponsiveButtonProps> = ({
+  text,
+  icon,
+  onClick,
+}) => {
+  return (
+    <Button
+      variant="contained"
+      onClick={() => onClick()}
+      sx={{
+        display: 'flex',
+        gap: 1,
+      }}
+    >
+      {icon}
+      <Typography
+        sx={{
+          display: {
+            xs: 'none',
+            xl: 'flex',
+          },
+          fontSize: 14,
+        }}
+      >
+        {text}
+      </Typography>
+    </Button>
+  );
+};

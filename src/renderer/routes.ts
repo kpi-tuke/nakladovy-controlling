@@ -33,6 +33,13 @@ export const routes: Route[] = [
     printToPDF: false,
     save: false,
   },
+  {
+    path: RouteName.ECONOMIC_ANALYSIS,
+    title: 'Ekonomická analýza hospodárenia',
+    addToReport: true,
+    printToPDF: true,
+    save: true,
+  },
 ];
 
 export const getRouteDetails = (path: string) =>

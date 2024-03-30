@@ -1,11 +1,16 @@
-import {createSlice} from "@reduxjs/toolkit";
-import {changeAccount, defaultState, openProject, rootReducer} from "../../store/rootReducer";
-import {RootState} from "../../store/store";
+import { createSlice } from '@reduxjs/toolkit';
+import {
+  changeAccount,
+  defaultState,
+  openProject,
+  rootReducer,
+} from '../../store/rootReducer';
+import { RootState } from '../../store/store';
 
 const initialEconomicState: defaultState = {
   id: 1,
-  title: "Ekonomická analýza hospodárenia",
-  corner: "Ekonomická položka (Náklady(€) /Výnosy(€))",
+  title: 'Ekonomická analýza hospodárenia',
+  corner: 'Ekonomická položka (Náklady(€) /Výnosy(€))',
   headers: ['2000'],
   data: [[0], [0]],
   items: [
@@ -14,7 +19,7 @@ const initialEconomicState: defaultState = {
   ],
   values: ['501', '666'],
   text: '',
-  accounts: [""],
+  accounts: [''],
   sortable: true,
   hasAnalytic: true,
   dynRows: true,

@@ -13,6 +13,7 @@ const PageContent: React.FC<Props> = ({ children }) => {
         display: 'flex',
         flexDirection: 'column',
         backgroundColor: '#f2f1f6',
+        overflowY: 'auto',
       }}
     >
       <Box

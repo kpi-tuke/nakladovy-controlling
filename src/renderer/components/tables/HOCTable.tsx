@@ -1,14 +1,14 @@
-import { ChangeEvent, useState } from "react";
-import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import PDFTable from "./PDFTable";
-import Title from "../Title";
+import { ChangeEvent, useState } from 'react';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import PDFTable from './PDFTable';
+import Title from '../Title';
 import { sortTable } from '../../helper';
 
 export default function withTable(
   TableInput: (props: any) => JSX.Element,
   TableDataHeader: (props: any) => JSX.Element,
   selector: any,
-  actions: any,
+  actions: any
 ) {
   return () => {
     const [analytic, setAnalytic] = useState<boolean>(false);
@@ -34,18 +34,36 @@ export default function withTable(
         event.target.value = event.target.value.slice(1);
       dispatch(
         actions.setDataOnIndex({
-          data: Math.abs(Math.round(parseFloat(event.target.value) * 100) / 100),
+          data: Math.abs(
+            Math.round(parseFloat(event.target.value) * 100) / 100
+          ),
           row,
           col,
         })
       );
     };
 
-    const { id, headers, data, corner, items, values, text, accounts, dynRows, dynCols, sortable, hasAnalytic } = useAppSelector(selector)
-    
-    function sort() {
+    const {
+      id,
+      headers,
+      data,
+      corner,
+      items,
+      values,
+      text,
+      accounts,
+      dynRows,
+      dynCols,
+      sortable,
+      hasAnalytic,
+    } = useAppSelector(selector);
 
-      const { newHeaders, newData } = sortTable(headers, data, id === 3 ? 1 : 0);
+    function sort() {
+      const { newHeaders, newData } = sortTable(
+        headers,
+        data,
+        id === 3 ? 1 : 0
+      );
       dispatch(
         actions.openProject({
           corner: corner,
@@ -62,7 +80,7 @@ export default function withTable(
     function toggleAnalytic() {
       setAnalytic(!analytic);
     }
-    
+
     return (
       <>
         <Title
@@ -73,11 +91,19 @@ export default function withTable(
           sort={sort}
         />
         <div className={'table-card row hideInPrint'}>
-          <TableInput selector={selector} analytic={analytic} actions={actions} />
+          <TableInput
+            selector={selector}
+            analytic={analytic}
+            actions={actions}
+          />
           <div className={'col-7'} style={{ width: '100%' }}>
             <div className={'table-data'}>
               <table className={'table'}>
-                <TableDataHeader header={headers} dynCols={dynCols} actions={actions} />
+                <TableDataHeader
+                  header={headers}
+                  dynCols={dynCols}
+                  actions={actions}
+                />
                 <tbody>
                   {data.map((rowData: number[], row: number) => (
                     <tr key={row}>
@@ -138,6 +164,6 @@ export default function withTable(
 
         <PDFTable selector={selector} />
       </>
-    )
-  }
+    );
+  };
 }

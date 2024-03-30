@@ -2,13 +2,21 @@ import ReactApexChart from 'react-apexcharts';
 import TableStatic from '../../components/TableStatic';
 import { useColGraph, useLineGraph } from '../../graphOptions';
 import { ApexOptions } from 'apexcharts';
-import {economicCalculation} from "./economicCalculation";
-import {useAppSelector} from "../../store/hooks";
-import {selectEconomic} from "./economicSlice";
+import { economicCalculation } from './economicCalculation';
+import { useAppSelector } from '../../store/hooks';
+import { selectEconomic } from './economicSlice';
 
 export default function EconomicResult() {
-  const {headers, data, values} = useAppSelector(selectEconomic)
-  const {costData, incomeData, profitData, costProfitabilityData, incomeProfitabilityData, costEfficiencyData, costIndicatorData} = economicCalculation(data, values)
+  const { headers, data, values } = useAppSelector(selectEconomic);
+  const {
+    costData,
+    incomeData,
+    profitData,
+    costProfitabilityData,
+    incomeProfitabilityData,
+    costEfficiencyData,
+    costIndicatorData,
+  } = economicCalculation(data, values);
   const lineSeries = [
     {
       name: 'Náklady',
@@ -45,7 +53,7 @@ export default function EconomicResult() {
 
   const lineOptions: ApexOptions = useLineGraph(headers);
 
-  const colOptions: ApexOptions = useColGraph(headers, "koeficient");
+  const colOptions: ApexOptions = useColGraph(headers, 'koeficient');
 
   return (
     <div className={'new-page'}>
@@ -56,7 +64,7 @@ export default function EconomicResult() {
           corner={'Ekonomické ukazovatele'}
           header={[...headers]}
           inputs={[
-            ['(Z) - zisk (€)', "V - N"],
+            ['(Z) - zisk (€)', 'V - N'],
             ['(N) - náklady celkom (€)', `\\sum N `],
             ['(V) - výnosy celkom (€)', `\\sum V `],
             ['(Rv) - rentabilita výnosov', `R_{v}=\\frac{Z}{V}`],
@@ -89,17 +97,16 @@ export default function EconomicResult() {
       </div>
 
       <div className={'graph-card new-page-after'}>
-          <h4 className={'graph-title'}>
-            EKONOMICKÉ UKAZOVATELE V SLEDOVANOM OBDOBÍ
-          </h4>
-          <ReactApexChart
-            options={colOptions}
-            series={colSeries}
-            type="bar"
-            height={420}
-          />
-        </div>
-
+        <h4 className={'graph-title'}>
+          EKONOMICKÉ UKAZOVATELE V SLEDOVANOM OBDOBÍ
+        </h4>
+        <ReactApexChart
+          options={colOptions}
+          series={colSeries}
+          type="bar"
+          height={420}
+        />
+      </div>
     </div>
   );
 }
