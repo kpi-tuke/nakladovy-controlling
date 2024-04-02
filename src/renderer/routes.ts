@@ -1,7 +1,6 @@
 type Route = {
   path: string;
   title: string;
-  addToReport: boolean;
   printToPDF: boolean;
   save: boolean;
 };
@@ -22,21 +21,18 @@ export const routes: Route[] = [
   {
     path: RouteName.HOME,
     title: 'Úvod',
-    addToReport: false,
     printToPDF: false,
     save: false,
   },
   {
     path: RouteName.SELECT,
     title: 'Výber analýzy',
-    addToReport: false,
     printToPDF: false,
     save: false,
   },
   {
     path: RouteName.ECONOMIC_ANALYSIS,
     title: 'Ekonomická analýza hospodárenia',
-    addToReport: true,
     printToPDF: true,
     save: true,
   },

@@ -1,49 +1,23 @@
 import { useNavigate, useLocation } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '../store/hooks';
-import { selectCVP } from '../pages/cvp/cvpSlice';
-import { selectEconomic } from '../pages/economic/economicSlice';
-import { selectIndex } from '../pages/index/indexSlice';
-import { selectPareto } from '../pages/pareto/paretoSlice';
-import { selectSortiment } from '../pages/sortiment/sortimentSlice';
-import { selectStructure } from '../pages/structure/structureSlice';
-import {
-  evaluationActions,
-  selectEvaluation,
-} from '../pages/report/evaluationSlice';
 import { Button, Grid, IconButton, Typography } from '@mui/material';
 import { getRouteDetails, RouteName } from 'renderer/routes';
-import React from 'react';
-import {
-  ArrowBack,
-  Add,
-  Remove,
-  Print,
-  Save,
-  Summarize,
-} from '@mui/icons-material';
+import React, { useMemo } from 'react';
+import { ArrowBack, Print, Save } from '@mui/icons-material';
+import { useAnalysisSave } from './providers/AnalysisSaveProvider';
 
 type Props = {
   reportId: number;
 };
 
 // TODO: pouzit props tu
-const HeaderBar: React.FC<any> = ({ reportId }) => {
-  const dispatch = useAppDispatch();
+const HeaderBar: React.FC<any> = () => {
+  const { save, economicChanged } = useAnalysisSave();
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
   const routeDetails = React.useMemo(() => {
     return getRouteDetails(pathname);
   }, [pathname]);
-
-  function addToReport(id: number) {
-    dispatch(evaluationActions.addTask(id));
-  }
-
-  function removeFromReport(id: number) {
-    dispatch(evaluationActions.removeTask(id));
-    console.log(id);
-  }
 
   // TODO: tu to bolo ako NUMBER... neviem preco
   function printToPDF(id: string) {
@@ -55,31 +29,16 @@ const HeaderBar: React.FC<any> = ({ reportId }) => {
     navigate(-1);
   }
 
-  const economic = useAppSelector(selectEconomic);
-  const structure = useAppSelector(selectStructure);
-  const cvp = useAppSelector(selectCVP);
-  const sortiment = useAppSelector(selectSortiment);
-  const chain = useAppSelector(selectIndex);
-  const pareto = useAppSelector(selectPareto);
-  const { tasks } = useAppSelector(selectEvaluation);
-
-  function save() {
-    const json = JSON.stringify({
-      economic,
-      sortiment,
-      structure,
-      chain,
-      cvp,
-      pareto,
-      tasks,
-    });
-    // @ts-ignore
-    window.electron.saveProject(json);
-  }
-
-  function goToReport() {
-    navigate(RouteName.EVALUATION);
-  }
+  const isSaveDisabled = useMemo(() => {
+    switch (pathname) {
+      case RouteName.ECONOMIC_ANALYSIS: {
+        return !economicChanged;
+      }
+      default: {
+        return false;
+      }
+    }
+  }, [economicChanged]);
 
   return (
     <Grid
@@ -147,21 +106,6 @@ const HeaderBar: React.FC<any> = ({ reportId }) => {
           gap: 2,
         }}
       >
-        {routeDetails?.addToReport &&
-          (tasks.includes(reportId) ? (
-            <ResponsiveButton
-              text="Odstrániť z reportu"
-              icon={<Remove />}
-              onClick={() => removeFromReport(reportId)}
-            />
-          ) : (
-            <ResponsiveButton
-              text="Zahrnúť v reporte"
-              icon={<Add />}
-              onClick={() => addToReport(reportId)}
-            />
-          ))}
-
         {routeDetails?.printToPDF && (
           <ResponsiveButton
             text="Tlačiť do PDF"
@@ -171,17 +115,12 @@ const HeaderBar: React.FC<any> = ({ reportId }) => {
         )}
 
         {routeDetails?.save && (
-          <>
-            {tasks.length > 0 && (
-              <ResponsiveButton
-                text="Report"
-                icon={<Summarize />}
-                onClick={goToReport}
-              />
-            )}
-
-            <ResponsiveButton text="Uložiť" onClick={save} icon={<Save />} />
-          </>
+          <ResponsiveButton
+            text={isSaveDisabled ? 'Uložené' : 'Uložiť'}
+            onClick={save}
+            icon={<Save />}
+            disabled={isSaveDisabled}
+          />
         )}
       </Grid>
     </Grid>
@@ -194,17 +133,20 @@ type ResponsiveButtonProps = {
   text: string;
   icon: React.ReactNode;
   onClick: VoidFunction;
+  disabled?: boolean;
 };
 
 const ResponsiveButton: React.FC<ResponsiveButtonProps> = ({
   text,
   icon,
   onClick,
+  disabled,
 }) => {
   return (
     <Button
       variant="contained"
       onClick={() => onClick()}
+      disabled={disabled}
       sx={{
         display: 'flex',
         gap: 1,

@@ -110,7 +110,7 @@ export default function WelcomePage() {
                 </WelcomeButton>
               </Grid>
               <Grid item xs={12}>
-                <WelcomeButton onClick={quit}>Ukončiť</WelcomeButton>
+                <WelcomeButton onClick={quit}>Ukončiť projekt</WelcomeButton>
               </Grid>
             </Grid>
           </Box>

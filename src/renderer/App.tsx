@@ -34,6 +34,7 @@ import HeaderValue from './components/tables/HeaderValue';
 import ItemInput from './components/tables/ItemInput';
 import ItemValue from './components/tables/ItemValue';
 import { RouteName } from './routes';
+import AnalysisSaveProvider from './components/providers/AnalysisSaveProvider';
 
 export default function App() {
   const EconomicAnalysis: () => JSX.Element = withAnalysis(
@@ -80,43 +81,48 @@ export default function App() {
   );
   return (
     <Provider store={store}>
-      <Router>
-        <Routes>
-          <Route path={RouteName.HOME} element={<WelcomePage />} />
-          <Route path={RouteName.SELECT} element={<TaskSelection />} />
-          <Route
-            path={RouteName.ECONOMIC_ANALYSIS}
-            element={<EconomicAnalysis />}
-          />
-          <Route
-            path={RouteName.PERETO_ANALYSIS}
-            element={<ParetoAnalysis />}
-          />
-          <Route
-            path={RouteName.SORTIMENT_ANALYSIS}
-            element={<SortimentAnalysis />}
-          />
-          <Route path={RouteName.CVP_ANALYSIS} element={<CVPAnalysis />} />
-          <Route path={RouteName.INDEX_ANALYSIS} element={<IndexAnalysis />} />
-          <Route
-            path={RouteName.STRUCTURE_ANALYSIS}
-            element={<StructureAnalysis />}
-          />
-          <Route
-            path={RouteName.EVALUATION}
-            element={
-              <Report
-                id1={EconomicAnalysis}
-                id2={StructureAnalysis}
-                id3={IndexAnalysis}
-                id4={CVPAnalysis}
-                id5={SortimentAnalysis}
-                id6={ParetoAnalysis}
-              />
-            }
-          />
-        </Routes>
-      </Router>
+      <AnalysisSaveProvider>
+        <Router>
+          <Routes>
+            <Route path={RouteName.HOME} element={<WelcomePage />} />
+            <Route path={RouteName.SELECT} element={<TaskSelection />} />
+            <Route
+              path={RouteName.ECONOMIC_ANALYSIS}
+              element={<EconomicAnalysis />}
+            />
+            <Route
+              path={RouteName.PERETO_ANALYSIS}
+              element={<ParetoAnalysis />}
+            />
+            <Route
+              path={RouteName.SORTIMENT_ANALYSIS}
+              element={<SortimentAnalysis />}
+            />
+            <Route path={RouteName.CVP_ANALYSIS} element={<CVPAnalysis />} />
+            <Route
+              path={RouteName.INDEX_ANALYSIS}
+              element={<IndexAnalysis />}
+            />
+            <Route
+              path={RouteName.STRUCTURE_ANALYSIS}
+              element={<StructureAnalysis />}
+            />
+            <Route
+              path={RouteName.EVALUATION}
+              element={
+                <Report
+                  id1={EconomicAnalysis}
+                  id2={StructureAnalysis}
+                  id3={IndexAnalysis}
+                  id4={CVPAnalysis}
+                  id5={SortimentAnalysis}
+                  id6={ParetoAnalysis}
+                />
+              }
+            />
+          </Routes>
+        </Router>
+      </AnalysisSaveProvider>
     </Provider>
   );
 }

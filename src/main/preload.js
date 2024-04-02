@@ -1,4 +1,4 @@
-const {contextBridge, ipcRenderer} = require('electron');
+const { contextBridge, ipcRenderer } = require('electron');
 
 contextBridge.exposeInMainWorld('electron', {
   ipcRenderer: {
@@ -20,22 +20,21 @@ contextBridge.exposeInMainWorld('electron', {
       }
     },
   },
-  printToPdf: (fileName) => {
-    ipcRenderer.send("printToPDF", fileName)
-  },
-  saveProject: (state) => {
-    ipcRenderer.send("save", state)
-  },
-  openProject: () => {
-    ipcRenderer.send("open")
-  },
+
+  printToPdf: (fileName) => ipcRenderer.send('printToPDF', fileName),
+
+  chooseFilePath: () => ipcRenderer.invoke('chooseFilePath'),
+
+  saveProject: (state) => ipcRenderer.invoke('save', state),
+
+  openProject: () => ipcRenderer.send('open'),
+
   onOpen(channel, func) {
     const validChannels = ['open'];
     if (validChannels.includes(channel)) {
       ipcRenderer.on(channel, (event, ...args) => func(...args));
     }
   },
-  quit: () => {
-    ipcRenderer.send("quit")
-  }
+
+  quit: () => ipcRenderer.send('quit'),
 });

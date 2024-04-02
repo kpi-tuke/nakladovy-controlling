@@ -69,9 +69,8 @@ ipcMain.on('open', async (event) => {
   }
 });
 
-ipcMain.on('save', async (event, state) => {
-  console.log(state);
-  const file = await dialog.showSaveDialog({
+ipcMain.handle('chooseFilePath', async () => {
+  const { filePath } = await dialog.showSaveDialog({
     title: 'Zvoľte umiestnenie súboru',
     buttonLabel: 'Uložiť',
     defaultPath: 'nákladový_controlling',
@@ -84,25 +83,36 @@ ipcMain.on('save', async (event, state) => {
     properties: [],
   });
 
-  if (!file.canceled) {
+  return filePath;
+});
+
+ipcMain.handle('save', async (_, state) => {
+  const { path, data } = JSON.parse(state);
+
+  if (path) {
     // @ts-ignore
-    fs.open(file.filePath.toString(), 'w+', function (err) {
+    fs.open(path, 'w+', function (err) {
       if (err) {
         console.log(err);
+        return false;
       } else {
         console.log('Opened Successfully');
       }
     });
     // @ts-ignore
-    fs.writeFile(file.filePath.toString(), state, function (err) {
+    fs.writeFile(path, JSON.stringify(data), function (err) {
       if (err) {
         console.log(err);
+        return false;
       } else {
         console.log('Saved Successfully');
       }
     });
+
+    return true;
   }
-  event.reply('save', 'saved');
+
+  return false;
 });
 
 ipcMain.on('printToPDF', async (event, fileName: string) => {
@@ -236,7 +246,7 @@ const createWindow = async () => {
       mainWindow.minimize();
     } else {
       mainWindow.show();
-      mainWindow.maximize()
+      mainWindow.maximize();
     }
   });
 
