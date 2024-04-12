@@ -11,7 +11,7 @@ type Props = {
 
 // TODO: pouzit props tu
 const HeaderBar: React.FC<any> = () => {
-  const { save, economicChanged } = useAnalysisSave();
+  const { save, economicChanged, onceSaved } = useAnalysisSave();
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
@@ -30,6 +30,10 @@ const HeaderBar: React.FC<any> = () => {
   }
 
   const isSaveDisabled = useMemo(() => {
+    if(!onceSaved) {
+      return false;
+    }
+
     switch (pathname) {
       case RouteName.ECONOMIC_ANALYSIS: {
         return !economicChanged;
@@ -38,7 +42,7 @@ const HeaderBar: React.FC<any> = () => {
         return false;
       }
     }
-  }, [economicChanged]);
+  }, [economicChanged, onceSaved]);
 
   return (
     <Grid
