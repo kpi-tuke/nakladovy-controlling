@@ -3,7 +3,7 @@ import React, {
   ReactNode,
   useContext,
   useMemo,
-  useState,
+  useState
 } from 'react';
 import { selectCVP } from 'renderer/pages/cvp/cvpSlice';
 import { selectEconomic } from 'renderer/pages/economic/economicSlice';
@@ -13,15 +13,17 @@ import { selectEvaluation } from 'renderer/pages/report/evaluationSlice';
 import { selectSortiment } from 'renderer/pages/sortiment/sortimentSlice';
 import { selectStructure } from 'renderer/pages/structure/structureSlice';
 import { useAppSelector } from 'renderer/store/hooks';
+import { useSnackbar } from './SnackbarProvider';
 
 const SaveContext = createContext<{
   save: VoidFunction;
   onceSaved: boolean;
   economicChanged: boolean;
 }>({
-  save: () => {},
+  save: () => {
+  },
   onceSaved: false,
-  economicChanged: false,
+  economicChanged: false
 });
 
 type Props = {
@@ -40,6 +42,7 @@ const AnalysisSaveProvider: React.FC<Props> = ({ children }) => {
   const [path, setPath] = useState<string | undefined>(undefined);
   // TODO: pridat typ
   const [oldData, setOldData] = useState<any>(null);
+  const { open } = useSnackbar();
 
   const onceSaved = !!path;
 
@@ -71,18 +74,19 @@ const AnalysisSaveProvider: React.FC<Props> = ({ children }) => {
       chain,
       cvp,
       pareto,
-      tasks,
+      tasks
     };
 
     const json = JSON.stringify({
       path: tempPath,
-      data: newData,
+      data: newData
     });
 
     // @ts-ignore
     const isSaved = await window.electron.saveProject(json);
     if (isSaved) {
       setOldData(newData);
+      open('Súbor bol uložený.');
     } else {
       // TODO: zobrazenie hlasky, ze sa nepodarilo ulozit subor
     }
@@ -93,7 +97,7 @@ const AnalysisSaveProvider: React.FC<Props> = ({ children }) => {
       value={{
         save,
         onceSaved,
-        economicChanged,
+        economicChanged
       }}
     >
       {children}
