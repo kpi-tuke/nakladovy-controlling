@@ -181,3 +181,52 @@ export const sortTableByYear = {
     return;
   },
 };
+
+export const sortTableByItemNumber = {
+  sortTableByItemNumber: (
+    state: {
+      headers: string[];
+      data: number[][];
+      items: string[];
+      values: string[];
+      text: string;
+    },
+    action: PayloadAction<SortDirection>
+  ) => {
+    const { headers, data, items, values, text } = state;
+
+    const sortedValues =
+      action.payload === 'desc'
+        ? [...values].sort((a, b) => +a - +b)
+        : [...values].sort((a, b) => +b - +a);
+
+    const sortedItems = items.sort((a, b) => {
+      const aNumber = a.split('-')[0].replaceAll(' ', '');
+      const bNumber = b.split('-')[0].replaceAll(' ', '');
+
+      return action.payload === 'desc'
+        ? +bNumber - +aNumber
+        : +aNumber - +bNumber;
+    });
+
+    const formattedData: { [key: string]: number[] } = {};
+
+    values.forEach((value, index) => {
+      formattedData[value] = data[index];
+    });
+
+    const sortedData: number[][] = [];
+
+    sortedValues.forEach((item) => {
+      sortedData.push(formattedData[item]);
+    });
+
+    state.headers = headers;
+    state.data = sortedData;
+    state.items = sortedItems;
+    state.values = sortedValues;
+    state.text = text;
+
+    return;
+  },
+};

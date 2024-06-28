@@ -43,26 +43,14 @@ export default function withTable(
       );
     };
 
-    const {
-      headers,
-      data,
-      corner,
-      items,
-      values,
-      text,
-      accounts,
-      dynRows,
-      dynCols,
-    } = useAppSelector(selector);
+    const { headers, data, dynRows, dynCols } = useAppSelector(selector);
 
     const sortByYear = (sortDirection: SortDirection) => {
       dispatch(actions.sortTableByYear(sortDirection));
     };
 
-    const sortByItemNumber = () => {
-      // headers,
-      // data,
-      // sortDirection
+    const sortByItemNumber = (sortDirection: SortDirection) => {
+      dispatch(actions.sortTableByItemNumber(sortDirection));
     };
 
     return (
