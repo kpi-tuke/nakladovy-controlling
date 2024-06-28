@@ -17,8 +17,8 @@ const initialIndexState: defaultState = {
     [0, 0, 0],
   ],
   items: [
-    '501 – Spotreba materiálu',
-    '666 – Výnosy z krátkodobého finančného majetku',
+    '501 - Spotreba materiálu',
+    '666 - Výnosy z krátkodobého finančného majetku',
   ],
   values: ['501', '666'],
   text: '',

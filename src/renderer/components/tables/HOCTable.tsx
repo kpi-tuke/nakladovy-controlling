@@ -2,7 +2,7 @@ import { ChangeEvent, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import PDFTable from './PDFTable';
 import Title from '../Title';
-import { sortTable } from '../../helper';
+import { SortDirection, sortTable, sortTableByYear } from '../../helper';
 
 export default function withTable(
   TableInput: (props: any) => JSX.Element,
@@ -58,12 +58,32 @@ export default function withTable(
       hasAnalytic,
     } = useAppSelector(selector);
 
-    function sort() {
-      const { newHeaders, newData } = sortTable(
+    // function sort() {
+    //   const { newHeaders, newData } = sortTable(
+    //     headers,
+    //     data,
+    //     id === 3 ? 1 : 0
+    //   );
+    //   dispatch(
+    //     actions.openProject({
+    //       corner: corner,
+    //       headers: newHeaders,
+    //       data: newData,
+    //       items,
+    //       values,
+    //       text,
+    //       accounts,
+    //     })
+    //   );
+    // }
+
+    const sortByYear = (sortDirection: SortDirection) => {
+      const { data: newData, headers: newHeaders } = sortTableByYear(
         headers,
         data,
-        id === 3 ? 1 : 0
+        sortDirection
       );
+
       dispatch(
         actions.openProject({
           corner: corner,
@@ -75,17 +95,15 @@ export default function withTable(
           accounts,
         })
       );
-    }
-
-    function toggleAnalytic() {
-      setAnalytic(!analytic);
-    }
+    };
 
     return (
       <>
         <Title
-          sortable={sortable}
-          onSort={() => {}}
+          onSortYear={sortByYear}
+          onSortItems={() => {}}
+          // sortable={sortable}
+          // onSort={() => {}}
           // analytic={analytic}
           // hasAnalytic={hasAnalytic}
           // toggleAnalytic={toggleAnalytic}

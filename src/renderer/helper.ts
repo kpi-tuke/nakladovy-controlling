@@ -72,6 +72,44 @@ export function sortTable(headers: string[], data: number[][], offset: number) {
   return { newHeaders, newData };
 }
 
+export type SortDirection = 'asc' | 'desc';
+
+export const sortTableByYear = (
+  headers: string[],
+  data: number[][],
+  sortDirection: SortDirection
+) => {
+  if (new Set(headers).size !== headers.length) return { headers, data };
+
+  for (const header of headers) {
+    if (!isNumeric(header)) {
+      throw new Error('Hlavička musí byť číslo!');
+    }
+  }
+
+  const formattedData: { [key: string]: number[] } = {};
+
+  headers.forEach((header, index) => {
+    formattedData[header] = [];
+    formattedData[header] = data.map((row) => row[index]);
+  });
+
+  const sortedHeaders =
+    sortDirection === 'asc'
+      ? [...headers].sort((a, b) => +b - +a)
+      : [...headers].sort((a, b) => +a - +b);
+
+  const sortedData: number[][] = Array.from({ length: data.length }, () => []);
+
+  for (let i = 0; i < sortedHeaders.length; i++) {
+    for (let j = 0; j < formattedData[sortedHeaders[i]].length; j++) {
+      sortedData[j].push(formattedData[sortedHeaders[i]][j]);
+    }
+  }
+
+  return { headers: sortedHeaders, data: sortedData };
+};
+
 export const divideArrays = (
   numerator: number[],
   denominator: number[]
@@ -97,3 +135,7 @@ export const subtractArrays = (
   }
   return arr;
 };
+
+function isNumeric(str: string): boolean {
+  return /\d/.test(str);
+}

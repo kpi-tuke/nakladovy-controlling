@@ -4,7 +4,6 @@ import { getRouteDetails, RouteName } from 'renderer/routes';
 import React, { useMemo } from 'react';
 import { ArrowBack, Print, Save } from '@mui/icons-material';
 import { useAnalysisSave } from './providers/AnalysisSaveProvider';
-import { useSnackbar } from './providers/SnackbarProvider';
 
 type Props = {
   reportId: number;
