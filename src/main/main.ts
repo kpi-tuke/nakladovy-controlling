@@ -17,6 +17,7 @@ import log from 'electron-log';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
 import fs from 'fs';
+import installExtension, { REDUX_DEVTOOLS } from 'electron-devtools-installer';
 
 export default class AppUpdater {
   constructor() {
@@ -291,3 +292,9 @@ app
     });
   })
   .catch(console.log);
+
+app.whenReady().then(() => {
+  installExtension(REDUX_DEVTOOLS)
+    .then((name) => console.log(`Added Extension:  ${name}`))
+    .catch((err) => console.log('An error occurred: ', err));
+});

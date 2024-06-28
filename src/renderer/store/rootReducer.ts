@@ -10,10 +10,10 @@ export interface defaultState {
   values: string[];
   text: string;
   accounts: string[];
-  sortable: boolean,
-  hasAnalytic: boolean,
-  dynRows?: boolean,
-  dynCols?: boolean,
+  sortable: boolean;
+  hasAnalytic: boolean;
+  dynRows?: boolean;
+  dynCols?: boolean;
 }
 
 export interface dataOnIndex {

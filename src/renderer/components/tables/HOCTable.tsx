@@ -85,10 +85,11 @@ export default function withTable(
       <>
         <Title
           sortable={sortable}
-          analytic={analytic}
-          hasAnalytic={hasAnalytic}
-          toggleAnalytic={toggleAnalytic}
-          sort={sort}
+          onSort={() => {}}
+          // analytic={analytic}
+          // hasAnalytic={hasAnalytic}
+          // toggleAnalytic={toggleAnalytic}
+          // sort={sort}
         />
         <div className={'table-card row hideInPrint'}>
           <TableInput
