@@ -2,23 +2,23 @@ import ReactApexChart from 'react-apexcharts';
 import TableStatic from '../../components/TableStatic';
 import { useColGraph } from '../../graphOptions';
 import { ApexOptions } from 'apexcharts';
-import {structureCalculation} from "./structureCalculation";
-import {useAppSelector} from "../../store/hooks";
-import {selectStructure} from "./structureSlice";
+import { structureCalculation } from './structureCalculation';
+import { useAppSelector } from '../../store/hooks';
+import { selectStructure } from './structureSlice';
 
 export default function StructureResult() {
-  const {data, items, headers} = useAppSelector(selectStructure)
-  const {rowSums, totalCost, colSums} = structureCalculation(data)
+  const { data, items, headers } = useAppSelector(selectStructure);
+  const { rowSums, totalCost, colSums } = structureCalculation(data);
   const genericSeries = [
     {
-      name: "Druhové",
+      name: 'Druhové',
       data: rowSums,
     },
   ];
 
   const calculationSeries = [
     {
-      name: "Kalkulačné",
+      name: 'Kalkulačné',
       data: colSums,
     },
   ];
@@ -89,14 +89,13 @@ export default function StructureResult() {
     labels: headers,
   };
 
-
   return (
     <div className={'new-page-after new-page'}>
       <h1 className={'result-h1'}>Analýza ukazovateľov</h1>
 
       <div className={'table-card'} style={{ marginTop: 50 }}>
         <TableStatic
-          corner={"Nákladové druhy"}
+          corner={'Nákladové druhy'}
           header={[...items, 'SPOLU']}
           inputs={[
             ['(Nj) - náklady jednotkové (€)', ''],
@@ -120,7 +119,7 @@ export default function StructureResult() {
         />
 
         <TableStatic
-          corner={"Kalkulačné položky"}
+          corner={'Kalkulačné položky'}
           header={[...headers, 'SPOLU']}
           inputs={[
             ['(Nj) - náklady jednotkové (€)', ''],

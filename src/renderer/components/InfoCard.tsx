@@ -26,22 +26,22 @@ export default function InfoCard(props: any) {
       },
     },
   };
-  const height = props.series && props.series.length >1 ? 100 : 0
+  const height = props.series && props.series.length > 1 ? 100 : 0;
   return (
     <div className={'info-card'}>
       <h2 className={'info-title'}>{props.header}:</h2>
-      <p className={"info-value"}>{props.value}</p>
+      <p className={'info-value'}>{props.value}</p>
       {props.series ? (
         <ReactApexChart
           //@ts-ignore
           options={graph.optionsSpark3}
           series={graph.seriesSpark3}
-          type={"area"}
+          type={'area'}
           height={height}
         />
-      )
-      : <div style={{height:5}}/>
-      }
+      ) : (
+        <div style={{ height: 5 }} />
+      )}
     </div>
   );
 }

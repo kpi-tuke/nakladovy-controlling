@@ -1,23 +1,8 @@
-import {
-  useNavigate,
-  useLocation
-} from 'react-router-dom';
-import {
-  Button,
-  Grid,
-  IconButton,
-  Typography
-} from '@mui/material';
-import {
-  getRouteDetails,
-  RouteName
-} from 'renderer/routes';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { Button, Grid, IconButton, Typography } from '@mui/material';
+import { getRouteDetails, RouteName } from 'renderer/routes';
 import React, { useMemo } from 'react';
-import {
-  ArrowBack,
-  Print,
-  Save
-} from '@mui/icons-material';
+import { ArrowBack, Print, Save } from '@mui/icons-material';
 import { useAnalysisSave } from './providers/AnalysisSaveProvider';
 import { useSnackbar } from './providers/SnackbarProvider';
 
@@ -67,23 +52,20 @@ const HeaderBar: React.FC<any> = () => {
         paddingLeft: 2,
         paddingRight: 2,
         alignItems: 'center',
-        height: '7vh'
+        height: '7vh',
       }}
     >
       {/* Left side */}
-      <Grid
-        item
-        xs={4}
-      >
+      <Grid item xs={4}>
         {pathname !== RouteName.HOME && (
           <>
             <IconButton
-              color='primary'
+              color="primary"
               onClick={goBack}
               sx={{
                 display: {
-                  md: 'none'
-                }
+                  md: 'none',
+                },
               }}
             >
               <ArrowBack />
@@ -91,12 +73,12 @@ const HeaderBar: React.FC<any> = () => {
             <Button
               onClick={goBack}
               startIcon={<ArrowBack />}
-              variant='outlined'
+              variant="outlined"
               sx={{
                 display: {
                   xs: 'none',
-                  md: 'flex'
-                }
+                  md: 'flex',
+                },
               }}
             >
               Späť
@@ -106,16 +88,13 @@ const HeaderBar: React.FC<any> = () => {
       </Grid>
 
       {/* Middle side */}
-      <Grid
-        item
-        xs={4}
-      >
+      <Grid item xs={4}>
         <Typography
-          variant='h1'
+          variant="h1"
           sx={{
             textAlign: 'center',
             fontSize: 24,
-            fontWeight: 600
+            fontWeight: 600,
           }}
         >
           {routeDetails?.title}
@@ -129,12 +108,12 @@ const HeaderBar: React.FC<any> = () => {
         sx={{
           display: 'flex',
           justifyContent: 'flex-end',
-          gap: 2
+          gap: 2,
         }}
       >
         {routeDetails?.printToPDF && (
           <ResponsiveButton
-            text='Tlačiť do PDF'
+            text="Tlačiť do PDF"
             icon={<Print />}
             onClick={() => printToPDF(routeDetails?.title ?? '')}
           />
@@ -162,22 +141,20 @@ type ResponsiveButtonProps = {
   disabled?: boolean;
 };
 
-const ResponsiveButton: React.FC<ResponsiveButtonProps> = (
-  {
-    text,
-    icon,
-    onClick,
-    disabled
-  }
-) => {
+const ResponsiveButton: React.FC<ResponsiveButtonProps> = ({
+  text,
+  icon,
+  onClick,
+  disabled,
+}) => {
   return (
     <Button
-      variant='contained'
+      variant="contained"
       onClick={() => onClick()}
       disabled={disabled}
       sx={{
         display: 'flex',
-        gap: 1
+        gap: 1,
       }}
     >
       {icon}
@@ -185,9 +162,9 @@ const ResponsiveButton: React.FC<ResponsiveButtonProps> = (
         sx={{
           display: {
             xs: 'none',
-            xl: 'flex'
+            xl: 'flex',
           },
-          fontSize: 14
+          fontSize: 14,
         }}
       >
         {text}

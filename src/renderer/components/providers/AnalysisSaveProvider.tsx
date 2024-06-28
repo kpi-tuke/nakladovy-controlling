@@ -3,7 +3,7 @@ import React, {
   ReactNode,
   useContext,
   useMemo,
-  useState
+  useState,
 } from 'react';
 import { selectCVP } from 'renderer/pages/cvp/cvpSlice';
 import { selectEconomic } from 'renderer/pages/economic/economicSlice';
@@ -20,10 +20,9 @@ const SaveContext = createContext<{
   onceSaved: boolean;
   economicChanged: boolean;
 }>({
-  save: () => {
-  },
+  save: () => {},
   onceSaved: false,
-  economicChanged: false
+  economicChanged: false,
 });
 
 type Props = {
@@ -74,12 +73,12 @@ const AnalysisSaveProvider: React.FC<Props> = ({ children }) => {
       chain,
       cvp,
       pareto,
-      tasks
+      tasks,
     };
 
     const json = JSON.stringify({
       path: tempPath,
-      data: newData
+      data: newData,
     });
 
     // @ts-ignore
@@ -97,7 +96,7 @@ const AnalysisSaveProvider: React.FC<Props> = ({ children }) => {
       value={{
         save,
         onceSaved,
-        economicChanged
+        economicChanged,
       }}
     >
       {children}

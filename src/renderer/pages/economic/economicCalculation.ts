@@ -1,8 +1,8 @@
-import {divideArrays, subtractArrays} from "../../helper";
+import { divideArrays, subtractArrays } from '../../helper';
 
 export function economicCalculation(data: number[][], values: any) {
-  let costsByYear: number[] = data[0].map(() => 0)
-  let incomeByYear: number[] = data[0].map(() => 0)
+  let costsByYear: number[] = data[0].map(() => 0);
+  let incomeByYear: number[] = data[0].map(() => 0);
 
   //sums of costs and incomes by year
   data.map((rowData: number[], row: number) => {
@@ -13,14 +13,20 @@ export function economicCalculation(data: number[][], values: any) {
       } else {
         costsByYear[col] = parseFloat((costsByYear[col] + value).toFixed(12));
       }
-    })
-  })
+    });
+  });
 
-  let profitByYear: number[] = subtractArrays(incomeByYear, costsByYear)
-  let incomeProfitabilityByYear: number[] = divideArrays(profitByYear, incomeByYear)
-  let costProfitabilityByYear: number[] = divideArrays(profitByYear, costsByYear)
-  let costEfficiencyByYear: number[] = divideArrays(incomeByYear, costsByYear)
-  let costIndicatorByYear: number[] = divideArrays(costsByYear, incomeByYear)
+  let profitByYear: number[] = subtractArrays(incomeByYear, costsByYear);
+  let incomeProfitabilityByYear: number[] = divideArrays(
+    profitByYear,
+    incomeByYear
+  );
+  let costProfitabilityByYear: number[] = divideArrays(
+    profitByYear,
+    costsByYear
+  );
+  let costEfficiencyByYear: number[] = divideArrays(incomeByYear, costsByYear);
+  let costIndicatorByYear: number[] = divideArrays(costsByYear, incomeByYear);
 
   return {
     costData: costsByYear,

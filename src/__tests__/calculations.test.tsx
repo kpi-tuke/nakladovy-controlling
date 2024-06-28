@@ -1,9 +1,9 @@
-import {economicCalculation} from "../renderer/pages/economic/economicCalculation";
-import {structureCalculation} from "../renderer/pages/structure/structureCalculation";
-import {sortimentCalculation} from "../renderer/pages/sortiment/sortimentCalculation";
-import {cvpCalculation} from "../renderer/pages/cvp/cvpCalculation";
-import {indexCalculation} from "../renderer/pages/index/indexCalculation";
-import {paretoCalculation} from "../renderer/pages/pareto/paretoCalculation";
+import { economicCalculation } from '../renderer/pages/economic/economicCalculation';
+import { structureCalculation } from '../renderer/pages/structure/structureCalculation';
+import { sortimentCalculation } from '../renderer/pages/sortiment/sortimentCalculation';
+import { cvpCalculation } from '../renderer/pages/cvp/cvpCalculation';
+import { indexCalculation } from '../renderer/pages/index/indexCalculation';
+import { paretoCalculation } from '../renderer/pages/pareto/paretoCalculation';
 
 test('economicCalculation test1', () => {
   expect(
@@ -206,7 +206,7 @@ test('paretoCalculation test2 decimal numbers', () => {
       [
         'Chyby mechanického trieskového opracovania',
         'Chyby tvárnenia materiálu',
-      ],
+      ]
     )
   ).toEqual({
     causes: [
@@ -216,7 +216,7 @@ test('paretoCalculation test2 decimal numbers', () => {
     percentages: [83.76, 16.24],
     values: [9.8, 1.9],
     percentagesKumul: [83.76, 100],
-    valuesKumul: [ 9.8, 11.7],
+    valuesKumul: [9.8, 11.7],
     sum: 11.7,
   });
 });

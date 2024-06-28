@@ -1,11 +1,15 @@
-import {createSlice} from "@reduxjs/toolkit";
-import {RootState} from "../../store/store";
-import {defaultState, openProject, rootReducer} from "../../store/rootReducer";
+import { createSlice } from '@reduxjs/toolkit';
+import { RootState } from '../../store/store';
+import {
+  defaultState,
+  openProject,
+  rootReducer,
+} from '../../store/rootReducer';
 
 const initialSortimentState: defaultState = {
   id: 5,
-  title: "Sortimentná analýza",
-  corner: "Ekonomická položka",
+  title: 'Sortimentná analýza',
+  corner: 'Ekonomická položka',
   headers: ['Výrobok A'],
   data: [[0], [0], [0], [0]],
   items: [
@@ -21,7 +25,7 @@ const initialSortimentState: defaultState = {
     'Objem výroby',
   ],
   text: '',
-  accounts: [""],
+  accounts: [''],
   sortable: false,
   hasAnalytic: false,
   dynCols: true,
@@ -39,7 +43,7 @@ const sortimentSlice = createSlice({
       state.values = initialSortimentState.values;
       state.text = initialSortimentState.text;
     },
-    ...openProject
+    ...openProject,
   },
 });
 

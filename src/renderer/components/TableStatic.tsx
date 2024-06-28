@@ -29,7 +29,7 @@ export default function TableStatic(props: any) {
   return (
     <>
       <div className={'table-data row hideInPrint'}>
-        <table style={{ borderCollapse: "collapse", width: '100%' }}>
+        <table style={{ borderCollapse: 'collapse', width: '100%' }}>
           <thead>
             <tr className={'table-head'}>
               <th className={'table-cell'} style={{ textAlign: 'center' }}>

@@ -21,10 +21,7 @@ export default function ItemValue({
           {items.map((value: string, row: number) => {
             return (
               <tr key={row}>
-                <td
-                  className={'table-cell'}
-                  key={value + row.toString()}
-                >
+                <td className={'table-cell'} key={value + row.toString()}>
                   {value}
                 </td>
               </tr>

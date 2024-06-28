@@ -2,13 +2,14 @@ import TableStatic from '../../components/TableStatic';
 import ReactApexChart from 'react-apexcharts';
 import { ApexOptions } from 'apexcharts';
 import { useColGraph } from '../../graphOptions';
-import {sortimentCalculation} from "./sortimentCalculation";
-import {useAppSelector} from "../../store/hooks";
-import {selectSortiment} from "./sortimentSlice";
+import { sortimentCalculation } from './sortimentCalculation';
+import { useAppSelector } from '../../store/hooks';
+import { selectSortiment } from './sortimentSlice';
 
 export default function SortimentResult() {
-  const {headers, data} = useAppSelector(selectSortiment)
-  const {marginGross, marginProfit, profit, rentCost, rentIncome, allowance} = sortimentCalculation(data)
+  const { headers, data } = useAppSelector(selectSortiment);
+  const { marginGross, marginProfit, profit, rentCost, rentIncome, allowance } =
+    sortimentCalculation(data);
   let series = [];
   for (let index = 0; index < headers.length; index++) {
     series.push({
@@ -37,8 +38,14 @@ export default function SortimentResult() {
     ['Rentabilita tržieb', 'Rentabilita nákladov'],
     'ekonomický ukazovatel (%)'
   );
-  const marginOptions: ApexOptions = useColGraph([''], 'ekonomický ukazovatel (€)');
-  const allowanceOptions: ApexOptions = useColGraph([''], 'ekonomický ukazovatel (€)');
+  const marginOptions: ApexOptions = useColGraph(
+    [''],
+    'ekonomický ukazovatel (€)'
+  );
+  const allowanceOptions: ApexOptions = useColGraph(
+    [''],
+    'ekonomický ukazovatel (€)'
+  );
 
   return (
     <div className={'new-page'}>
@@ -49,12 +56,21 @@ export default function SortimentResult() {
           corner={'Ukazovatele sortimentnej analýzy'}
           header={[...headers]}
           inputs={[
-            ['(Rt) - rentabilita tržieb (%)', `R_{t}=\\frac{ZP}{P_{cj}}\\times 100`],
-            ['(Rn) - rentabilita nákladov (%)', `R_{n}=\\frac{ZP}{ÚVN}\\times 100`],
+            [
+              '(Rt) - rentabilita tržieb (%)',
+              `R_{t}=\\frac{ZP}{P_{cj}}\\times 100`,
+            ],
+            [
+              '(Rn) - rentabilita nákladov (%)',
+              `R_{n}=\\frac{ZP}{ÚVN}\\times 100`,
+            ],
             ['(Hr) - hrubé rozpätie (€)', `H_{r}={P_{cj}}-{P_{n}}`],
             ['(Pú) - príspevok na úhradu (€)', `P_{ú}=1-\\frac{P_{n}}{P_{cj}}`],
             ['(ZP) - Zisková prirážka (€)', `ZP = P_{cj} - ÚVN`],
-            ['(Z) - Zisk pri pôvodnej výrobnej štruktúre (€)', `Z =((P_{cj} - P_{n}) - (ÚVN - P_{n})) \\times Q`],
+            [
+              '(Z) - Zisk pri pôvodnej výrobnej štruktúre (€)',
+              `Z =((P_{cj} - P_{n}) - (ÚVN - P_{n})) \\times Q`,
+            ],
           ]}
           data={[
             [...rentIncome],
@@ -81,7 +97,7 @@ export default function SortimentResult() {
         }
       </div>
 
-      <div className={"row"}>
+      <div className={'row'}>
         <div className={'col-t graph-card'}>
           <h4 className={'graph-title'}>HRUBÉ ROZPÄTIE</h4>
           {

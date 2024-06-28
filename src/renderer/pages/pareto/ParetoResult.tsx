@@ -1,12 +1,13 @@
 import ReactApexChart from 'react-apexcharts';
 import TableStatic from '../../components/TableStatic';
-import {paretoCalculation} from "./paretoCalculation";
-import {useAppSelector} from "../../store/hooks";
-import {selectPareto} from "./paretoSlice";
+import { paretoCalculation } from './paretoCalculation';
+import { useAppSelector } from '../../store/hooks';
+import { selectPareto } from './paretoSlice';
 
 export default function ParetoResult() {
-  const {data, items} = useAppSelector(selectPareto)
-  const {sum, values, valuesKumul, percentagesKumul, percentages, causes} = paretoCalculation(data, items)
+  const { data, items } = useAppSelector(selectPareto);
+  const { sum, values, valuesKumul, percentagesKumul, percentages, causes } =
+    paretoCalculation(data, items);
   const barChart = {
     series: [
       {
@@ -84,7 +85,6 @@ export default function ParetoResult() {
     legend: {
       show: true,
     },
-
   };
 
   return (
@@ -100,7 +100,7 @@ export default function ParetoResult() {
             'Štruktúra nákladov (%)',
             'Kumulovaná štruktúra nákladov (%)',
           ]}
-          inputs={[...causes.map((value: string) => [value, ""])]}
+          inputs={[...causes.map((value: string) => [value, ''])]}
           data={values.map((value: number, idx: number) => {
             return [
               value,

@@ -37,11 +37,11 @@ export default function HeaderInput({
             />
           </th>
         ))}
-        {(
+        {
           <th className={'add-cell'} onClick={addColumn}>
             +
           </th>
-        )}
+        }
       </tr>
     </thead>
   );

@@ -1,6 +1,6 @@
-import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {RootState} from "../../store/store";
-import {defaultState, rootReducer} from "../../store/rootReducer";
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { RootState } from '../../store/store';
+import { defaultState, rootReducer } from '../../store/rootReducer';
 
 export interface CVPState extends defaultState {
   fixTotal: number;
@@ -9,8 +9,8 @@ export interface CVPState extends defaultState {
 
 const initialCVPState: CVPState = {
   id: 4,
-  title: "CVP analýza",
-  corner: "Názov výrobku",
+  title: 'CVP analýza',
+  corner: 'Názov výrobku',
   headers: [
     '(Q) - objem produkcie (ks...)',
     '(Pcj) - predajná cena jednotková (€)',
@@ -20,12 +20,12 @@ const initialCVPState: CVPState = {
   data: [[0, 0, 0]],
   values: ['Výrobok A'],
   text: '',
-  accounts: [""],
+  accounts: [''],
   sortable: false,
   hasAnalytic: false,
   fixTotal: 0,
   minProfit: 0,
-  dynRows: true
+  dynRows: true,
 };
 
 const CVPSlice = createSlice({
@@ -53,16 +53,16 @@ const CVPSlice = createSlice({
       state.values = initialCVPState.values;
       state.text = initialCVPState.text;
     },
-    openProject : (state: CVPState, action: PayloadAction<CVPState>) => {
-      state.headers = action.payload.headers
-      state.data = action.payload.data
-      state.items = action.payload.items
-      state.values = action.payload.values
-      state.text = action.payload.text
-      state.fixTotal = action.payload.fixTotal
-      state.minProfit = action.payload.minProfit
+    openProject: (state: CVPState, action: PayloadAction<CVPState>) => {
+      state.headers = action.payload.headers;
+      state.data = action.payload.data;
+      state.items = action.payload.items;
+      state.values = action.payload.values;
+      state.text = action.payload.text;
+      state.fixTotal = action.payload.fixTotal;
+      state.minProfit = action.payload.minProfit;
       // state = action.payload
-    }
+    },
   },
 });
 

@@ -2,13 +2,23 @@ import ReactApexChart from 'react-apexcharts';
 import TableStatic from '../../components/TableStatic';
 import { useColGraph } from '../../graphOptions';
 import { ApexOptions } from 'apexcharts';
-import {indexCalculation} from "./indexCalculation";
-import {useAppSelector} from "../../store/hooks";
-import {selectEconomic} from "../economic/economicSlice";
+import { indexCalculation } from './indexCalculation';
+import { useAppSelector } from '../../store/hooks';
+import { selectEconomic } from '../economic/economicSlice';
 
 export default function IndexResult() {
-  const {data, headers, values} = useAppSelector(selectEconomic)
-  const {chainIndexes, baseIndexes, newHeaders, costDiff, incomeDiff, costSumsForYears, incomeSumsForYears, betweenYears, reaction} = indexCalculation(data, headers, values)
+  const { data, headers, values } = useAppSelector(selectEconomic);
+  const {
+    chainIndexes,
+    baseIndexes,
+    newHeaders,
+    costDiff,
+    incomeDiff,
+    costSumsForYears,
+    incomeSumsForYears,
+    betweenYears,
+    reaction,
+  } = indexCalculation(data, headers, values);
   const economicSeries = [
     {
       name: 'Náklady',
@@ -96,18 +106,20 @@ export default function IndexResult() {
           header={[...betweenYears]}
           inputs={[
             ['(Ir) - reťazový index', `I_{r} = \\frac{N_{i+1}}{N_{i}}`],
-            ['(Pzn) - percento zmeny nákladov (%)', `P_{zn} = = (\\frac{N_{i+1}}{N_{i}} \\times) - 100`],
-            ['(Pzv) - percento zmeny výnosov (%)', `P_{zn} = = (\\frac{V_{i+1}}{V_{i}} \\times) - 100`],
+            [
+              '(Pzn) - percento zmeny nákladov (%)',
+              `P_{zn} = = (\\frac{N_{i+1}}{N_{i}} \\times) - 100`,
+            ],
+            [
+              '(Pzv) - percento zmeny výnosov (%)',
+              `P_{zn} = = (\\frac{V_{i+1}}{V_{i}} \\times) - 100`,
+            ],
             ['(Kr) - koeficient reakcie', `K_{r} = \\frac{P_{zn}}{P_{zv}}`],
           ]}
           data={[
             [...chainIndexes],
             [...costDiff.map((value: number) => value.toString())],
-            [
-              ...incomeDiff.map((value: number) =>
-                value.toString()
-              ),
-            ],
+            [...incomeDiff.map((value: number) => value.toString())],
             [...reaction],
           ]}
         />
@@ -139,7 +151,7 @@ export default function IndexResult() {
         }
       </div>
 
-      <div className={"row"}>
+      <div className={'row'}>
         <div className={'col-t graph-card new-page'}>
           <h4 className={'graph-title'}>REŤAZOVÝ INDEX</h4>
           {
@@ -164,8 +176,8 @@ export default function IndexResult() {
           }
         </div>
       </div>
-      <div className={"row new-page-after"}>
-        <div className={'col-t graph-card'} >
+      <div className={'row new-page-after'}>
+        <div className={'col-t graph-card'}>
           <h4 className={'graph-title'}>PERCENTO ZMENY VÝNOSOV</h4>
           {
             <ReactApexChart

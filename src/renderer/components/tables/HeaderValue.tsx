@@ -1,8 +1,4 @@
-export default function HeaderValue({
-  header,
-}: {
-  header: string[];
-}) {
+export default function HeaderValue({ header }: { header: string[] }) {
   return (
     <thead>
       <tr className={'table-head'}>
@@ -10,7 +6,7 @@ export default function HeaderValue({
           <th
             key={idx}
             className={'table-cell-value'}
-            style={{ textAlign: "center"}}
+            style={{ textAlign: 'center' }}
           >
             {value}
           </th>

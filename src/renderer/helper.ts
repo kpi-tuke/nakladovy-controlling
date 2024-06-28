@@ -29,7 +29,8 @@ export function splitTable(
 }
 
 export function sortTable(headers: string[], data: number[][], offset: number) {
-  if (new Set(headers).size !== headers.length) return {newHeaders: headers, newData: data}
+  if (new Set(headers).size !== headers.length)
+    return { newHeaders: headers, newData: data };
   let tableCols: Map<string, number[]> = new Map<string, number[]>();
   let wrongCols: Map<string, number[]> = new Map<string, number[]>();
   for (let i = offset; i < headers.length; i++) {

@@ -1,13 +1,9 @@
-import HeaderBar from "../components/HeaderBar";
+import HeaderBar from '../components/HeaderBar';
 
 export default function () {
-
-  return(
+  return (
     <div>
-      <HeaderBar
-        title={"Manuál"}
-        back={"welcome"}
-      />
+      <HeaderBar title={'Manuál'} back={'welcome'} />
     </div>
-  )
+  );
 }

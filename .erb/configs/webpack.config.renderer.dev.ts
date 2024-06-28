@@ -3,8 +3,8 @@ import fs from 'fs';
 import webpack from 'webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import chalk from 'chalk';
-import {merge} from 'webpack-merge';
-import {execSync, spawn} from 'child_process';
+import { merge } from 'webpack-merge';
+import { execSync, spawn } from 'child_process';
 import baseConfig from './webpack.config.base';
 import webpackPaths from './webpack.paths';
 import checkNodeEnv from '../scripts/check-node-env';
@@ -111,10 +111,10 @@ export default merge(baseConfig, {
     requiredByDLLConfig
       ? null
       : new webpack.DllReferencePlugin({
-        context: webpackPaths.dllPath,
-        manifest: require(manifest),
-        sourceType: 'var',
-      }),
+          context: webpackPaths.dllPath,
+          manifest: require(manifest),
+          sourceType: 'var',
+        }),
 
     new webpack.NoEmitOnErrorsPlugin(),
 
@@ -164,7 +164,7 @@ export default merge(baseConfig, {
     port,
     compress: true,
     hot: true,
-    headers: {'Access-Control-Allow-Origin': '*'},
+    headers: { 'Access-Control-Allow-Origin': '*' },
     static: {
       publicPath: '/',
     },

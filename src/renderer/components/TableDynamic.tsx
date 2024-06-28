@@ -1,7 +1,7 @@
 import { ChangeEvent } from 'react';
 import Select from 'react-select';
 import { useAppDispatch } from 'renderer/store/hooks';
-import {splitTable} from "../helper";
+import { splitTable } from '../helper';
 
 export default function TableDynamic(props: any) {
   const dispatch = useAppDispatch();
@@ -52,7 +52,6 @@ export default function TableDynamic(props: any) {
     dispatch(props.actions.changeAccount({ data: e.value, index: idx }));
   };
 
-
   const addColumn = () => {
     dispatch(props.actions.addColumn());
   };
@@ -96,20 +95,18 @@ export default function TableDynamic(props: any) {
       )
       .map((option: any) => option.label);
 
-
-
   return (
     <>
       <div className={'table-card row hideInPrint'}>
         <div className={'col-5'}>
           <table className={'table'} style={{ width: '100%' }}>
             <thead>
-            <tr className={'table-head'}>
-              <th className={'table-corner'}>{props.corner}</th>
-              {props.analytic && (
-                <th className={'table-analytic'}>Analytický účet</th>
-              )}
-            </tr>
+              <tr className={'table-head'}>
+                <th className={'table-corner'}>{props.corner}</th>
+                {props.analytic && (
+                  <th className={'table-analytic'}>Analytický účet</th>
+                )}
+              </tr>
             </thead>
             <tbody>
               {props.inputs.map((value: string, row: number) => {

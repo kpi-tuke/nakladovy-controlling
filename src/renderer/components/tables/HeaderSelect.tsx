@@ -7,17 +7,16 @@ export default function HeaderSelect({
   header: string[];
   actions: any;
 }) {
-
   const selectCol = [
-    {value: 7, label: 'Priamy materiál'},
-    {value: 8, label: 'Priame mzdy'},
-    {value: 9, label: 'Ostatné náklady'},
-    {value: 10, label: 'Výrobná réžia'},
-    {value: 11, label: 'Správna réžia'},
-    {value: 12, label: 'Odbytová réžia'},
-    {value: 13, label: 'Zásobovacia réžia'},
-    {value: 14, label: 'Dopravná réžia'},
-  ]
+    { value: 7, label: 'Priamy materiál' },
+    { value: 8, label: 'Priame mzdy' },
+    { value: 9, label: 'Ostatné náklady' },
+    { value: 10, label: 'Výrobná réžia' },
+    { value: 11, label: 'Správna réžia' },
+    { value: 12, label: 'Odbytová réžia' },
+    { value: 13, label: 'Zásobovacia réžia' },
+    { value: 14, label: 'Dopravná réžia' },
+  ];
 
   const dispatch = useAppDispatch();
 
@@ -29,12 +28,12 @@ export default function HeaderSelect({
     dispatch(actions.addColumn());
   };
 
-  let availableHeadersOptions =
-    selectCol.filter(
-        (option: { value: number; label: string }) =>
-          !header.includes(option.label)
-      )
-      .map((option: any) => option.label);
+  let availableHeadersOptions = selectCol
+    .filter(
+      (option: { value: number; label: string }) =>
+        !header.includes(option.label)
+    )
+    .map((option: any) => option.label);
 
   return (
     <thead>
@@ -53,24 +52,22 @@ export default function HeaderSelect({
               value={value}
               onChange={(e) => handleChangeHeader(e.target, idx)}
             >
-              {availableHeadersOptions.map(
-                (option: string, idx: number) => (
-                  <option key={idx} value={option}>
-                    {option}
-                  </option>
-                )
-              )}
+              {availableHeadersOptions.map((option: string, idx: number) => (
+                <option key={idx} value={option}>
+                  {option}
+                </option>
+              ))}
               <option key={8} value={value} hidden={true}>
                 {value}
               </option>
             </select>
           </th>
         ))}
-        {
-          header.length < 8 && <th className={'add-cell'} onClick={addColumn}>
-          +
+        {header.length < 8 && (
+          <th className={'add-cell'} onClick={addColumn}>
+            +
           </th>
-        }
+        )}
       </tr>
     </thead>
   );

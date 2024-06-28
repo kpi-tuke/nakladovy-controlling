@@ -1,21 +1,21 @@
-import {createSlice} from "@reduxjs/toolkit";
-import {defaultState, openProject, rootReducer} from "../../store/rootReducer";
-import {RootState} from "../../store/store";
+import { createSlice } from '@reduxjs/toolkit';
+import {
+  defaultState,
+  openProject,
+  rootReducer,
+} from '../../store/rootReducer';
+import { RootState } from '../../store/store';
 
 const initialParetoState: defaultState = {
   id: 6,
-  title: "Pareto analýza nákladov",
-  corner: "Príčiny vzniku nákladov",
+  title: 'Pareto analýza nákladov',
+  corner: 'Príčiny vzniku nákladov',
   headers: ['(N) - náklady (€)'],
   data: [[0]],
-  items: [
-    'Názov chyby',
-  ],
-  values: [
-    'Názov chyby',
-  ],
+  items: ['Názov chyby'],
+  values: ['Názov chyby'],
   text: '',
-  accounts: [""],
+  accounts: [''],
   sortable: false,
   hasAnalytic: false,
   dynRows: true,
@@ -33,7 +33,7 @@ export const paretoSlice = createSlice({
       state.values = initialParetoState.values;
       state.text = initialParetoState.text;
     },
-    ...openProject
+    ...openProject,
   },
 });
 

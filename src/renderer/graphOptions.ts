@@ -1,7 +1,6 @@
 import { ApexOptions } from 'apexcharts';
 
 export const useLineGraph = (osX: string[]): ApexOptions => {
-
   return {
     chart: {
       type: 'line',
@@ -55,8 +54,11 @@ export const useLineGraph = (osX: string[]): ApexOptions => {
   };
 };
 
-export const useColGraph = (osX: string[], titleY?: string, titleX?: string): ApexOptions => {
-
+export const useColGraph = (
+  osX: string[],
+  titleY?: string,
+  titleX?: string
+): ApexOptions => {
   return {
     chart: {
       type: 'bar',
@@ -124,11 +126,8 @@ export const useColGraph = (osX: string[], titleY?: string, titleX?: string): Ap
 export const useCVPGraph = (
   osX: string[],
   zeroTon: number,
-  zeroProf: number,
+  zeroProf: number
 ): ApexOptions => {
-
-
-
   return {
     chart: {
       type: 'line',
@@ -175,10 +174,10 @@ export const useCVPGraph = (
               background: '#FF9800',
               color: 'white',
               fontSize: '14px',
-              fontWeight: "bold"
+              fontWeight: 'bold',
             },
             orientation: 'horizontal',
-            text: 'Minimálny zisk'
+            text: 'Minimálny zisk',
           },
         },
         {
@@ -190,11 +189,11 @@ export const useCVPGraph = (
             text: 'Nulový bod',
             orientation: 'horizontal',
             style: {
-              background: "#ff4e4e",
-              color: "white",
+              background: '#ff4e4e',
+              color: 'white',
               fontSize: '14px',
-              fontWeight: "bold"
-            }
+              fontWeight: 'bold',
+            },
           },
         },
       ],
@@ -206,8 +205,8 @@ export const useCVPGraph = (
     xaxis: {
       categories: osX,
       title: {
-        text: "objem produkcie jednotky (ks...)",
-      }
+        text: 'objem produkcie jednotky (ks...)',
+      },
     },
     yaxis: [
       {

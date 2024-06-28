@@ -1,11 +1,16 @@
-import {createSlice} from "@reduxjs/toolkit";
-import {changeAccount, defaultState, openProject, rootReducer} from "../../store/rootReducer";
-import {RootState} from "../../store/store";
+import { createSlice } from '@reduxjs/toolkit';
+import {
+  changeAccount,
+  defaultState,
+  openProject,
+  rootReducer,
+} from '../../store/rootReducer';
+import { RootState } from '../../store/store';
 
 const initialIndexState: defaultState = {
   id: 3,
-  title: "Analýza reťazových a bázických indexov",
-  corner: "Ekonomická položka (€)",
+  title: 'Analýza reťazových a bázických indexov',
+  corner: 'Ekonomická položka (€)',
   headers: ['Bázický rok', '2000', '2001'],
   data: [
     [0, 0, 0],
@@ -17,7 +22,7 @@ const initialIndexState: defaultState = {
   ],
   values: ['501', '666'],
   text: '',
-  accounts: [""],
+  accounts: [''],
   sortable: true,
   hasAnalytic: true,
   dynRows: true,

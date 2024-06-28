@@ -1,23 +1,13 @@
-import {
-  IconButton,
-  Snackbar,
-  SnackbarContent
-} from '@mui/material';
-import React, {
-  createContext,
-  ReactNode,
-  useContext,
-  useState
-} from 'react';
+import { IconButton, Snackbar, SnackbarContent } from '@mui/material';
+import React, { createContext, ReactNode, useContext, useState } from 'react';
 import CloseIcon from '@mui/icons-material/Close';
 
 type ContextType = {
   open: (message: string) => void;
-}
+};
 
 const SaveContext = createContext<ContextType>({
-  open: () => {
-  }
+  open: () => {},
 });
 
 type Props = {
@@ -41,12 +31,12 @@ const SnackbarProvider: React.FC<Props> = ({ children }) => {
   const action = (
     <React.Fragment>
       <IconButton
-        size='small'
-        aria-label='close'
-        color='inherit'
+        size="small"
+        aria-label="close"
+        color="inherit"
         onClick={handleClose}
       >
-        <CloseIcon fontSize='small' />
+        <CloseIcon fontSize="small" />
       </IconButton>
     </React.Fragment>
   );
@@ -54,7 +44,7 @@ const SnackbarProvider: React.FC<Props> = ({ children }) => {
   return (
     <SaveContext.Provider
       value={{
-        open
+        open,
       }}
     >
       {children}
