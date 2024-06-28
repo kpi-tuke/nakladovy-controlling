@@ -1,4 +1,6 @@
 import { PayloadAction } from '@reduxjs/toolkit';
+import { isNumeric } from 'renderer/helper';
+import { SortDirection } from 'renderer/types/sortDirection';
 
 export interface defaultState {
   id: number;
@@ -123,5 +125,59 @@ export const openProject = {
     state.items = action.payload.items;
     state.values = action.payload.values;
     state.text = action.payload.text;
+  },
+};
+
+export const sortTableByYear = {
+  sortTableByYear: (
+    state: {
+      headers: string[];
+      data: number[][];
+      items: string[];
+      values: string[];
+      text: string;
+    },
+    action: PayloadAction<SortDirection>
+  ) => {
+    const { headers, data, items, values, text } = state;
+
+    if (new Set(headers).size !== headers.length) return;
+
+    for (const header of headers) {
+      if (!isNumeric(header)) {
+        throw new Error('Hlavička musí byť číslo!');
+      }
+    }
+
+    const formattedData: { [key: string]: number[] } = {};
+
+    headers.forEach((header, index) => {
+      formattedData[header] = [];
+      formattedData[header] = data.map((row) => row[index]);
+    });
+
+    const sortedHeaders =
+      action.payload === 'desc'
+        ? [...headers].sort((a, b) => +b - +a)
+        : [...headers].sort((a, b) => +a - +b);
+
+    const sortedData: number[][] = Array.from(
+      { length: data.length },
+      () => []
+    );
+
+    for (let i = 0; i < sortedHeaders.length; i++) {
+      for (let j = 0; j < formattedData[sortedHeaders[i]].length; j++) {
+        sortedData[j].push(formattedData[sortedHeaders[i]][j]);
+      }
+    }
+
+    state.headers = sortedHeaders;
+    state.data = sortedData;
+    state.items = items;
+    state.values = values;
+    state.text = text;
+
+    return;
   },
 };

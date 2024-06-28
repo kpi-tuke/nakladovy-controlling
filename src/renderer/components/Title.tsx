@@ -2,7 +2,7 @@ import { Box, Button, Grid, styled, Typography } from '@mui/material';
 import React from 'react';
 import { AccessTime, AlignHorizontalRight } from '@mui/icons-material';
 import Dropdown from './Dropdown';
-import { SortDirection } from 'renderer/helper';
+import { SortDirection } from 'renderer/types/sortDirection';
 
 const TitleText = styled(Typography)`
   font-size: 30px;
@@ -29,7 +29,7 @@ type Props = {
   onSortItems?: (sortDirection: SortDirection) => void;
 };
 
-const Title: React.FC<Props> = ({ onSortYear }) => {
+const Title: React.FC<Props> = ({ onSortYear, onSortItems }) => {
   return (
     <Grid container className={'hideInPrint'}>
       <Grid item xs={4} />
@@ -58,15 +58,28 @@ const Title: React.FC<Props> = ({ onSortYear }) => {
               </ResponsiveButton>
             </Dropdown>
           )}
-          {/* {!!onSortItems && (
-            <ResponsiveButton
-              variant="outlined"
-              onClick={onSortItems}
-              icon={<AlignHorizontalRight />}
+
+          {!!onSortItems && (
+            <Dropdown
+              options={[
+                {
+                  onClick: () => onSortItems('asc'),
+                  label: 'Vzostupne',
+                },
+                {
+                  onClick: () => onSortItems('desc'),
+                  label: 'Zostupne',
+                },
+              ]}
             >
-              Zoradiť položky
-            </ResponsiveButton>
-          )} */}
+              <ResponsiveButton
+                variant="outlined"
+                icon={<AlignHorizontalRight />}
+              >
+                Zoradiť položky
+              </ResponsiveButton>
+            </Dropdown>
+          )}
         </SortingButtons>
       </GridSorting>
     </Grid>

@@ -4,6 +4,7 @@ import {
   defaultState,
   openProject,
   rootReducer,
+  sortTableByYear,
 } from '../../store/rootReducer';
 import { RootState } from '../../store/store';
 
@@ -11,11 +12,14 @@ const initialEconomicState: defaultState = {
   id: 1,
   title: 'Ekonomická analýza hospodárenia',
   corner: 'Ekonomická položka (Náklady(€) /Výnosy(€))',
-  headers: ['2000'],
-  data: [[0], [0]],
+  headers: ['2000', '1999', '2024'],
+  data: [
+    [1, 2, 3],
+    [4, 5, 6],
+  ],
   items: [
-    '501 – Spotreba materiálu',
-    '666 – Výnosy z krátkodobého finančného majetku',
+    '501 - Spotreba materiálu',
+    '666 - Výnosy z krátkodobého finančného majetku',
   ],
   values: ['501', '666'],
   text: '',
@@ -40,6 +44,7 @@ export const economicSlice = createSlice({
     },
     ...openProject,
     ...changeAccount,
+    ...sortTableByYear,
   },
 });
 
