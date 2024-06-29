@@ -1,4 +1,5 @@
 import { PayloadAction } from '@reduxjs/toolkit';
+import { off } from 'process';
 import { isNumeric } from 'renderer/helper';
 import { SortDirection } from 'renderer/types/sortDirection';
 
@@ -136,16 +137,19 @@ export const sortTableByYear = {
       items: string[];
       values: string[];
       text: string;
+      id: number;
     },
     action: PayloadAction<SortDirection>
   ) => {
-    const { headers, data, items, values, text } = state;
+    const { headers, data, items, values, text, id } = state;
+
+    const offset = id === 3 ? 1 : 0;
 
     if (new Set(headers).size !== headers.length) return;
 
-    for (const header of headers) {
-      if (!isNumeric(header)) {
-        throw new Error('Hlavička musí byť číslo!');
+    for (let i = offset; i < headers.length; i++) {
+      if (!isNumeric(headers[i])) {
+        throw new Error('Hlavička musí obsahovať LEN číslo!');
       }
     }
 

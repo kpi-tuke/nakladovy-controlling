@@ -14,6 +14,7 @@ import {
   TableRow,
 } from './Table';
 import TableActionButton from './TableActionButton';
+import { useError } from '../providers/ErrorProvider';
 
 const TableWrapper = styled(Box)`
   overflow-x: auto;
@@ -27,6 +28,7 @@ export default function withTable(
 ) {
   return () => {
     const dispatch = useAppDispatch();
+    const { openError } = useError();
 
     // @ts-ignore
     const { headers, data, dynRows, dynCols } = useAppSelector(selector);
@@ -63,7 +65,11 @@ export default function withTable(
     };
 
     const sortByYear = (sortDirection: SortDirection) => {
-      dispatch(actions.sortTableByYear(sortDirection));
+      try {
+        dispatch(actions.sortTableByYear(sortDirection));
+      } catch (error) {
+        openError(error);
+      }
     };
 
     const sortByItemNumber = (sortDirection: SortDirection) => {
@@ -72,7 +78,12 @@ export default function withTable(
 
     return (
       <>
-        <Title onSortYear={sortByYear} onSortItems={sortByItemNumber} />
+        <Title
+          onSortYear={actions.sortTableByYear ? sortByYear : undefined}
+          onSortItems={
+            actions.sortTableByItemNumber ? sortByItemNumber : undefined
+          }
+        />
         <Paper>
           <Grid container className="hideInPrint">
             <Grid xs={4} item>

@@ -4,6 +4,8 @@ import {
   defaultState,
   openProject,
   rootReducer,
+  sortTableByItemNumber,
+  sortTableByYear,
 } from '../../store/rootReducer';
 import { RootState } from '../../store/store';
 
@@ -44,6 +46,8 @@ export const indexSlice = createSlice({
     },
     ...openProject,
     ...changeAccount,
+    ...sortTableByItemNumber,
+    ...sortTableByYear,
   },
 });
 

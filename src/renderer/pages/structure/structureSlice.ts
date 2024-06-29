@@ -4,6 +4,7 @@ import {
   defaultState,
   openProject,
   rootReducer,
+  sortTableByItemNumber,
 } from '../../store/rootReducer';
 import groupedOptions from 'renderer/chartOfAccounts';
 
@@ -36,6 +37,7 @@ const structureSlice = createSlice({
       state.text = initialStructureState.text;
     },
     ...openProject,
+    ...sortTableByItemNumber,
   },
 });
 
