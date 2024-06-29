@@ -8,10 +8,25 @@ import { selectStructure } from './structureSlice';
 import SectionTitle from 'renderer/components/SectionTitle';
 import Spacer from 'renderer/components/Spacer';
 import { Paper } from '@mui/material';
+import React from 'react';
 
 export default function StructureResult() {
   const { data, items, headers } = useAppSelector(selectStructure);
-  const { rowSums, totalCost, colSums } = structureCalculation(data);
+
+  const filteredData = React.useMemo(() => {
+    const filteredData = [];
+
+    items.forEach((item, index) => {
+      if (Boolean(item)) {
+        filteredData.push(data[index]);
+      }
+    });
+
+    return filteredData;
+  }, [data, items]);
+
+  const { rowSums, totalCost, colSums } = structureCalculation(filteredData);
+
   const genericSeries = [
     {
       name: 'Druhové',
@@ -100,7 +115,7 @@ export default function StructureResult() {
       <Paper>
         <TableStatic
           corner={'Nákladové druhy'}
-          header={[...items, 'SPOLU']}
+          header={[...items.filter(Boolean), 'SPOLU']}
           inputs={[
             ['(Nj) - náklady jednotkové (€)', ''],
             ['(Š) - štruktúra (%)', ''],
