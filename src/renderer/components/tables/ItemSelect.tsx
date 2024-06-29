@@ -69,7 +69,7 @@ export default function ItemSelect({
   analytic: boolean;
   actions: any;
 }) {
-  const { corner, items, accounts } = useAppSelector(selector);
+  const { corner, items } = useAppSelector(selector);
   const dispatch = useAppDispatch();
 
   const handleChange = function (value: Option, idx: number) {
@@ -112,6 +112,7 @@ export default function ItemSelect({
                   options={allOption}
                   groupBy={(option) => option.type}
                   getOptionLabel={(option) => option.label}
+                  getOptionDisabled={(option) => items.includes(option.label)}
                   renderInput={(params) => <TextField {...params} />}
                   clearIcon={null}
                   // @ts-ignore
