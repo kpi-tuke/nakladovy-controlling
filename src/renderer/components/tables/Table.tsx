@@ -29,3 +29,24 @@ export const TableCell = styled(MuiTableCell)`
     border-right: 1px solid ${({ theme }) => theme.palette.divider};
   }
 `;
+
+export const DataTable = styled(Table)`
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  width: unset;
+`;
+
+export const ActionCellRight = styled(TableCell)`
+  width: 20px;
+  min-width: 20px;
+  max-width: 20px;
+  border-right: 1px solid ${({ theme }) => theme.palette.divider};
+`;
+
+export const ActionCellBottom = styled(TableCell)`
+  height: 28px;
+`;
+
+export const ActionCellBottomRight = styled(ActionCellRight)`
+  height: 28px;
+`;

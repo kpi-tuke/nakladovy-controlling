@@ -1,36 +1,8 @@
-import { Button, styled, TextField } from '@mui/material';
+import { TextField } from '@mui/material';
 import { useAppDispatch } from '../../store/hooks';
-import { TableCell, TableHead, TableRow } from './Table';
+import { ActionCellRight, TableCell, TableHead, TableRow } from './Table';
 import { Add } from '@mui/icons-material';
-
-const AddCell = styled(TableCell)`
-  position: relative;
-  width: 20px;
-  min-width: 20px;
-  max-width: 20px;
-  border-right: 1px solid ${({ theme }) => theme.palette.divider};
-`;
-
-const AddButton = styled(Button)`
-  background-color: #fff;
-  padding: 0;
-  position: absolute;
-  inset: 0;
-  min-width: unset;
-  width: 100%;
-  border-radius: 0;
-  color: ${({ theme }) => theme.palette.success.main};
-
-  &:hover {
-    background-color: ${({ theme }) => theme.palette.success.main};
-    color: #fff;
-  }
-`;
-
-const InputStyled = styled(TextField)`
-  border: none;
-  border-radius: 0;
-`;
+import TableActionButton from './TableActionButton';
 
 export default function HeaderInput({
   header,
@@ -54,7 +26,7 @@ export default function HeaderInput({
       <TableRow>
         {header.map((value: string, idx: number) => (
           <TableCell key={idx}>
-            <InputStyled
+            <TextField
               defaultValue={value}
               onBlur={(e) => handleChangeHeader(e.target, idx)}
               sx={{
@@ -79,11 +51,9 @@ export default function HeaderInput({
           </TableCell>
         ))}
         {
-          <AddCell>
-            <AddButton onClick={addColumn}>
-              <Add sx={{ fontSize: 18 }} />
-            </AddButton>
-          </AddCell>
+          <ActionCellRight>
+            <TableActionButton buttonType="add" onClick={addColumn} />
+          </ActionCellRight>
         }
       </TableRow>
     </TableHead>
