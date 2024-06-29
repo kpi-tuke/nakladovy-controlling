@@ -8,21 +8,22 @@ import {
   sortTableByYear,
 } from '../../store/rootReducer';
 import { RootState } from '../../store/store';
+import groupedOptions from 'renderer/chartOfAccounts';
 
 const initialEconomicState: defaultState = {
   id: 1,
   title: 'Ekonomická analýza hospodárenia',
   corner: 'Ekonomická položka (Náklady(€) /Výnosy(€))',
-  headers: ['2000', '1999', '2024'],
-  data: [
-    [1, 2, 3],
-    [4, 5, 6],
-  ],
+  headers: ['2000'],
+  data: [[1], [4]],
   items: [
-    '501 - Spotreba materiálu',
-    '666 - Výnosy z krátkodobého finančného majetku',
+    groupedOptions[0].options[0].label,
+    groupedOptions[1].options[0].label,
   ],
-  values: ['501', '666'],
+  values: [
+    groupedOptions[0].options[0].value.toString(),
+    groupedOptions[1].options[0].value.toString(),
+  ],
   text: '',
   accounts: [''],
   sortable: true,

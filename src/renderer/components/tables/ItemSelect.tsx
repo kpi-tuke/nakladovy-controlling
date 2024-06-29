@@ -1,11 +1,58 @@
-import Select from 'react-select';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { defaultState } from '../../store/rootReducer';
 import groupedOptions from '../../chartOfAccounts';
 import { RootState } from '../../store/store';
+import { Table, TableBody, TableCell, TableHead, TableRow } from './Table';
+import {
+  Autocomplete,
+  Button,
+  styled,
+  TextField,
+  Typography,
+} from '@mui/material';
+import { Add } from '@mui/icons-material';
+import React from 'react';
+
+const AddCell = styled(TableCell)`
+  position: relative;
+  height: 28px;
+`;
+
+const AddButton = styled(Button)`
+  background-color: #fff;
+  padding: 0;
+  position: absolute;
+  inset: 0;
+  min-width: unset;
+  width: 100%;
+  border-radius: 0;
+  color: ${({ theme }) => theme.palette.success.main};
+
+  &:hover {
+    background-color: ${({ theme }) => theme.palette.success.main};
+    color: #fff;
+  }
+`;
+
+const Title = styled(Typography)`
+  font-weight: bold;
+  text-align: center;
+`;
+
+const TableStyled = styled(Table)`
+  width: 100%;
+  border-right: ${({ theme }) => `1px solid ${theme.palette.divider}`};
+`;
+
+type Option = {
+  label: string;
+  value: number;
+  type: string;
+};
 
 export default function ItemSelect({
   selector,
+  // @ts-ignore
   analytic,
   actions,
 }: {
@@ -18,100 +65,86 @@ export default function ItemSelect({
   const { corner, items, accounts } = useAppSelector(selector);
   const dispatch = useAppDispatch();
 
-  const handleChangeInput = function (e: any, idx: number) {
-    dispatch(actions.setItemsOnIndex({ data: e.label || e.value, index: idx }));
-    dispatch(actions.setValuesOnIndex({ data: e.value, index: idx }));
-  };
-
-  const handleChangeAccount = function (e: any, idx: number) {
-    dispatch(actions.changeAccount({ data: e.value, index: idx }));
+  const handleChange = function (value: Option, idx: number) {
+    dispatch(
+      actions.setItemsOnIndex({ data: value.label || value.value, index: idx })
+    );
+    dispatch(actions.setValuesOnIndex({ data: value.value, index: idx }));
   };
 
   const addRow = () => {
     dispatch(actions.addRow());
   };
 
-  const customStyles = {
-    control: (provided: any) => ({
-      ...provided,
-      border: '0px solid black',
-    }),
-    menu: (provided: any) => ({
-      ...provided,
-      border: '0px solid black',
-      borderRadius: 0,
-    }),
-  };
+  const allOption = React.useMemo(() => {
+    const allOptions: Option[] = [];
 
-  let availableInputOptions = groupedOptions.map(
-    (selection: { label: any; options: any[] }) => ({
-      label: selection.label,
-      options: selection.options.filter(
-        (opt: any) => !items.includes(opt.label)
-      ),
-    })
-  );
+    groupedOptions.forEach((group) => {
+      group.options.forEach((option) => {
+        allOptions.push({ ...option, type: group.label });
+      });
+    });
+
+    return allOptions;
+  }, []);
 
   return (
-    <div className={'col-5'}>
-      <table className={'table'} style={{ width: '100%' }}>
-        <thead>
-          <tr className={'table-head'}>
-            <th className={'table-corner'}>{corner}</th>
-            {analytic && <th className={'table-analytic'}>Analytický účet</th>}
-          </tr>
-        </thead>
-        <tbody>
-          {items.map((value: string, row: number) => {
-            return (
-              <tr key={row}>
-                <td
-                  className={'table-cell'}
-                  style={{
-                    borderBottomColor:
-                      row === items.length - 1 ? '#65c565' : 'lightgray',
-                  }}
-                  key={value + row.toString()}
-                >
-                  <Select
-                    styles={customStyles}
-                    value={{ label: value }}
-                    options={availableInputOptions}
-                    onChange={(e) => handleChangeInput(e, row)}
-                  />
-                </td>
-                {analytic && (
-                  <td
-                    className={'table-cell-analytic'}
-                    style={{
-                      borderBottomColor:
-                        row === items.length - 1 ? '#65c565' : 'lightgray',
-                    }}
-                  >
-                    <input
-                      className={'table-input'}
-                      type="text"
-                      defaultValue={accounts[row]}
-                      onBlur={(e) => handleChangeAccount(e.target, row)}
-                    />
-                  </td>
-                )}
-              </tr>
-            );
-          })}
+    <TableStyled>
+      <TableHead>
+        <TableRow>
+          <TableCell>
+            <Title>{corner}</Title>
+          </TableCell>
+        </TableRow>
+      </TableHead>
+      <TableBody>
+        {items.map((value: string, row: number) => {
+          return (
+            <TableRow key={row}>
+              <TableCell>
+                <Autocomplete
+                  value={allOption.find((option) => option.label === value)}
+                  options={allOption}
+                  groupBy={(option) => option.type}
+                  getOptionLabel={(option) => option.label}
+                  renderInput={(params) => <TextField {...params} />}
+                  clearIcon={null}
+                  // @ts-ignore
+                  onChange={(e, value) => handleChange(value, row)}
+                  sx={{
+                    position: 'absolute',
+                    inset: 0,
 
-          <tr>
-            <td
-              colSpan={2}
-              className={'add-cell'}
-              style={{ textAlign: 'center' }}
-              onClick={addRow}
-            >
-              +
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+                    '.MuiOutlinedInput-root': {
+                      borderRadius: '0',
+                      height: '48px',
+                      paddingRight: '36px !important',
+
+                      fieldset: {
+                        border: 'none',
+                        height: '48px',
+                      },
+                    },
+
+                    input: {
+                      height: `${48 - 18}px !important`,
+                      padding: '0px !important',
+                    },
+                  }}
+                />
+              </TableCell>
+            </TableRow>
+          );
+        })}
+
+        <TableRow>
+          <AddCell colSpan={2} onClick={addRow}>
+            <AddButton>
+              <Add sx={{ fontSize: 18 }} />
+            </AddButton>
+          </AddCell>
+        </TableRow>
+      </TableBody>
+    </TableStyled>
   );
 }

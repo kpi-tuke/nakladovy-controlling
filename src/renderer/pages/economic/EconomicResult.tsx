@@ -5,6 +5,8 @@ import { ApexOptions } from 'apexcharts';
 import { economicCalculation } from './economicCalculation';
 import { useAppSelector } from '../../store/hooks';
 import { selectEconomic } from './economicSlice';
+import MuiTable from 'renderer/components/MuiTable';
+import { Box } from '@mui/material';
 
 export default function EconomicResult() {
   const { headers, data, values } = useAppSelector(selectEconomic);

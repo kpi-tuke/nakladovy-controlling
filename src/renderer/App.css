@@ -277,11 +277,11 @@ a {
 }
 
 .table-input-head {
+  background-color: transparent;
   border: 0;
-  width: 100%;
+  /* width: 100%; */
   text-align: center;
   font-size: 15px;
-  background-color: #e6f7ff;
   outline-width: 0;
   font-weight: bold;
 }
