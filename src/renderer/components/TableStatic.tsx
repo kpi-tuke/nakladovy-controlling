@@ -1,6 +1,18 @@
-// import MathJax from "react-mathjax"
-
 import MathJax from 'react-mathjax';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableCorner,
+  TableHead,
+  TableRow,
+} from './tables/Table';
+import { Grid, styled, Tooltip } from '@mui/material';
+import { TableData } from './tables/TableData';
+
+const TableStyled = styled(Table)`
+  width: unset;
+`;
 
 export default function TableStatic(props: any) {
   let separatedData: number[][][] = [];
@@ -28,118 +40,95 @@ export default function TableStatic(props: any) {
 
   return (
     <>
-      <div className={'table-data row hideInPrint'}>
-        <table style={{ borderCollapse: 'collapse', width: '100%' }}>
-          <thead>
-            <tr className={'table-head'}>
-              <th className={'table-cell'} style={{ textAlign: 'center' }}>
-                {props.corner}
-              </th>
+      <TableData className={'hideInPrint'}>
+        <TableStyled>
+          <TableHead>
+            <TableRow>
+              <TableCorner>{props.corner}</TableCorner>
               {props.header.map((value: string, idx: number) => {
-                return (
-                  <th
-                    className={'table-cell'}
-                    style={{ textAlign: 'center' }}
-                    key={idx}
-                  >
-                    {value}
-                  </th>
-                );
+                return <TableCell key={idx}>{value}</TableCell>;
               })}
-            </tr>
-          </thead>
+            </TableRow>
+          </TableHead>
 
-          <tbody>
+          <TableBody>
             {props.inputs.map((value: string[], row: number) => {
               return (
-                <tr key={row.toString()}>
-                  <td
-                    className={'table-cell'}
-                    style={{ textAlign: 'left' }}
-                    key={value[0]}
-                  >
-                    {value[0]}
-                    {value[1] !== '' && (
-                      <span className={'tooltiptext'}>
+                <TableRow key={row.toString()}>
+                  <Tooltip
+                    placement="right"
+                    title={
+                      value[1] !== '' && (
                         <MathJax.Provider>
                           <MathJax.Node formula={value[1]} />
                         </MathJax.Provider>
-                      </span>
-                    )}
-                  </td>
+                      )
+                    }
+                  >
+                    <TableCell key={value[0]} className="table-cell">
+                      {value[0]}
+                    </TableCell>
+                  </Tooltip>
 
                   {props.data[row].map((value: number, col: number) => {
                     return (
-                      <td
-                        className={'table-cell'}
-                        style={
-                          value < 0
-                            ? { color: 'red', textAlign: 'center' }
-                            : { textAlign: 'center' }
-                        }
+                      <TableCell
+                        sx={{
+                          textAlign: 'center',
+                          color: value < 0 ? 'red' : 'inherit',
+                        }}
                         key={row.toString() + ':' + col.toString()}
                       >
                         {value.toString()}
-                      </td>
+                      </TableCell>
                     );
                   })}
-                </tr>
+                </TableRow>
               );
             })}
-          </tbody>
-        </table>
-      </div>
+          </TableBody>
+        </TableStyled>
+      </TableData>
 
-      <div className={'table-data row hideInScreen'}>
-        {separatedData.map((table, index) => (
-          <table
-            key={index}
-            className={'col-12'}
-            style={{ borderCollapse: 'collapse', borderSpacing: 0 }}
-          >
-            <thead>
-              <tr className={'table-head'}>
-                <th className={'table-cell'}>{props.corner}</th>
-                {separatedHeaders[index].map((value: string, idx: number) => {
-                  return (
-                    <th
-                      className={'table-cell'}
-                      style={{ textAlign: 'center' }}
-                      key={idx}
-                    >
-                      {value}
-                    </th>
-                  );
-                })}
-              </tr>
-            </thead>
+      <TableData className={'hideInScreen'}>
+        <Grid container>
+          {separatedData.map((table, index) => (
+            <Grid item xs={12}>
+              <TableStyled key={index}>
+                <TableHead>
+                  <TableRow>
+                    <TableCorner>{props.corner}</TableCorner>
+                    {separatedHeaders[index].map(
+                      (value: string, idx: number) => {
+                        return <TableCell key={idx}>{value}</TableCell>;
+                      }
+                    )}
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {table.map((tableRow: number[], row: number) => {
+                    return (
+                      <TableRow key={row.toString()}>
+                        <TableCell key={row}>{props.inputs[row][0]}</TableCell>
 
-            <tbody>
-              {table.map((tableRow: number[], row: number) => {
-                return (
-                  <tr key={row.toString()}>
-                    <td className={'table-cell'} key={row}>
-                      {props.inputs[row][0]}
-                    </td>
-
-                    {tableRow.map((value: number, col: number) => {
-                      return (
-                        <td
-                          className={'table-cell'}
-                          style={{ textAlign: 'center' }}
-                          key={row.toString() + ':' + col.toString()}
-                        >
-                          {value.toString()}
-                        </td>
-                      );
-                    })}
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        ))}
-      </div>
+                        {tableRow.map((value: number, col: number) => {
+                          return (
+                            <TableCell
+                              key={row.toString() + ':' + col.toString()}
+                            >
+                              {value.toString()}
+                            </TableCell>
+                          );
+                        })}
+                      </TableRow>
+                    );
+                  })}
+                </TableBody>
+              </TableStyled>
+            </Grid>
+          ))}
+        </Grid>
+      </TableData>
     </>
   );
 }

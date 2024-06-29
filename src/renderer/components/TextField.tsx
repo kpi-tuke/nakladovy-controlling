@@ -1,4 +1,5 @@
 import { useAppDispatch } from '../store/hooks';
+import SectionTitle from './SectionTitle';
 
 export default function TextField(props: any) {
   const dispatch = useAppDispatch();
@@ -9,7 +10,7 @@ export default function TextField(props: any) {
 
   return (
     <div>
-      <h1 className={'result-h1'}>Záver a zhodnotenie analýzy</h1>
+      <SectionTitle>Záver a zhodnotenie analýzy</SectionTitle>
 
       <textarea
         defaultValue={props.text}

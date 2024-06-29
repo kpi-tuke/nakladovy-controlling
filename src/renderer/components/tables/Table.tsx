@@ -26,6 +26,12 @@ export const TableCell = styled(MuiTableCell)`
   position: relative;
   border-right: 1px solid ${({ theme }) => theme.palette.divider};
   text-align: center;
+
+  &:hover {
+    .tooltiptext {
+      visibility: visible;
+    }
+  }
 `;
 
 export const TableCorner = styled(TableCell)`

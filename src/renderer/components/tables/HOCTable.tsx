@@ -33,8 +33,6 @@ export default function withTable(
     // @ts-ignore
     const { headers, data, dynRows, dynCols } = useAppSelector(selector);
 
-    console.log('headers: ', headers);
-
     const deleteRow = (row: number) => {
       dispatch(actions.deleteRow(row));
     };

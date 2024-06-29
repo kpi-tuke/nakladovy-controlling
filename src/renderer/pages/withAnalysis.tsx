@@ -27,7 +27,6 @@ export default function withAnalysis(
     return (
       <Page>
         <HeaderBar id={id} addToReport={true} printToPDF={true} />
-
         <PageContent>
           <Table />
           <Result />

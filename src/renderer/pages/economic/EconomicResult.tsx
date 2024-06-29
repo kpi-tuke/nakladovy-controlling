@@ -5,8 +5,9 @@ import { ApexOptions } from 'apexcharts';
 import { economicCalculation } from './economicCalculation';
 import { useAppSelector } from '../../store/hooks';
 import { selectEconomic } from './economicSlice';
-import MuiTable from 'renderer/components/MuiTable';
-import { Box } from '@mui/material';
+import SectionTitle from 'renderer/components/SectionTitle';
+import Spacer from 'renderer/components/Spacer';
+import { Paper } from '@mui/material';
 
 export default function EconomicResult() {
   const { headers, data, values } = useAppSelector(selectEconomic);
@@ -59,9 +60,9 @@ export default function EconomicResult() {
 
   return (
     <div className={'new-page'}>
-      <h1 className={'result-h1'}>Analýza ekonomických ukazovateľov</h1>
-
-      <div className={'table-card'} style={{ marginTop: 50 }}>
+      <Spacer height={40} />
+      <SectionTitle>Analýza ekonomických ukazovateľov</SectionTitle>
+      <Paper>
         <TableStatic
           corner={'Ekonomické ukazovatele'}
           header={[...headers]}
@@ -84,10 +85,9 @@ export default function EconomicResult() {
             [...costIndicatorData],
           ]}
         />
-      </div>
-
-      <h1 className={'result-h1 new-page'}>Dashboarding</h1>
-
+      </Paper>
+      <Spacer height={40} />
+      <SectionTitle>Dashboarding</SectionTitle>
       <div className={'graph-card'}>
         <h4 className={'graph-title'}>TREND VÝVOJA EKONOMICKÝCH VELIČÍN</h4>
         <ReactApexChart
@@ -97,7 +97,6 @@ export default function EconomicResult() {
           height={420}
         />
       </div>
-
       <div className={'graph-card new-page-after'}>
         <h4 className={'graph-title'}>
           EKONOMICKÉ UKAZOVATELE V SLEDOVANOM OBDOBÍ

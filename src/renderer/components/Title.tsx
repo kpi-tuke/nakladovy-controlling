@@ -3,11 +3,7 @@ import React from 'react';
 import { AccessTime, AlignHorizontalRight } from '@mui/icons-material';
 import Dropdown from './Dropdown';
 import { SortDirection } from 'renderer/types/sortDirection';
-
-const TitleText = styled(Typography)`
-  font-size: 30px;
-  font-weight: 700;
-`;
+import SectionTitle from './SectionTitle';
 
 const GridCenter = styled(Grid)`
   display: flex;
@@ -35,7 +31,7 @@ const Title: React.FC<Props> = ({ onSortYear, onSortItems }) => {
       <Grid item xs={4} />
 
       <GridCenter item xs={4}>
-        <TitleText variant="h2">Vstupy</TitleText>
+        <SectionTitle>Vstupy</SectionTitle>
       </GridCenter>
 
       <GridSorting item xs={4}>
