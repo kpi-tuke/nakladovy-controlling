@@ -29,9 +29,8 @@ export default function PDFTable({
   );
 
   return (
-    // <Grid container className="hideInScreen">
-    // TODO: odkomentovat komentar
     <Paper
+      className="hideInScreen"
       sx={{
         marginTop: '20px',
       }}
