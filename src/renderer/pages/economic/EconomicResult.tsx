@@ -59,7 +59,7 @@ export default function EconomicResult() {
   const colOptions: ApexOptions = useColGraph(headers, 'koeficient');
 
   return (
-    <div className={'new-page'}>
+    <div className={'new-page-after new-page'}>
       <Spacer height={40} />
       <SectionTitle>Analýza ekonomických ukazovateľov</SectionTitle>
       <Paper>

@@ -5,6 +5,9 @@ import { useColGraph } from '../../graphOptions';
 import { sortimentCalculation } from './sortimentCalculation';
 import { useAppSelector } from '../../store/hooks';
 import { selectSortiment } from './sortimentSlice';
+import SectionTitle from 'renderer/components/SectionTitle';
+import { Paper } from '@mui/material';
+import Spacer from 'renderer/components/Spacer';
 
 export default function SortimentResult() {
   const { headers, data } = useAppSelector(selectSortiment);
@@ -49,9 +52,10 @@ export default function SortimentResult() {
 
   return (
     <div className={'new-page'}>
-      <h1 className={'result-h1'}>Ukazovatele sortimentnej analýzy</h1>
+      <Spacer height={40} />
+      <SectionTitle>Ukazovatele sortimentnej analýzy</SectionTitle>
 
-      <div className={'table-card'}>
+      <Paper>
         <TableStatic
           corner={'Ukazovatele sortimentnej analýzy'}
           header={[...headers]}
@@ -81,9 +85,10 @@ export default function SortimentResult() {
             [...profit],
           ]}
         />
-      </div>
+      </Paper>
 
-      <h1 className={'result-h1 new-page'}>Dashboarding</h1>
+      <Spacer height={40} />
+      <SectionTitle className={'new-page'}>Dashboarding</SectionTitle>
 
       <div className={'graph-card'}>
         <h4 className={'graph-title'}>UKAZOVATELE SORTIMENTNEJ ANALÝZY</h4>

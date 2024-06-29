@@ -5,6 +5,9 @@ import { ApexOptions } from 'apexcharts';
 import { structureCalculation } from './structureCalculation';
 import { useAppSelector } from '../../store/hooks';
 import { selectStructure } from './structureSlice';
+import SectionTitle from 'renderer/components/SectionTitle';
+import Spacer from 'renderer/components/Spacer';
+import { Paper } from '@mui/material';
 
 export default function StructureResult() {
   const { data, items, headers } = useAppSelector(selectStructure);
@@ -91,9 +94,10 @@ export default function StructureResult() {
 
   return (
     <div className={'new-page-after new-page'}>
-      <h1 className={'result-h1'}>Analýza ukazovateľov</h1>
+      <Spacer height={60} />
+      <SectionTitle>Analýza ukazovateľov</SectionTitle>
 
-      <div className={'table-card'} style={{ marginTop: 50 }}>
+      <Paper>
         <TableStatic
           corner={'Nákladové druhy'}
           header={[...items, 'SPOLU']}
@@ -141,9 +145,10 @@ export default function StructureResult() {
             ],
           ]}
         />
-      </div>
+      </Paper>
 
-      <h1 className={'result-h1 new-page'}>Dashboarding</h1>
+      <Spacer height={60} />
+      <SectionTitle>Dashboarding</SectionTitle>
 
       <div className={'row'}>
         <div className={'col-t graph-card'}>

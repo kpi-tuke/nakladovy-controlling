@@ -6,6 +6,15 @@ import { cvpCalculation } from './cvpCalculation';
 import { useAppSelector } from '../../store/hooks';
 import { CVPActions, selectCVP } from './cvpSlice';
 import SingleInput from '../../components/SingleInput';
+import { Box, Paper, styled } from '@mui/material';
+import SectionTitle from 'renderer/components/SectionTitle';
+import Spacer from 'renderer/components/Spacer';
+
+const Inputs = styled(Box)`
+  max-width: 600px;
+  margin: 0 auto;
+  margin-top: 40px;
+`;
 
 export default function CVPResult() {
   const { data, items, fixTotal, minProfit } = useAppSelector(selectCVP);
@@ -82,26 +91,37 @@ export default function CVPResult() {
 
   return (
     <div className={graphs.length % 2 === 0 ? 'new-page-after' : ''}>
-      <div className={'row'}>
+      <Inputs
+        sx={{
+          display: 'grid',
+          gridTemplateColumns: {
+            xs: '1fr',
+            sm: '1fr 1fr',
+          },
+          gap: '8px',
+        }}
+      >
         <SingleInput
           title={'FIXNÉ NÁKLADY'}
           value={fixTotal}
-          input={CVPActions.setFixTotal}
+          action={CVPActions.setFixTotal}
         />
         <SingleInput
           title={'MINIMÁLNY ZISK'}
-          vlaue={minProfit}
-          input={CVPActions.setMinProfit}
+          value={minProfit}
+          action={CVPActions.setMinProfit}
         />
-      </div>
+      </Inputs>
 
-      <h1 className={'result-h1 new-page'}>
-        Analýza nulového bodu - kritický bod rentability{' '}
-      </h1>
+      <Spacer height={40} />
+      <SectionTitle className={'new-page'}>
+        Analýza nulového bodu - kritický bod rentability
+      </SectionTitle>
 
-      <div className={'table-card'}>
+      <Paper>
         <TableStatic
           corner={'Ekonomické ukazovatele'}
+          // @ts-ignore
           header={...items}
           inputs={[
             [
@@ -120,9 +140,10 @@ export default function CVPResult() {
             [...zeroProf.map((value: number) => Math.round(value * 100) / 100)],
           ]}
         />
-      </div>
+      </Paper>
 
-      <h1 className={'result-h1 new-page'}>Dashboarding</h1>
+      <Spacer height={40} />
+      <SectionTitle className={'new-page'}>Dashboarding</SectionTitle>
 
       {graphs.map((graph, idx) => (
         <div key={idx} className={idx % 2 === 0 && idx !== 0 ? 'new-page' : ''}>

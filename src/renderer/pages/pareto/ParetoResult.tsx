@@ -3,6 +3,9 @@ import TableStatic from '../../components/TableStatic';
 import { paretoCalculation } from './paretoCalculation';
 import { useAppSelector } from '../../store/hooks';
 import { selectPareto } from './paretoSlice';
+import Spacer from 'renderer/components/Spacer';
+import SectionTitle from 'renderer/components/SectionTitle';
+import { Paper } from '@mui/material';
 
 export default function ParetoResult() {
   const { data, items } = useAppSelector(selectPareto);
@@ -89,9 +92,10 @@ export default function ParetoResult() {
 
   return (
     <div className={'new-page'}>
-      <h1 className={'result-h1'}>Analýza ukazovateľov</h1>
+      <Spacer height={40} />
+      <SectionTitle>Analýza ukazovateľov</SectionTitle>
 
-      <div className={'table-card'}>
+      <Paper>
         <TableStatic
           corner={'Príčiny vzniku nákladov'}
           header={[
@@ -110,8 +114,10 @@ export default function ParetoResult() {
             ];
           })}
         />
-      </div>
-      <h1 className={'result-h1 new-page'}>Dashboarding</h1>
+      </Paper>
+
+      <Spacer height={40} />
+      <SectionTitle className={'new-page'}>Dashboarding</SectionTitle>
 
       <div className={'graph-card'}>
         <h4 className={'graph-title'}>PARETO ANALÝZA A LORENZOVA KRIVKA</h4>

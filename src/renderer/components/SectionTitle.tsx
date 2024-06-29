@@ -11,10 +11,15 @@ const TitleText = styled(Typography)`
 
 type Props = {
   children: string;
+  className?: string;
 };
 
-const SectionTitle: React.FC<Props> = ({ children }) => {
-  return <TitleText variant="h2">{children}</TitleText>;
+const SectionTitle: React.FC<Props> = ({ children, className }) => {
+  return (
+    <TitleText className={className} variant="h2">
+      {children}
+    </TitleText>
+  );
 };
 
 export default SectionTitle;

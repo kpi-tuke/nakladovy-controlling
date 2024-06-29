@@ -1,12 +1,26 @@
 import { ChangeEvent } from 'react';
 import { useAppDispatch } from '../store/hooks';
+import { Paper, styled, TextField, Typography } from '@mui/material';
 
-export default function SingleInput(props: any) {
+const PaperStyled = styled(Paper)`
+  padding: 8px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+`;
+
+type Props = {
+  title: string;
+  value: number;
+  action: any;
+};
+
+const SingleInput: React.FC<Props> = ({ title, value, action }) => {
   const dispatch = useAppDispatch();
 
   const handleChange = function (event: ChangeEvent<HTMLInputElement>) {
     dispatch(
-      props.input(
+      action(
         event.target.value === ''
           ? 0
           : Math.round(parseFloat(event.target.value) * 100) / 100
@@ -15,16 +29,27 @@ export default function SingleInput(props: any) {
   };
 
   return (
-    <div className={'info-card col-6'}>
-      <h2 className={'info-title'}>{props.title}</h2>
-      <input
-        className={'single-input'}
-        value={props.value}
+    <PaperStyled>
+      <Typography variant="h2" sx={{ fontSize: '18px', fontWeight: 700 }}>
+        {title}
+      </Typography>
+      <TextField
+        size="small"
+        value={value}
         type="number"
-        min={'0'}
-        onChange={(e) => handleChange(e)}
+        onChange={(e) => handleChange(e as ChangeEvent<HTMLInputElement>)}
         onWheel={(event) => event.currentTarget.blur()}
+        InputProps={{
+          inputProps: { min: 0 },
+        }}
+        sx={{
+          input: {
+            textAlign: 'center',
+          },
+        }}
       />
-    </div>
+    </PaperStyled>
   );
-}
+};
+
+export default SingleInput;

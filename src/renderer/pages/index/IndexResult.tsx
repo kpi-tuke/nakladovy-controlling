@@ -5,6 +5,9 @@ import { ApexOptions } from 'apexcharts';
 import { indexCalculation } from './indexCalculation';
 import { useAppSelector } from '../../store/hooks';
 import { selectEconomic } from '../economic/economicSlice';
+import SectionTitle from 'renderer/components/SectionTitle';
+import Spacer from 'renderer/components/Spacer';
+import { Paper } from '@mui/material';
 
 export default function IndexResult() {
   const { data, headers, values } = useAppSelector(selectEconomic);
@@ -92,9 +95,10 @@ export default function IndexResult() {
 
   return (
     <div className={'new-page'}>
-      <h1 className={'result-h1'}>Indexná analýza</h1>
+      <Spacer height={40} />
+      <SectionTitle>Indexná analýza</SectionTitle>
 
-      <div className={'table-card'}>
+      <Paper>
         <TableStatic
           corner={'Ekonomické ukazovatele'}
           header={[...newHeaders]}
@@ -123,9 +127,10 @@ export default function IndexResult() {
             [...reaction],
           ]}
         />
-      </div>
+      </Paper>
 
-      <h1 className={'result-h1 new-page'}>Dashboarding</h1>
+      <Spacer height={60} />
+      <SectionTitle className={'new-page'}>Dashboarding</SectionTitle>
 
       <div className={'graph-card'}>
         <h4 className={'graph-title'}>VÝVOJ EKONOMICKÝCH VELIČÍN</h4>

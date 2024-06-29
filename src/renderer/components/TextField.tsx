@@ -1,3 +1,4 @@
+import { TextareaAutosize } from '@mui/material';
 import { useAppDispatch } from '../store/hooks';
 import SectionTitle from './SectionTitle';
 
@@ -12,9 +13,16 @@ export default function TextField(props: any) {
     <div>
       <SectionTitle>Záver a zhodnotenie analýzy</SectionTitle>
 
-      <textarea
+      <TextareaAutosize
         defaultValue={props.text}
         onChange={(e) => changeText(e.target)}
+        minRows={6}
+        style={{
+          fontSize: '16px',
+          outline: 'none',
+          borderRadius: '8px',
+          padding: '8px',
+        }}
       />
     </div>
   );
