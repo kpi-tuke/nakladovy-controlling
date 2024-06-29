@@ -1,6 +1,16 @@
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { defaultState } from '../../store/rootReducer';
 import { RootState } from '../../store/store';
+import {
+  ActionCellBottom,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+} from './Table';
+import TableActionButton from './TableActionButton';
+import TableInput from './TableInput';
 
 export default function ItemInput({
   selector,
@@ -24,47 +34,32 @@ export default function ItemInput({
   };
 
   return (
-    <div className={'col-5'}>
-      <table className={'table'} style={{ width: '100%' }}>
-        <thead>
-          <tr className={'table-head'}>
-            <th className={'table-corner'}>{corner}</th>
-          </tr>
-        </thead>
-        <tbody>
-          {items.map((value: string, row: number) => {
-            return (
-              <tr key={row}>
-                <td
-                  className={'table-cell'}
-                  style={{
-                    borderBottomColor:
-                      row === items.length - 1 ? '#65c565' : 'lightgray',
-                  }}
-                  key={value + row.toString()}
-                >
-                  <input
-                    className={'table-input'}
-                    type="text"
-                    defaultValue={value}
-                    onBlur={(e) => handleChangeInput(e.target, row)}
-                  />
-                </td>
-              </tr>
-            );
-          })}
+    <Table>
+      <TableHead>
+        <TableRow>
+          <TableCell>{corner}</TableCell>
+        </TableRow>
+      </TableHead>
+      <TableBody>
+        {items.map((value: string, row: number) => {
+          return (
+            <TableRow key={row}>
+              <TableCell key={value + row.toString()}>
+                <TableInput
+                  defaultValue={value}
+                  onBlur={(e) => handleChangeInput(e.target, row)}
+                />
+              </TableCell>
+            </TableRow>
+          );
+        })}
 
-          <tr>
-            <td
-              className={'add-cell'}
-              style={{ textAlign: 'center' }}
-              onClick={addRow}
-            >
-              +
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+        <TableRow>
+          <ActionCellBottom>
+            <TableActionButton buttonType="add" onClick={addRow} />
+          </ActionCellBottom>
+        </TableRow>
+      </TableBody>
+    </Table>
   );
 }

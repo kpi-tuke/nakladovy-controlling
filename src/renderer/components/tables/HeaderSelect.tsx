@@ -1,4 +1,7 @@
 import { useAppDispatch } from '../../store/hooks';
+import { ActionCellRight, TableCell, TableHead, TableRow } from './Table';
+import TableActionButton from './TableActionButton';
+import TableSelect from './TableSelect';
 
 export default function HeaderSelect({
   header,
@@ -20,8 +23,13 @@ export default function HeaderSelect({
 
   const dispatch = useAppDispatch();
 
-  const handleChangeHeader = function (e: any, idx: number) {
-    dispatch(actions.setHeadersOnIndex({ data: e.value, index: idx }));
+  const handleChangeHeader = function (
+    event: React.ChangeEvent<HTMLSelectElement>,
+    idx: number
+  ) {
+    dispatch(
+      actions.setHeadersOnIndex({ data: event.target.value, index: idx })
+    );
   };
 
   const addColumn = () => {
@@ -36,39 +44,25 @@ export default function HeaderSelect({
     .map((option: any) => option.label);
 
   return (
-    <thead>
-      <tr className={'table-head'}>
+    <TableHead>
+      <TableRow>
         {header.map((value: string, idx: number) => (
-          <th
-            key={idx}
-            className={'table-cell'}
-            style={{
-              borderRightColor:
-                idx === header.length - 1 ? '#65c565' : 'lightgray',
-            }}
-          >
-            <select
-              className={'table-select-head'}
+          <TableCell key={idx}>
+            <TableSelect
               value={value}
-              onChange={(e) => handleChangeHeader(e.target, idx)}
-            >
-              {availableHeadersOptions.map((option: string, idx: number) => (
-                <option key={idx} value={option}>
-                  {option}
-                </option>
-              ))}
-              <option key={8} value={value} hidden={true}>
-                {value}
-              </option>
-            </select>
-          </th>
+              onChange={(e) => handleChangeHeader(e as any, idx)}
+              options={[...availableHeadersOptions, value].filter(
+                (option) => !!option
+              )}
+            />
+          </TableCell>
         ))}
-        {header.length < 8 && (
-          <th className={'add-cell'} onClick={addColumn}>
-            +
-          </th>
+        {header.length < selectCol.length && (
+          <ActionCellRight $topBorder={false}>
+            <TableActionButton buttonType="add" onClick={addColumn} />
+          </ActionCellRight>
         )}
-      </tr>
-    </thead>
+      </TableRow>
+    </TableHead>
   );
 }

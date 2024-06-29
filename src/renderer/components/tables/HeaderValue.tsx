@@ -1,17 +1,30 @@
+import { Typography } from '@mui/material';
+import { TableCell, TableHead, TableRow } from './Table';
+
 export default function HeaderValue({ header }: { header: string[] }) {
   return (
-    <thead>
-      <tr className={'table-head'}>
+    <TableHead>
+      <TableRow>
         {header.map((value: string, idx: number) => (
-          <th
+          <TableCell
             key={idx}
-            className={'table-cell-value'}
-            style={{ textAlign: 'center' }}
+            sx={{
+              minWidth: '13vw',
+              maxWidth: '13vw',
+              width: '13vw',
+            }}
           >
-            {value}
-          </th>
+            <Typography
+              sx={{
+                textAlign: 'center',
+                fontSize: '14px',
+              }}
+            >
+              {value}
+            </Typography>
+          </TableCell>
         ))}
-      </tr>
-    </thead>
+      </TableRow>
+    </TableHead>
   );
 }

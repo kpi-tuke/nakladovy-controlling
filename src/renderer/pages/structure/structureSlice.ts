@@ -5,6 +5,7 @@ import {
   openProject,
   rootReducer,
 } from '../../store/rootReducer';
+import groupedOptions from 'renderer/chartOfAccounts';
 
 const initialStructureState: defaultState = {
   id: 2,
@@ -12,8 +13,8 @@ const initialStructureState: defaultState = {
   corner: '↓Nákladové druhy | Kalkulačné položky→',
   headers: ['Priamy materiál'],
   data: [[0]],
-  items: ['501 – Spotreba materiálu'],
-  values: ['1'],
+  items: [groupedOptions[0].options[0].label],
+  values: [groupedOptions[0].options[0].value.toString()],
   text: '',
   accounts: [''],
   sortable: false,

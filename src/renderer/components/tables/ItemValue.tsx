@@ -1,6 +1,21 @@
+import styled from '@emotion/styled';
 import { useAppSelector } from '../../store/hooks';
 import { defaultState } from '../../store/rootReducer';
 import { RootState } from '../../store/store';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableCorner,
+  TableHead,
+  TableRow,
+  ActionCellBottom,
+} from './Table';
+
+const TableCellStyled = styled(TableCell)`
+  padding: 0 9px;
+  text-align: left;
+`;
 
 export default function ItemValue({
   selector,
@@ -10,25 +25,26 @@ export default function ItemValue({
   const { corner, items } = useAppSelector(selector);
 
   return (
-    <div className={'col-5'}>
-      <table className={'table'} style={{ width: '100%' }}>
-        <thead>
-          <tr className={'table-head'}>
-            <th className={'table-corner'}>{corner}</th>
-          </tr>
-        </thead>
-        <tbody>
-          {items.map((value: string, row: number) => {
-            return (
-              <tr key={row}>
-                <td className={'table-cell'} key={value + row.toString()}>
-                  {value}
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
-    </div>
+    <Table>
+      <TableHead>
+        <TableRow>
+          <TableCorner>{corner}</TableCorner>
+        </TableRow>
+      </TableHead>
+      <TableBody>
+        {items.map((value: string, row: number) => {
+          return (
+            <TableRow key={row}>
+              <TableCellStyled key={value + row.toString()}>
+                {value}
+              </TableCellStyled>
+            </TableRow>
+          );
+        })}
+        <TableRow>
+          <ActionCellBottom></ActionCellBottom>
+        </TableRow>
+      </TableBody>
+    </Table>
   );
 }

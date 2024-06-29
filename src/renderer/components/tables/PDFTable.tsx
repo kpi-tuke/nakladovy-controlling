@@ -2,6 +2,18 @@ import { splitTable } from '../../helper';
 import { RootState } from '../../store/store';
 import { defaultState } from '../../store/rootReducer';
 import { useAppSelector } from '../../store/hooks';
+import { Grid, Paper, styled } from '@mui/material';
+import { Table, TableBody, TableCell, TableCorner, TableRow } from './Table';
+import HeaderValue from './HeaderValue';
+
+const TableCellStyled = styled(TableCell)`
+  padding: 0 9px;
+  text-align: left;
+`;
+
+const TableStyled = styled(Table)`
+  width: unset;
+`;
 
 export default function PDFTable({
   selector,
@@ -17,66 +29,53 @@ export default function PDFTable({
   );
 
   return (
-    <div className={'table-card row hideInScreen'}>
-      <div className={'col-4'}>
-        {separatedHeaders.map((_table: string[], idx: number) => (
-          <table
-            key={idx + 'input'}
-            className={'table'}
-            style={{ width: '100%' }}
-          >
-            <tbody>
-              <tr className={'table-head'}>
-                <td className={'table-corner'}>{corner}</td>
-              </tr>
-              {items.map((value: string, row: number) => {
-                return (
-                  <tr key={row}>
-                    <td className={'table-cell'} key={value + row.toString()}>
-                      {value}
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        ))}
-      </div>
+    // <Grid container className="hideInScreen">
+    // TODO: odkomentovat komentar
+    <Paper
+      sx={{
+        marginTop: '20px',
+      }}
+    >
+      <Grid container>
+        <Grid item xs={4}>
+          {separatedHeaders.map((_table: string[], idx: number) => (
+            <Table key={idx + 'input'}>
+              <TableBody>
+                <TableRow>
+                  <TableCorner>{corner}</TableCorner>
+                </TableRow>
 
-      <div className={'table-data col-8 row'}>
-        {separatedData.map((table: number[][], idx: number) => (
-          <table key={idx + 'data'} className={'col-12 table'}>
-            <thead>
-              <tr className={'table-head'}>
-                {separatedHeaders[idx].map((value: string, col: number) => (
-                  <th
-                    key={col}
-                    className={'table-cell'}
-                    style={{ textAlign: 'center' }}
-                  >
-                    {value}
-                  </th>
+                {items.map((value: string, row: number) => {
+                  return (
+                    <TableRow key={row}>
+                      <TableCellStyled key={value + row.toString()}>
+                        {value}
+                      </TableCellStyled>
+                    </TableRow>
+                  );
+                })}
+              </TableBody>
+            </Table>
+          ))}
+        </Grid>
+
+        <Grid item xs={8}>
+          {separatedData.map((table: number[][], idx: number) => (
+            <TableStyled key={idx + 'data'}>
+              <HeaderValue header={separatedHeaders[idx]} />
+              <TableBody>
+                {table.map((rowData: number[], row: number) => (
+                  <TableRow key={row}>
+                    {rowData.map((value: number, col: number) => (
+                      <TableCell key={row + ':' + col}>{value}</TableCell>
+                    ))}
+                  </TableRow>
                 ))}
-              </tr>
-            </thead>
-            <tbody>
-              {table.map((rowData: number[], row: number) => (
-                <tr key={row}>
-                  {rowData.map((value: number, col: number) => (
-                    <td
-                      className={'table-cell'}
-                      style={{ textAlign: 'center' }}
-                      key={row + ':' + col}
-                    >
-                      {value}
-                    </td>
-                  ))}
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        ))}
-      </div>
-    </div>
+              </TableBody>
+            </TableStyled>
+          ))}
+        </Grid>
+      </Grid>
+    </Paper>
   );
 }

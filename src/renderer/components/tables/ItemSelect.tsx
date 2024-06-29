@@ -2,7 +2,14 @@ import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { defaultState } from '../../store/rootReducer';
 import groupedOptions from '../../chartOfAccounts';
 import { RootState } from '../../store/store';
-import { Table, TableBody, TableCell, TableHead, TableRow } from './Table';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableCorner,
+  TableHead,
+  TableRow,
+} from './Table';
 import {
   Autocomplete,
   Button,
@@ -92,9 +99,7 @@ export default function ItemSelect({
     <TableStyled>
       <TableHead>
         <TableRow>
-          <TableCell>
-            <Title>{corner}</Title>
-          </TableCell>
+          <TableCorner>{corner}</TableCorner>
         </TableRow>
       </TableHead>
       <TableBody>

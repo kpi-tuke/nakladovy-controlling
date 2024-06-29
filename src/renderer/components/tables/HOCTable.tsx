@@ -13,7 +13,6 @@ import {
   TableCell,
   TableRow,
 } from './Table';
-import { Remove } from '@mui/icons-material';
 import TableActionButton from './TableActionButton';
 
 const TableWrapper = styled(Box)`
@@ -31,6 +30,8 @@ export default function withTable(
 
     // @ts-ignore
     const { headers, data, dynRows, dynCols } = useAppSelector(selector);
+
+    console.log('headers: ', headers);
 
     const deleteRow = (row: number) => {
       dispatch(actions.deleteRow(row));
@@ -130,21 +131,21 @@ export default function withTable(
                         )}
                       </TableRow>
                     ))}
-                    {dynCols && (
-                      <TableRow>
-                        {data[0].map((_value: number, col: number) => {
-                          return (
-                            <ActionCellBottom key={col}>
+                    <TableRow>
+                      {data[0].map((_value: number, col: number) => {
+                        return (
+                          <ActionCellBottom key={col}>
+                            {dynCols && (
                               <TableActionButton
                                 buttonType="delete"
                                 onClick={() => deleteColumn(col)}
                               />
-                            </ActionCellBottom>
-                          );
-                        })}
-                        <ActionCellBottomRight></ActionCellBottomRight>
-                      </TableRow>
-                    )}
+                            )}
+                          </ActionCellBottom>
+                        );
+                      })}
+                      <ActionCellBottomRight></ActionCellBottomRight>
+                    </TableRow>
                   </TableBody>
                 </DataTable>
               </TableWrapper>

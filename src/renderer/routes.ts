@@ -10,7 +10,7 @@ export enum RouteName {
   SELECT = '/taskselect',
   ECONOMIC_ANALYSIS = '/economicAnalysis',
   PERETO_ANALYSIS = '/paretoAnalysis',
-  SORTIMENT_ANALYSIS = '/paretoAnalysis',
+  SORTIMENT_ANALYSIS = '/sortimentAnalysis',
   CVP_ANALYSIS = '/cvpAnalysis',
   INDEX_ANALYSIS = '/indexAnalysis',
   STRUCTURE_ANALYSIS = '/structureAnalysis',

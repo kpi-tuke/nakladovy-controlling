@@ -24,10 +24,13 @@ export const TableCell = styled(MuiTableCell)`
   min-width: 12vw;
   max-width: 12vw;
   position: relative;
+  border-right: 1px solid ${({ theme }) => theme.palette.divider};
+  text-align: center;
+`;
 
-  &:not(:last-child) {
-    border-right: 1px solid ${({ theme }) => theme.palette.divider};
-  }
+export const TableCorner = styled(TableCell)`
+  font-weight: bold;
+  text-align: center;
 `;
 
 export const DataTable = styled(Table)`
@@ -36,11 +39,13 @@ export const DataTable = styled(Table)`
   width: unset;
 `;
 
-export const ActionCellRight = styled(TableCell)`
+export const ActionCellRight = styled(TableCell)<{ $topBorder?: boolean }>`
   width: 20px;
   min-width: 20px;
   max-width: 20px;
   border-right: 1px solid ${({ theme }) => theme.palette.divider};
+  border-top: ${({ theme, $topBorder = true }) =>
+    $topBorder ? `1px solid ${theme.palette.divider}` : 'none'};
 `;
 
 export const ActionCellBottom = styled(TableCell)`
@@ -49,4 +54,5 @@ export const ActionCellBottom = styled(TableCell)`
 
 export const ActionCellBottomRight = styled(ActionCellRight)`
   height: 28px;
+  border: none;
 `;
