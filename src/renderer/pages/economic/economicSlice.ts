@@ -15,14 +15,16 @@ const initialEconomicState: defaultState = {
   title: 'Ekonomická analýza hospodárenia',
   corner: 'Ekonomická položka (Náklady(€) /Výnosy(€))',
   headers: ['2000'],
-  data: [[1], [4]],
+  data: [[0], [0], [0]],
   items: [
     groupedOptions[0].options[0].label,
     groupedOptions[1].options[0].label,
+    '',
   ],
   values: [
     groupedOptions[0].options[0].value.toString(),
     groupedOptions[1].options[0].value.toString(),
+    '',
   ],
   text: '',
   accounts: [''],

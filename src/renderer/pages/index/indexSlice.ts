@@ -17,12 +17,14 @@ const initialIndexState: defaultState = {
   data: [
     [0, 0, 0],
     [0, 0, 0],
+    [0, 0, 0],
   ],
   items: [
     '501 - Spotreba materiálu',
     '666 - Výnosy z krátkodobého finančného majetku',
+    '',
   ],
-  values: ['501', '666'],
+  values: ['501', '666', ''],
   text: '',
   accounts: [''],
   sortable: true,

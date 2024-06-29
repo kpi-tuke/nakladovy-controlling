@@ -41,11 +41,6 @@ const AddButton = styled(Button)`
   }
 `;
 
-const Title = styled(Typography)`
-  font-weight: bold;
-  text-align: center;
-`;
-
 const TableStyled = styled(Table)`
   width: 100%;
   border-right: ${({ theme }) => `1px solid ${theme.palette.divider}`};
@@ -77,6 +72,10 @@ export default function ItemSelect({
       actions.setItemsOnIndex({ data: value.label || value.value, index: idx })
     );
     dispatch(actions.setValuesOnIndex({ data: value.value, index: idx }));
+
+    if (!items.includes(value.label) && idx === items.length - 1) {
+      dispatch(actions.addRow());
+    }
   };
 
   const addRow = () => {
