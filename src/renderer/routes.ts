@@ -36,6 +36,36 @@ export const routes: Route[] = [
     printToPDF: true,
     save: true,
   },
+  {
+    path: RouteName.STRUCTURE_ANALYSIS,
+    title: 'Štruktúrna analýza',
+    printToPDF: true,
+    save: true,
+  },
+  {
+    path: RouteName.CVP_ANALYSIS,
+    title: 'CVP analýza',
+    printToPDF: true,
+    save: true,
+  },
+  {
+    path: RouteName.SORTIMENT_ANALYSIS,
+    title: 'Sortimentná analýza',
+    printToPDF: true,
+    save: true,
+  },
+  {
+    path: RouteName.INDEX_ANALYSIS,
+    title: 'Indexná analýza',
+    printToPDF: true,
+    save: true,
+  },
+  {
+    path: RouteName.PERETO_ANALYSIS,
+    title: 'Pareto analýza',
+    printToPDF: true,
+    save: true,
+  },
 ];
 
 export const getRouteDetails = (path: string) =>
