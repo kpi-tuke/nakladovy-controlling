@@ -19,7 +19,13 @@ export default function EconomicResult() {
     incomeProfitabilityData,
     costEfficiencyData,
     costIndicatorData,
-  } = economicCalculation(data, values);
+    materialCostData,
+    wageCostData,
+    depreciationCostData,
+    financialConstData,
+    servicesConstData,
+    taxesConstData,
+  } = economicCalculation(data, values, headers.length ?? 0);
   const lineSeries = [
     {
       name: 'Náklady',
@@ -67,7 +73,6 @@ export default function EconomicResult() {
           corner={'Ekonomické ukazovatele'}
           header={[...headers]}
           inputs={[
-            // ['(Z) - zisk (€)', 'V - N'],
             ['(N<sub>c</sub>) - náklady celkom (€)', `\\sum N `],
             ['(V<sub>c</sub>) - výnosy celkom (€)', `\\sum V `],
             [
@@ -82,16 +87,46 @@ export default function EconomicResult() {
             ['(N<sub>ú</sub>) - nákladová účinnosť', `N_{u}=\\frac{V}{N}`],
             ['(e) - efektívnosť', `e=\\frac{V}{N}`],
             ['(h<sub>c</sub>) - nákladovosť celkom', `h_{c}=\\frac{N}{V}`],
+            [
+              'h<sub>m</sub> - materiálová nákladovosť',
+              '\\frac{N_{MAT (501)}}{V}',
+            ],
+            [
+              'h<sub>mz</sub> - mzdová nákladovosť',
+              '\\frac{N_{MZDY (521)}}{V}',
+            ],
+            [
+              'h<sub>o</sub> - odpisová nákladovosť',
+              '\\frac{N_{odpí (551)}}{V}',
+            ],
+            [
+              'h<sub>f</sub> - finančná nákladovosť',
+              '\\frac{N_{F (561-569)}}{V}',
+            ],
+            [
+              'h<sub>s</sub> - nákladovosť služieb',
+              '\\frac{N_{s (511-518)}}{V}',
+            ],
+            ['h<sub>d</sub> - nákladovosť daní', '\\frac{N_{d (531-538)}}{V}'],
+            ['P<sub>o</sub> - celková produktivita', ''],
           ]}
           data={[
-            [...costData],
-            [...incomeData],
-            [...profitData],
-            [...costProfitabilityData],
-            [...incomeProfitabilityData],
-            [...costEfficiencyData],
-            [...costEfficiencyData],
-            [...costIndicatorData],
+            costData,
+            incomeData,
+            profitData,
+            costProfitabilityData,
+            incomeProfitabilityData,
+            costEfficiencyData,
+            costEfficiencyData,
+            costIndicatorData,
+            materialCostData,
+            wageCostData,
+            depreciationCostData,
+            financialConstData,
+            servicesConstData,
+            taxesConstData,
+            // TODO: doplnit po konzultacii
+            [0],
           ]}
         />
       </Paper>

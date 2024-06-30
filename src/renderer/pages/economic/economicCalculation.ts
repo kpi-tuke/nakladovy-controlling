@@ -1,8 +1,12 @@
-import { divideArrays, subtractArrays } from '../../helper';
+import { divideArrays, subtractArrays, sumArrays } from '../../helper';
 
-export function economicCalculation(data: number[][], values: any) {
-  let costsByYear: number[] = data[0].map(() => 0);
-  let incomeByYear: number[] = data[0].map(() => 0);
+export function economicCalculation(
+  data: number[][],
+  values: any,
+  length: number
+) {
+  let costsByYear: number[] = Array.from({ length: length }, () => 0);
+  let incomeByYear: number[] = Array.from({ length: length }, () => 0);
 
   //sums of costs and incomes by year
   data.map((rowData: number[], row: number) => {
@@ -17,16 +21,88 @@ export function economicCalculation(data: number[][], values: any) {
   });
 
   let profitByYear: number[] = subtractArrays(incomeByYear, costsByYear);
+
   let incomeProfitabilityByYear: number[] = divideArrays(
     profitByYear,
     incomeByYear
   );
+
   let costProfitabilityByYear: number[] = divideArrays(
     profitByYear,
     costsByYear
   );
+
   let costEfficiencyByYear: number[] = divideArrays(incomeByYear, costsByYear);
   let costIndicatorByYear: number[] = divideArrays(costsByYear, incomeByYear);
+
+  // 501 code of material costs
+  const values501index = values.findIndex((value: any) => value == 501);
+  let materialCostByYear = Array.from({ length: data[0].length }, () => 0);
+  if (values501index !== -1) {
+    const values501 = data[values501index];
+    materialCostByYear = divideArrays(values501, incomeByYear);
+  }
+
+  // 521 code of wage costs
+  const values521index = values.findIndex((value: any) => value == 521);
+  let wageCostByYear = Array.from({ length: data[0].length }, () => 0);
+  if (values521index !== -1) {
+    const values521 = data[values521index];
+    wageCostByYear = divideArrays(values521, incomeByYear);
+  }
+
+  // 551 code of wage costs
+  const values551index = values.findIndex((value: any) => value == 521);
+  let depreciationCostByYear = Array.from({ length: data[0].length }, () => 0);
+  if (values551index !== -1) {
+    const values551 = data[values551index];
+    wageCostByYear = divideArrays(values551, incomeByYear);
+  }
+
+  // 561 - 569
+  const values561569indexes = [];
+  values.forEach((value, index) => {
+    if (value >= 561 && value <= 569) {
+      values561569indexes.push(index);
+    }
+  });
+  let financialConstByYear = values561569indexes.reduce(
+    (acc, index) => {
+      return sumArrays(acc, data[index]);
+    },
+    Array.from({ length: data[0].length }, () => 0)
+  );
+  financialConstByYear = divideArrays(financialConstByYear, incomeByYear);
+
+  // 511 - 518
+  const values511518indexes = [];
+  values.forEach((value, index) => {
+    if (value >= 511 && value <= 518) {
+      values511518indexes.push(index);
+    }
+  });
+  let servicesConstByYear = values511518indexes.reduce(
+    (acc, index) => {
+      return sumArrays(acc, data[index]);
+    },
+    Array.from({ length: data[0].length }, () => 0)
+  );
+  servicesConstByYear = divideArrays(servicesConstByYear, incomeByYear);
+
+  // 531 - 538
+  const values531538indexes = [];
+  values.forEach((value, index) => {
+    if (value >= 531 && value <= 538) {
+      values531538indexes.push(index);
+    }
+  });
+  let taxesConstByYear = values531538indexes.reduce(
+    (acc, index) => {
+      return sumArrays(acc, data[index]);
+    },
+    Array.from({ length: data[0].length }, () => 0)
+  );
+  taxesConstByYear = divideArrays(taxesConstByYear, incomeByYear);
 
   return {
     costData: costsByYear,
@@ -36,5 +112,11 @@ export function economicCalculation(data: number[][], values: any) {
     costProfitabilityData: costProfitabilityByYear,
     costEfficiencyData: costEfficiencyByYear,
     costIndicatorData: costIndicatorByYear,
+    materialCostData: materialCostByYear,
+    wageCostData: wageCostByYear,
+    depreciationCostData: depreciationCostByYear,
+    financialConstData: financialConstByYear,
+    servicesConstData: servicesConstByYear,
+    taxesConstData: taxesConstByYear,
   };
 }

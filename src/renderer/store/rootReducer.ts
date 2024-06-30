@@ -79,12 +79,13 @@ export const rootReducer = {
     state.data.push(arr);
   },
   deleteRow: (
-    state: { items: string[]; data: number[][] },
+    state: { items: string[]; data: number[][]; values: string[] },
     action: PayloadAction<number>
   ) => {
     if (state.items.length === 1) return;
     state.items.splice(action.payload, 1);
     state.data.splice(action.payload, 1);
+    state.values.splice(action.payload, 1);
   },
   deleteColumn: (
     state: { headers: string[]; data: number[][] },

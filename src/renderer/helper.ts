@@ -54,6 +54,14 @@ export const subtractArrays = (
   return arr;
 };
 
+export const sumArrays = (array1: number[], array2: number[]): number[] => {
+  let sum: number[] = [];
+  for (let i = 0; i < array1.length; i++) {
+    sum.push(array1[i] + array2[i]);
+  }
+  return sum;
+};
+
 export const isNumeric = (str: string): boolean => {
   return /^\d+$/.test(str);
 };
