@@ -13,7 +13,7 @@ import groupedOptions from 'renderer/chartOfAccounts';
 const initialEconomicState: defaultState = {
   id: 1,
   title: 'Ekonomická analýza hospodárenia',
-  corner: 'Ekonomická položka (Náklady(€) /Výnosy(€))',
+  corner: 'Ekonomická veličina (€)',
   headers: ['2000'],
   data: [[0], [0], [0]],
   items: [

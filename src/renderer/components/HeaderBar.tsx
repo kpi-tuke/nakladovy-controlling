@@ -161,7 +161,7 @@ const ResponsiveButton: React.FC<ResponsiveButtonProps> = ({
         sx={{
           display: {
             xs: 'none',
-            xl: 'flex',
+            lg: 'flex',
           },
           fontSize: 14,
         }}

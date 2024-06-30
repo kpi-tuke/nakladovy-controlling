@@ -3,9 +3,14 @@ import React from 'react';
 
 type Props = TextFieldProps & {
   bold?: boolean;
+  inputTextAlign?: 'center' | 'left' | 'right';
 };
 
-const TableInput: React.FC<Props> = ({ bold, ...props }) => {
+const TableInput: React.FC<Props> = ({
+  bold,
+  inputTextAlign = 'center',
+  ...props
+}) => {
   return (
     <TextField
       {...props}
@@ -22,9 +27,9 @@ const TableInput: React.FC<Props> = ({ bold, ...props }) => {
 
         input: {
           height: '48px',
-          padding: 0,
+          padding: '0 9px',
           fontWeight: bold ? 'bold' : 'normal',
-          textAlign: 'center',
+          textAlign: inputTextAlign,
         },
       }}
     />
