@@ -65,9 +65,11 @@ export default function TableStatic(props: any) {
                       )
                     }
                   >
-                    <TableCell key={value[0]} className="table-cell">
-                      {value[0]}
-                    </TableCell>
+                    <TableCell
+                      key={value[0]}
+                      className="table-cell"
+                      dangerouslySetInnerHTML={{ __html: value[0] }}
+                    />
                   </Tooltip>
 
                   {props.data[row].map((value: number, col: number) => {

@@ -67,20 +67,29 @@ export default function EconomicResult() {
           corner={'Ekonomické ukazovatele'}
           header={[...headers]}
           inputs={[
-            ['(Z) - zisk (€)', 'V - N'],
-            ['(N) - náklady celkom (€)', `\\sum N `],
-            ['(V) - výnosy celkom (€)', `\\sum V `],
-            ['(Rv) - rentabilita výnosov', `R_{v}=\\frac{Z}{V}`],
-            ['(Rn) - rentabilita nákladov', `R_{n}=\\frac{Z}{N}`],
-            ['(Nú) - nákladová účinnosť', `N_{u}=\\frac{V}{N}`],
-            ['(n) - nákladovosť', `n=\\frac{N}{V}`],
+            // ['(Z) - zisk (€)', 'V - N'],
+            ['(N<sub>c</sub>) - náklady celkom (€)', `\\sum N `],
+            ['(V<sub>c</sub>) - výnosy celkom (€)', `\\sum V `],
+            [
+              '(VH) - výsledok hospodárenia (€)',
+              `\\begin{align*}
+              \\text{ZISK} & \\quad V > N \\\\
+              \\text{STRATA} & \\quad V < N
+              \\end{align*}`,
+            ],
+            ['(R<sub>n</sub>) - rentabilita nákladov', `R_{n}=\\frac{Z}{N}`],
+            ['(R<sub>v</sub>) - rentabilita výnosov', `R_{v}=\\frac{Z}{V}`],
+            ['(N<sub>ú</sub>) - nákladová účinnosť', `N_{u}=\\frac{V}{N}`],
+            ['(e) - efektívnosť', `e=\\frac{V}{N}`],
+            ['(h<sub>c</sub>) - nákladovosť celkom', `h_{c}=\\frac{N}{V}`],
           ]}
           data={[
-            [...profitData],
             [...costData],
             [...incomeData],
-            [...incomeProfitabilityData],
+            [...profitData],
             [...costProfitabilityData],
+            [...incomeProfitabilityData],
+            [...costEfficiencyData],
             [...costEfficiencyData],
             [...costIndicatorData],
           ]}
