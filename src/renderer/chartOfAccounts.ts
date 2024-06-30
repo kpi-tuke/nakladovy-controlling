@@ -116,8 +116,8 @@ export const costs = [
   { value: 568, label: '568 - Ostatné finančné náklady' },
   { value: 569, label: '569 - Manká a škody na finančnom majetku' },
   { value: 591, label: '591 - Splatná daň z príjmov' },
-  { value: 593, label: '592 - Odložená daň z príjmov' },
-  { value: 596, label: '595 - Dodatočné odvody dane z príjmov' },
+  { value: 592, label: '592 - Odložená daň z príjmov' },
+  { value: 595, label: '595 - Dodatočné odvody dane z príjmov' },
   {
     value: 596,
     label: '596 - Prevod podielov na výsledku hospodárenia spoločníkom',
