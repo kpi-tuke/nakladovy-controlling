@@ -52,6 +52,8 @@ const HeaderBar: React.FC<any> = () => {
         paddingRight: 2,
         alignItems: 'center',
         height: '7vh',
+        boxShadow: '0px 15px 10px -15px rgba(0, 0, 0, 0.2)',
+        zIndex: 2,
       }}
     >
       {/* Left side */}
