@@ -54,7 +54,7 @@ export default function TableStatic(props: any) {
           <TableBody>
             {props.inputs.map((value: string[], row: number) => {
               return (
-                <TableRow key={row.toString()}>
+                <TableRow key={row}>
                   <Tooltip
                     placement="right"
                     title={
@@ -67,8 +67,8 @@ export default function TableStatic(props: any) {
                   >
                     <TableCell
                       key={value[0]}
-                      className="table-cell"
                       dangerouslySetInnerHTML={{ __html: value[0] }}
+                      sx={{ textAlign: 'left', padding: '0 9px' }}
                     />
                   </Tooltip>
 
@@ -79,9 +79,9 @@ export default function TableStatic(props: any) {
                           textAlign: 'center',
                           color: value < 0 ? 'red' : 'inherit',
                         }}
-                        key={row.toString() + ':' + col.toString()}
+                        key={row + ':' + col}
                       >
-                        {value.toString()}
+                        {value}
                       </TableCell>
                     );
                   })}
@@ -110,16 +110,12 @@ export default function TableStatic(props: any) {
                 <TableBody>
                   {table.map((tableRow: number[], row: number) => {
                     return (
-                      <TableRow key={row.toString()}>
+                      <TableRow key={row}>
                         <TableCell key={row}>{props.inputs[row][0]}</TableCell>
 
                         {tableRow.map((value: number, col: number) => {
                           return (
-                            <TableCell
-                              key={row.toString() + ':' + col.toString()}
-                            >
-                              {value.toString()}
-                            </TableCell>
+                            <TableCell key={row + ':' + col}>{value}</TableCell>
                           );
                         })}
                       </TableRow>

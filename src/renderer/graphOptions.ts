@@ -44,7 +44,7 @@ export const useLineGraph = (osX: string[]): ApexOptions => {
     yaxis: [
       {
         title: {
-          text: 'ekonomická veličina (€)',
+          text: 'hodnota ukazovateľa (koeficient)',
         },
       },
     ],
@@ -211,7 +211,7 @@ export const useCVPGraph = (
     yaxis: [
       {
         title: {
-          text: 'ekonomická veličina (€)',
+          text: 'hodnota ukazovateľa (koeficient)',
         },
       },
     ],

@@ -8,6 +8,8 @@ import { selectEconomic } from './economicSlice';
 import SectionTitle from 'renderer/components/SectionTitle';
 import Spacer from 'renderer/components/Spacer';
 import { Paper } from '@mui/material';
+import { GraphCard } from 'renderer/components/graph/GraphCard';
+import { GraphTitle } from 'renderer/components/graph/GraphTitle';
 
 export default function EconomicResult() {
   const { headers, data, values } = useAppSelector(selectEconomic);
@@ -28,41 +30,48 @@ export default function EconomicResult() {
   } = economicCalculation(data, values, headers.length ?? 0);
   const lineSeries = [
     {
-      name: 'Náklady',
+      name: 'Náklady (N<sub>c</sub>)',
       data: costData,
     },
     {
-      name: 'Výnosy',
+      name: 'Výnosy (V<sub>c</sub>)',
       data: incomeData,
     },
     {
-      name: 'Zisk',
+      name: 'Výsledok hospodárenia - zisk/strata (VH)',
       data: profitData,
     },
   ];
 
   const colSeries = [
     {
-      name: 'Rentabilita výnosov',
+      name: 'Rentabilita výnosov R<sub>v</sub>',
       data: incomeProfitabilityData,
     },
     {
-      name: 'Rentabilita nákladov',
+      name: 'Rentabilita nákladov R<sub>n</sub>',
       data: costProfitabilityData,
     },
     {
-      name: 'Nákladová účinnosť',
+      name: 'Nákladová účinnosť N<sub>ú</sub>',
       data: costEfficiencyData,
     },
     {
-      name: 'Nákladovosť',
+      name: 'Efektívnosť',
+      data: costEfficiencyData,
+    },
+    {
+      name: 'Nákladovosť celkom h<sub>c</sub>',
       data: costIndicatorData,
     },
   ];
 
   const lineOptions: ApexOptions = useLineGraph(headers);
 
-  const colOptions: ApexOptions = useColGraph(headers, 'koeficient');
+  const colOptions: ApexOptions = useColGraph(
+    headers,
+    'hodnota ukazovateľa (koeficient)'
+  );
 
   return (
     <div className={'new-page-after new-page'}>
@@ -125,33 +134,38 @@ export default function EconomicResult() {
             financialConstData,
             servicesConstData,
             taxesConstData,
-            // TODO: doplnit po konzultacii
+            // TODO: doplnit po konzultacii (celková produktivita)
             [0],
           ]}
         />
       </Paper>
+
       <Spacer height={40} />
+
       <SectionTitle>Dashboarding</SectionTitle>
-      <div className={'graph-card'}>
-        <h4 className={'graph-title'}>TREND VÝVOJA EKONOMICKÝCH VELIČÍN</h4>
+
+      <GraphCard>
+        <GraphTitle>TREND VÝVOJA EKONOMICKÝCH VELIČÍN</GraphTitle>
         <ReactApexChart
           options={lineOptions}
           series={lineSeries}
           type="line"
           height={420}
         />
-      </div>
-      <div className={'graph-card new-page-after'}>
-        <h4 className={'graph-title'}>
-          EKONOMICKÉ UKAZOVATELE V SLEDOVANOM OBDOBÍ
-        </h4>
+      </GraphCard>
+
+      <Spacer height={40} />
+
+      <GraphCard className={'new-page-after'}>
+        <GraphTitle>Prehľad ekonomických ukazovaťeľov</GraphTitle>
         <ReactApexChart
           options={colOptions}
           series={colSeries}
           type="bar"
           height={420}
         />
-      </div>
+      </GraphCard>
+      <Spacer height={40} />
     </div>
   );
 }
