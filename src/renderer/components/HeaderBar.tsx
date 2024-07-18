@@ -47,6 +47,7 @@ const HeaderBar: React.FC<any> = () => {
   return (
     <Grid
       container
+      className="hideInPrint"
       sx={{
         paddingLeft: 2,
         paddingRight: 2,

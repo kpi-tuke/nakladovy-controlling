@@ -1,5 +1,14 @@
-import { Box } from '@mui/material';
+import { Box, styled } from '@mui/material';
 import React from 'react';
+
+const Content = styled(Box)`
+  height: 93vh;
+  display: flex;
+  flex-direction: column;
+  /* background-color: #f2f1f6; */
+  background-color: ${({ theme }) => theme.palette.background.default};
+  overflow-y: auto;
+`;
 
 type Props = {
   children: React.ReactNode;
@@ -7,15 +16,7 @@ type Props = {
 
 const PageContent: React.FC<Props> = ({ children }) => {
   return (
-    <Box
-      sx={{
-        height: '93vh',
-        display: 'flex',
-        flexDirection: 'column',
-        backgroundColor: '#f2f1f6',
-        overflowY: 'auto',
-      }}
-    >
+    <Content>
       <Box
         sx={{
           flex: 1,
@@ -24,7 +25,7 @@ const PageContent: React.FC<Props> = ({ children }) => {
       >
         {children}
       </Box>
-    </Box>
+    </Content>
   );
 };
 
