@@ -9,9 +9,9 @@ export default function HeaderValue({ header }: { header: string[] }) {
           <TableCell
             key={idx}
             sx={{
-              minWidth: '13vw',
-              maxWidth: '13vw',
-              width: '13vw',
+              minWidth: '12.75vw',
+              maxWidth: '12.75vw',
+              width: '12.75vw',
             }}
           >
             <Typography

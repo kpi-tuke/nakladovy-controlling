@@ -82,7 +82,6 @@ export default function withTable(
             actions.sortTableByItemNumber ? sortByItemNumber : undefined
           }
         />
-
         <Paper className="hideInPrint">
           <Grid container>
             <Grid xs={4} item>
@@ -162,7 +161,6 @@ export default function withTable(
             </Grid>
           </Grid>
         </Paper>
-
         <PDFTable selector={selector} />
       </>
     );

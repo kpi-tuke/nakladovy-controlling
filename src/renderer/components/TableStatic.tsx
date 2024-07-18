@@ -7,7 +7,7 @@ import {
   TableHead,
   TableRow,
 } from './tables/Table';
-import { Grid, styled, Tooltip } from '@mui/material';
+import { Grid, styled, Tooltip, Typography } from '@mui/material';
 import { TableData } from './tables/TableData';
 
 const TableStyled = styled(Table)`
@@ -92,41 +92,49 @@ export default function TableStatic(props: any) {
         </TableStyled>
       </TableData>
 
-      <TableData className={'hideInScreen'}>
-        <Grid container>
-          {separatedData.map((table, index) => (
-            <Grid item xs={12}>
-              <TableStyled key={index}>
-                <TableHead>
-                  <TableRow>
-                    <TableCorner>{props.corner}</TableCorner>
-                    {separatedHeaders[index].map(
-                      (value: string, idx: number) => {
-                        return <TableCell key={idx}>{value}</TableCell>;
-                      }
-                    )}
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {table.map((tableRow: number[], row: number) => {
-                    return (
-                      <TableRow key={row}>
-                        <TableCell key={row}>{props.inputs[row][0]}</TableCell>
+      {separatedData.map((table, index) => (
+        <div className="new-page-after ">
+          <TableStyled key={index}>
+            <TableHead>
+              <TableRow>
+                <TableCorner>{props.corner}</TableCorner>
+                {separatedHeaders[index].map((value: string, idx: number) => {
+                  return <TableCell key={idx}>{value}</TableCell>;
+                })}
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {table.map((tableRow: number[], row: number) => {
+                return (
+                  <TableRow key={row}>
+                    <TableCell
+                      key={row}
+                      dangerouslySetInnerHTML={{
+                        __html: props.inputs[row][0],
+                      }}
+                      sx={{
+                        minWidth: '24vw',
+                        maxWidth: '24vw',
+                      }}
+                    ></TableCell>
 
-                        {tableRow.map((value: number, col: number) => {
-                          return (
-                            <TableCell key={row + ':' + col}>{value}</TableCell>
-                          );
-                        })}
-                      </TableRow>
-                    );
-                  })}
-                </TableBody>
-              </TableStyled>
-            </Grid>
-          ))}
-        </Grid>
-      </TableData>
+                    {tableRow.map((value: number, col: number) => {
+                      return (
+                        <TableCell key={row + ':' + col}>{value}</TableCell>
+                      );
+                    })}
+                  </TableRow>
+                );
+              })}
+            </TableBody>
+          </TableStyled>
+          {separatedData.length > 1 && (
+            <Typography textAlign={'right'} variant="caption">
+              {index + 1} / {separatedData.length}
+            </Typography>
+          )}
+        </div>
+      ))}
     </>
   );
 }

@@ -1,3 +1,7 @@
+/* * {
+  outline: 1px solid red !important;
+} */
+
 body {
   padding: 0;
   margin: 0;
@@ -437,6 +441,7 @@ a {
 
 .new-page-after {
   page-break-after: always;
+  break-after: always;
 }
 
 .hideInScreen {
