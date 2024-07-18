@@ -2,7 +2,6 @@ import { Box, styled } from '@mui/material';
 import React from 'react';
 
 const Content = styled(Box)`
-  height: 93vh;
   display: flex;
   flex-direction: column;
   background-color: ${({ theme }) => theme.palette.background.default};
