@@ -82,8 +82,9 @@ export default function withTable(
             actions.sortTableByItemNumber ? sortByItemNumber : undefined
           }
         />
-        <Paper>
-          <Grid container className="hideInPrint">
+
+        <Paper className="hideInPrint">
+          <Grid container>
             <Grid xs={4} item>
               <TableInput selector={selector} actions={actions} />
             </Grid>

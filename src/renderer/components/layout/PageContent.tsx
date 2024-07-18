@@ -5,9 +5,21 @@ const Content = styled(Box)`
   height: 93vh;
   display: flex;
   flex-direction: column;
-  /* background-color: #f2f1f6; */
   background-color: ${({ theme }) => theme.palette.background.default};
   overflow-y: auto;
+
+  @media print {
+    background-color: ${({ theme }) => theme.palette.backgroundPrint.default};
+  }
+`;
+
+const Container = styled(Box)`
+  flex: 1;
+  padding: 2rem;
+
+  @media print {
+    padding: 0;
+  }
 `;
 
 type Props = {
@@ -17,14 +29,7 @@ type Props = {
 const PageContent: React.FC<Props> = ({ children }) => {
   return (
     <Content>
-      <Box
-        sx={{
-          flex: 1,
-          padding: 6,
-        }}
-      >
-        {children}
-      </Box>
+      <Container>{children}</Container>
     </Content>
   );
 };

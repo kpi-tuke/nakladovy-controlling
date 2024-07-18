@@ -5,7 +5,7 @@ import React from 'react';
 const TitleText = styled(Typography)`
   font-size: 30px;
   font-weight: 700;
-  margin-bottom: 16px;
+  margin-bottom: 1rem;
   text-align: center;
 `;
 

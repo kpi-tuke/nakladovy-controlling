@@ -1,25 +1,27 @@
-import { colors, createTheme } from '@mui/material';
+import { colors, createTheme, PaletteColorOptions } from '@mui/material';
 
 declare module '@mui/material/styles' {
-  interface Theme {
-    status: {
-      danger: string;
+  interface Theme {}
+  interface ThemeOptions {}
+  interface Palette {
+    backgroundPrint: {
+      default: string;
     };
   }
-  interface ThemeOptions {
-    status?: {
-      danger?: string;
+  interface PaletteOptions {
+    backgroundPrint: {
+      default: string;
     };
   }
 }
 
 export const theme = createTheme({
   palette: {
-    primary: {
-      main: colors.blue[500],
+    background: {
+      default: '#f2f1f6',
     },
-  },
-  status: {
-    danger: colors.purple[200],
+    backgroundPrint: {
+      default: '#fff',
+    },
   },
 });

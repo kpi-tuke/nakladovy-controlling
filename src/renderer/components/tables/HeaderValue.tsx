@@ -18,6 +18,7 @@ export default function HeaderValue({ header }: { header: string[] }) {
               sx={{
                 textAlign: 'center',
                 fontSize: '14px',
+                fontWeight: 'bold',
               }}
             >
               {value}

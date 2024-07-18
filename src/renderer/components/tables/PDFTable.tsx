@@ -3,16 +3,19 @@ import { RootState } from '../../store/store';
 import { defaultState } from '../../store/rootReducer';
 import { useAppSelector } from '../../store/hooks';
 import { Grid, Paper, styled } from '@mui/material';
-import { Table, TableBody, TableCell, TableCorner, TableRow } from './Table';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableCorner,
+  TableRow,
+  TableHead,
+} from './Table';
 import HeaderValue from './HeaderValue';
 
 const TableCellStyled = styled(TableCell)`
   padding: 0 9px;
   text-align: left;
-`;
-
-const TableStyled = styled(Table)`
-  width: unset;
 `;
 
 export default function PDFTable({
@@ -29,28 +32,27 @@ export default function PDFTable({
   );
 
   return (
-    <Paper
-      className="hideInScreen"
-      sx={{
-        marginTop: '20px',
-      }}
-    >
+    <Paper className="hideInScreen">
       <Grid container>
         <Grid item xs={4}>
           {separatedHeaders.map((_table: string[], idx: number) => (
             <Table key={idx + 'input'}>
-              <TableBody>
+              <TableHead>
                 <TableRow>
                   <TableCorner>{corner}</TableCorner>
                 </TableRow>
+              </TableHead>
 
+              <TableBody>
                 {items.map((value: string, row: number) => {
-                  return (
+                  return !!value ? (
                     <TableRow key={row}>
                       <TableCellStyled key={value + row.toString()}>
                         {value}
                       </TableCellStyled>
                     </TableRow>
+                  ) : (
+                    <></>
                   );
                 })}
               </TableBody>
@@ -60,18 +62,27 @@ export default function PDFTable({
 
         <Grid item xs={8}>
           {separatedData.map((table: number[][], idx: number) => (
-            <TableStyled key={idx + 'data'}>
+            <Table
+              key={idx + 'data'}
+              sx={{
+                width: 'unset',
+              }}
+            >
               <HeaderValue header={separatedHeaders[idx]} />
               <TableBody>
-                {table.map((rowData: number[], row: number) => (
-                  <TableRow key={row}>
-                    {rowData.map((value: number, col: number) => (
-                      <TableCell key={row + ':' + col}>{value}</TableCell>
-                    ))}
-                  </TableRow>
-                ))}
+                {table.map((rowData: number[], row: number) =>
+                  row < items.length - 1 ? (
+                    <TableRow key={row}>
+                      {rowData.map((value: number, col: number) => (
+                        <TableCell key={row + ':' + col}>{value}</TableCell>
+                      ))}
+                    </TableRow>
+                  ) : (
+                    <></>
+                  )
+                )}
               </TableBody>
-            </TableStyled>
+            </Table>
           ))}
         </Grid>
       </Grid>

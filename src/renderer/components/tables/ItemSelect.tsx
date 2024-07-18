@@ -10,13 +10,7 @@ import {
   TableHead,
   TableRow,
 } from './Table';
-import {
-  Autocomplete,
-  Button,
-  styled,
-  TextField,
-  Typography,
-} from '@mui/material';
+import { Autocomplete, Button, styled, TextField } from '@mui/material';
 import { Add } from '@mui/icons-material';
 import React from 'react';
 import TableInput from './TableInput';
@@ -42,11 +36,6 @@ const AddButton = styled(Button)`
   }
 `;
 
-const TableStyled = styled(Table)`
-  width: 100%;
-  border-right: ${({ theme }) => `1px solid ${theme.palette.divider}`};
-`;
-
 type Option = {
   label: string;
   value: number;
@@ -57,14 +46,9 @@ const ADD_CUSTOM = 'Iná položka...';
 
 export default function ItemSelect({
   selector,
-  // @ts-ignore
-  analytic,
   actions,
 }: {
-  corner: string[];
-  inputs: string[];
   selector: (state: RootState) => defaultState;
-  analytic: boolean;
   actions: any;
 }) {
   const { corner, items, values } = useAppSelector(selector);
@@ -110,7 +94,12 @@ export default function ItemSelect({
   }, []);
 
   return (
-    <TableStyled>
+    <Table
+      sx={{
+        width: '100%',
+        borderRight: (theme) => `1px solid ${theme.palette.divider}`,
+      }}
+    >
       <TableHead>
         <TableRow>
           <TableCorner>{corner}</TableCorner>
@@ -179,6 +168,6 @@ export default function ItemSelect({
           </AddCell>
         </TableRow>
       </TableBody>
-    </TableStyled>
+    </Table>
   );
 }

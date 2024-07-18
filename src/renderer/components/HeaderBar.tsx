@@ -1,13 +1,35 @@
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Button, Grid, IconButton, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  Grid,
+  IconButton,
+  styled,
+  Typography,
+} from '@mui/material';
 import { getRouteDetails, RouteName } from 'renderer/routes';
 import React, { useMemo } from 'react';
 import { ArrowBack, Print, Save } from '@mui/icons-material';
 import { useAnalysisSave } from './providers/AnalysisSaveProvider';
 
-type Props = {
-  reportId: number;
-};
+const Wrapper = styled(Box)`
+  height: 7vh;
+  box-shadow: 0px 15px 10px -15px rgba(0, 0, 0, 0.2);
+
+  @media print {
+    box-shadow: none;
+    display: flex;
+    align-items: center;
+  }
+`;
+
+const PrintPageTitle = styled(Typography)`
+  font-weight: 700;
+  font-size: 36px;
+  color: ${({ theme }) => theme.palette.primary.main};
+  text-align: center;
+  width: 100%;
+`;
 
 // TODO: pouzit props tu
 const HeaderBar: React.FC<any> = () => {
@@ -45,92 +67,102 @@ const HeaderBar: React.FC<any> = () => {
   }, [economicChanged, onceSaved]);
 
   return (
-    <Grid
-      container
-      className="hideInPrint"
-      sx={{
-        paddingLeft: 2,
-        paddingRight: 2,
-        alignItems: 'center',
-        height: '7vh',
-        boxShadow: '0px 15px 10px -15px rgba(0, 0, 0, 0.2)',
-        zIndex: 2,
-      }}
-    >
-      {/* Left side */}
-      <Grid item xs={4}>
-        {pathname !== RouteName.HOME && (
-          <>
-            <IconButton
-              color="primary"
-              onClick={goBack}
-              sx={{
-                display: {
-                  md: 'none',
-                },
-              }}
-            >
-              <ArrowBack />
-            </IconButton>
-            <Button
-              onClick={goBack}
-              startIcon={<ArrowBack />}
-              variant="outlined"
-              sx={{
-                display: {
-                  xs: 'none',
-                  md: 'flex',
-                },
-              }}
-            >
-              Späť
-            </Button>
-          </>
-        )}
-      </Grid>
-
-      {/* Middle side */}
-      <Grid item xs={4}>
-        <Typography
-          variant="h1"
+    <Wrapper>
+      <Box
+        sx={{
+          height: '100%',
+        }}
+        className="hideInPrint"
+      >
+        <Grid
+          container
           sx={{
-            textAlign: 'center',
-            fontSize: 24,
-            fontWeight: 600,
+            height: '100%',
+            paddingLeft: 2,
+            paddingRight: 2,
+            alignItems: 'center',
+            zIndex: 2,
           }}
         >
-          {routeDetails?.title}
-        </Typography>
-      </Grid>
+          {/* Left side */}
+          <Grid item xs={4}>
+            {pathname !== RouteName.HOME && (
+              <>
+                <IconButton
+                  color="primary"
+                  onClick={goBack}
+                  sx={{
+                    display: {
+                      md: 'none',
+                    },
+                  }}
+                >
+                  <ArrowBack />
+                </IconButton>
+                <Button
+                  onClick={goBack}
+                  startIcon={<ArrowBack />}
+                  variant="outlined"
+                  sx={{
+                    display: {
+                      xs: 'none',
+                      md: 'flex',
+                    },
+                  }}
+                >
+                  Späť
+                </Button>
+              </>
+            )}
+          </Grid>
 
-      {/* Right side */}
-      <Grid
-        item
-        xs={4}
-        sx={{
-          display: 'flex',
-          justifyContent: 'flex-end',
-          gap: 2,
-        }}
-      >
-        {routeDetails?.printToPDF && (
-          <ResponsiveButton
-            text="Tlačiť do PDF"
-            icon={<Print />}
-            onClick={() => printToPDF(routeDetails?.title ?? '')}
-          />
-        )}
+          {/* Middle side */}
+          <Grid item xs={4}>
+            <Typography
+              variant="h1"
+              sx={{
+                textAlign: 'center',
+                fontSize: 24,
+                fontWeight: 600,
+              }}
+            >
+              {routeDetails?.title}
+            </Typography>
+          </Grid>
 
-        {routeDetails?.save && (
-          <ResponsiveButton
-            text={isSaveDisabled ? 'Uložené' : 'Uložiť'}
-            onClick={save}
-            icon={<Save />}
-            disabled={isSaveDisabled}
-          />
-        )}
-      </Grid>
-    </Grid>
+          {/* Right side */}
+          <Grid
+            item
+            xs={4}
+            sx={{
+              display: 'flex',
+              justifyContent: 'flex-end',
+              gap: 2,
+            }}
+          >
+            {routeDetails?.printToPDF && (
+              <ResponsiveButton
+                text="Tlačiť do PDF"
+                icon={<Print />}
+                onClick={() => printToPDF(routeDetails?.title ?? '')}
+              />
+            )}
+
+            {routeDetails?.save && (
+              <ResponsiveButton
+                text={isSaveDisabled ? 'Uložené' : 'Uložiť'}
+                onClick={save}
+                icon={<Save />}
+                disabled={isSaveDisabled}
+              />
+            )}
+          </Grid>
+        </Grid>
+      </Box>
+      <PrintPageTitle variant="h1" className="hideInScreen">
+        {routeDetails?.title}
+      </PrintPageTitle>
+    </Wrapper>
   );
 };
 

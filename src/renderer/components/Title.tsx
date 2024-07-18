@@ -27,14 +27,14 @@ type Props = {
 
 const Title: React.FC<Props> = ({ onSortYear, onSortItems }) => {
   return (
-    <Grid container className={'hideInPrint'}>
+    <Grid container>
       <Grid item xs={4} />
 
       <GridCenter item xs={4}>
         <SectionTitle>Vstupy</SectionTitle>
       </GridCenter>
 
-      <GridSorting item xs={4}>
+      <GridSorting item xs={4} className={'hideInPrint'}>
         <SortingButtons>
           {!!onSortYear && (
             <Dropdown

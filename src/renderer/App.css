@@ -432,6 +432,7 @@ a {
 
 .new-page {
   page-break-before: always;
+  break-before: always;
 }
 
 .new-page-after {
@@ -466,19 +467,11 @@ textarea {
   }
 }
 
+.MuiPaper-root {
+  overflow: hidden;
+}
+
 @media print {
-  body {
-    background-color: white;
-  }
-
-  .space-left {
-    margin-left: 0;
-  }
-
-  .space-right {
-    margin-right: 0;
-  }
-
   .hideInPrint {
     display: none;
     visibility: hidden;
@@ -489,6 +482,11 @@ textarea {
     visibility: visible;
   }
 
+  .MuiPaper-root {
+    box-shadow: none !important;
+    border-radius: 0px !important;
+  }
+
   .evaluation > .task-container > .header-bar {
     visibility: visible;
     background-color: white;
@@ -497,11 +495,6 @@ textarea {
   .header-bar {
     position: relative;
     background-color: white;
-  }
-
-  .header-title {
-    color: #1a98ff;
-    font-size: 38px;
   }
 
   .evaluation > .header-bar > .header-title {

@@ -7,7 +7,12 @@ import {
   styled,
 } from '@mui/material';
 
-export const Table = styled(MuiTable)``;
+export const Table = styled(MuiTable)`
+  @media print {
+    border-top: ${({ theme }) => `1px solid ${theme.palette.divider}`};
+    border-left: ${({ theme }) => `1px solid ${theme.palette.divider}`};
+  }
+`;
 
 export const TableHead = styled(MuiTableHead)`
   background-color: #e6f7ff;
