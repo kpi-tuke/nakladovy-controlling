@@ -445,8 +445,8 @@ a {
 }
 
 .hideInScreen {
-  display: none;
-  visibility: hidden;
+  display: none !important;
+  visibility: hidden !important;
 }
 
 textarea {
@@ -483,8 +483,8 @@ textarea {
   }
 
   .hideInScreen {
-    display: grid;
-    visibility: visible;
+    display: grid !important;
+    visibility: visible !important;
   }
 
   .MuiPaper-root {

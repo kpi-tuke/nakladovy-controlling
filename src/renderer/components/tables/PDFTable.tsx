@@ -2,7 +2,7 @@ import { splitTable } from '../../helper';
 import { RootState } from '../../store/store';
 import { defaultState } from '../../store/rootReducer';
 import { useAppSelector } from '../../store/hooks';
-import { Paper, styled, Typography } from '@mui/material';
+import { Paper, Typography } from '@mui/material';
 import {
   Table,
   TableBody,
@@ -108,8 +108,16 @@ export default function PDFTable({
               )}
             </TableBody>
           </Table>
-          {mergedData.length > 1 && (
-            <Typography textAlign={'right'} variant="caption">
+          {(mergedData.length > 1 || items.length > 16) && (
+            <Typography
+              textAlign={'right'}
+              variant="caption"
+              sx={{
+                textAlign: 'right',
+                marginBottom: '4rem',
+                display: 'block',
+              }}
+            >
               {index + 1} / {mergedData.length}
             </Typography>
           )}

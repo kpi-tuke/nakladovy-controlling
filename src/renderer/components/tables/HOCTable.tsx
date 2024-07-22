@@ -161,6 +161,7 @@ export default function withTable(
             </Grid>
           </Grid>
         </Paper>
+
         <PDFTable selector={selector} />
       </>
     );

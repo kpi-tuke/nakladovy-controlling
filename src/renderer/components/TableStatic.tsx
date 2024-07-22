@@ -93,7 +93,7 @@ export default function TableStatic(props: any) {
       </TableData>
 
       {separatedData.map((table, index) => (
-        <div className="new-page-after ">
+        <div className="new-page-after hideInScreen">
           <TableStyled key={index}>
             <TableHead>
               <TableRow>
