@@ -74,8 +74,8 @@ export default function EconomicResult() {
   );
 
   return (
-    <div className={'new-page-after new-page'}>
-      <Spacer height={40} />
+    <div className={'new-page'}>
+      <Spacer height={40} hideInPrint />
       <SectionTitle>Analýza ekonomických ukazovateľov</SectionTitle>
       <Paper>
         <TableStatic
@@ -140,7 +140,7 @@ export default function EconomicResult() {
         />
       </Paper>
 
-      <Spacer height={40} />
+      <Spacer height={40} hideInPrint />
 
       <SectionTitle>Dashboarding</SectionTitle>
 
@@ -151,12 +151,13 @@ export default function EconomicResult() {
           series={lineSeries}
           type="line"
           height={420}
+          width={'100%'}
         />
       </GraphCard>
 
-      <Spacer height={40} />
+      <Spacer height={40} hideInPrint />
 
-      <GraphCard className={'new-page-after'}>
+      <GraphCard>
         <GraphTitle>Prehľad ekonomických ukazovaťeľov</GraphTitle>
         <ReactApexChart
           options={colOptions}
@@ -165,7 +166,6 @@ export default function EconomicResult() {
           height={420}
         />
       </GraphCard>
-      <Spacer height={40} />
     </div>
   );
 }

@@ -1,11 +1,12 @@
 import HeaderBar from '../components/HeaderBar';
 import { useSelector } from 'react-redux';
-import TextField from '../components/TextField';
+import TextArea from '../components/Textarea';
 import { defaultState } from '../store/rootReducer';
 import { RootState } from '../store/store';
 import withTable from '../components/tables/HOCTable';
 import Page from 'renderer/components/layout/Page';
 import PageContent from 'renderer/components/layout/PageContent';
+import Spacer from 'renderer/components/Spacer';
 
 export default function withAnalysis(
   selector: (state: RootState) => defaultState,
@@ -30,7 +31,8 @@ export default function withAnalysis(
         <PageContent>
           <Table />
           <Result />
-          <TextField text={text} action={actions.changeText} />
+          <Spacer height={20} hideInPrint />
+          <TextArea text={text} action={actions.changeText} />
         </PageContent>
       </Page>
     );

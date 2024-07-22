@@ -3,11 +3,13 @@ import React from 'react';
 
 type Props = {
   height: number;
+  hideInPrint?: boolean;
 };
 
-const Spacer: React.FC<Props> = ({ height }) => {
+const Spacer: React.FC<Props> = ({ height, hideInPrint }) => {
   return (
     <Box
+      className={hideInPrint ? 'hideInPrint' : ''}
       sx={{
         height: `${height}px`,
       }}
