@@ -46,7 +46,7 @@ const items: AnalysisItem[] = [
 export default function TaskSelection() {
   return (
     <Page>
-      <HeaderBar title={'Ekonomické analýzy'} back={'welcome'} save={true} />
+      <HeaderBar />
       <PageContent>
         <Grid container spacing={4}>
           {items.map((item, index) => (

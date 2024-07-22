@@ -6,7 +6,6 @@ const MainPage = styled(Box)`
   display: flex;
   flex-direction: column;
   position: relative;
-  padding-top: 7vh;
 `;
 
 type Props = {

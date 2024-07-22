@@ -6,6 +6,8 @@ const Content = styled(Box)`
   flex-direction: column;
   background-color: ${({ theme }) => theme.palette.background.default};
   overflow-y: auto;
+  min-height: 93vh;
+  padding-top: 7vh;
 
   @media print {
     background-color: ${({ theme }) => theme.palette.backgroundPrint.default};
