@@ -1,21 +1,34 @@
-import { TextareaAutosize } from '@mui/material';
-import { useAppDispatch } from '../store/hooks';
+import { debounce, TextareaAutosize } from '@mui/material';
 import SectionTitle from './SectionTitle';
 
-export default function TextField(props: any) {
-  const dispatch = useAppDispatch();
+type Props = {
+  onChangeDebounced?: (value: string) => void;
+  defaultValue?: string;
+};
 
-  function changeText(target: EventTarget & HTMLTextAreaElement) {
-    dispatch(props.action(target.value));
-  }
+const Textarea: React.FC<Props> = ({
+  defaultValue,
+  onChangeDebounced: onChange,
+}) => {
+  const debouncedOnChange = (value: string) => {
+    onChange(value);
+  };
+
+  const onChangeDebounced = debounce(debouncedOnChange, 1000);
+
+  const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    onChangeDebounced(event.target.value ?? '');
+  };
 
   return (
     <div>
       <SectionTitle>Záver a zhodnotenie analýzy</SectionTitle>
 
       <TextareaAutosize
-        defaultValue={props.text}
-        onChange={(e) => changeText(e.target)}
+        defaultValue={defaultValue}
+        onChange={(e) => {
+          handleChange(e);
+        }}
         minRows={6}
         style={{
           fontSize: '16px',
@@ -26,4 +39,6 @@ export default function TextField(props: any) {
       />
     </div>
   );
-}
+};
+
+export default Textarea;

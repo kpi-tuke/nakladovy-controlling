@@ -7,6 +7,7 @@ import withTable from '../components/tables/HOCTable';
 import Page from 'renderer/components/layout/Page';
 import PageContent from 'renderer/components/layout/PageContent';
 import Spacer from 'renderer/components/Spacer';
+import { useAppDispatch } from 'renderer/store/hooks';
 
 export default function withAnalysis(
   selector: (state: RootState) => defaultState,
@@ -17,6 +18,7 @@ export default function withAnalysis(
 ) {
   return () => {
     const { id, text } = useSelector(selector);
+    const dispatch = useAppDispatch();
 
     const Table: () => JSX.Element = withTable(
       TableItems,
@@ -32,7 +34,12 @@ export default function withAnalysis(
           <Table />
           <Result />
           <Spacer height={20} hideInPrint />
-          <TextArea text={text} action={actions.changeText} />
+          <TextArea
+            defaultValue={text}
+            onChangeDebounced={(value) => {
+              dispatch(actions.changeText(value));
+            }}
+          />
         </PageContent>
       </Page>
     );
