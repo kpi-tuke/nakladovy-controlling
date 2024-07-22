@@ -15,8 +15,10 @@ import { useAnalysisSave } from './providers/AnalysisSaveProvider';
 const Wrapper = styled(Box)`
   height: 7vh;
   box-shadow: 0px 15px 10px -15px rgba(0, 0, 0, 0.2);
-  position: sticky;
+  position: absolute;
   top: 0;
+  left: 0;
+  right: 0;
   background-color: ${({ theme }) => theme.palette.background.paper};
   z-index: 100;
 
