@@ -26,6 +26,7 @@ const Wrapper = styled(Box)`
     box-shadow: none;
     display: flex;
     align-items: center;
+    position: absolute;
   }
 `;
 
