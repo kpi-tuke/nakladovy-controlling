@@ -6,6 +6,8 @@ import { selectPareto } from './paretoSlice';
 import Spacer from 'renderer/components/Spacer';
 import SectionTitle from 'renderer/components/SectionTitle';
 import { Paper } from '@mui/material';
+import { GraphCard } from 'renderer/components/graph/GraphCard';
+import { GraphTitle } from 'renderer/components/graph/GraphTitle';
 
 export default function ParetoResult() {
   const { data, items } = useAppSelector(selectPareto);
@@ -91,10 +93,9 @@ export default function ParetoResult() {
   };
 
   return (
-    <div className={'new-page'}>
-      <Spacer height={40} />
-      <SectionTitle>Analýza ukazovateľov</SectionTitle>
-
+    <div>
+      <Spacer height={40} hideInPrint />
+      <SectionTitle className="new-page">Analýza ukazovateľov</SectionTitle>
       <Paper>
         <TableStatic
           corner={'Príčiny vzniku nákladov'}
@@ -116,11 +117,12 @@ export default function ParetoResult() {
         />
       </Paper>
 
-      <Spacer height={40} />
-      <SectionTitle className={'new-page'}>Dashboarding</SectionTitle>
+      <Spacer height={40} hideInPrint />
 
-      <div className={'graph-card'}>
-        <h4 className={'graph-title'}>PARETO ANALÝZA A LORENZOVA KRIVKA</h4>
+      <SectionTitle>Dashboarding</SectionTitle>
+
+      <GraphCard>
+        <GraphTitle>PARETO ANALÝZA A LORENZOVA KRIVKA</GraphTitle>
         {
           <ReactApexChart
             // @ts-ignore
@@ -130,7 +132,7 @@ export default function ParetoResult() {
             height={600}
           />
         }
-      </div>
+      </GraphCard>
     </div>
   );
 }
