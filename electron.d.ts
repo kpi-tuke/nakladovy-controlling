@@ -3,10 +3,7 @@ export {};
 declare global {
   interface Window {
     electron: {
-      printToPdf: (
-        defaultFileName: string,
-        callback: (arg: any) => void
-      ) => void;
+      printToPdf: (defaultFileName: string) => Promise<boolean>;
       chooseFilePath: () => Promise<string>;
       saveProject: (json: string) => Promise<boolean>;
     };

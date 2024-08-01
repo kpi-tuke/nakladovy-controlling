@@ -21,7 +21,7 @@ contextBridge.exposeInMainWorld('electron', {
     },
   },
 
-  printToPdf: (fileName) => ipcRenderer.send('printToPDF', fileName),
+  printToPdf: (fileName) => ipcRenderer.invoke('printToPDF', fileName),
 
   chooseFilePath: () => ipcRenderer.invoke('chooseFilePath'),
 

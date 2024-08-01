@@ -11,6 +11,7 @@ import { routes, RouteName } from 'renderer/routes';
 import React from 'react';
 import { ArrowBack, Print, Save } from '@mui/icons-material';
 import { useAnalysisSave } from './providers/AnalysisSaveProvider';
+import { useSnackbar } from './providers/SnackbarProvider';
 
 const Wrapper = styled(Box)`
   height: 7vh;
@@ -27,12 +28,19 @@ const HeaderBar = () => {
   const { save, saveButtonDisabled } = useAnalysisSave();
   const navigate = useNavigate();
   const { pathname } = useLocation();
+  const { open } = useSnackbar();
 
   const routeDetails = routes[pathname as RouteName];
 
-  function printToPDF(defaultFileName: string) {
-    window.electron.printToPdf(defaultFileName, (arg) => console.log(arg));
-  }
+  const printToPDF = async (defaultFileName: string) => {
+    const isGenerated = await window.electron.printToPdf(defaultFileName);
+
+    if (isGenerated) {
+      open('PDF sa úspešne vygenerovalo');
+    } else {
+      open('PDF sa nepodarilo vygenerovať');
+    }
+  };
 
   function goBack() {
     navigate(-1);

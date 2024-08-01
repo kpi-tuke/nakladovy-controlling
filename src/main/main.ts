@@ -116,21 +116,7 @@ ipcMain.handle('save', async (_, state) => {
   return false;
 });
 
-ipcMain.on('printToPDF', async (event, fileName: string) => {
-  let maximized = false;
-  let fullScreened = false;
-  if (mainWindow?.isFullScreen()) {
-    mainWindow?.setFullScreen(false);
-    fullScreened = true;
-  }
-  if (mainWindow?.isMaximized()) {
-    mainWindow?.unmaximize();
-    maximized = true;
-  }
-  // @ts-ignore
-  const [width, height] = mainWindow?.getSize();
-  mainWindow?.setSize(850, height);
-
+ipcMain.handle('printToPDF', async (_, fileName: string) => {
   const options = {
     marginsType: 0,
     pageSize: 'A4',
@@ -153,34 +139,37 @@ ipcMain.on('printToPDF', async (event, fileName: string) => {
   });
 
   if (!file.canceled) {
-    mainWindow?.webContents
-      .printToPDF(options)
-      .then((data) => {
-        // @ts-ignore
-        fs.open(file.filePath.toString(), 'w+', function (err) {
-          if (err) {
-            console.log(err);
-          } else {
-            console.log('PDF Opened Successfully');
-          }
-        });
-        // @ts-ignore
-        fs.writeFile(file.filePath.toString(), data, function (err) {
-          if (err) {
-            console.log(err);
-          } else {
-            console.log('PDF Generated Successfully');
-          }
-        });
-      })
-      .catch((error) => {
-        console.log(error);
+    try {
+      const data = await mainWindow?.webContents.printToPDF(options);
+
+      // @ts-ignore
+      fs.open(file.filePath.toString(), 'w+', (err) => {
+        if (err) {
+          console.log(err);
+          return false;
+        } else {
+          console.log('PDF Opened Successfully');
+        }
       });
+      // @ts-ignore
+      fs.writeFile(file.filePath.toString(), data, (err) => {
+        if (err) {
+          console.log(err);
+          return false;
+        } else {
+          console.log('PDF Generated Successfully');
+          return 'okej';
+        }
+      });
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
+  } else {
+    return false;
   }
-  if (maximized) mainWindow?.maximize();
-  if (fullScreened) mainWindow?.setFullScreen(true);
-  else mainWindow?.setSize(width, height);
-  event.reply('printToPDF', 'printed');
+
+  return true;
 });
 
 ipcMain.on('quit', async () => {
