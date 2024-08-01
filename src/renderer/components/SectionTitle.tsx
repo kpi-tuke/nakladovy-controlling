@@ -16,7 +16,13 @@ type Props = {
 
 const SectionTitle: React.FC<Props> = ({ children, className }) => {
   return (
-    <TitleText className={className} variant="h2">
+    <TitleText
+      className={className}
+      variant="h2"
+      sx={{
+        color: (theme) => theme.palette.title.default,
+      }}
+    >
       {children}
     </TitleText>
   );

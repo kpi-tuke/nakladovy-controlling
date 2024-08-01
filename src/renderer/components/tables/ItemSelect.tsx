@@ -14,6 +14,7 @@ import { Autocomplete, Button, styled, TextField } from '@mui/material';
 import { Add } from '@mui/icons-material';
 import React from 'react';
 import TableInput from './TableInput';
+import TableActionButton from './TableActionButton';
 
 const AddCell = styled(TableCell)`
   position: relative;
@@ -161,10 +162,8 @@ export default function ItemSelect({
         })}
 
         <TableRow>
-          <AddCell colSpan={2} onClick={addRow}>
-            <AddButton>
-              <Add sx={{ fontSize: 18 }} />
-            </AddButton>
+          <AddCell colSpan={2}>
+            <TableActionButton buttonType="add" onClick={addRow} />
           </AddCell>
         </TableRow>
       </TableBody>

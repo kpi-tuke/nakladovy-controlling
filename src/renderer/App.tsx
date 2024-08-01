@@ -37,9 +37,8 @@ import { RouteName, routes } from './routes';
 import AnalysisSaveProvider from './components/providers/AnalysisSaveProvider';
 import SnackbarProvider from './components/providers/SnackbarProvider';
 import ErrorProvider from './components/providers/ErrorProvider';
-import { ThemeProvider } from '@mui/material';
-import { theme } from './theme/theme';
 import HeaderBar from './components/HeaderBar';
+import ThemeProvider from './components/providers/ThemeProvider';
 
 export default function App() {
   const EconomicAnalysis: () => JSX.Element = withAnalysis(
@@ -92,7 +91,7 @@ export default function App() {
   );
   return (
     <Provider store={store}>
-      <ThemeProvider theme={theme}>
+      <ThemeProvider>
         <ErrorProvider>
           <SnackbarProvider>
             <AnalysisSaveProvider>

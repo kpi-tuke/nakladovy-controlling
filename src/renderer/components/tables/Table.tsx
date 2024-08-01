@@ -16,6 +16,11 @@ export const Table = styled(MuiTable)`
 
 export const TableHead = styled(MuiTableHead)`
   background-color: #e6f7ff;
+
+  background-color: ${({ theme }) =>
+    theme.palette.mode === 'light'
+      ? theme.palette.primary.light
+      : theme.palette.primary.dark};
 `;
 
 export const TableBody = styled(MuiTableBody)``;

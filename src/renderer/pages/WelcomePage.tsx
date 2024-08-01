@@ -9,7 +9,7 @@ import { paretoActions } from './pareto/paretoSlice';
 import { sortimentActions } from './sortiment/sortimentSlice';
 import { structureActions } from './structure/structureSlice';
 import { evaluationActions } from './report/evaluationSlice';
-import { Box, Button, Grid, Typography } from '@mui/material';
+import { Box, Button, Grid, Paper, Typography } from '@mui/material';
 import AppVersion from 'renderer/components/AppVersion';
 import Page from 'renderer/components/layout/Page';
 import PageContent from 'renderer/components/layout/PageContent';
@@ -78,12 +78,10 @@ export default function WelcomePage() {
             gap: 4,
           }}
         >
-          <Box
+          <Paper
             sx={{
-              background: 'white',
               maxWidth: 800,
               padding: 3,
-              borderRadius: 1,
             }}
           >
             <Typography>
@@ -95,7 +93,7 @@ export default function WelcomePage() {
               jednotlivých ekonomických analýz obsahujú grafické metódy a sú
               realizované vo formáte pdf.
             </Typography>
-          </Box>
+          </Paper>
 
           <Box>
             <Grid container spacing={2}>

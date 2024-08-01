@@ -12,6 +12,7 @@ import React from 'react';
 import { ArrowBack, Print, Save } from '@mui/icons-material';
 import { useAnalysisSave } from './providers/AnalysisSaveProvider';
 import { useSnackbar } from './providers/SnackbarProvider';
+import ColorModeButton from './ColorModeButton';
 
 const Wrapper = styled(Box)`
   height: 7vh;
@@ -104,6 +105,7 @@ const HeaderBar = () => {
                 textAlign: 'center',
                 fontSize: 24,
                 fontWeight: 600,
+                color: (theme) => theme.palette.title.default,
               }}
             >
               {routeDetails?.title}
@@ -136,6 +138,8 @@ const HeaderBar = () => {
                 disabled={saveButtonDisabled}
               />
             )}
+
+            {pathname === RouteName.HOME && <ColorModeButton />}
           </Grid>
         </Grid>
       </Box>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Grid, styled } from '@mui/material';
+import { Box, Grid, styled, ThemeProvider } from '@mui/material';
 import Timeline from '@mui/lab/Timeline';
 import TimelineItem from '@mui/lab/TimelineItem';
 import TimelineSeparator from '@mui/lab/TimelineSeparator';
@@ -7,6 +7,9 @@ import TimelineConnector from '@mui/lab/TimelineConnector';
 import TimelineContent from '@mui/lab/TimelineContent';
 import TimelineDot from '@mui/lab/TimelineDot';
 import { RouteName } from 'renderer/routes';
+import { lightTheme } from 'renderer/theme/theme';
+import { useTheme } from 'renderer/components/providers/ThemeProvider';
+import useEnhancedEffect from '@mui/material/utils/useEnhancedEffect';
 
 const Wrapper = styled(Box)`
   position: relative;
@@ -59,6 +62,8 @@ const Report: React.FC<Props> = ({
   SortimentAnalysisPage,
   ParetoAnalysisPage,
 }) => {
+  const { switchColorMode, mode } = useTheme();
+
   const economicRef = React.useRef(null);
   const structureRef = React.useRef(null);
   const indexRef = React.useRef(null);
@@ -66,7 +71,17 @@ const Report: React.FC<Props> = ({
   const paretoRef = React.useRef(null);
   const sortimentRef = React.useRef(null);
 
-  console.log('sortimentRef: ', sortimentRef);
+  React.useEffect(() => {
+    if (mode === 'dark') {
+      switchColorMode();
+    }
+
+    return () => {
+      if (mode === 'light') {
+        switchColorMode();
+      }
+    };
+  }, [mode, switchColorMode]);
 
   return (
     <Wrapper
