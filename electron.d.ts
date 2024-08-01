@@ -7,6 +7,8 @@ declare global {
         defaultFileName: string,
         callback: (arg: any) => void
       ) => void;
+      chooseFilePath: () => Promise<string>;
+      saveProject: (json: string) => Promise<boolean>;
     };
   }
 }

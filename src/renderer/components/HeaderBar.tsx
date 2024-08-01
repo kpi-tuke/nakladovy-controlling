@@ -8,7 +8,7 @@ import {
   Typography,
 } from '@mui/material';
 import { routes, RouteName } from 'renderer/routes';
-import React, { useMemo } from 'react';
+import React from 'react';
 import { ArrowBack, Print, Save } from '@mui/icons-material';
 import { useAnalysisSave } from './providers/AnalysisSaveProvider';
 
@@ -24,7 +24,7 @@ const Wrapper = styled(Box)`
 `;
 
 const HeaderBar = () => {
-  const { save, economicChanged, onceSaved } = useAnalysisSave();
+  const { save, saveButtonDisabled } = useAnalysisSave();
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
@@ -37,22 +37,6 @@ const HeaderBar = () => {
   function goBack() {
     navigate(-1);
   }
-
-  // TODO: dorobit pre ostatne analyzy
-  const isSaveDisabled = useMemo(() => {
-    if (!onceSaved) {
-      return false;
-    }
-
-    switch (pathname) {
-      case RouteName.ECONOMIC_ANALYSIS: {
-        return !economicChanged;
-      }
-      default: {
-        return false;
-      }
-    }
-  }, [economicChanged, onceSaved]);
 
   return (
     <Wrapper className="hideInPrint">
@@ -138,18 +122,15 @@ const HeaderBar = () => {
 
             {routeDetails?.save && (
               <ResponsiveButton
-                text={isSaveDisabled ? 'Uložené' : 'Uložiť'}
+                text={saveButtonDisabled ? 'Uložené' : 'Uložiť'}
                 onClick={save}
                 icon={<Save />}
-                disabled={isSaveDisabled}
+                disabled={saveButtonDisabled}
               />
             )}
           </Grid>
         </Grid>
       </Box>
-      {/* <PrintPageTitle variant="h1" className="hideInScreen">
-        {routeDetails?.title}
-      </PrintPageTitle> */}
     </Wrapper>
   );
 };

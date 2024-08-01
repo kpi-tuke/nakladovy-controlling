@@ -17,12 +17,10 @@ import { useSnackbar } from './SnackbarProvider';
 
 const SaveContext = createContext<{
   save: VoidFunction;
-  onceSaved: boolean;
-  economicChanged: boolean;
+  saveButtonDisabled: boolean;
 }>({
   save: () => {},
-  onceSaved: false,
-  economicChanged: false,
+  saveButtonDisabled: false,
 });
 
 type Props = {
@@ -39,26 +37,40 @@ const AnalysisSaveProvider: React.FC<Props> = ({ children }) => {
   const { tasks } = useAppSelector(selectEvaluation);
 
   const [path, setPath] = useState<string | undefined>(undefined);
-  // TODO: pridat typ
   const [oldData, setOldData] = useState<any>(null);
   const { open } = useSnackbar();
 
   const onceSaved = !!path;
 
-  const economicChanged = useMemo(() => {
-    if (!oldData?.economic) return false;
-
-    const oldString = JSON.stringify(oldData.economic);
-    const newString = JSON.stringify(economic);
+  const dataChanged = useMemo(() => {
+    const oldString = JSON.stringify(oldData);
+    const newString = JSON.stringify({
+      economic,
+      sortiment,
+      structure,
+      chain,
+      cvp,
+      pareto,
+      tasks,
+    });
 
     return oldString !== newString && onceSaved;
-  }, [oldData?.economic, economic]);
+  }, [
+    oldData,
+    economic,
+    sortiment,
+    structure,
+    chain,
+    cvp,
+    pareto,
+    tasks,
+    onceSaved,
+  ]);
 
   const save = async () => {
     let tempPath;
 
     if (!onceSaved) {
-      // @ts-ignore
       tempPath = await window.electron.chooseFilePath();
 
       setPath(tempPath);
@@ -81,13 +93,12 @@ const AnalysisSaveProvider: React.FC<Props> = ({ children }) => {
       data: newData,
     });
 
-    // @ts-ignore
     const isSaved = await window.electron.saveProject(json);
     if (isSaved) {
       setOldData(newData);
       open('Súbor bol uložený.');
     } else {
-      // TODO: zobrazenie hlasky, ze sa nepodarilo ulozit subor
+      open('Súbor sa nepodarilo uložiť.');
     }
   };
 
@@ -95,8 +106,7 @@ const AnalysisSaveProvider: React.FC<Props> = ({ children }) => {
     <SaveContext.Provider
       value={{
         save,
-        onceSaved,
-        economicChanged,
+        saveButtonDisabled: !onceSaved ? false : !dataChanged,
       }}
     >
       {children}
