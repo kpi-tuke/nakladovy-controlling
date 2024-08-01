@@ -74,7 +74,7 @@ export default function EconomicResult() {
   );
 
   return (
-    <div className={'new-page'}>
+    <div>
       <Spacer height={40} hideInPrint />
       <SectionTitle>Analýza ekonomických ukazovateľov</SectionTitle>
       <Paper>
