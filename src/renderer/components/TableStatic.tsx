@@ -7,13 +7,14 @@ import {
   TableHead,
   TableRow,
 } from './tables/Table';
-import { Grid, styled, Tooltip, Typography } from '@mui/material';
+import { styled, Tooltip, Typography } from '@mui/material';
 import { TableData } from './tables/TableData';
 
 const TableStyled = styled(Table)`
   width: unset;
 `;
 
+// TODO: add props
 export default function TableStatic(props: any) {
   let separatedData: number[][][] = [];
   let separatedHeaders: string[][] = [];

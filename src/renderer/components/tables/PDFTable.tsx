@@ -46,7 +46,7 @@ export default function PDFTable({
   return (
     <>
       {mergedData.map((table, index) => (
-        <div className="new-page-after hideInScreen">
+        <div className={`hideInScreen  ${index > 0 ? 'new-page' : ''}`}>
           <Table
             key={index}
             sx={{

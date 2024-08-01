@@ -6,9 +6,11 @@ import { cvpCalculation } from './cvpCalculation';
 import { useAppSelector } from '../../store/hooks';
 import { CVPActions, selectCVP } from './cvpSlice';
 import SingleInput from '../../components/SingleInput';
-import { Box, Paper, styled } from '@mui/material';
+import { Box, Grid, Paper, styled } from '@mui/material';
 import SectionTitle from 'renderer/components/SectionTitle';
 import Spacer from 'renderer/components/Spacer';
+import { GraphCard } from 'renderer/components/graph/GraphCard';
+import { GraphTitle } from 'renderer/components/graph/GraphTitle';
 
 const Inputs = styled(Box)`
   max-width: 600px;
@@ -29,7 +31,7 @@ export default function CVPResult() {
     series: { name: string; data: number[] }[];
   }[] = [];
 
-  items.map((value: any, idx: number) => {
+  items.forEach((value: any, idx: number) => {
     const costTotal: number[] = [];
     const incomeTotal: number[] = [];
     const osX: number[] = [0];
@@ -90,7 +92,7 @@ export default function CVPResult() {
   });
 
   return (
-    <div className={graphs.length % 2 === 0 ? 'new-page-after' : ''}>
+    <div>
       <Inputs
         sx={{
           display: 'grid',
@@ -113,7 +115,8 @@ export default function CVPResult() {
         />
       </Inputs>
 
-      <Spacer height={40} />
+      <Spacer height={40} hideInPrint />
+
       <SectionTitle className={'new-page'}>
         Analýza nulového bodu - kritický bod rentability
       </SectionTitle>
@@ -121,8 +124,7 @@ export default function CVPResult() {
       <Paper>
         <TableStatic
           corner={'Ekonomické ukazovatele'}
-          // @ts-ignore
-          header={...items}
+          header={items}
           inputs={[
             [
               '(No) - nulový bod (€)',
@@ -142,26 +144,32 @@ export default function CVPResult() {
         />
       </Paper>
 
-      <Spacer height={40} />
-      <SectionTitle className={'new-page'}>Dashboarding</SectionTitle>
+      <Spacer height={40} hideInPrint />
 
-      {graphs.map((graph, idx) => (
-        <div key={idx} className={idx % 2 === 0 && idx !== 0 ? 'new-page' : ''}>
-          <div className={'col-12'}>
-            <div className={'graph-card'}>
-              <h4 className={'graph-title'}>
+      <SectionTitle>Dashboarding</SectionTitle>
+
+      <Grid container spacing={2}>
+        {graphs.map((graph, index) => (
+          <Grid
+            item
+            xs={12}
+            key={index}
+            className={index % 2 === 0 && index !== 0 ? 'new-page' : ''}
+          >
+            <GraphCard>
+              <GraphTitle>
                 {'NULOVÝ BOD: ' + graph.value.toUpperCase()}
-              </h4>
+              </GraphTitle>
               <ReactApexChart
                 options={graph.graph}
                 series={graph.series}
                 type="line"
                 height={420}
               />
-            </div>
-          </div>
-        </div>
-      ))}
+            </GraphCard>
+          </Grid>
+        ))}
+      </Grid>
     </div>
   );
 }

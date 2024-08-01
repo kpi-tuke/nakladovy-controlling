@@ -34,50 +34,52 @@ const Title: React.FC<Props> = ({ onSortYear, onSortItems }) => {
         <SectionTitle>Vstupy</SectionTitle>
       </GridCenter>
 
-      <GridSorting item xs={4} className={'hideInPrint'}>
-        <SortingButtons>
-          {!!onSortYear && (
-            <Dropdown
-              options={[
-                {
-                  onClick: () => onSortYear('asc'),
-                  label: 'Vzostupne',
-                },
-                {
-                  onClick: () => onSortYear('desc'),
-                  label: 'Zostupne',
-                },
-              ]}
-            >
-              <ResponsiveButton variant="outlined" icon={<AccessTime />}>
-                Zoradiť roky
-              </ResponsiveButton>
-            </Dropdown>
-          )}
-
-          {!!onSortItems && (
-            <Dropdown
-              options={[
-                {
-                  onClick: () => onSortItems('asc'),
-                  label: 'Vzostupne',
-                },
-                {
-                  onClick: () => onSortItems('desc'),
-                  label: 'Zostupne',
-                },
-              ]}
-            >
-              <ResponsiveButton
-                variant="outlined"
-                icon={<AlignHorizontalRight />}
+      <div className="hideInPrint">
+        <GridSorting item xs={4}>
+          <SortingButtons>
+            {!!onSortYear && (
+              <Dropdown
+                options={[
+                  {
+                    onClick: () => onSortYear('asc'),
+                    label: 'Vzostupne',
+                  },
+                  {
+                    onClick: () => onSortYear('desc'),
+                    label: 'Zostupne',
+                  },
+                ]}
               >
-                Zoradiť položky
-              </ResponsiveButton>
-            </Dropdown>
-          )}
-        </SortingButtons>
-      </GridSorting>
+                <ResponsiveButton variant="outlined" icon={<AccessTime />}>
+                  Zoradiť roky
+                </ResponsiveButton>
+              </Dropdown>
+            )}
+
+            {!!onSortItems && (
+              <Dropdown
+                options={[
+                  {
+                    onClick: () => onSortItems('asc'),
+                    label: 'Vzostupne',
+                  },
+                  {
+                    onClick: () => onSortItems('desc'),
+                    label: 'Zostupne',
+                  },
+                ]}
+              >
+                <ResponsiveButton
+                  variant="outlined"
+                  icon={<AlignHorizontalRight />}
+                >
+                  Zoradiť položky
+                </ResponsiveButton>
+              </Dropdown>
+            )}
+          </SortingButtons>
+        </GridSorting>
+      </div>
     </Grid>
   );
 };
