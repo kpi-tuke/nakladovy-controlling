@@ -34,6 +34,7 @@ export default function withAnalysis(
           <Table />
           <Result />
           <Spacer height={20} hideInPrint />
+          <div className="new-page"></div>
           <TextArea
             defaultValue={text}
             onChangeDebounced={(value) => {

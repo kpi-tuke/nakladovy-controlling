@@ -7,8 +7,10 @@ import { useAppSelector } from '../../store/hooks';
 import { selectStructure } from './structureSlice';
 import SectionTitle from 'renderer/components/SectionTitle';
 import Spacer from 'renderer/components/Spacer';
-import { Paper } from '@mui/material';
+import { Grid, Paper } from '@mui/material';
 import React from 'react';
+import { GraphCard } from 'renderer/components/graph/GraphCard';
+import { GraphTitle } from 'renderer/components/graph/GraphTitle';
 
 export default function StructureResult() {
   const { data, items, headers } = useAppSelector(selectStructure);
@@ -108,10 +110,9 @@ export default function StructureResult() {
   };
 
   return (
-    <div className={'new-page-after new-page'}>
-      <Spacer height={60} />
+    <div>
+      <Spacer height={40} hideInPrint />
       <SectionTitle>Analýza ukazovateľov</SectionTitle>
-
       <Paper>
         <TableStatic
           corner={'Nákladové druhy'}
@@ -136,7 +137,11 @@ export default function StructureResult() {
             ],
           ]}
         />
+      </Paper>
 
+      <Spacer height={40} />
+
+      <Paper>
         <TableStatic
           corner={'Kalkulačné položky'}
           header={[...headers, 'SPOLU']}
@@ -162,60 +167,64 @@ export default function StructureResult() {
         />
       </Paper>
 
-      <Spacer height={60} />
+      <Spacer height={40} hideInPrint />
+
       <SectionTitle>Dashboarding</SectionTitle>
 
-      <div className={'row'}>
-        <div className={'col-t graph-card'}>
-          <h4 className={'graph-title'}>ŠTRUKTÚRA NÁKLADOVÝCH DRUHOV</h4>
-          {
+      <Grid
+        container
+        spacing={2}
+        justifyContent="space-between"
+        alignItems="stretch"
+      >
+        <Grid item xs={12} md={6} display={'flex'}>
+          <GraphCard sx={{ flex: 1 }}>
+            <GraphTitle>ŠTRUKTÚRA NÁKLADOVÝCH DRUHOV</GraphTitle>
             <ReactApexChart
               options={pieChart}
               series={rowSums}
               type="pie"
               height={407}
             />
-          }
-        </div>
+          </GraphCard>
+        </Grid>
 
-        <div className={'col-t graph-card'}>
-          <h4 className={'graph-title'}>DRUHOVÉ ČLENENIE NÁKLADOV</h4>
-          {
+        <Grid item xs={12} md={6} display={'flex'}>
+          <GraphCard sx={{ flex: 1 }}>
+            <GraphTitle>DRUHOVÉ ČLENENIE NÁKLADOV</GraphTitle>
             <ReactApexChart
               options={genericOptions}
               series={genericSeries}
               type="bar"
               height={350}
             />
-          }
-        </div>
-      </div>
+          </GraphCard>
+        </Grid>
 
-      <div className={'row new-page'}>
-        <div className={'col-t  graph-card'}>
-          <h4 className={'graph-title'}>ŠTRUKTÚRA KALKULAČNÝCH POLOŽIEK</h4>
-          {
+        <Grid item xs={12} md={6} display={'flex'}>
+          <GraphCard sx={{ flex: 1 }}>
+            <GraphTitle>ŠTRUKTÚRA KALKULAČNÝCH POLOŽIEK</GraphTitle>
             <ReactApexChart
               options={donutChart}
               series={colSums}
               type="donut"
               height={407}
             />
-          }
-        </div>
+          </GraphCard>
+        </Grid>
 
-        <div className={'col-t graph-card '}>
-          <h4 className={'graph-title'}>KALKULAČNÉ ČLENENIE NÁKLADOV</h4>
-          {
+        <Grid item xs={12} md={6} display={'flex'}>
+          <GraphCard sx={{ flex: 1 }}>
+            <GraphTitle>KALKULAČNÉ ČLENENIE NÁKLADOV</GraphTitle>
             <ReactApexChart
               options={calculationOptions}
               series={calculationSeries}
               type="bar"
               height={350}
             />
-          }
-        </div>
-      </div>
+          </GraphCard>
+        </Grid>
+      </Grid>
     </div>
   );
 }
