@@ -6,8 +6,10 @@ import { sortimentCalculation } from './sortimentCalculation';
 import { useAppSelector } from '../../store/hooks';
 import { selectSortiment } from './sortimentSlice';
 import SectionTitle from 'renderer/components/SectionTitle';
-import { Paper } from '@mui/material';
+import { Grid, Paper } from '@mui/material';
 import Spacer from 'renderer/components/Spacer';
+import { GraphCard } from 'renderer/components/graph/GraphCard';
+import { GraphTitle } from 'renderer/components/graph/GraphTitle';
 
 export default function SortimentResult() {
   const { headers, data } = useAppSelector(selectSortiment);
@@ -51,10 +53,12 @@ export default function SortimentResult() {
   );
 
   return (
-    <div className={'new-page'}>
-      <Spacer height={40} />
-      <SectionTitle>Ukazovatele sortimentnej analýzy</SectionTitle>
+    <div>
+      <Spacer height={40} hideInPrint />
 
+      <SectionTitle className="new-page">
+        Ukazovatele sortimentnej analýzy
+      </SectionTitle>
       <Paper>
         <TableStatic
           corner={'Ukazovatele sortimentnej analýzy'}
@@ -87,46 +91,49 @@ export default function SortimentResult() {
         />
       </Paper>
 
-      <Spacer height={40} />
-      <SectionTitle className={'new-page'}>Dashboarding</SectionTitle>
+      <Spacer height={40} hideInPrint />
 
-      <div className={'graph-card'}>
-        <h4 className={'graph-title'}>UKAZOVATELE SORTIMENTNEJ ANALÝZY</h4>
-        {
-          <ReactApexChart
-            options={rentabilityOptions}
-            series={series}
-            type="bar"
-            height={420}
-          />
-        }
-      </div>
+      <SectionTitle>Dashboarding</SectionTitle>
 
-      <div className={'row'}>
-        <div className={'col-t graph-card'}>
-          <h4 className={'graph-title'}>HRUBÉ ROZPÄTIE</h4>
-          {
+      <Grid container spacing={2}>
+        <Grid item xs={12}>
+          <GraphCard>
+            <GraphTitle>UKAZOVATELE SORTIMENTNEJ ANALÝZY</GraphTitle>
+            {
+              <ReactApexChart
+                options={rentabilityOptions}
+                series={series}
+                type="bar"
+                height={420}
+              />
+            }
+          </GraphCard>
+        </Grid>
+
+        <Grid item xs={12} md={6}>
+          <GraphCard>
+            <GraphTitle>HRUBÉ ROZPÄTIE</GraphTitle>
             <ReactApexChart
               options={marginOptions}
               series={series2}
               type="bar"
               height={420}
             />
-          }
-        </div>
+          </GraphCard>
+        </Grid>
 
-        <div className={'col-t graph-card new-page'}>
-          <h4 className={'graph-title'}>PRÍSPEVOK NA ÚHRADU</h4>
-          {
+        <Grid item xs={12} md={6}>
+          <GraphCard>
+            <GraphTitle>PRÍSPEVOK NA ÚHRADU</GraphTitle>
             <ReactApexChart
               options={allowanceOptions}
               series={series3}
               type="bar"
               height={420}
             />
-          }
-        </div>
-      </div>
+          </GraphCard>
+        </Grid>
+      </Grid>
     </div>
   );
 }
