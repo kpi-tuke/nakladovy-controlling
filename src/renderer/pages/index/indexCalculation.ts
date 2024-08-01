@@ -1,6 +1,10 @@
 import { divideArrays, subtractArrays } from '../../helper';
 
-export function indexCalculation(data: number[][], headers: any, values: any) {
+export function indexCalculation(
+  data: number[][],
+  headers: string[],
+  values: any
+) {
   let costSumsForYears: number[] = headers.slice(1).map(() => 0);
   let incomeSumsForYears: number[] = headers.slice(1).map(() => 0);
   let costSumBase: number = 0;

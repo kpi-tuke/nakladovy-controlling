@@ -4,13 +4,15 @@ import { useColGraph } from '../../graphOptions';
 import { ApexOptions } from 'apexcharts';
 import { indexCalculation } from './indexCalculation';
 import { useAppSelector } from '../../store/hooks';
-import { selectEconomic } from '../economic/economicSlice';
+import { selectIndex } from '../index/indexSlice';
 import SectionTitle from 'renderer/components/SectionTitle';
 import Spacer from 'renderer/components/Spacer';
-import { Paper } from '@mui/material';
+import { Grid, Paper } from '@mui/material';
+import { GraphCard } from 'renderer/components/graph/GraphCard';
+import { GraphTitle } from 'renderer/components/graph/GraphTitle';
 
 export default function IndexResult() {
-  const { data, headers, values } = useAppSelector(selectEconomic);
+  const { data, headers, values } = useAppSelector(selectIndex);
   const {
     chainIndexes,
     baseIndexes,
@@ -94,9 +96,9 @@ export default function IndexResult() {
   };
 
   return (
-    <div className={'new-page'}>
-      <Spacer height={40} />
-      <SectionTitle>Indexná analýza</SectionTitle>
+    <div>
+      <Spacer height={40} hideInPrint />
+      <SectionTitle className="new-page">Indexná analýza</SectionTitle>
 
       <Paper>
         <TableStatic
@@ -104,7 +106,13 @@ export default function IndexResult() {
           header={[...newHeaders]}
           inputs={[['(Ib) - bázický index', `I_{b} = \\frac{N_{i}}{N_{b}}`]]}
           data={[[...baseIndexes]]}
+          newPageAfter={false}
         />
+      </Paper>
+
+      <Spacer height={40} />
+
+      <Paper>
         <TableStatic
           corner={'Ekonomické ukazovatele'}
           header={[...betweenYears]}
@@ -129,82 +137,102 @@ export default function IndexResult() {
         />
       </Paper>
 
-      <Spacer height={60} />
-      <SectionTitle className={'new-page'}>Dashboarding</SectionTitle>
+      <Spacer height={60} hideInPrint />
 
-      <div className={'graph-card'}>
-        <h4 className={'graph-title'}>VÝVOJ EKONOMICKÝCH VELIČÍN</h4>
-        {
-          <ReactApexChart
-            options={economicOptions}
-            series={economicSeries}
-            type="bar"
-            height={420}
-          />
-        }
-      </div>
+      <SectionTitle>Dashboarding</SectionTitle>
 
-      <div className={'graph-card'}>
-        <h4 className={'graph-title'}>BÁZICKÝ INDEX</h4>
-        {
-          <ReactApexChart
-            options={baseOptions}
-            series={baseSeries}
-            type="bar"
-            height={420}
-          />
-        }
-      </div>
+      <Grid container spacing={2}>
+        <Grid item xs={12}>
+          <GraphCard>
+            <GraphTitle>VÝVOJ EKONOMICKÝCH VELIČÍN</GraphTitle>
+            {
+              <ReactApexChart
+                options={economicOptions}
+                series={economicSeries}
+                type="bar"
+                height={420}
+              />
+            }
+          </GraphCard>
+        </Grid>
 
-      <div className={'row'}>
-        <div className={'col-t graph-card new-page'}>
-          <h4 className={'graph-title'}>REŤAZOVÝ INDEX</h4>
-          {
-            <ReactApexChart
-              options={chainOptions}
-              series={chainSeries}
-              type="bar"
-              height={450}
-            />
-          }
-        </div>
+        <Grid item xs={12}>
+          <GraphCard>
+            <GraphTitle>BÁZICKÝ INDEX</GraphTitle>
+            {
+              <ReactApexChart
+                options={baseOptions}
+                series={baseSeries}
+                type="bar"
+                height={420}
+              />
+            }
+          </GraphCard>
+        </Grid>
 
-        <div className={'col-t graph-card new-page-after'}>
-          <h4 className={'graph-title'}>PERCENTO ZMENY NÁKLADOV</h4>
-          {
-            <ReactApexChart
-              options={costDiffOptions}
-              series={costDiffSeries}
-              type="bar"
-              height={450}
-            />
-          }
-        </div>
-      </div>
-      <div className={'row new-page-after'}>
-        <div className={'col-t graph-card'}>
-          <h4 className={'graph-title'}>PERCENTO ZMENY VÝNOSOV</h4>
-          {
-            <ReactApexChart
-              options={incomeDiffOptions}
-              series={incomeDiffSeries}
-              type="bar"
-              height={450}
-            />
-          }
-        </div>
-        <div className={'col-t graph-card'}>
-          <h4 className={'graph-title'}>KOFICIENT REAKCIE</h4>
-          {
-            <ReactApexChart
-              options={reactionOptions}
-              series={reactionSeries}
-              type="bar"
-              height={450}
-            />
-          }
-        </div>
-      </div>
+        <Grid item xs={12}>
+          <Grid container spacing={2}>
+            <Grid item xs={12} md={6}>
+              <GraphCard>
+                <GraphTitle>REŤAZOVÝ INDEX</GraphTitle>
+                {
+                  <ReactApexChart
+                    options={chainOptions}
+                    series={chainSeries}
+                    type="bar"
+                    height={450}
+                  />
+                }
+              </GraphCard>
+            </Grid>
+
+            <Grid item xs={12} md={6} spacing={2}>
+              <GraphCard>
+                <GraphTitle>PERCENTO ZMENY NÁKLADOV</GraphTitle>
+                {
+                  <ReactApexChart
+                    options={costDiffOptions}
+                    series={costDiffSeries}
+                    type="bar"
+                    height={450}
+                  />
+                }
+              </GraphCard>
+            </Grid>
+          </Grid>
+        </Grid>
+
+        <Grid item xs={12}>
+          <Grid container spacing={2}>
+            <Grid item xs={12} md={6}>
+              <GraphCard>
+                <GraphTitle>PERCENTO ZMENY VÝNOSOV</GraphTitle>
+                {
+                  <ReactApexChart
+                    options={incomeDiffOptions}
+                    series={incomeDiffSeries}
+                    type="bar"
+                    height={450}
+                  />
+                }
+              </GraphCard>
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <GraphCard>
+                <h4 className={'graph-title'}>KOFICIENT REAKCIE</h4>
+                {
+                  <ReactApexChart
+                    options={reactionOptions}
+                    series={reactionSeries}
+                    type="bar"
+                    height={450}
+                  />
+                }
+              </GraphCard>
+            </Grid>
+          </Grid>
+        </Grid>
+      </Grid>
     </div>
   );
 }

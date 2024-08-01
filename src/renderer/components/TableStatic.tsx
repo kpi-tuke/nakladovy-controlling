@@ -14,29 +14,42 @@ const TableStyled = styled(Table)`
   width: unset;
 `;
 
-// TODO: add props
-export default function TableStatic(props: any) {
+type Props = {
+  data: any[];
+  header: string[];
+  corner: string;
+  inputs: string[][];
+  newPageAfter?: boolean;
+};
+
+const TableStatic: React.FC<Props> = ({
+  data,
+  header,
+  corner,
+  inputs,
+  newPageAfter = true,
+}) => {
   let separatedData: number[][][] = [];
   let separatedHeaders: string[][] = [];
   const colsInTable = 6;
-  let numOfTables = Math.ceil(props.data[0].length / colsInTable);
+  let numOfTables = Math.ceil(data[0].length / colsInTable);
 
   for (let i = 0; i < numOfTables; i++) {
     separatedData.push([]);
     separatedHeaders.push([]);
-    for (let j = 0; j < props.data.length; j++) {
+    for (let j = 0; j < data.length; j++) {
       separatedData[i].push([]);
     }
   }
 
   let table: number = 0;
 
-  for (let y = 0; y < props.data[0].length; y++) {
+  for (let y = 0; y < data[0].length; y++) {
     if (y % colsInTable === 0 && y !== 0) table++;
-    for (let x = 0; x < props.data.length; x++) {
-      separatedData[table][x].push(props.data[x][y]);
+    for (let x = 0; x < data.length; x++) {
+      separatedData[table][x].push(data[x][y]);
     }
-    separatedHeaders[table].push(props.header[y]);
+    separatedHeaders[table].push(header[y]);
   }
 
   return (
@@ -45,15 +58,15 @@ export default function TableStatic(props: any) {
         <TableStyled>
           <TableHead>
             <TableRow>
-              <TableCorner>{props.corner}</TableCorner>
-              {props.header.map((value: string, idx: number) => {
+              <TableCorner>{corner}</TableCorner>
+              {header.map((value: string, idx: number) => {
                 return <TableCell key={idx}>{value}</TableCell>;
               })}
             </TableRow>
           </TableHead>
 
           <TableBody>
-            {props.inputs.map((value: string[], row: number) => {
+            {inputs.map((value: string[], row: number) => {
               return (
                 <TableRow key={row}>
                   <Tooltip
@@ -73,7 +86,7 @@ export default function TableStatic(props: any) {
                     />
                   </Tooltip>
 
-                  {props.data[row].map((value: number, col: number) => {
+                  {data[row].map((value: number, col: number) => {
                     return (
                       <TableCell
                         sx={{
@@ -94,11 +107,11 @@ export default function TableStatic(props: any) {
       </TableData>
 
       {separatedData.map((table, index) => (
-        <div className="new-page-after hideInScreen">
+        <div className={`hideInScreen ${newPageAfter ? 'new-page-after' : ''}`}>
           <TableStyled key={index}>
             <TableHead>
               <TableRow>
-                <TableCorner>{props.corner}</TableCorner>
+                <TableCorner>{corner}</TableCorner>
                 {separatedHeaders[index].map((value: string, idx: number) => {
                   return <TableCell key={idx}>{value}</TableCell>;
                 })}
@@ -111,7 +124,7 @@ export default function TableStatic(props: any) {
                     <TableCell
                       key={row}
                       dangerouslySetInnerHTML={{
-                        __html: props.inputs[row][0],
+                        __html: inputs[row][0],
                       }}
                       sx={{
                         minWidth: '24vw',
@@ -138,4 +151,6 @@ export default function TableStatic(props: any) {
       ))}
     </>
   );
-}
+};
+
+export default TableStatic;
