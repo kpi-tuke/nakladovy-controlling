@@ -10,10 +10,11 @@ const MainPage = styled(Box)`
 
 type Props = {
   children: React.ReactNode;
+  id?: string;
 };
 
-const Page: React.FC<Props> = ({ children }) => {
-  return <MainPage>{children}</MainPage>;
+const Page: React.FC<Props> = ({ children, id }) => {
+  return <MainPage id={id}>{children}</MainPage>;
 };
 
 export default Page;

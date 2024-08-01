@@ -33,12 +33,13 @@ import HeaderSelect from './components/tables/HeaderSelect';
 import HeaderValue from './components/tables/HeaderValue';
 import ItemInput from './components/tables/ItemInput';
 import ItemValue from './components/tables/ItemValue';
-import { RouteName } from './routes';
+import { RouteName, routes } from './routes';
 import AnalysisSaveProvider from './components/providers/AnalysisSaveProvider';
 import SnackbarProvider from './components/providers/SnackbarProvider';
 import ErrorProvider from './components/providers/ErrorProvider';
 import { ThemeProvider } from '@mui/material';
 import { theme } from './theme/theme';
+import HeaderBar from './components/HeaderBar';
 
 export default function App() {
   const EconomicAnalysis: () => JSX.Element = withAnalysis(
@@ -46,42 +47,48 @@ export default function App() {
     economicActions,
     ItemSelect,
     HeaderInput,
-    EconomicResult
+    EconomicResult,
+    RouteName.ECONOMIC_ANALYSIS
   );
   const StructureAnalysis: () => JSX.Element = withAnalysis(
     selectStructure,
     structureActions,
     ItemSelect,
     HeaderSelect,
-    StructureResult
+    StructureResult,
+    RouteName.STRUCTURE_ANALYSIS
   );
   const IndexAnalysis: () => JSX.Element = withAnalysis(
     selectIndex,
     indexActions,
     ItemSelect,
     HeaderInput,
-    IndexResult
+    IndexResult,
+    RouteName.INDEX_ANALYSIS
   );
   const CVPAnalysis: () => JSX.Element = withAnalysis(
     selectCVP,
     CVPActions,
     ItemInput,
     HeaderValue,
-    CVPResult
+    CVPResult,
+    RouteName.CVP_ANALYSIS
   );
   const SortimentAnalysis: () => JSX.Element = withAnalysis(
     selectSortiment,
     sortimentActions,
     ItemValue,
     HeaderInput,
-    SortimentResult
+    SortimentResult,
+    RouteName.SORTIMENT_ANALYSIS
   );
   const ParetoAnalysis: () => JSX.Element = withAnalysis(
     selectPareto,
     paretoActions,
     ItemInput,
     HeaderValue,
-    ParetoResult
+    ParetoResult,
+    RouteName.PERETO_ANALYSIS
   );
   return (
     <Provider store={store}>
@@ -90,6 +97,7 @@ export default function App() {
           <SnackbarProvider>
             <AnalysisSaveProvider>
               <Router>
+                <HeaderBar />
                 <Routes>
                   <Route path={RouteName.HOME} element={<WelcomePage />} />
                   <Route path={RouteName.SELECT} element={<TaskSelection />} />
@@ -121,12 +129,12 @@ export default function App() {
                     path={RouteName.EVALUATION}
                     element={
                       <Report
-                        id1={EconomicAnalysis}
-                        id2={StructureAnalysis}
-                        id3={IndexAnalysis}
-                        id4={CVPAnalysis}
-                        id5={SortimentAnalysis}
-                        id6={ParetoAnalysis}
+                        EconomicAnalysisPage={EconomicAnalysis}
+                        StructureAnalysisPage={StructureAnalysis}
+                        IndexAnalysisPage={IndexAnalysis}
+                        CVPAnalysisPage={CVPAnalysis}
+                        SortimentAnalysisPage={SortimentAnalysis}
+                        ParetoAnalysisPage={ParetoAnalysis}
                       />
                     }
                   />

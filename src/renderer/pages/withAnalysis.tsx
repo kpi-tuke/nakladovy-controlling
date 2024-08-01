@@ -1,4 +1,3 @@
-import HeaderBar from '../components/HeaderBar';
 import { useSelector } from 'react-redux';
 import TextArea from '../components/Textarea';
 import { defaultState } from '../store/rootReducer';
@@ -8,16 +7,27 @@ import Page from 'renderer/components/layout/Page';
 import PageContent from 'renderer/components/layout/PageContent';
 import Spacer from 'renderer/components/Spacer';
 import { useAppDispatch } from 'renderer/store/hooks';
+import { styled, Typography } from '@mui/material';
+import { routes } from 'renderer/routes';
+
+const PrintPageTitle = styled(Typography)`
+  font-weight: 700;
+  font-size: 36px;
+  color: ${({ theme }) => theme.palette.primary.main};
+  text-align: center;
+  width: 100%;
+`;
 
 export default function withAnalysis(
   selector: (state: RootState) => defaultState,
   actions: any,
   TableItems: (props: any) => JSX.Element,
   TableHeaders: (props: any) => JSX.Element,
-  Result: () => JSX.Element
+  Result: () => JSX.Element,
+  routeName: string
 ) {
   return () => {
-    const { id, text } = useSelector(selector);
+    const { text } = useSelector(selector);
     const dispatch = useAppDispatch();
 
     const Table: () => JSX.Element = withTable(
@@ -27,10 +37,14 @@ export default function withAnalysis(
       actions
     );
 
+    const title = routes[routeName].title;
+
     return (
-      <Page>
-        <HeaderBar id={id} addToReport={true} printToPDF={true} />
+      <Page id={routeName.replace('/', '')}>
         <PageContent>
+          <PrintPageTitle className="hideInScreen page-print-title">
+            {title}
+          </PrintPageTitle>
           <Table />
           <Result />
           <Spacer height={20} hideInPrint />

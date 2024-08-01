@@ -47,67 +47,70 @@ export default function PDFTable({
     <>
       {mergedData.map((table, index) => (
         <div className={`hideInScreen  ${index > 0 ? 'new-page' : ''}`}>
-          <Table
-            key={index}
-            sx={{
-              width: 'unset',
-            }}
-          >
-            <TableHead>
-              <TableRow>
-                <TableCorner
-                  sx={{
-                    minWidth: '30vw',
-                    maxWidth: '30vw',
-                  }}
-                >
-                  {corner}
-                </TableCorner>
-
-                {table.headers.map((header, headerIndex) => (
-                  <TableCell
-                    key={headerIndex}
+          <Paper>
+            <Table
+              key={index}
+              sx={{
+                width: 'unset',
+              }}
+            >
+              <TableHead>
+                <TableRow>
+                  <TableCorner
                     sx={{
-                      minWidth: '13.3vw',
-                      maxWidth: '13.3vw',
+                      minWidth: '30vw',
+                      maxWidth: '30vw',
                     }}
                   >
-                    {header}
-                  </TableCell>
-                ))}
-              </TableRow>
-            </TableHead>
+                    {corner}
+                  </TableCorner>
 
-            <TableBody>
-              {table.data.map((rowData, rowIndex) =>
-                !!items[rowIndex] ? (
-                  <TableRow key={rowIndex}>
+                  {table.headers.map((header, headerIndex) => (
                     <TableCell
+                      key={headerIndex}
                       sx={{
-                        textAlign: 'left',
-                        padding: '0 9px',
+                        minWidth: '13.3vw',
+                        maxWidth: '13.3vw',
                       }}
                     >
-                      {items[rowIndex]}
+                      {header}
                     </TableCell>
-                    {rowData.map((value, colIndex) => (
+                  ))}
+                </TableRow>
+              </TableHead>
+
+              <TableBody>
+                {table.data.map((rowData, rowIndex) =>
+                  !!items[rowIndex] ? (
+                    <TableRow key={rowIndex}>
                       <TableCell
-                        key={colIndex}
                         sx={{
-                          minWidth: '13.3vw',
-                          maxWidth: '13.3vw',
+                          textAlign: 'left',
+                          padding: '0 9px',
                         }}
                       >
-                        {value}
+                        {items[rowIndex]}
                       </TableCell>
-                    ))}
-                  </TableRow>
-                ) : (
-                  <></>
-                )
-              )}
-            </TableBody>
-          </Table>
+                      {rowData.map((value, colIndex) => (
+                        <TableCell
+                          key={colIndex}
+                          sx={{
+                            minWidth: '13.3vw',
+                            maxWidth: '13.3vw',
+                          }}
+                        >
+                          {value}
+                        </TableCell>
+                      ))}
+                    </TableRow>
+                  ) : (
+                    <></>
+                  )
+                )}
+              </TableBody>
+            </Table>
+          </Paper>
+
           {(mergedData.length > 1 || items.length > 16) && (
             <Typography
               textAlign={'right'}

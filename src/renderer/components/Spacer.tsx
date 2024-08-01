@@ -9,7 +9,7 @@ type Props = {
 const Spacer: React.FC<Props> = ({ height, hideInPrint }) => {
   return (
     <Box
-      className={hideInPrint ? 'hideInPrint' : ''}
+      className={`spacer ${hideInPrint ? 'hideInPrint' : ''}`}
       sx={{
         height: `${height}px`,
       }}

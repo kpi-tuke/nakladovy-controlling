@@ -13,6 +13,7 @@ import { Box, Button, Grid, Typography } from '@mui/material';
 import AppVersion from 'renderer/components/AppVersion';
 import Page from 'renderer/components/layout/Page';
 import PageContent from 'renderer/components/layout/PageContent';
+import { RouteName } from 'renderer/routes';
 
 export default function WelcomePage() {
   const navigate = useNavigate();
@@ -54,6 +55,10 @@ export default function WelcomePage() {
     navigate('/taskselect');
   }
 
+  const openReport = () => {
+    navigate(RouteName.EVALUATION);
+  };
+
   function quit() {
     // @ts-ignore
     window.electron.quit();
@@ -61,7 +66,7 @@ export default function WelcomePage() {
 
   return (
     <Page>
-      <HeaderBar title={'NÁKLADOVÝ CONTROLLING'} />
+      <HeaderBar />
       <PageContent>
         <Box
           sx={{
@@ -109,6 +114,11 @@ export default function WelcomePage() {
                   Otvoriť projekt
                 </WelcomeButton>
               </Grid>
+              {created && (
+                <Grid item xs={12}>
+                  <WelcomeButton onClick={openReport}>Report</WelcomeButton>
+                </Grid>
+              )}
               <Grid item xs={12}>
                 <WelcomeButton onClick={quit}>Ukončiť projekt</WelcomeButton>
               </Grid>

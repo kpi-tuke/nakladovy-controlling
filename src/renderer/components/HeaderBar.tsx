@@ -7,7 +7,7 @@ import {
   styled,
   Typography,
 } from '@mui/material';
-import { getRouteDetails, RouteName } from 'renderer/routes';
+import { routes, RouteName } from 'renderer/routes';
 import React, { useMemo } from 'react';
 import { ArrowBack, Print, Save } from '@mui/icons-material';
 import { useAnalysisSave } from './providers/AnalysisSaveProvider';
@@ -21,43 +21,24 @@ const Wrapper = styled(Box)`
   right: 0;
   background-color: ${({ theme }) => theme.palette.background.paper};
   z-index: 100;
-
-  @media print {
-    box-shadow: none;
-    display: flex;
-    align-items: center;
-    position: absolute;
-  }
 `;
 
-const PrintPageTitle = styled(Typography)`
-  font-weight: 700;
-  font-size: 36px;
-  color: ${({ theme }) => theme.palette.primary.main};
-  text-align: center;
-  width: 100%;
-`;
-
-// TODO: pouzit props tu
-const HeaderBar: React.FC<any> = () => {
+const HeaderBar = () => {
   const { save, economicChanged, onceSaved } = useAnalysisSave();
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
-  const routeDetails = React.useMemo(() => {
-    return getRouteDetails(pathname);
-  }, [pathname]);
+  const routeDetails = routes[pathname as RouteName];
 
-  // TODO: tu to bolo ako NUMBER... neviem preco
-  function printToPDF(id: string) {
-    // @ts-ignore
-    window.electron.printToPdf(id, (arg) => console.log(arg));
+  function printToPDF(defaultFileName: string) {
+    window.electron.printToPdf(defaultFileName, (arg) => console.log(arg));
   }
 
   function goBack() {
     navigate(-1);
   }
 
+  // TODO: dorobit pre ostatne analyzy
   const isSaveDisabled = useMemo(() => {
     if (!onceSaved) {
       return false;
@@ -74,7 +55,7 @@ const HeaderBar: React.FC<any> = () => {
   }, [economicChanged, onceSaved]);
 
   return (
-    <Wrapper>
+    <Wrapper className="hideInPrint">
       <Box
         sx={{
           height: '100%',
@@ -166,9 +147,9 @@ const HeaderBar: React.FC<any> = () => {
           </Grid>
         </Grid>
       </Box>
-      <PrintPageTitle variant="h1" className="hideInScreen">
+      {/* <PrintPageTitle variant="h1" className="hideInScreen">
         {routeDetails?.title}
-      </PrintPageTitle>
+      </PrintPageTitle> */}
     </Wrapper>
   );
 };

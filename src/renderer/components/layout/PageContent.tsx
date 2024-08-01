@@ -11,6 +11,7 @@ const Content = styled(Box)`
 
   @media print {
     background-color: ${({ theme }) => theme.palette.backgroundPrint.default};
+    padding-top: 0;
   }
 `;
 
