@@ -112,7 +112,7 @@ export default function StructureResult() {
   return (
     <div>
       <Spacer height={40} hideInPrint />
-      <SectionTitle>Analýza ukazovateľov</SectionTitle>
+      <SectionTitle className="new-page">Analýza ukazovateľov</SectionTitle>
       <Paper>
         <TableStatic
           corner={'Nákladové druhy'}

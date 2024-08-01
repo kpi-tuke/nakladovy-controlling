@@ -34,8 +34,8 @@ const Title: React.FC<Props> = ({ onSortYear, onSortItems }) => {
         <SectionTitle>Vstupy</SectionTitle>
       </GridCenter>
 
-      <div className="hideInPrint">
-        <GridSorting item xs={4}>
+      <GridSorting item xs={4}>
+        <div className="hideInPrint">
           <SortingButtons>
             {!!onSortYear && (
               <Dropdown
@@ -78,8 +78,8 @@ const Title: React.FC<Props> = ({ onSortYear, onSortItems }) => {
               </Dropdown>
             )}
           </SortingButtons>
-        </GridSorting>
-      </div>
+        </div>
+      </GridSorting>
     </Grid>
   );
 };

@@ -76,7 +76,9 @@ export default function EconomicResult() {
   return (
     <div>
       <Spacer height={40} hideInPrint />
-      <SectionTitle>Analýza ekonomických ukazovateľov</SectionTitle>
+      <SectionTitle className="new-page">
+        Analýza ekonomických ukazovateľov
+      </SectionTitle>
       <Paper>
         <TableStatic
           corner={'Ekonomické ukazovatele'}
