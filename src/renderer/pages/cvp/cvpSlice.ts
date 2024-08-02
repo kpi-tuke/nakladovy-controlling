@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../store/store';
-import { defaultState, rootReducer } from '../../store/rootReducer';
+import { defaultState, HeaderType, rootReducer } from '../../store/rootReducer';
+import { MeasureUnit } from 'renderer/theme/measureUnit';
 
 export interface CVPState extends defaultState {
   fixTotal: number;
@@ -9,15 +10,54 @@ export interface CVPState extends defaultState {
 
 const initialCVPState: CVPState = {
   id: 4,
-  title: 'CVP analýza',
+  title: 'CVP analýza (COST VOLUME PROFIT)',
   corner: 'Názov výrobku',
   headers: [
-    '(Q) - objem produkcie (ks...)',
-    '(Pcj) - predajná cena jednotková (€)',
-    '(Nvj) - variabilné náklady jednotkové (€)',
+    {
+      type: HeaderType.STRING,
+      label: '(Q) - objem produkcie',
+    },
+    {
+      type: HeaderType.SELECT,
+      label: 'merná jednotka',
+      options: [
+        {
+          label: MeasureUnit.PIECE,
+          value: MeasureUnit.PIECE,
+        },
+        {
+          label: MeasureUnit.KILOGRAM,
+          value: MeasureUnit.KILOGRAM,
+        },
+        {
+          label: MeasureUnit.TONNE,
+          value: MeasureUnit.TONNE,
+        },
+        {
+          label: MeasureUnit.GRAM,
+          value: MeasureUnit.GRAM,
+        },
+      ],
+    },
+    {
+      type: HeaderType.STRING,
+      label: '(Pcj) - predajná cena jednotková (€)',
+    },
+    {
+      type: HeaderType.STRING,
+      label: '(Nvj) - variabilné náklady jednotkové (€)',
+    },
+    {
+      type: HeaderType.STRING,
+      label: '(F<sub>n</sub>) fixné náklady (€)',
+    },
+    {
+      type: HeaderType.STRING,
+      label: '(Z<sub>min</sub>) minimálny zisk (€)',
+    },
   ],
   items: ['Výrobok A'],
-  data: [[0, 0, 0]],
+  data: [[0, '', 0, 0, 0, 0]],
   values: ['Výrobok A'],
   text: '',
   accounts: [''],
@@ -33,18 +73,6 @@ const CVPSlice = createSlice({
   initialState: initialCVPState,
   reducers: {
     ...rootReducer,
-    setFixTotal: (
-      state: { fixTotal: number },
-      action: PayloadAction<number>
-    ) => {
-      state.fixTotal = action.payload;
-    },
-    setMinProfit: (
-      state: { minProfit: number },
-      action: PayloadAction<number>
-    ) => {
-      state.minProfit = action.payload;
-    },
     // @ts-ignore
     reset: (state) => {
       state.headers = initialCVPState.headers;

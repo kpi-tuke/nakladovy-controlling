@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import {
   defaultState,
+  HeaderType,
   openProject,
   rootReducer,
 } from '../../store/rootReducer';
@@ -10,7 +11,12 @@ const initialParetoState: defaultState = {
   id: 6,
   title: 'Pareto analýza nákladov',
   corner: 'Príčiny vzniku nákladov',
-  headers: ['(N) - náklady (€)'],
+  headers: [
+    {
+      type: HeaderType.STRING,
+      label: '(N) - náklady (€)',
+    },
+  ],
   data: [[0]],
   items: ['Názov chyby'],
   values: ['Názov chyby'],

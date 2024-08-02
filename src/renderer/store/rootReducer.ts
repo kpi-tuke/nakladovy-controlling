@@ -2,12 +2,30 @@ import { PayloadAction } from '@reduxjs/toolkit';
 import { isNumeric } from 'renderer/helper';
 import { SortDirection } from 'renderer/types/sortDirection';
 
+export enum HeaderType {
+  STRING = 'STRING',
+  SELECT = 'SELECT',
+}
+
+type HeaderOption = {
+  label: string;
+  value: string;
+};
+
+export type Header = {
+  label: string;
+  type: HeaderType;
+  options?: HeaderOption[];
+};
+
+export type CellValue = number | string;
+
 export interface defaultState {
   id: number;
   title: string;
   corner: string;
-  headers: string[];
-  data: number[][];
+  headers: Header[];
+  data: CellValue[][];
   items: string[];
   values: string[];
   text: string;
@@ -29,14 +47,18 @@ export interface dataOnCords {
   data: number;
   row: number;
   col: number;
+  type: HeaderType;
 }
 
 export const rootReducer = {
   setHeadersOnIndex: (
-    state: { headers: string[] },
+    state: { headers: Header[] },
     action: PayloadAction<dataOnIndex>
   ) => {
-    state.headers[action.payload.index] = action.payload.data;
+    state.headers[action.payload.index] = {
+      label: action.payload.data,
+      type: HeaderType.STRING,
+    };
   },
   setItemsOnIndex: (
     state: { items: string[] },
@@ -51,24 +73,29 @@ export const rootReducer = {
     state.values[action.payload.index] = action.payload.data;
   },
   setDataOnIndex: (
-    state: { data: number[][] },
+    state: { data: CellValue[][] },
     action: PayloadAction<dataOnCords>
   ) => {
-    state.data[action.payload.row][action.payload.col] = isNaN(
-      action.payload.data
-    )
-      ? 0
-      : action.payload.data;
+    if (action.payload.type === HeaderType.SELECT) {
+      console.log('payload: ', action.payload);
+      state.data[action.payload.row][action.payload.col] = action.payload.data;
+    } else {
+      state.data[action.payload.row][action.payload.col] = isNaN(
+        action.payload.data
+      )
+        ? 0
+        : action.payload.data;
+    }
   },
-  addColumn: (state: { headers: string[]; data: number[][] }): void => {
-    state.headers.push('');
+  addColumn: (state: { headers: Header[]; data: CellValue[][] }): void => {
+    state.headers.push({ label: '', type: HeaderType.STRING });
     state.data.map((rowData: any) => {
       rowData.push(0);
     });
   },
   addRow: (state: {
     items: string[];
-    data: number[][];
+    data: CellValue[][];
     accounts: string[];
   }) => {
     state.items.push('');
@@ -80,7 +107,7 @@ export const rootReducer = {
     state.data.push(arr);
   },
   deleteRow: (
-    state: { items: string[]; data: number[][]; values: string[] },
+    state: { items: string[]; data: CellValue[][]; values: string[] },
     action: PayloadAction<number>
   ) => {
     if (state.items.length === 1) return;
@@ -89,11 +116,11 @@ export const rootReducer = {
     state.values.splice(action.payload, 1);
   },
   deleteColumn: (
-    state: { headers: string[]; data: number[][] },
+    state: { headers: Header[]; data: CellValue[][] },
     action: PayloadAction<number>
   ) => {
     if (state.headers.length === 1) return;
-    state.data.map((rowData: number[]) => {
+    state.data.map((rowData: CellValue[]) => {
       rowData.splice(action.payload, 1);
     });
     state.headers.splice(action.payload, 1);
@@ -115,8 +142,8 @@ export const changeAccount = {
 export const openProject = {
   openProject: (
     state: {
-      headers: string[];
-      data: number[][];
+      headers: Header[];
+      data: CellValue[][];
       items: string[];
       values: string[];
       text: string;
@@ -134,8 +161,8 @@ export const openProject = {
 export const sortTableByYear = {
   sortTableByYear: (
     state: {
-      headers: string[];
-      data: number[][];
+      headers: Header[];
+      data: CellValue[][];
       items: string[];
       values: string[];
       text: string;
@@ -150,16 +177,16 @@ export const sortTableByYear = {
     if (new Set(headers).size !== headers.length) return;
 
     for (let i = offset; i < headers.length; i++) {
-      if (!isNumeric(headers[i])) {
+      if (!isNumeric(headers[i].label)) {
         throw new Error('Hlavička musí obsahovať LEN číslo!');
       }
     }
 
-    const formattedData: { [key: string]: number[] } = {};
+    const formattedData: { [key: string]: CellValue[] } = {};
 
     headers.forEach((header, index) => {
-      formattedData[header] = [];
-      formattedData[header] = data.map((row) => row[index]);
+      formattedData[header.label] = [];
+      formattedData[header.label] = data.map((row) => row[index]);
     });
 
     const sortedHeaders =
@@ -167,14 +194,14 @@ export const sortTableByYear = {
         ? [...headers].sort((a, b) => +b - +a)
         : [...headers].sort((a, b) => +a - +b);
 
-    const sortedData: number[][] = Array.from(
+    const sortedData: CellValue[][] = Array.from(
       { length: data.length },
       () => []
     );
 
     for (let i = 0; i < sortedHeaders.length; i++) {
-      for (let j = 0; j < formattedData[sortedHeaders[i]].length; j++) {
-        sortedData[j].push(formattedData[sortedHeaders[i]][j]);
+      for (let j = 0; j < formattedData[sortedHeaders[i].label].length; j++) {
+        sortedData[j].push(formattedData[sortedHeaders[i].label][j]);
       }
     }
 
@@ -191,8 +218,8 @@ export const sortTableByYear = {
 export const sortTableByItemNumber = {
   sortTableByItemNumber: (
     state: {
-      headers: string[];
-      data: number[][];
+      headers: Header[];
+      data: CellValue[][];
       items: string[];
       values: string[];
       text: string;
@@ -215,13 +242,13 @@ export const sortTableByItemNumber = {
         : +aNumber - +bNumber;
     });
 
-    const formattedData: { [key: string]: number[] } = {};
+    const formattedData: { [key: string]: CellValue[] } = {};
 
     values.forEach((value, index) => {
       formattedData[value] = data[index];
     });
 
-    const sortedData: number[][] = [];
+    const sortedData: CellValue[][] = [];
 
     sortedValues.forEach((item) => {
       sortedData.push(formattedData[item]);

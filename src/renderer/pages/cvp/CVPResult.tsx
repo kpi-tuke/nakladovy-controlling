@@ -4,34 +4,36 @@ import { useCVPGraph } from '../../graphOptions';
 import { ApexOptions } from 'apexcharts';
 import { cvpCalculation } from './cvpCalculation';
 import { useAppSelector } from '../../store/hooks';
-import { CVPActions, selectCVP } from './cvpSlice';
-import SingleInput from '../../components/SingleInput';
-import { Box, Grid, Paper, styled } from '@mui/material';
+import { selectCVP } from './cvpSlice';
+import { Grid, Paper } from '@mui/material';
 import SectionTitle from 'renderer/components/SectionTitle';
 import Spacer from 'renderer/components/Spacer';
 import { GraphCard } from 'renderer/components/graph/GraphCard';
 import { GraphTitle } from 'renderer/components/graph/GraphTitle';
 
-const Inputs = styled(Box)`
-  max-width: 600px;
-  margin: 0 auto;
-  margin-top: 40px;
-`;
-
 export default function CVPResult() {
-  const { data, items, fixTotal, minProfit } = useAppSelector(selectCVP);
-  const { volumes, prices, zeroTon, zeroProf, zeroEur, costs } = cvpCalculation(
-    data,
-    fixTotal,
-    minProfit
-  );
+  const { data, items } = useAppSelector(selectCVP);
+  const {
+    volumes,
+    prices,
+    zeroTon,
+    zeroProf,
+    zeroEur,
+    costs,
+    zeroSellPrice,
+    paymentMoney,
+    fixedCosts,
+    capacityUsage,
+    fixTotals,
+  } = cvpCalculation(data);
+
   const graphs: {
     value: string;
     graph: ApexOptions;
     series: { name: string; data: number[] }[];
   }[] = [];
 
-  items.forEach((value: any, idx: number) => {
+  items.forEach((product: any, idx: number) => {
     const costTotal: number[] = [];
     const incomeTotal: number[] = [];
     const osX: number[] = [0];
@@ -53,8 +55,10 @@ export default function CVPResult() {
 
     osX.push(Math.max(...osX) + Math.max(...osX) * 0.3);
 
-    osX.map((vol: number) => {
-      costTotal.push(Math.round((costs[idx] * vol + fixTotal) * 100) / 100);
+    osX.map((vol: number, index) => {
+      costTotal.push(
+        Math.round((costs[idx] * vol + fixTotals[index]) * 100) / 100
+      );
 
       incomeTotal.push(Math.round(prices[idx] * vol * 100) / 100);
     });
@@ -85,7 +89,7 @@ export default function CVPResult() {
       },
     ];
     graphs.push({
-      value,
+      value: product,
       graph,
       series,
     });
@@ -93,28 +97,6 @@ export default function CVPResult() {
 
   return (
     <div>
-      <Inputs
-        sx={{
-          display: 'grid',
-          gridTemplateColumns: {
-            xs: '1fr',
-            sm: '1fr 1fr',
-          },
-          gap: '8px',
-        }}
-      >
-        <SingleInput
-          title={'FIXNÉ NÁKLADY'}
-          value={fixTotal}
-          action={CVPActions.setFixTotal}
-        />
-        <SingleInput
-          title={'MINIMÁLNY ZISK'}
-          value={minProfit}
-          action={CVPActions.setMinProfit}
-        />
-      </Inputs>
-
       <Spacer height={40} hideInPrint />
 
       <SectionTitle className={'new-page'}>
@@ -127,19 +109,58 @@ export default function CVPResult() {
           header={items}
           inputs={[
             [
-              '(No) - nulový bod (€)',
+              '(N<sub>0</sub>) - nulový bod',
+              `N_{0}=\\frac{F_{n}}{P_{cj}-N_{vj}}`,
+            ],
+            [
+              '(N<sub>0</sub>) - nulový bod (€)',
               `N_{0}=\\frac{F{n}}{1-\\frac{N_{vj}}{P_{cj}}}`,
             ],
-            ['(No) - nulový bod (ks...)', `N_{0}=\\frac{F_{n}}{P_{cj}-N_{vj}}`],
             [
-              '(No) - nulový bod Zmin (ks...)',
+              '(N<sub>0</sub>) - nulový bod Zmin (ks)',
               `N_{0}=\\frac{F_{n}+Z_{min}}{P_{cj}-N_{vj}}`,
+            ],
+            [
+              '(P<sub>c</sub>) - pri predajnej cene (€)',
+              `N_{0}=\\frac{F_{n}}{Q+N_{vj}}`,
+            ],
+            [
+              '(P<sub>ú</sub>) - príspevok na úhradu fixných nákladov a zisku (€)',
+              `P_{ú}=\P_{cj}-N_{vj}`,
+            ],
+            [
+              '(NF<sub>j</sub>) - náklady fixné jednotkové (€)',
+              `NF_{j}=\\frac{F_{n}}{Q}`,
+            ],
+            [
+              '(VK<sub>krit</sub>) - kritické využitie výrobnej kapacity',
+              `VK_{krit}=\\frac{N_{0}(ton)}{Q * 100%}`,
             ],
           ]}
           data={[
-            [...zeroEur.map((value: number) => Math.round(value * 100) / 100)],
             [...zeroTon.map((value: number) => Math.round(value * 100) / 100)],
+            [...zeroEur.map((value: number) => Math.round(value * 100) / 100)],
             [...zeroProf.map((value: number) => Math.round(value * 100) / 100)],
+            [
+              ...zeroSellPrice.map(
+                (value: number) => Math.round(value * 100) / 100
+              ),
+            ],
+            [
+              ...paymentMoney.map(
+                (value: number) => Math.round(value * 100) / 100
+              ),
+            ],
+            [
+              ...fixedCosts.map(
+                (value: number) => Math.round(value * 100) / 100
+              ),
+            ],
+            [
+              ...capacityUsage.map(
+                (value: number) => Math.round(value * 100) / 100
+              ),
+            ],
           ]}
         />
       </Paper>

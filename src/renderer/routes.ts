@@ -38,7 +38,7 @@ export const routes: { [key in RouteName]: Route } = {
     save: true,
   },
   [RouteName.CVP_ANALYSIS]: {
-    title: 'CVP analýza',
+    title: 'CVP analýza (COST VOLUME PROFIT)',
     printToPDF: true,
     save: true,
   },

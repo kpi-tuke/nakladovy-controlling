@@ -1,11 +1,13 @@
+import { CellValue } from './store/rootReducer';
+
 // [ [1,2,3], [4,5,6], [7,8,9] ] => [ [ [1,2],[4,5],[7,8] ], [ [3],[6],[9] ] ]
 export function splitTable(
   colsPerTable: number,
   header: string[],
-  data: number[][]
+  data: CellValue[][]
 ) {
   let numberOfTables = Math.ceil(data[0].length / colsPerTable);
-  let separatedData: number[][][] = [];
+  let separatedData: CellValue[][][] = [];
   let separatedHeaders: string[][] = [];
 
   for (let i = 0; i < numberOfTables; i++) {
@@ -38,6 +40,17 @@ export const divideArrays = (
     else arr.push(Math.round((100 * numerator[i]) / denominator[i]) / 100);
   }
   return arr;
+};
+
+export const multiplyArrays = (
+  array1: number[],
+  array2: number[]
+): number[] => {
+  let product: number[] = [];
+  for (let i = 0; i < array1.length; i++) {
+    product.push(array1[i] * array2[i]);
+  }
+  return product;
 };
 
 export const subtractArrays = (

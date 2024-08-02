@@ -21,7 +21,7 @@ const items: AnalysisItem[] = [
   },
   {
     to: RouteName.CVP_ANALYSIS,
-    title: 'CVP analýza',
+    title: 'CVP analýza (COST VOLUME PROFIT)',
     description:
       'Analýza zameraná na určenie kritického objemu výroby a stanovenie nulového bodu.',
   },

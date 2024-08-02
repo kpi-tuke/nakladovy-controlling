@@ -66,10 +66,10 @@ export default function EconomicResult() {
     },
   ];
 
-  const lineOptions: ApexOptions = useLineGraph(headers);
+  const lineOptions: ApexOptions = useLineGraph(headers.map((h) => h.label));
 
   const colOptions: ApexOptions = useColGraph(
-    headers,
+    headers.map((h) => h.label),
     'hodnota ukazovateľa (koeficient)'
   );
 
@@ -82,7 +82,7 @@ export default function EconomicResult() {
       <Paper>
         <TableStatic
           corner={'Ekonomické ukazovatele'}
-          header={[...headers]}
+          header={headers.map((h) => h.label)}
           inputs={[
             ['(N<sub>c</sub>) - náklady celkom (€)', `\\sum N `],
             ['(V<sub>c</sub>) - výnosy celkom (€)', `\\sum V `],

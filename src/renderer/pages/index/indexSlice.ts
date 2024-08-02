@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import {
   changeAccount,
   defaultState,
+  HeaderType,
   openProject,
   rootReducer,
   sortTableByItemNumber,
@@ -13,7 +14,20 @@ const initialIndexState: defaultState = {
   id: 3,
   title: 'Analýza reťazových a bázických indexov',
   corner: 'Ekonomická položka (€)',
-  headers: ['Bázický rok', '2000', '2001'],
+  headers: [
+    {
+      type: HeaderType.STRING,
+      label: 'Bázický rok',
+    },
+    {
+      type: HeaderType.STRING,
+      label: '2000',
+    },
+    {
+      type: HeaderType.STRING,
+      label: '2001',
+    },
+  ],
   data: [
     [0, 0, 0],
     [0, 0, 0],

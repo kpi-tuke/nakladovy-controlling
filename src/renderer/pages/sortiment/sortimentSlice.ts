@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../../store/store';
 import {
   defaultState,
+  HeaderType,
   openProject,
   rootReducer,
 } from '../../store/rootReducer';
@@ -10,7 +11,12 @@ const initialSortimentState: defaultState = {
   id: 5,
   title: 'Sortimentná analýza',
   corner: 'Ekonomická položka',
-  headers: ['Výrobok A'],
+  headers: [
+    {
+      type: HeaderType.STRING,
+      label: 'Výrobok A',
+    },
+  ],
   data: [[0], [0], [0], [0]],
   items: [
     '(Pn) - priame náklady (€)',

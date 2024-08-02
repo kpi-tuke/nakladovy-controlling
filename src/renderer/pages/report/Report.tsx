@@ -130,7 +130,7 @@ const Report: React.FC<Props> = ({
               ref: indexRef,
             },
             {
-              label: 'CVP analýza',
+              label: 'CVP analýza (COST VOLUME PROFIT)',
               id: RouteName.CVP_ANALYSIS,
               ref: cvpRef,
             },

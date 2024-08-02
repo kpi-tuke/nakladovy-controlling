@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../../store/store';
 import {
   defaultState,
+  HeaderType,
   openProject,
   rootReducer,
   sortTableByItemNumber,
@@ -12,7 +13,12 @@ const initialStructureState: defaultState = {
   id: 2,
   title: 'Štruktúrna analýza nákladov',
   corner: '↓Nákladové druhy | Kalkulačné položky→',
-  headers: ['Priamy materiál'],
+  headers: [
+    {
+      type: HeaderType.STRING,
+      label: 'Priamy materiál',
+    },
+  ],
   data: [[0], [0]],
   items: [costOptions[0].label, ''],
   values: [costOptions[0].value.toString(), ''],

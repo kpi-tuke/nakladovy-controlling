@@ -20,9 +20,8 @@ export default function HeaderValue({ header }: { header: string[] }) {
                 fontSize: '14px',
                 fontWeight: 'bold',
               }}
-            >
-              {value}
-            </Typography>
+              dangerouslySetInnerHTML={{ __html: value }}
+            />
           </TableCell>
         ))}
       </TableRow>

@@ -49,7 +49,10 @@ export default function StructureResult() {
     plotOptions: { bar: { distributed: true } },
   };
   const calculationOptions = {
-    ...useColGraph(headers, 'Kalkulačné náklady'),
+    ...useColGraph(
+      headers.map((h) => h.label),
+      'Kalkulačné náklady'
+    ),
     legend: { show: false },
     plotOptions: { bar: { distributed: true } },
   };
@@ -106,7 +109,7 @@ export default function StructureResult() {
     fill: {
       type: 'gradient',
     },
-    labels: headers,
+    labels: headers.map((h) => h.label),
   };
 
   return (
@@ -144,7 +147,7 @@ export default function StructureResult() {
       <Paper>
         <TableStatic
           corner={'Druhové náklady'}
-          header={[...headers, 'SPOLU']}
+          header={[...headers.map((h) => h.label), 'SPOLU']}
           inputs={[
             ['(Nj) - náklady jednotkové (€)', ''],
             ['(Š) - štruktúra (%)', ''],

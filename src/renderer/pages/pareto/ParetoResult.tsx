@@ -12,7 +12,7 @@ import { GraphTitle } from 'renderer/components/graph/GraphTitle';
 export default function ParetoResult() {
   const { data, items } = useAppSelector(selectPareto);
   const { sum, values, valuesKumul, percentagesKumul, percentages, causes } =
-    paretoCalculation(data, items);
+    paretoCalculation(data as number[][], items);
   const barChart = {
     series: [
       {

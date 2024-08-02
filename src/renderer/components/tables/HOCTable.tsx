@@ -3,7 +3,14 @@ import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import PDFTable from './PDFTable';
 import Title from '../Title';
 import { SortDirection } from 'renderer/types/sortDirection';
-import { Box, Grid, Paper, styled, TextField } from '@mui/material';
+import {
+  Autocomplete,
+  Box,
+  Grid,
+  Paper,
+  styled,
+  TextField,
+} from '@mui/material';
 import {
   ActionCellBottom,
   ActionCellBottomRight,
@@ -15,6 +22,7 @@ import {
 } from './Table';
 import TableActionButton from './TableActionButton';
 import { useError } from '../providers/ErrorProvider';
+import { defaultState, HeaderType } from 'renderer/store/rootReducer';
 
 const TableWrapper = styled(Box)`
   overflow-x: auto;
@@ -30,8 +38,9 @@ export default function withTable(
     const dispatch = useAppDispatch();
     const { openError } = useError();
 
-    // @ts-ignore
-    const { headers, data, dynRows, dynCols } = useAppSelector(selector);
+    const { headers, data, dynRows, dynCols } = useAppSelector(
+      selector
+    ) as defaultState;
 
     const deleteRow = (row: number) => {
       dispatch(actions.deleteRow(row));
@@ -44,22 +53,36 @@ export default function withTable(
     const handleChangeData = function (
       event: ChangeEvent<HTMLInputElement>,
       row: number,
-      col: number
+      col: number,
+      cellType?: HeaderType,
+      value?: string
     ) {
-      if (
-        event.target.value.startsWith('0') &&
-        !event.target.value.startsWith('0.')
-      )
-        event.target.value = event.target.value.slice(1);
-      dispatch(
-        actions.setDataOnIndex({
-          data: Math.abs(
-            Math.round(parseFloat(event.target.value) * 100) / 100
-          ),
-          row,
-          col,
-        })
-      );
+      if (cellType === HeaderType.SELECT) {
+        dispatch(
+          actions.setDataOnIndex({
+            data: value,
+            row,
+            col,
+            type: HeaderType.SELECT,
+          })
+        );
+      } else {
+        if (
+          event.target.value.startsWith('0') &&
+          !event.target.value.startsWith('0.')
+        )
+          event.target.value = event.target.value.slice(1);
+
+        dispatch(
+          actions.setDataOnIndex({
+            data: Math.abs(
+              Math.round(parseFloat(event.target.value) * 100) / 100
+            ),
+            row,
+            col,
+          })
+        );
+      }
     };
 
     const sortByYear = (sortDirection: SortDirection) => {
@@ -91,7 +114,7 @@ export default function withTable(
               <TableWrapper>
                 <DataTable>
                   <TableDataHeader
-                    header={headers}
+                    header={headers.map((h) => h.label)}
                     dynCols={dynCols}
                     actions={actions}
                   />
@@ -100,34 +123,77 @@ export default function withTable(
                       <TableRow key={row}>
                         {rowData.map((value: number, col: number) => (
                           <TableCell key={row + ':' + col}>
-                            <TextField
-                              defaultValue={value}
-                              onBlur={(e) =>
-                                handleChangeData(
-                                  e as React.FocusEvent<HTMLInputElement>,
-                                  row,
-                                  col
-                                )
-                              }
-                              onWheel={(event) => event.currentTarget.blur()}
-                              sx={{
-                                position: 'absolute',
-                                inset: 0,
+                            {headers[col].type === 'STRING' ? (
+                              <TextField
+                                defaultValue={value}
+                                onBlur={(e) =>
+                                  handleChangeData(
+                                    e as React.FocusEvent<HTMLInputElement>,
+                                    row,
+                                    col
+                                  )
+                                }
+                                onWheel={(event) => event.currentTarget.blur()}
+                                sx={{
+                                  position: 'absolute',
+                                  inset: 0,
 
-                                '& .MuiOutlinedInput-root': {
-                                  borderRadius: '0',
-                                  '& fieldset': {
-                                    border: 'none',
+                                  '& .MuiOutlinedInput-root': {
+                                    borderRadius: '0',
+                                    '& fieldset': {
+                                      border: 'none',
+                                    },
                                   },
-                                },
 
-                                input: {
-                                  height: '48px',
-                                  padding: 0,
-                                  textAlign: 'center',
-                                },
-                              }}
-                            />
+                                  input: {
+                                    height: '48px',
+                                    padding: 0,
+                                    textAlign: 'center',
+                                  },
+                                }}
+                              />
+                            ) : (
+                              <Autocomplete
+                                value={headers[col].options.find(
+                                  (option) => option.value === value.toString()
+                                )}
+                                options={headers[col].options}
+                                getOptionLabel={(option) => option.label}
+                                renderInput={(params) => (
+                                  <TextField {...params} />
+                                )}
+                                clearIcon={false}
+                                onChange={(e, value) => {
+                                  handleChangeData(
+                                    e as React.ChangeEvent<HTMLInputElement>,
+                                    row,
+                                    col,
+                                    headers[col].type,
+                                    value.value
+                                  );
+                                }}
+                                sx={{
+                                  position: 'absolute',
+                                  inset: 0,
+
+                                  '.MuiOutlinedInput-root': {
+                                    borderRadius: '0',
+                                    height: '48px',
+                                    paddingRight: '36px !important',
+
+                                    fieldset: {
+                                      border: 'none',
+                                      height: '48px',
+                                    },
+                                  },
+
+                                  input: {
+                                    height: `${48 - 18}px !important`,
+                                    padding: '0px !important',
+                                  },
+                                }}
+                              />
+                            )}
                           </TableCell>
                         ))}
                         {dynRows && (

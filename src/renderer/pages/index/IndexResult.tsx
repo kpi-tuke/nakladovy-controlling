@@ -23,7 +23,11 @@ export default function IndexResult() {
     incomeSumsForYears,
     betweenYears,
     reaction,
-  } = indexCalculation(data, headers, values);
+  } = indexCalculation(
+    data as number[][],
+    headers.map((h) => h.label),
+    values
+  );
   const economicSeries = [
     {
       name: 'Náklady',

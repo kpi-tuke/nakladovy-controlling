@@ -205,7 +205,7 @@ export const useCVPGraph = (
     xaxis: {
       categories: osX,
       title: {
-        text: 'objem produkcie jednotky (ks...)',
+        text: 'objem produkcie jednotky (ks)',
       },
     },
     yaxis: [

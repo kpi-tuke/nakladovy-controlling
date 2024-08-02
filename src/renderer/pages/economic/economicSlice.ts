@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import {
   changeAccount,
   defaultState,
+  HeaderType,
   openProject,
   rootReducer,
   sortTableByItemNumber,
@@ -18,7 +19,12 @@ const initialEconomicState: defaultState = {
   id: 1,
   title: 'Ekonomická analýza hospodárenia',
   corner: 'Ekonomická veličina (€)',
-  headers: ['2000'],
+  headers: [
+    {
+      type: HeaderType.STRING,
+      label: '2000',
+    },
+  ],
   data: [[0], [0], [0]],
   items: [costOptions[0].label, profitOptions[0].label, ''],
   values: [

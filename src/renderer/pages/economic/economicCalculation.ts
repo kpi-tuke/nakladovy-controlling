@@ -1,7 +1,8 @@
+import { CellValue } from 'renderer/store/rootReducer';
 import { divideArrays, subtractArrays, sumArrays } from '../../helper';
 
 export function economicCalculation(
-  data: number[][],
+  data: CellValue[][],
   values: any,
   length: number
 ) {
@@ -39,7 +40,7 @@ export function economicCalculation(
   const values501index = values.findIndex((value: any) => value == 501);
   let materialCostByYear = Array.from({ length: data[0].length }, () => 0);
   if (values501index !== -1) {
-    const values501 = data[values501index];
+    const values501 = data[values501index] as number[];
     materialCostByYear = divideArrays(values501, incomeByYear);
   }
 
@@ -47,7 +48,7 @@ export function economicCalculation(
   const values521index = values.findIndex((value: any) => value == 521);
   let wageCostByYear = Array.from({ length: data[0].length }, () => 0);
   if (values521index !== -1) {
-    const values521 = data[values521index];
+    const values521 = data[values521index] as number[];
     wageCostByYear = divideArrays(values521, incomeByYear);
   }
 
@@ -55,7 +56,7 @@ export function economicCalculation(
   const values551index = values.findIndex((value: any) => value == 521);
   let depreciationCostByYear = Array.from({ length: data[0].length }, () => 0);
   if (values551index !== -1) {
-    const values551 = data[values551index];
+    const values551 = data[values551index] as number[];
     wageCostByYear = divideArrays(values551, incomeByYear);
   }
 
@@ -68,7 +69,7 @@ export function economicCalculation(
   });
   let financialConstByYear = values561569indexes.reduce(
     (acc, index) => {
-      return sumArrays(acc, data[index]);
+      return sumArrays(acc, data[index] as number[]);
     },
     Array.from({ length: data[0].length }, () => 0)
   );
@@ -83,7 +84,7 @@ export function economicCalculation(
   });
   let servicesConstByYear = values511518indexes.reduce(
     (acc, index) => {
-      return sumArrays(acc, data[index]);
+      return sumArrays(acc, data[index] as number[]);
     },
     Array.from({ length: data[0].length }, () => 0)
   );
@@ -98,7 +99,7 @@ export function economicCalculation(
   });
   let taxesConstByYear = values531538indexes.reduce(
     (acc, index) => {
-      return sumArrays(acc, data[index]);
+      return sumArrays(acc, data[index] as number[]);
     },
     Array.from({ length: data[0].length }, () => 0)
   );

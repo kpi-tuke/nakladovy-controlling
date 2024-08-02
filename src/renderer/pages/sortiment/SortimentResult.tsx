@@ -14,11 +14,11 @@ import { GraphTitle } from 'renderer/components/graph/GraphTitle';
 export default function SortimentResult() {
   const { headers, data } = useAppSelector(selectSortiment);
   const { marginGross, marginProfit, profit, rentCost, rentIncome, allowance } =
-    sortimentCalculation(data);
+    sortimentCalculation(data as number[][]);
   let series = [];
   for (let index = 0; index < headers.length; index++) {
     series.push({
-      name: headers[index].toString(),
+      name: headers[index].label.toString(),
       data: [rentIncome[index], rentCost[index]],
     });
   }
@@ -26,7 +26,7 @@ export default function SortimentResult() {
   let series2: any[] = [];
   for (let index = 0; index < headers.length; index++) {
     series2.push({
-      name: headers[index].toString(),
+      name: headers[index].label.toString(),
       data: [marginGross[index]],
     });
   }
@@ -34,7 +34,7 @@ export default function SortimentResult() {
   let series3: any[] = [];
   for (let index = 0; index < headers.length; index++) {
     series3.push({
-      name: headers[index].toString(),
+      name: headers[index].label.toString(),
       data: [allowance[index]],
     });
   }
@@ -62,7 +62,7 @@ export default function SortimentResult() {
       <Paper>
         <TableStatic
           corner={'Ukazovatele sortimentnej analýzy'}
-          header={[...headers]}
+          header={headers.map((h) => h.label)}
           inputs={[
             [
               '(Rt) - rentabilita tržieb (%)',

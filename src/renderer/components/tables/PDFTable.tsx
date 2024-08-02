@@ -22,7 +22,7 @@ export default function PDFTable({
   const colsPerTable = 5;
   const { separatedHeaders, separatedData } = splitTable(
     colsPerTable,
-    headers,
+    headers.map((h) => h.label),
     data
   );
 
