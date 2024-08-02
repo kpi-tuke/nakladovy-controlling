@@ -6,22 +6,24 @@ import {
   rootReducer,
   sortTableByItemNumber,
 } from '../../store/rootReducer';
-import groupedOptions from 'renderer/chartOfAccounts';
+import { costOptions } from 'renderer/chartOfAccounts';
 
 const initialStructureState: defaultState = {
   id: 2,
-  title: 'Štruktúrna analýza',
+  title: 'Štruktúrna analýza nákladov',
   corner: '↓Nákladové druhy | Kalkulačné položky→',
   headers: ['Priamy materiál'],
   data: [[0], [0]],
-  items: [groupedOptions[0].options[0].label, ''],
-  values: [groupedOptions[0].options[0].value.toString(), ''],
+  items: [costOptions[0].label, ''],
+  values: [costOptions[0].value.toString(), ''],
+  // options: groupedOptions,
   text: '',
   accounts: [''],
   sortable: false,
   hasAnalytic: false,
   dynRows: true,
   dynCols: true,
+  itemSelectOptions: costOptions,
 };
 
 const structureSlice = createSlice({

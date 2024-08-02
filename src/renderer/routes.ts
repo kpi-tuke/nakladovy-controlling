@@ -33,7 +33,7 @@ export const routes: { [key in RouteName]: Route } = {
     save: true,
   },
   [RouteName.STRUCTURE_ANALYSIS]: {
-    title: 'Štruktúrna analýza',
+    title: 'Štruktúrna analýza nákladov',
     printToPDF: true,
     save: true,
   },

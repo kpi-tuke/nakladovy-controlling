@@ -120,7 +120,7 @@ const Report: React.FC<Props> = ({
               ref: economicRef,
             },
             {
-              label: 'Štruktúrna analýza',
+              label: 'Štruktúrna analýza nákladov',
               id: RouteName.STRUCTURE_ANALYSIS,
               ref: structureRef,
             },

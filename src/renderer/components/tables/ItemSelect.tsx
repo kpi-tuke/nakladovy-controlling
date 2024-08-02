@@ -1,6 +1,5 @@
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { defaultState } from '../../store/rootReducer';
-import groupedOptions from '../../chartOfAccounts';
 import { RootState } from '../../store/store';
 import {
   Table,
@@ -11,30 +10,12 @@ import {
   TableRow,
 } from './Table';
 import { Autocomplete, Button, styled, TextField } from '@mui/material';
-import { Add } from '@mui/icons-material';
-import React from 'react';
 import TableInput from './TableInput';
 import TableActionButton from './TableActionButton';
 
 const AddCell = styled(TableCell)`
   position: relative;
   height: 28px;
-`;
-
-const AddButton = styled(Button)`
-  background-color: #fff;
-  padding: 0;
-  position: absolute;
-  inset: 0;
-  min-width: unset;
-  width: 100%;
-  border-radius: 0;
-  color: ${({ theme }) => theme.palette.success.main};
-
-  &:hover {
-    background-color: ${({ theme }) => theme.palette.success.main};
-    color: #fff;
-  }
 `;
 
 type Option = {
@@ -52,7 +33,12 @@ export default function ItemSelect({
   selector: (state: RootState) => defaultState;
   actions: any;
 }) {
-  const { corner, items, values } = useAppSelector(selector);
+  const {
+    corner,
+    items,
+    values,
+    itemSelectOptions = [],
+  } = useAppSelector(selector);
   const dispatch = useAppDispatch();
 
   const handleAutocompleteChange = (value: Option, idx: number) => {
@@ -80,20 +66,6 @@ export default function ItemSelect({
     dispatch(actions.addRow());
   };
 
-  const allOption = React.useMemo(() => {
-    const allOptions: Option[] = [];
-
-    groupedOptions.forEach((group) => {
-      group.options.forEach((option) => {
-        allOptions.push({ ...option, type: group.label });
-      });
-    });
-
-    allOptions.push({ label: ADD_CUSTOM, value: -1, type: 'Iné' });
-
-    return allOptions;
-  }, []);
-
   return (
     <Table
       sx={{
@@ -113,8 +85,10 @@ export default function ItemSelect({
               <TableCell>
                 {values[row] != '-1' ? (
                   <Autocomplete
-                    value={allOption.find((option) => option.label === value)}
-                    options={allOption}
+                    value={itemSelectOptions.find(
+                      (option) => option.label === value
+                    )}
+                    options={itemSelectOptions}
                     groupBy={(option) => option.type}
                     getOptionLabel={(option) => option.label}
                     getOptionDisabled={(option) =>

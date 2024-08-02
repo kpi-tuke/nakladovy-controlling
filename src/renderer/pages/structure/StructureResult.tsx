@@ -49,7 +49,7 @@ export default function StructureResult() {
     plotOptions: { bar: { distributed: true } },
   };
   const calculationOptions = {
-    ...useColGraph(headers, 'Náklady (€)'),
+    ...useColGraph(headers, 'Kalkulačné náklady'),
     legend: { show: false },
     plotOptions: { bar: { distributed: true } },
   };
@@ -143,7 +143,7 @@ export default function StructureResult() {
 
       <Paper>
         <TableStatic
-          corner={'Kalkulačné položky'}
+          corner={'Druhové náklady'}
           header={[...headers, 'SPOLU']}
           inputs={[
             ['(Nj) - náklady jednotkové (€)', ''],
@@ -179,7 +179,7 @@ export default function StructureResult() {
       >
         <Grid item xs={12} md={6} display={'flex'}>
           <GraphCard sx={{ flex: 1 }}>
-            <GraphTitle>ŠTRUKTÚRA NÁKLADOVÝCH DRUHOV</GraphTitle>
+            <GraphTitle>Štruktúra nákladov (%)</GraphTitle>
             <ReactApexChart
               options={pieChart}
               series={rowSums}
@@ -191,7 +191,7 @@ export default function StructureResult() {
 
         <Grid item xs={12} md={6} display={'flex'}>
           <GraphCard sx={{ flex: 1 }}>
-            <GraphTitle>DRUHOVÉ ČLENENIE NÁKLADOV</GraphTitle>
+            <GraphTitle>Druhové náklady (€)</GraphTitle>
             <ReactApexChart
               options={genericOptions}
               series={genericSeries}
@@ -215,7 +215,7 @@ export default function StructureResult() {
 
         <Grid item xs={12} md={6} display={'flex'}>
           <GraphCard sx={{ flex: 1 }}>
-            <GraphTitle>KALKULAČNÉ ČLENENIE NÁKLADOV</GraphTitle>
+            <GraphTitle>Kalkulačné položky</GraphTitle>
             <ReactApexChart
               options={calculationOptions}
               series={calculationSeries}

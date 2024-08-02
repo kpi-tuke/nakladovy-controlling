@@ -1,5 +1,4 @@
 import { PayloadAction } from '@reduxjs/toolkit';
-import { off } from 'process';
 import { isNumeric } from 'renderer/helper';
 import { SortDirection } from 'renderer/types/sortDirection';
 
@@ -17,6 +16,8 @@ export interface defaultState {
   hasAnalytic: boolean;
   dynRows?: boolean;
   dynCols?: boolean;
+  // TODO: prepisat
+  itemSelectOptions?: any;
 }
 
 export interface dataOnIndex {

@@ -1,4 +1,14 @@
-export const profits = [
+export type InputSelectOption = {
+  value: number;
+  label: string;
+};
+
+export enum InputSelectType {
+  COSTS = 'Náklady',
+  PROFITS = 'Výnosy',
+}
+
+const profits: InputSelectOption[] = [
   { value: 601, label: '601 - Tržby za vlastné výrobky' },
   { value: 602, label: '602 - Tržby z predaja služieb' },
   { value: 604, label: '604 - Tržby za tovar' },
@@ -41,7 +51,7 @@ export const profits = [
   { value: 668, label: '668 - Ostatné finančné výnosy' },
 ];
 
-export const costs = [
+const costs = [
   { value: 501, label: '501 - Spotreba materiálu' },
   { value: 502, label: '502 - Spotreba energie' },
   { value: 503, label: '503 - Spotreba ostatných neskladovateľných dodávok' },
@@ -124,15 +134,14 @@ export const costs = [
   },
 ];
 
-const groupedOptions = [
-  {
-    label: 'Náklady',
-    options: costs,
-  },
-  {
-    label: 'Výnosy',
-    options: profits,
-  },
-];
+export const costOptions = costs.map((item) => ({
+  ...item,
+  type: InputSelectType.COSTS,
+}));
 
-export default groupedOptions;
+export const profitOptions = profits.map((item) => ({
+  ...item,
+  type: InputSelectType.PROFITS,
+}));
+
+export const allOptions = [...costOptions, ...profitOptions];

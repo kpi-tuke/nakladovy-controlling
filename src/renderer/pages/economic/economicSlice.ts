@@ -8,7 +8,11 @@ import {
   sortTableByYear,
 } from '../../store/rootReducer';
 import { RootState } from '../../store/store';
-import groupedOptions from 'renderer/chartOfAccounts';
+import {
+  costOptions,
+  profitOptions,
+  allOptions,
+} from 'renderer/chartOfAccounts';
 
 const initialEconomicState: defaultState = {
   id: 1,
@@ -16,14 +20,10 @@ const initialEconomicState: defaultState = {
   corner: 'Ekonomická veličina (€)',
   headers: ['2000'],
   data: [[0], [0], [0]],
-  items: [
-    groupedOptions[0].options[0].label,
-    groupedOptions[1].options[0].label,
-    '',
-  ],
+  items: [costOptions[0].label, profitOptions[0].label, ''],
   values: [
-    groupedOptions[0].options[0].value.toString(),
-    groupedOptions[1].options[0].value.toString(),
+    costOptions[0].value.toString(),
+    profitOptions[0].value.toString(),
     '',
   ],
   text: '',
@@ -32,6 +32,7 @@ const initialEconomicState: defaultState = {
   hasAnalytic: true,
   dynRows: true,
   dynCols: true,
+  itemSelectOptions: allOptions,
 };
 
 export const economicSlice = createSlice({
