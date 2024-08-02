@@ -117,6 +117,21 @@ ipcMain.handle('save', async (_, state) => {
 });
 
 ipcMain.handle('printToPDF', async (_, fileName: string) => {
+  let maximized = false;
+  let fullScreened = false;
+  if (mainWindow?.isFullScreen()) {
+    mainWindow?.setFullScreen(false);
+    fullScreened = true;
+    console.log('fullScreened');
+  } else if (mainWindow?.isMaximized()) {
+    mainWindow?.unmaximize();
+    maximized = true;
+    console.log('maximized');
+  }
+
+  const [width, height] = mainWindow?.getSize();
+  mainWindow?.setSize(800, height);
+
   const options = {
     marginsType: 0,
     pageSize: 'A4',
@@ -161,6 +176,14 @@ ipcMain.handle('printToPDF', async (_, fileName: string) => {
           return 'okej';
         }
       });
+
+      if (maximized) {
+        mainWindow?.maximize();
+      } else if (fullScreened) {
+        mainWindow?.setFullScreen(true);
+      } else {
+        mainWindow?.setSize(width, height);
+      }
     } catch (error) {
       console.log(error);
       return false;
