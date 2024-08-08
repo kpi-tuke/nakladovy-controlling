@@ -14,6 +14,20 @@ const List = styled('ul')`
 
 const Item = styled('li')`
   text-align: center;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+`;
+
+const Dot = styled('div')`
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+`;
+
+const Text = styled('p')`
+  font-size: 12px;
+  margin: 0;
 `;
 
 const CustomLegend: React.FC<LegendProps> = (props) => {
@@ -24,8 +38,9 @@ const CustomLegend: React.FC<LegendProps> = (props) => {
       {payload.map((entry, index) => {
         const formattedValue = entry.value.replace(/_(\d+)/g, '<sub>$1</sub>');
         return (
-          <Item key={`item-${index}`} style={{ color: entry.color }}>
-            <span dangerouslySetInnerHTML={{ __html: formattedValue }} />
+          <Item key={`item-${index}`}>
+            <Dot style={{ backgroundColor: entry.color }} />
+            <Text dangerouslySetInnerHTML={{ __html: formattedValue }} />
           </Item>
         );
       })}

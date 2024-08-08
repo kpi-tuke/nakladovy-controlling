@@ -11,6 +11,7 @@ const Wrapper = styled(Box)`
 const Title = styled('p')`
   margin: 0;
   margin-bottom: 8px;
+  font-weight: bold;
 `;
 
 const List = styled('ul')`
@@ -20,6 +21,28 @@ const List = styled('ul')`
   list-style: none;
   margin: 0;
   padding: 0;
+`;
+
+const Item = styled('li')`
+  text-align: center;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+`;
+
+const Dot = styled('div')`
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+`;
+
+const Text = styled('p')`
+  font-size: 14px;
+  margin: 0;
+`;
+
+const Value = styled(Text)`
+  font-weight: bold;
 `;
 
 const CustomTooltip: React.FC<TooltipProps<any, any>> = ({
@@ -38,10 +61,12 @@ const CustomTooltip: React.FC<TooltipProps<any, any>> = ({
               '<sub>$1</sub>'
             );
             return (
-              <li key={`item-${index}`} style={{ color: entry.color }}>
-                <span dangerouslySetInnerHTML={{ __html: formattedValue }} />:{' '}
-                {entry.value}
-              </li>
+              <Item key={`item-${index}`}>
+                <Dot style={{ backgroundColor: entry.color }} />
+                <Text
+                  dangerouslySetInnerHTML={{ __html: formattedValue }}
+                />: <Value>{entry.value}</Value>
+              </Item>
             );
           })}
         </List>
