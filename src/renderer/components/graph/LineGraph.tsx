@@ -11,7 +11,7 @@ import {
 } from 'recharts';
 import { GraphCard } from './GraphCard';
 import { GraphTitle } from './GraphTitle';
-import { graphColors } from './colors';
+import { getColorByIndex } from './colors';
 import CustomLegend from './CustomLegend';
 import CustomTooltip from './CustomTooltip';
 import { useTheme } from '@mui/material';
@@ -69,7 +69,7 @@ const LineGraph: React.FC<Props> = ({ height, title, data, labels }) => {
               key={d.name}
               type="monotone"
               dataKey={d.name}
-              stroke={graphColors[index]}
+              stroke={getColorByIndex(index)}
               strokeWidth={3}
             />
           ))}

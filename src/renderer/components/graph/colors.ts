@@ -1,4 +1,4 @@
-export const graphColors = [
+const graphColors = [
   '#02b2af',
   '#72ccff',
   '#da01fe',
@@ -10,3 +10,8 @@ export const graphColors = [
   '#ff1744',
   '#00b8d4',
 ];
+
+export function getColorByIndex(index: number): string {
+  const colorIndex = index % graphColors.length;
+  return graphColors[colorIndex];
+}

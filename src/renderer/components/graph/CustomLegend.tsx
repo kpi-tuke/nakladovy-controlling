@@ -1,6 +1,6 @@
-import { styled } from '@mui/material';
+import { styled, Typography } from '@mui/material';
 import React from 'react';
-import { LegendProps } from 'recharts';
+import { Legend, LegendProps } from 'recharts';
 
 const List = styled('ul')`
   display: flex;
@@ -25,7 +25,7 @@ const Dot = styled('div')`
   border-radius: 50%;
 `;
 
-const Text = styled('p')`
+const Text = styled(Typography)`
   font-size: 12px;
   margin: 0;
 `;

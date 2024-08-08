@@ -1,7 +1,4 @@
-import ReactApexChart from 'react-apexcharts';
 import TableStatic from '../../components/TableStatic';
-import { useColGraph } from '../../graphOptions';
-import { ApexOptions } from 'apexcharts';
 import { structureCalculation } from './structureCalculation';
 import { useAppSelector } from '../../store/hooks';
 import { selectStructure } from './structureSlice';
@@ -9,8 +6,8 @@ import SectionTitle from 'renderer/components/SectionTitle';
 import Spacer from 'renderer/components/Spacer';
 import { Grid, Paper } from '@mui/material';
 import React from 'react';
-import { GraphCard } from 'renderer/components/graph/GraphCard';
-import { GraphTitle } from 'renderer/components/graph/GraphTitle';
+import BarGraph from 'renderer/components/graph/BarGraph';
+import PieGraph from 'renderer/components/graph/PieGraph';
 
 export default function StructureResult() {
   const { data, items, headers } = useAppSelector(selectStructure);
@@ -28,89 +25,6 @@ export default function StructureResult() {
   }, [data, items]);
 
   const { rowSums, totalCost, colSums } = structureCalculation(filteredData);
-
-  const genericSeries = [
-    {
-      name: 'Druhové',
-      data: rowSums,
-    },
-  ];
-
-  const calculationSeries = [
-    {
-      name: 'Kalkulačné',
-      data: colSums,
-    },
-  ];
-
-  const genericOptions = {
-    ...useColGraph(items, 'Náklady (€)'),
-    legend: { show: false },
-    plotOptions: { bar: { distributed: true } },
-  };
-  const calculationOptions = {
-    ...useColGraph(
-      headers.map((h) => h.label),
-      'Kalkulačné náklady'
-    ),
-    legend: { show: false },
-    plotOptions: { bar: { distributed: true } },
-  };
-
-  const pieChart: ApexOptions = {
-    chart: {
-      type: 'pie',
-      toolbar: {
-        show: true,
-      },
-    },
-    colors: [
-      '#2E93fA',
-      '#59edbb',
-      '#FF9800',
-      '#E91E63',
-      '#66DA26',
-      '#a796e0',
-      '#fff923',
-      '#eda859',
-      '#546E7A',
-    ],
-    legend: {
-      show: true,
-      position: 'bottom',
-    },
-    fill: {
-      type: 'gradient',
-    },
-    labels: items,
-  };
-  const donutChart: ApexOptions = {
-    chart: {
-      type: 'donut',
-      toolbar: {
-        show: true,
-      },
-    },
-    colors: [
-      '#2E93fA',
-      '#59edbb',
-      '#FF9800',
-      '#E91E63',
-      '#66DA26',
-      '#a796e0',
-      '#fff923',
-      '#eda859',
-      '#546E7A',
-    ],
-    legend: {
-      show: true,
-      position: 'bottom',
-    },
-    fill: {
-      type: 'gradient',
-    },
-    labels: headers.map((h) => h.label),
-  };
 
   return (
     <div>
@@ -174,58 +88,55 @@ export default function StructureResult() {
 
       <SectionTitle>Dashboarding</SectionTitle>
 
-      <Grid
-        container
-        spacing={2}
-        justifyContent="space-between"
-        alignItems="stretch"
-      >
-        <Grid item xs={12} md={6} display={'flex'}>
-          <GraphCard sx={{ flex: 1 }}>
-            <GraphTitle>Štruktúra nákladov (%)</GraphTitle>
-            <ReactApexChart
-              options={pieChart}
-              series={rowSums}
-              type="pie"
-              height={407}
-            />
-          </GraphCard>
+      <Grid container spacing={2}>
+        <Grid item xs={12} md={6}>
+          <PieGraph
+            title="Štruktúra nákladov (%)"
+            height={420}
+            data={rowSums.map((value, index) => ({
+              name: items[index],
+              value,
+            }))}
+          />
         </Grid>
 
-        <Grid item xs={12} md={6} display={'flex'}>
-          <GraphCard sx={{ flex: 1 }}>
-            <GraphTitle>Druhové náklady (€)</GraphTitle>
-            <ReactApexChart
-              options={genericOptions}
-              series={genericSeries}
-              type="bar"
-              height={350}
-            />
-          </GraphCard>
+        <Grid item xs={12} md={6}>
+          <BarGraph
+            title="Druhové náklady (€)"
+            height={420}
+            labels={['']}
+            data={items.filter(Boolean).map((item, index) => ({
+              name: item,
+              values: [rowSums[index]],
+            }))}
+            yAxisLabel="Náklady (€)"
+            showValueInBar={true}
+          />
         </Grid>
 
-        <Grid item xs={12} md={6} display={'flex'}>
-          <GraphCard sx={{ flex: 1 }}>
-            <GraphTitle>ŠTRUKTÚRA KALKULAČNÝCH POLOŽIEK</GraphTitle>
-            <ReactApexChart
-              options={donutChart}
-              series={colSums}
-              type="donut"
-              height={407}
-            />
-          </GraphCard>
+        <Grid item xs={12} md={6}>
+          <PieGraph
+            title="ŠTRUKTÚRA KALKULAČNÝCH POLOŽIEK"
+            height={420}
+            data={colSums.filter(Boolean).map((value, index) => ({
+              name: headers[index].label,
+              value,
+            }))}
+          />
         </Grid>
 
-        <Grid item xs={12} md={6} display={'flex'}>
-          <GraphCard sx={{ flex: 1 }}>
-            <GraphTitle>Kalkulačné položky</GraphTitle>
-            <ReactApexChart
-              options={calculationOptions}
-              series={calculationSeries}
-              type="bar"
-              height={350}
-            />
-          </GraphCard>
+        <Grid item xs={12} md={6}>
+          <BarGraph
+            title="Kalkulačné položky"
+            height={420}
+            labels={['']}
+            data={headers.filter(Boolean).map((header, index) => ({
+              name: header.label,
+              values: [colSums[index]],
+            }))}
+            yAxisLabel="Kalkulačné náklady"
+            showValueInBar={true}
+          />
         </Grid>
       </Grid>
     </div>

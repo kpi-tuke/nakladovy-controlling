@@ -2,9 +2,9 @@ export function structureCalculation(data: number[][]) {
   let rowSums: number[] = [];
   let colSums: number[] = [];
 
-  data.map((rowData: number[], row: number) => {
+  data.forEach((rowData: number[], row: number) => {
     rowSums[row] = 0;
-    rowData.map((value: number) => {
+    rowData.forEach((value: number) => {
       rowSums[row] = parseFloat((rowSums[row] + value).toFixed(12));
     });
   });
@@ -13,8 +13,8 @@ export function structureCalculation(data: number[][]) {
     colSums.push(0);
   }
 
-  data.map((rowData: number[]) => {
-    rowData.map((value: number, idx: number) => {
+  data.forEach((rowData: number[]) => {
+    rowData.forEach((value: number, idx: number) => {
       colSums[idx] = parseFloat((colSums[idx] + value).toFixed(12));
     });
   });
