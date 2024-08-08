@@ -11,6 +11,8 @@ import { Paper } from '@mui/material';
 import { GraphCard } from 'renderer/components/graph/GraphCard';
 import { GraphTitle } from 'renderer/components/graph/GraphTitle';
 
+import LineGraph from 'renderer/components/graph/LineGraph';
+
 export default function EconomicResult() {
   const { headers, data, values } = useAppSelector(selectEconomic);
   const {
@@ -145,6 +147,28 @@ export default function EconomicResult() {
       <Spacer height={40} hideInPrint />
 
       <SectionTitle>Dashboarding</SectionTitle>
+
+      <LineGraph
+        title="TREND VÝVOJA EKONOMICKÝCH VELIČÍN"
+        height={420}
+        labels={headers.map((h) => h.label)}
+        data={[
+          {
+            name: 'Náklady (N<sub>c</sub>)',
+            values: costData,
+          },
+          {
+            name: 'Výnosy (V<sub>c</sub>)',
+            values: incomeData,
+          },
+          {
+            name: 'Výsledok hospodárenia - zisk/strata (VH)',
+            values: profitData,
+          },
+        ]}
+      />
+
+      <Spacer height={40} hideInPrint />
 
       <GraphCard>
         <GraphTitle>TREND VÝVOJA EKONOMICKÝCH VELIČÍN</GraphTitle>
