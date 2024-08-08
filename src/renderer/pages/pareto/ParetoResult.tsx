@@ -98,9 +98,9 @@ export default function ParetoResult() {
       <SectionTitle className="new-page">Analýza ukazovateľov</SectionTitle>
       <Paper>
         <TableStatic
-          corner={'Príčiny vzniku nákladov'}
+          corner={'Druhové náklady'}
           header={[
-            '(N) - náklady (€)',
+            '(N) - výška nákladov (€)',
             'Kumulované náklady (€)',
             'Štruktúra nákladov (%)',
             'Kumulovaná štruktúra nákladov (%)',
