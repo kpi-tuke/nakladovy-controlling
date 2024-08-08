@@ -1,15 +1,11 @@
 import TableStatic from '../../components/TableStatic';
-import ReactApexChart from 'react-apexcharts';
-import { ApexOptions } from 'apexcharts';
-import { useColGraph } from '../../graphOptions';
 import { sortimentCalculation } from './sortimentCalculation';
 import { useAppSelector } from '../../store/hooks';
 import { selectSortiment } from './sortimentSlice';
 import SectionTitle from 'renderer/components/SectionTitle';
 import { Grid, Paper } from '@mui/material';
 import Spacer from 'renderer/components/Spacer';
-import { GraphCard } from 'renderer/components/graph/GraphCard';
-import { GraphTitle } from 'renderer/components/graph/GraphTitle';
+import BarGraph from 'renderer/components/graph/BarGraph';
 
 export default function SortimentResult() {
   const { headers, data } = useAppSelector(selectSortiment);
@@ -27,43 +23,6 @@ export default function SortimentResult() {
     totalCosts,
     totalProfit,
   } = sortimentCalculation(data as number[][]);
-
-  let series = [];
-  for (let index = 0; index < headers.length; index++) {
-    series.push({
-      name: headers[index].label.toString(),
-      data: [rentIncome[index], rentCost[index]],
-    });
-  }
-
-  let series2: any[] = [];
-  for (let index = 0; index < headers.length; index++) {
-    series2.push({
-      name: headers[index].label.toString(),
-      data: [marginGross[index]],
-    });
-  }
-
-  let series3: any[] = [];
-  for (let index = 0; index < headers.length; index++) {
-    series3.push({
-      name: headers[index].label.toString(),
-      data: [allowance[index]],
-    });
-  }
-
-  const rentabilityOptions: ApexOptions = useColGraph(
-    ['Rentabilita tržieb', 'Rentabilita nákladov'],
-    'ekonomický ukazovatel (%)'
-  );
-  const marginOptions: ApexOptions = useColGraph(
-    [''],
-    'ekonomický ukazovatel (€)'
-  );
-  const allowanceOptions: ApexOptions = useColGraph(
-    [''],
-    'ekonomický ukazovatel (€)'
-  );
 
   return (
     <div>
@@ -128,41 +87,43 @@ export default function SortimentResult() {
 
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <GraphCard>
-            <GraphTitle>UKAZOVATELE SORTIMENTNEJ ANALÝZY</GraphTitle>
-            {
-              <ReactApexChart
-                options={rentabilityOptions}
-                series={series}
-                type="bar"
-                height={420}
-              />
-            }
-          </GraphCard>
+          <BarGraph
+            title="UKAZOVATELE SORTIMENTNEJ ANALÝZY"
+            height={420}
+            labels={['Rentabilita tržieb', 'Rentabilita nákladov']}
+            data={headers.map((h, index) => ({
+              name: h.label,
+              values: [rentIncome[index], rentCost[index]],
+            }))}
+            showValueInBar={true}
+            yAxisLabel="ekonomický ukazovatel (%)"
+          />
         </Grid>
 
         <Grid item xs={12} md={6}>
-          <GraphCard>
-            <GraphTitle>HRUBÉ ROZPÄTIE</GraphTitle>
-            <ReactApexChart
-              options={marginOptions}
-              series={series2}
-              type="bar"
-              height={420}
-            />
-          </GraphCard>
+          <BarGraph
+            title="HRUBÉ ROZPÄTIE"
+            height={420}
+            labels={['']}
+            data={headers.map((header, index) => ({
+              name: header.label,
+              values: [marginGross[index]],
+            }))}
+            showValueInBar
+          />
         </Grid>
 
         <Grid item xs={12} md={6}>
-          <GraphCard>
-            <GraphTitle>PRÍSPEVOK NA ÚHRADU</GraphTitle>
-            <ReactApexChart
-              options={allowanceOptions}
-              series={series3}
-              type="bar"
-              height={420}
-            />
-          </GraphCard>
+          <BarGraph
+            title="PRÍSPEVOK NA ÚHRADU"
+            height={420}
+            labels={['']}
+            data={headers.map((header, index) => ({
+              name: header.label,
+              values: [allowance[index]],
+            }))}
+            showValueInBar
+          />
         </Grid>
       </Grid>
     </div>

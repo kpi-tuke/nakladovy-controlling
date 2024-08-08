@@ -16,6 +16,7 @@ import { getColorByIndex } from './colors';
 import CustomLegend from './CustomLegend';
 import CustomTooltip from './CustomTooltip';
 import { useTheme } from '@mui/material';
+import CustomYAxisLabel from './CustomYAxisLabel';
 
 type BarData = {
   name: string;
@@ -38,7 +39,7 @@ const BarGraph: React.FC<Props> = ({
   title,
   data,
   labels,
-  barLabelSize,
+  barLabelSize = 14,
   showLegend = true,
   yAxisLabel,
   showValueInBar,
@@ -63,8 +64,6 @@ const BarGraph: React.FC<Props> = ({
     });
   }, [data, labels]);
 
-  console.log('finalData: ', finalData);
-
   return (
     <GraphCard>
       <GraphTitle>{title}</GraphTitle>
@@ -75,13 +74,18 @@ const BarGraph: React.FC<Props> = ({
             dataKey="name"
             stroke={primaryTextColor}
             fontSize={barLabelSize}
+            fontWeight={'bold'}
           />
           <YAxis
             stroke={primaryTextColor}
             label={
-              yAxisLabel
-                ? { value: yAxisLabel, angle: -90, position: 'insideLeft' }
-                : undefined
+              yAxisLabel ? (
+                <CustomYAxisLabel
+                  value={yAxisLabel}
+                  angle={-90}
+                  position="insideBottom"
+                />
+              ) : undefined
             }
           />
           <Tooltip content={<CustomTooltip />} />
@@ -94,6 +98,7 @@ const BarGraph: React.FC<Props> = ({
                   dataKey={d.name}
                   position="inside"
                   fill={primaryTextColor}
+                  fontWeight={'bold'}
                 />
               )}
             </Bar>
