@@ -145,3 +145,10 @@ export const profitOptions = profits.map((item) => ({
 }));
 
 export const allOptions = [...costOptions, ...profitOptions];
+
+export const ADD_CUSTOM_ITEM_LABEL = 'Iná položka...';
+
+export const customOption = {
+  value: -1,
+  label: ADD_CUSTOM_ITEM_LABEL,
+};

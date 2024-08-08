@@ -9,6 +9,7 @@ import {
   sortTableByYear,
 } from '../../store/rootReducer';
 import { RootState } from '../../store/store';
+import { allOptions, customOption } from 'renderer/chartOfAccounts';
 
 const initialIndexState: defaultState = {
   id: 3,
@@ -39,6 +40,7 @@ const initialIndexState: defaultState = {
     '',
   ],
   values: ['501', '666', ''],
+  itemSelectOptions: [...allOptions, customOption],
   text: '',
   accounts: [''],
   sortable: true,

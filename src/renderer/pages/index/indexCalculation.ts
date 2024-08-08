@@ -5,26 +5,29 @@ export function indexCalculation(
   headers: string[],
   values: any
 ) {
-  let costSumsForYears: number[] = headers.slice(1).map(() => 0);
-  let incomeSumsForYears: number[] = headers.slice(1).map(() => 0);
+  const costSumsForYears: number[] = headers.slice(1).map(() => 0);
+  const incomeSumsForYears: number[] = headers.slice(1).map(() => 0);
+  const customValueSumsForYears: number[] = headers.slice(1).map(() => 0);
+
   let costSumBase: number = 0;
-  let chainIndexes: number[];
-  let baseIndexes: number[];
-  let incomeDiff: number[];
-  let costDiff: number[];
-  let reaction: number[];
-  let betweenYears: string[] = [];
+  const betweenYears: string[] = [];
 
   data.map((rowData: number[], row: number) => {
     rowData.slice(1).map((value: number, col: number) => {
-      // 500-599 codes of costs, 600-699 codes od incomes
+      // 600-699 codes of incomes
       if (parseInt(values[row]) >= 600) {
         incomeSumsForYears[col] = parseFloat(
           (incomeSumsForYears[col] + value).toFixed(12)
         );
-      } else {
+        // 500-599 codes of costs
+      } else if (parseInt(values[row]) >= 500) {
         costSumsForYears[col] = parseFloat(
           (costSumsForYears[col] + value).toFixed(12)
+        );
+        // custom value
+      } else if (parseInt(values[row]) === -1) {
+        customValueSumsForYears[col] = parseFloat(
+          (customValueSumsForYears[col] + value).toFixed(12)
         );
       }
     });
@@ -35,26 +38,40 @@ export function indexCalculation(
       costSumBase = parseFloat((costSumBase + data[i][0]).toFixed(12));
   }
 
-  incomeDiff = subtractArrays(
+  const incomeDiff = subtractArrays(
     divideArrays(
       incomeSumsForYears.slice(1).map((value) => value * 100),
       incomeSumsForYears.slice(0, -1)
     ),
     incomeSumsForYears.map(() => 100)
   );
-  costDiff = subtractArrays(
+
+  const costDiff = subtractArrays(
     divideArrays(
       costSumsForYears.slice(1).map((value) => value * 100),
       costSumsForYears.slice(0, -1)
     ),
     costSumsForYears.map(() => 100)
   );
-  chainIndexes = divideArrays(
+
+  const chainIndexes = divideArrays(
     costSumsForYears.slice(1),
     costSumsForYears.slice(0, -1)
   );
-  reaction = divideArrays(costDiff, incomeDiff);
-  baseIndexes = divideArrays(
+
+  const absoluteChainIndexes = subtractArrays(
+    costSumsForYears,
+    incomeSumsForYears
+  );
+
+  const reaction = divideArrays(costDiff, incomeDiff);
+
+  const baseIndexes = divideArrays(
+    costSumsForYears,
+    costSumsForYears.map(() => costSumBase)
+  );
+
+  const absoluteBaseIndexes = subtractArrays(
     costSumsForYears,
     costSumsForYears.map(() => costSumBase)
   );
@@ -72,9 +89,12 @@ export function indexCalculation(
     newHeaders,
     costSumsForYears,
     incomeSumsForYears,
+    customValueSumsForYears,
     costSumBase,
     chainIndexes,
+    absoluteChainIndexes,
     baseIndexes,
+    absoluteBaseIndexes,
     costDiff,
     incomeDiff,
     reaction,

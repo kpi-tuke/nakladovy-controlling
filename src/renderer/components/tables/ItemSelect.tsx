@@ -12,6 +12,7 @@ import {
 import { Autocomplete, Button, styled, TextField } from '@mui/material';
 import TableInput from './TableInput';
 import TableActionButton from './TableActionButton';
+import { ADD_CUSTOM_ITEM_LABEL } from 'renderer/chartOfAccounts';
 
 const AddCell = styled(TableCell)`
   position: relative;
@@ -23,8 +24,6 @@ type Option = {
   value: number;
   type: string;
 };
-
-const ADD_CUSTOM = 'Iná položka...';
 
 export default function ItemSelect({
   selector,
@@ -42,7 +41,7 @@ export default function ItemSelect({
   const dispatch = useAppDispatch();
 
   const handleAutocompleteChange = (value: Option, idx: number) => {
-    const savedValue = value.label === ADD_CUSTOM ? '' : value.label;
+    const savedValue = value.label === ADD_CUSTOM_ITEM_LABEL ? '' : value.label;
 
     dispatch(actions.setItemsOnIndex({ data: savedValue, index: idx }));
     dispatch(
@@ -93,7 +92,7 @@ export default function ItemSelect({
                     getOptionLabel={(option) => option.label}
                     getOptionDisabled={(option) =>
                       items.includes(option.label) &&
-                      option.label !== ADD_CUSTOM
+                      option.label !== ADD_CUSTOM_ITEM_LABEL
                     }
                     renderInput={(params) => <TextField {...params} />}
                     clearIcon={null}
