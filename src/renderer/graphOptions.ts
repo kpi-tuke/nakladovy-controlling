@@ -178,6 +178,8 @@ export const useCVPGraph = (
             },
             orientation: 'horizontal',
             text: 'Minimálny zisk',
+            // @ts-ignore
+            width: 110,
           },
         },
         {
@@ -194,6 +196,8 @@ export const useCVPGraph = (
               fontSize: '14px',
               fontWeight: 'bold',
             },
+            // @ts-ignore
+            width: 90,
           },
         },
       ],

@@ -1,5 +1,4 @@
 import TableStatic from '../../components/TableStatic';
-import ReactApexChart from 'react-apexcharts';
 import { useCVPGraph } from '../../graphOptions';
 import { ApexOptions } from 'apexcharts';
 import { cvpCalculation } from './cvpCalculation';
@@ -8,8 +7,7 @@ import { selectCVP } from './cvpSlice';
 import { Grid, Paper } from '@mui/material';
 import SectionTitle from 'renderer/components/SectionTitle';
 import Spacer from 'renderer/components/Spacer';
-import { GraphCard } from 'renderer/components/graph/GraphCard';
-import { GraphTitle } from 'renderer/components/graph/GraphTitle';
+import LineGraph from 'renderer/components/graph/LineGraph';
 
 export default function CVPResult() {
   const { data, items } = useAppSelector(selectCVP);
@@ -55,9 +53,9 @@ export default function CVPResult() {
 
     osX.push(Math.max(...osX) + Math.max(...osX) * 0.3);
 
-    osX.map((vol: number, index) => {
+    osX.map((vol: number) => {
       costTotal.push(
-        Math.round((costs[idx] * vol + fixTotals[index]) * 100) / 100
+        Math.round((costs[idx] * vol + fixTotals[idx]) * 100) / 100
       );
 
       incomeTotal.push(Math.round(prices[idx] * vol * 100) / 100);
@@ -66,9 +64,11 @@ export default function CVPResult() {
     costTotal.sort(function (a, b) {
       return a - b;
     });
+
     incomeTotal.sort(function (a, b) {
       return a - b;
     });
+
     osX.sort(function (a, b) {
       return a - b;
     });
@@ -170,26 +170,51 @@ export default function CVPResult() {
       <SectionTitle>Dashboarding</SectionTitle>
 
       <Grid container spacing={2}>
-        {graphs.map((graph, index) => (
-          <Grid
-            item
-            xs={12}
-            key={index}
-            className={index % 2 === 0 && index !== 0 ? 'new-page' : ''}
-          >
-            <GraphCard>
-              <GraphTitle>
-                {'NULOVÝ BOD: ' + graph.value.toUpperCase()}
-              </GraphTitle>
-              <ReactApexChart
-                options={graph.graph}
-                series={graph.series}
-                type="line"
-                height={420}
-              />
-            </GraphCard>
-          </Grid>
-        ))}
+        {graphs.map((graph, index) => {
+          console.log('graph: ', graph);
+
+          return (
+            <>
+              <Grid
+                item
+                xs={12}
+                key={index}
+                className={index % 2 === 0 && index !== 0 ? 'new-page' : ''}
+              >
+                <LineGraph
+                  title={'NULOVÝ BOD: ' + graph.value.toUpperCase()}
+                  labels={graph.graph.xaxis.categories}
+                  height={420}
+                  data={[
+                    {
+                      name: 'Náklady',
+                      values: graph.series[0].data,
+                    },
+                    {
+                      name: 'Výnosy',
+                      values: graph.series[1].data,
+                    },
+                  ]}
+                  referenceLines={graph.graph.annotations.xaxis.map(
+                    (annotation) => {
+                      return {
+                        x: annotation.x.toString(),
+                        stroke: annotation.borderColor,
+                        label: annotation.label.text,
+                        // @ts-ignore
+                        width: annotation.label.width,
+                      };
+                    }
+                  )}
+                  yAxisLabel="hodnota ukazovateľa (koeficient)"
+                  xAxisLabel={`objem produkcie jednotky ${
+                    data[index][1] ? `(${data[index][1]})` : ''
+                  }`}
+                />
+              </Grid>
+            </>
+          );
+        })}
       </Grid>
     </div>
   );

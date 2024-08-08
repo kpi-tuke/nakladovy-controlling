@@ -25,6 +25,10 @@ export function cvpCalculation(data: CellValue[][]) {
     minProfits[idx] = rowData[5];
   });
 
+  // nulový bod
+  const zeroTon = divideArrays(fixTotals, subtractArrays(prices, costs));
+
+  // nulový bod (€)
   const zeroEur = divideArrays(
     fixTotals,
     subtractArrays(
@@ -33,8 +37,7 @@ export function cvpCalculation(data: CellValue[][]) {
     )
   );
 
-  const zeroTon = divideArrays(fixTotals, subtractArrays(prices, costs));
-
+  // nulový bod Zmin (ks)
   const zeroProf = divideArrays(
     costs.map((_, index) =>
       parseFloat((fixTotals[index] + minProfits[index]).toFixed(12))

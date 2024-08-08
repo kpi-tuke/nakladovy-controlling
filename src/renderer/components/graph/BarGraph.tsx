@@ -33,7 +33,7 @@ type Props = {
   showValueInBar?: boolean;
 };
 
-const LineGraph: React.FC<Props> = ({
+const BarGraph: React.FC<Props> = ({
   height,
   title,
   data,
@@ -104,4 +104,4 @@ const LineGraph: React.FC<Props> = ({
   );
 };
 
-export default LineGraph;
+export default BarGraph;
