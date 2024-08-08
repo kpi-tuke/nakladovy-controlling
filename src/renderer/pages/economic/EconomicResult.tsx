@@ -1,17 +1,13 @@
-import ReactApexChart from 'react-apexcharts';
 import TableStatic from '../../components/TableStatic';
-import { useColGraph, useLineGraph } from '../../graphOptions';
-import { ApexOptions } from 'apexcharts';
 import { economicCalculation } from './economicCalculation';
 import { useAppSelector } from '../../store/hooks';
 import { selectEconomic } from './economicSlice';
 import SectionTitle from 'renderer/components/SectionTitle';
 import Spacer from 'renderer/components/Spacer';
 import { Paper } from '@mui/material';
-import { GraphCard } from 'renderer/components/graph/GraphCard';
-import { GraphTitle } from 'renderer/components/graph/GraphTitle';
 
 import LineGraph from 'renderer/components/graph/LineGraph';
+import BarGraph from 'renderer/components/graph/BarGraph';
 
 export default function EconomicResult() {
   const { headers, data, values } = useAppSelector(selectEconomic);
@@ -30,53 +26,9 @@ export default function EconomicResult() {
     servicesConstData,
     taxesConstData,
   } = economicCalculation(data, values, headers.length ?? 0);
-  const lineSeries = [
-    {
-      name: 'Náklady (N<sub>c</sub>)',
-      data: costData,
-    },
-    {
-      name: 'Výnosy (V<sub>c</sub>)',
-      data: incomeData,
-    },
-    {
-      name: 'Výsledok hospodárenia - zisk/strata (VH)',
-      data: profitData,
-    },
-  ];
-
-  const colSeries = [
-    {
-      name: 'Rentabilita výnosov R<sub>v</sub>',
-      data: incomeProfitabilityData,
-    },
-    {
-      name: 'Rentabilita nákladov R<sub>n</sub>',
-      data: costProfitabilityData,
-    },
-    {
-      name: 'Nákladová účinnosť N<sub>ú</sub>',
-      data: costEfficiencyData,
-    },
-    {
-      name: 'Efektívnosť',
-      data: costEfficiencyData,
-    },
-    {
-      name: 'Nákladovosť celkom h<sub>c</sub>',
-      data: costIndicatorData,
-    },
-  ];
-
-  const lineOptions: ApexOptions = useLineGraph(headers.map((h) => h.label));
-
-  const colOptions: ApexOptions = useColGraph(
-    headers.map((h) => h.label),
-    'hodnota ukazovateľa (koeficient)'
-  );
 
   return (
-    <div>
+    <>
       <Spacer height={40} hideInPrint />
       <SectionTitle className="new-page">
         Analýza ekonomických ukazovateľov
@@ -170,28 +122,33 @@ export default function EconomicResult() {
 
       <Spacer height={40} hideInPrint />
 
-      <GraphCard>
-        <GraphTitle>TREND VÝVOJA EKONOMICKÝCH VELIČÍN</GraphTitle>
-        <ReactApexChart
-          options={lineOptions}
-          series={lineSeries}
-          type="line"
-          height={420}
-          width={'100%'}
-        />
-      </GraphCard>
-
-      <Spacer height={40} hideInPrint />
-
-      <GraphCard>
-        <GraphTitle>Prehľad ekonomických ukazovaťeľov</GraphTitle>
-        <ReactApexChart
-          options={colOptions}
-          series={colSeries}
-          type="bar"
-          height={420}
-        />
-      </GraphCard>
-    </div>
+      <BarGraph
+        title="Prehľad ekonomických ukazovaťeľov"
+        height={420}
+        labels={headers.map((h) => h.label)}
+        data={[
+          {
+            name: 'Rentabilita výnosov R<sub>v</sub>',
+            values: incomeProfitabilityData,
+          },
+          {
+            name: 'Rentabilita nákladov R<sub>n</sub>',
+            values: costProfitabilityData,
+          },
+          {
+            name: 'Nákladová účinnosť N<sub>ú</sub>',
+            values: costEfficiencyData,
+          },
+          {
+            name: 'Efektívnosť',
+            values: costEfficiencyData,
+          },
+          {
+            name: 'Nákladovosť celkom h<sub>c</sub>',
+            values: costIndicatorData,
+          },
+        ]}
+      />
+    </>
   );
 }

@@ -1,9 +1,9 @@
 import React, { useMemo } from 'react';
 import {
+  Bar,
+  BarChart,
   CartesianGrid,
   Legend,
-  Line,
-  LineChart,
   ResponsiveContainer,
   Tooltip,
   XAxis,
@@ -16,7 +16,7 @@ import CustomLegend from './CustomLegend';
 import CustomTooltip from './CustomTooltip';
 import { useTheme } from '@mui/material';
 
-type LineData = {
+type BarData = {
   name: string;
   values: number[];
 };
@@ -24,7 +24,7 @@ type LineData = {
 type Props = {
   height: number;
   title: string;
-  data: LineData[];
+  data: BarData[];
   labels: string[];
 };
 
@@ -53,11 +53,7 @@ const LineGraph: React.FC<Props> = ({ height, title, data, labels }) => {
     <GraphCard>
       <GraphTitle>{title}</GraphTitle>
       <ResponsiveContainer width="100%" height={height}>
-        <LineChart
-          height={250}
-          data={finalData}
-          margin={{ top: 20, right: 20 }}
-        >
+        <BarChart height={250} data={finalData} margin={{ top: 20, right: 20 }}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="name" stroke={primaryTextColor} />
           <YAxis stroke={primaryTextColor} />
@@ -65,15 +61,9 @@ const LineGraph: React.FC<Props> = ({ height, title, data, labels }) => {
           <Legend content={<CustomLegend />} />
 
           {data.map((d, index) => (
-            <Line
-              key={d.name}
-              type="monotone"
-              dataKey={d.name}
-              stroke={graphColors[index]}
-              strokeWidth={3}
-            />
+            <Bar dataKey={d.name} fill={graphColors[index]} />
           ))}
-        </LineChart>
+        </BarChart>
       </ResponsiveContainer>
     </GraphCard>
   );
