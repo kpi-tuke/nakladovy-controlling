@@ -124,7 +124,7 @@ const HeaderBar = () => {
           >
             {routeDetails?.printToPDF && (
               <ResponsiveButton
-                text="Tlačiť do PDF"
+                text="Tlačiť"
                 icon={<Print />}
                 onClick={() => printToPDF(routeDetails?.title ?? '')}
               />

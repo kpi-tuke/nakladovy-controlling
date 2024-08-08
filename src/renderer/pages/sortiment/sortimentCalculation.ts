@@ -1,18 +1,26 @@
-import { divideArrays, subtractArrays } from '../../helper';
+import {
+  divideArrays,
+  subtractArrays,
+  sumArrays,
+  multiplyArrays,
+} from '../../helper';
 
 export function sortimentCalculation(data: number[][]) {
-  let directCost: number[] = data[0].map((value) => value);
-  let totalCost: number[] = data[1].map((value) => value);
-  let price: number[] = data[2].map((value) => value);
-  let volume: number[] = data[3].map((value) => value);
-  let marginProfit: number[] = subtractArrays(price, totalCost);
-  let marginGross: number[] = subtractArrays(price, directCost);
-  let allowance: number[] = subtractArrays(
+  const directCost: number[] = data[0].map((value) => value);
+  const totalCost: number[] = data[1].map((value) => value);
+  const price: number[] = data[2].map((value) => value);
+  const volume: number[] = data[3].map((value) => value);
+  const marginProfit: number[] = subtractArrays(price, totalCost);
+  const marginGross: number[] = subtractArrays(price, directCost);
+
+  const allowance: number[] = subtractArrays(
     price.map(() => 1),
     divideArrays(directCost, price)
   );
-  let totalVolume: number = volume.reduce((a, b) => a + b, 0);
-  let profit: number[] = subtractArrays(
+
+  const totalVolume: number = volume.reduce((a, b) => a + b, 0);
+
+  const profit: number[] = subtractArrays(
     subtractArrays(
       price.map((value) => value * totalVolume),
       directCost.map((value) => value * totalVolume)
@@ -22,8 +30,21 @@ export function sortimentCalculation(data: number[][]) {
       directCost.map((value) => value * totalVolume)
     )
   );
-  let rentCost: number[] = divideArrays(marginProfit, totalCost);
-  let rentIncome: number[] = divideArrays(marginProfit, price);
+  const rentCost: number[] = divideArrays(marginProfit, totalCost);
+
+  const rentIncome: number[] = divideArrays(marginProfit, price);
+
+  const totalDirectCosts = sumArrays(sumArrays(data[4], data[5]), data[6]);
+
+  const totalIndirectCosts = subtractArrays(data[1], totalDirectCosts);
+
+  const unitProfit = subtractArrays(totalDirectCosts, data[1]);
+
+  const income = multiplyArrays(totalDirectCosts, data[3]);
+
+  const totalCosts = sumArrays(totalDirectCosts, totalIndirectCosts);
+
+  const totalProfit = subtractArrays(income, totalCosts);
 
   return {
     rentCost,
@@ -32,5 +53,11 @@ export function sortimentCalculation(data: number[][]) {
     marginGross,
     allowance,
     profit,
+    totalDirectCosts,
+    totalIndirectCosts,
+    unitProfit,
+    income,
+    totalCosts,
+    totalProfit,
   };
 }

@@ -13,8 +13,21 @@ import { GraphTitle } from 'renderer/components/graph/GraphTitle';
 
 export default function SortimentResult() {
   const { headers, data } = useAppSelector(selectSortiment);
-  const { marginGross, marginProfit, profit, rentCost, rentIncome, allowance } =
-    sortimentCalculation(data as number[][]);
+  const {
+    marginGross,
+    marginProfit,
+    profit,
+    rentCost,
+    rentIncome,
+    allowance,
+    totalDirectCosts,
+    totalIndirectCosts,
+    unitProfit,
+    income,
+    totalCosts,
+    totalProfit,
+  } = sortimentCalculation(data as number[][]);
+
   let series = [];
   for (let index = 0; index < headers.length; index++) {
     series.push({
@@ -74,19 +87,37 @@ export default function SortimentResult() {
             ],
             ['(Hr) - hrubé rozpätie (€)', `H_{r}={P_{cj}}-{P_{n}}`],
             ['(Pú) - príspevok na úhradu (€)', `P_{ú}=1-\\frac{P_{n}}{P_{cj}}`],
-            ['(ZP) - Zisková prirážka (€)', `ZP = P_{cj} - ÚVN`],
+            ['(ZP) - zisková prirážka (€)', `ZP = P_{cj} - ÚVN`],
             [
-              '(Z) - Zisk pri pôvodnej výrobnej štruktúre (€)',
+              '(Z) - zisk pri pôvodnej výrobnej štruktúre (€)',
               `Z =((P_{cj} - P_{n}) - (ÚVN - P_{n})) \\times Q`,
             ],
+            ['(Z<sub>j</sub>) - zisk jednotkový (€)', `Z_{j} = P_{c} - ÚVN`],
+            [
+              '(N<sub>p</sub>) - priame náklady celkom (€)',
+              `N_{p} = P_{m} + P_{mz} + P_{o}`,
+            ],
+            [
+              '(NP<sub>c</sub>) - nepriame (režijné) náklady celkom (€)',
+              `NP_{c} = ÚVP - P_{c}`,
+            ],
+            ['(T) - tržby (€)', `T = P_{c} * Q`],
+            ['(NC) - náklady celkom (€)', `NC = N_{p} + N_{n}`],
+            ['(Z<sub>c</sub>) - celopodnikový zisk (€)', `Z_{c} = T - NC`],
           ]}
           data={[
-            [...rentIncome],
-            [...rentCost],
-            [...marginGross],
-            [...allowance],
-            [...marginProfit],
-            [...profit],
+            rentIncome,
+            rentCost,
+            marginGross,
+            allowance,
+            marginProfit,
+            profit,
+            unitProfit,
+            totalDirectCosts,
+            totalIndirectCosts,
+            income,
+            totalCosts,
+            totalProfit,
           ]}
         />
       </Paper>

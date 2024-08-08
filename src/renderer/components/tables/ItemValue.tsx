@@ -35,9 +35,10 @@ export default function ItemValue({
         {items.map((value: string, row: number) => {
           return (
             <TableRow key={row}>
-              <TableCellStyled key={value + row.toString()}>
-                {value}
-              </TableCellStyled>
+              <TableCellStyled
+                key={value + row.toString()}
+                dangerouslySetInnerHTML={{ __html: value }}
+              />
             </TableRow>
           );
         })}
