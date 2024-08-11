@@ -8,6 +8,7 @@ import SectionTitle from 'renderer/components/SectionTitle';
 import { Paper } from '@mui/material';
 import { GraphCard } from 'renderer/components/graph/GraphCard';
 import { GraphTitle } from 'renderer/components/graph/GraphTitle';
+import BarWithLineGraph from 'renderer/components/graph/BarWithLineGraph';
 
 export default function ParetoResult() {
   const { data, items } = useAppSelector(selectPareto);
@@ -120,6 +121,44 @@ export default function ParetoResult() {
       <Spacer height={40} hideInPrint />
 
       <SectionTitle>Dashboarding</SectionTitle>
+
+      <BarWithLineGraph
+        title="PARETO ANALÝZA A LORENZOVA KRIVKA"
+        height={420}
+        labels={causes}
+        barData={[
+          {
+            name: 'Príčiny',
+            values: values,
+          },
+        ]}
+        lineData={[
+          {
+            name: 'Lorenzova krivka',
+            values: percentagesKumul,
+          },
+        ]}
+        // showValueInBar={true}
+        // showValueInLine={true}
+        // referenceLinesY={[
+        //   {
+        //     label: '80%',
+        //     stroke: 'orange',
+        //     y: '80',
+        //   },
+        // ]}
+        // referenceLinesX={[
+        //   {
+        //     label: '80%',
+        //     stroke: 'orange',
+        //     x: '10',
+        //   },
+        // ]}
+        // yAxisLabel="Náklady (€)"
+        // showLegend={true}
+      />
+
+      <Spacer height={40} hideInPrint />
 
       <GraphCard>
         <GraphTitle>PARETO ANALÝZA A LORENZOVA KRIVKA</GraphTitle>
