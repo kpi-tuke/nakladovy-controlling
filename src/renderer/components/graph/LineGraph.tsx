@@ -29,7 +29,7 @@ type ReferenceLine = {
   x: string;
   stroke: string;
   label: string;
-  width: number;
+  width?: number;
 };
 
 type Props = {
@@ -96,6 +96,7 @@ const LineGraph: React.FC<Props> = ({
                   }
                 : undefined
             }
+            fontWeight={'bold'}
           />
           <YAxis
             stroke={primaryTextColor}
