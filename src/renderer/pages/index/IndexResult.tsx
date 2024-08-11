@@ -1,15 +1,12 @@
-import ReactApexChart from 'react-apexcharts';
 import TableStatic from '../../components/TableStatic';
-import { useColGraph } from '../../graphOptions';
-import { ApexOptions } from 'apexcharts';
 import { indexCalculation } from './indexCalculation';
 import { useAppSelector } from '../../store/hooks';
 import { selectIndex } from '../index/indexSlice';
 import SectionTitle from 'renderer/components/SectionTitle';
 import Spacer from 'renderer/components/Spacer';
 import { Grid, Paper } from '@mui/material';
-import { GraphCard } from 'renderer/components/graph/GraphCard';
-import { GraphTitle } from 'renderer/components/graph/GraphTitle';
+import BarGraph from 'renderer/components/graph/BarGraph';
+import LineGraph from 'renderer/components/graph/LineGraph';
 
 export default function IndexResult() {
   const { data, headers, values } = useAppSelector(selectIndex);
@@ -32,103 +29,8 @@ export default function IndexResult() {
     values
   );
 
-  const economicSeries = [
-    {
-      name: 'Náklady',
-      data: costSumsForYears,
-    },
-    {
-      name: 'Výnosy',
-      data: incomeSumsForYears,
-    },
-  ];
-
-  const baseSeries = [
-    {
-      name: 'Bázický index',
-      data: baseIndexes,
-    },
-  ];
-
-  const valuesSummary = [
-    {
-      name: 'Náklady',
-      data: costSumsForYears,
-    },
-    {
-      name: 'Výnosy',
-      data: incomeSumsForYears,
-    },
-    {
-      name: 'Iné ekonomické položky',
-      data: customValueSumsForYears,
-    },
-  ];
-
-  const chainSeries = [
-    {
-      name: 'Percento zmeny výnosov',
-      data: chainIndexes,
-    },
-  ];
-
-  const costDiffSeries = [
-    {
-      name: 'Percento zment nákladov',
-      data: costDiff,
-    },
-  ];
-
-  const incomeDiffSeries = [
-    {
-      name: 'Percento zmeny výnosov',
-      data: incomeDiff,
-    },
-  ];
-
-  const reactionSeries = [
-    {
-      name: 'Koeficient reakcie',
-      data: reaction,
-    },
-  ];
-
-  const economicOptions: ApexOptions = useColGraph(
-    newHeaders,
-    'ekonomická veličina (€)'
-  );
-  const baseOptions: ApexOptions = {
-    ...useColGraph(newHeaders),
-    colors: ['#2E93fA'],
-  };
-
-  const chainOptions: ApexOptions = {
-    ...useColGraph(betweenYears),
-    colors: ['#66DA26', '#E91E63'],
-  };
-
-  const costDiffOptions: ApexOptions = {
-    ...useColGraph(betweenYears),
-    colors: ['#FF9800'],
-  };
-
-  const incomeDiffOptions: ApexOptions = {
-    ...useColGraph(betweenYears),
-    colors: ['#546E7A'],
-  };
-
-  const reactionOptions: ApexOptions = {
-    ...useColGraph(betweenYears),
-    colors: ['#E91E63'],
-  };
-
-  const allOptions: ApexOptions = {
-    ...useColGraph(betweenYears),
-    colors: ['#E91E63', '#66DA26', '#546E7A'],
-  };
-
   return (
-    <div>
+    <>
       <Spacer height={40} hideInPrint />
       <SectionTitle className="new-page">
         Analýza Indexov a Rozdielov
@@ -198,61 +100,76 @@ export default function IndexResult() {
 
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <GraphCard>
-            <GraphTitle>VÝVOJ EKONOMICKÝCH VELIČÍN</GraphTitle>
-            {
-              <ReactApexChart
-                options={economicOptions}
-                series={economicSeries}
-                type="bar"
-                height={420}
-              />
-            }
-          </GraphCard>
+          <BarGraph
+            title="VÝVOJ EKONOMICKÝCH VELIČÍN"
+            height={420}
+            labels={headers.slice(1).map((h) => h.label)}
+            data={[
+              {
+                name: 'Náklady',
+                values: costSumsForYears,
+              },
+              {
+                name: 'Výnosy',
+                values: incomeSumsForYears,
+              },
+            ]}
+            yAxisLabel="ekonomická veličina (€)"
+          />
         </Grid>
 
         <Grid item xs={12}>
-          <GraphCard>
-            <GraphTitle>BÁZICKÝ INDEX</GraphTitle>
-            {
-              <ReactApexChart
-                options={baseOptions}
-                series={baseSeries}
-                type="bar"
-                height={420}
-              />
-            }
-          </GraphCard>
+          <BarGraph
+            title="BÁZICKÝ INDEX"
+            height={420}
+            labels={headers.slice(1).map((h) => h.label)}
+            data={[
+              {
+                name: 'Bázický index',
+                values: baseIndexes,
+              },
+            ]}
+            showLegend={false}
+          />
         </Grid>
 
         <Grid item xs={12}>
-          <GraphCard>
-            <GraphTitle>REŤAZOVÝ INDEX</GraphTitle>
-            {
-              <ReactApexChart
-                options={chainOptions}
-                series={chainSeries}
-                type="bar"
-                height={450}
-              />
-            }
-          </GraphCard>
+          <BarGraph
+            title="REŤAZOVÝ INDEX"
+            height={420}
+            labels={betweenYears}
+            data={[
+              {
+                name: 'Percento zmeny výnosov',
+                values: chainIndexes,
+              },
+            ]}
+            showLegend={false}
+          />
         </Grid>
 
         <Grid item xs={12}>
-          <GraphCard>
-            <GraphTitle>Náklady, výnosy a iné ekonomické položky </GraphTitle>
-            {
-              <ReactApexChart
-                options={allOptions}
-                series={valuesSummary}
-                type="line"
-                height={420}
-              />
-            }
-          </GraphCard>
+          <LineGraph
+            title="Náklady, výnosy a iné ekonomické položky"
+            height={420}
+            labels={betweenYears}
+            data={[
+              {
+                name: 'Náklady',
+                values: costSumsForYears,
+              },
+              {
+                name: 'Výnosy',
+                values: incomeSumsForYears,
+              },
+              {
+                name: 'Iné ekonomické položky',
+                values: customValueSumsForYears,
+              },
+            ]}
+          />
         </Grid>
       </Grid>
-    </div>
+    </>
   );
 }
