@@ -1,6 +1,4 @@
 import TableStatic from '../../components/TableStatic';
-import { useCVPGraph } from '../../graphOptions';
-import { ApexOptions } from 'apexcharts';
 import { cvpCalculation } from './cvpCalculation';
 import { useAppSelector } from '../../store/hooks';
 import { selectCVP } from './cvpSlice';
@@ -27,8 +25,8 @@ export default function CVPResult() {
 
   const graphs: {
     value: string;
-    graph: ApexOptions;
     series: { name: string; data: number[] }[];
+    labels: string[];
   }[] = [];
 
   items.forEach((product: any, idx: number) => {
@@ -73,11 +71,6 @@ export default function CVPResult() {
       return a - b;
     });
 
-    const graph: ApexOptions = useCVPGraph(
-      osX.map((x: number) => x.toString()),
-      zeroTon[idx],
-      zeroProf[idx]
-    );
     const series = [
       {
         name: 'Náklady',
@@ -90,8 +83,8 @@ export default function CVPResult() {
     ];
     graphs.push({
       value: product,
-      graph,
       series,
+      labels: osX.map((value) => value.toString()),
     });
   });
 
@@ -171,8 +164,6 @@ export default function CVPResult() {
 
       <Grid container spacing={2}>
         {graphs.map((graph, index) => {
-          console.log('graph: ', graph);
-
           return (
             <>
               <Grid
@@ -183,7 +174,7 @@ export default function CVPResult() {
               >
                 <LineGraph
                   title={'NULOVÝ BOD: ' + graph.value.toUpperCase()}
-                  labels={graph.graph.xaxis.categories}
+                  labels={graph.labels}
                   height={420}
                   data={[
                     {
@@ -195,17 +186,20 @@ export default function CVPResult() {
                       values: graph.series[1].data,
                     },
                   ]}
-                  referenceLines={graph.graph.annotations.xaxis.map(
-                    (annotation) => {
-                      return {
-                        x: annotation.x.toString(),
-                        stroke: annotation.borderColor,
-                        label: annotation.label.text,
-                        // @ts-ignore
-                        width: annotation.label.width,
-                      };
-                    }
-                  )}
+                  referenceLines={[
+                    {
+                      x: zeroProf[index].toString(),
+                      stroke: '#ff00bb',
+                      label: 'Minimálny zisk',
+                      width: 110,
+                    },
+                    {
+                      x: zeroTon[index].toString(),
+                      stroke: '#FF4e4e',
+                      label: 'Nulový bod',
+                      width: 90,
+                    },
+                  ]}
                   yAxisLabel="hodnota ukazovateľa (koeficient)"
                   xAxisLabel={`objem produkcie jednotky ${
                     data[index][1] ? `(${data[index][1]})` : ''
