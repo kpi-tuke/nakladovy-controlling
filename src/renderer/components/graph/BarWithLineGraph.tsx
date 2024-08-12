@@ -9,6 +9,8 @@ import {
   Legend,
   ResponsiveContainer,
   LabelList,
+  ReferenceLine,
+  Label,
 } from 'recharts';
 import { GraphCard } from './GraphCard';
 import { GraphTitle } from './GraphTitle';
@@ -17,10 +19,18 @@ import CustomTooltip from './CustomTooltip';
 import CustomYAxisLabel from './CustomYAxisLabel';
 import { useTheme } from '@mui/material';
 import { getColorByIndex } from './colors';
+import CustomLabel from './CustomReferenceLineLabel';
 
 type ItemData = {
   name: string;
   values: number[];
+};
+
+type ReferenceLine = {
+  y: string;
+  stroke: string;
+  label: string;
+  width?: number;
 };
 
 type Props = {
@@ -34,6 +44,7 @@ type Props = {
   yAxisLabelLeft?: string;
   yAxisLabelRight?: string;
   showValueInBar?: boolean;
+  referenceLines?: ReferenceLine[];
 };
 
 const BarWithLineGraph: React.FC<Props> = ({
@@ -47,6 +58,7 @@ const BarWithLineGraph: React.FC<Props> = ({
   yAxisLabelLeft,
   yAxisLabelRight,
   showValueInBar = true,
+  referenceLines = [],
 }) => {
   const {
     palette: {
@@ -104,6 +116,7 @@ const BarWithLineGraph: React.FC<Props> = ({
             orientation="left"
             stroke={primaryTextColor}
             domain={yDomain}
+            interval="preserveStartEnd"
             label={
               yAxisLabelLeft ? (
                 <CustomYAxisLabel
@@ -113,6 +126,7 @@ const BarWithLineGraph: React.FC<Props> = ({
                 />
               ) : undefined
             }
+            tickCount={10}
           />
 
           <YAxis
@@ -155,7 +169,29 @@ const BarWithLineGraph: React.FC<Props> = ({
               dataKey={l.name}
               stroke={getColorByIndex(index + 2)}
               strokeWidth={3}
-            />
+            >
+              <LabelList
+                dataKey={l.name}
+                position="insideBottom"
+                fill={primaryTextColor}
+                fontWeight={'bold'}
+              />
+            </Line>
+          ))}
+
+          {referenceLines.map((line, index) => (
+            <ReferenceLine
+              y={line.y}
+              stroke={line.stroke}
+              key={index}
+              yAxisId={'right'}
+            >
+              <Label
+                content={<CustomLabel customWidth={line.width} />}
+                fill={line.stroke}
+                value={line.label}
+              />
+            </ReferenceLine>
           ))}
         </ComposedChart>
       </ResponsiveContainer>
