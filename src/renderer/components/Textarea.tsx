@@ -1,10 +1,19 @@
 import {
   debounce,
+  styled,
   TextareaAutosize,
   useTheme as useMuiTheme,
 } from '@mui/material';
 import SectionTitle from './SectionTitle';
 import { useTheme } from './providers/ThemeProvider';
+
+const StyledTextareaAutosize = styled(TextareaAutosize)`
+  &::placeholder {
+    @media print {
+      opacity: 0;
+    }
+  }
+`;
 
 type Props = {
   onChangeDebounced?: (value: string) => void;
@@ -32,7 +41,7 @@ const Textarea: React.FC<Props> = ({
     <div>
       <SectionTitle>Záver a zhodnotenie analýzy</SectionTitle>
 
-      <TextareaAutosize
+      <StyledTextareaAutosize
         defaultValue={defaultValue}
         onChange={(e) => {
           handleChange(e);

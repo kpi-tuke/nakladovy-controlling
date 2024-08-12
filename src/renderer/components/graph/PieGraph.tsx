@@ -1,7 +1,14 @@
 import React from 'react';
 import { GraphCard } from './GraphCard';
 import { GraphTitle } from './GraphTitle';
-import { Cell, Legend, Pie, PieChart, ResponsiveContainer } from 'recharts';
+import {
+  CartesianGrid,
+  Cell,
+  Legend,
+  Pie,
+  PieChart,
+  ResponsiveContainer,
+} from 'recharts';
 import { getColorByIndex } from './colors';
 import CustomLegend from './CustomLegend';
 
@@ -48,6 +55,8 @@ const PieGraph: React.FC<Props> = ({ height, title, data }) => {
       <GraphTitle>{title}</GraphTitle>
       <ResponsiveContainer width="100%" height={height}>
         <PieChart>
+          <CartesianGrid strokeDasharray="3 3" />
+
           <Pie
             data={data}
             cx="50%"
