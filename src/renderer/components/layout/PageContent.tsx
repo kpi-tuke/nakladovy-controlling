@@ -18,8 +18,6 @@ const Content = styled(Box)`
 const Container = styled(Box)`
   flex: 1;
   padding: 2rem;
-  display: flex;
-  flex-direction: column;
 
   @media print {
     padding: 0;

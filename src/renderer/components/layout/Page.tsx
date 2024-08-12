@@ -3,8 +3,6 @@ import React from 'react';
 
 const MainPage = styled(Box)`
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
   position: relative;
 `;
 
