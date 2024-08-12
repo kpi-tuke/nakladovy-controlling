@@ -9,11 +9,20 @@ import { paretoActions } from './pareto/paretoSlice';
 import { sortimentActions } from './sortiment/sortimentSlice';
 import { structureActions } from './structure/structureSlice';
 import { evaluationActions } from './report/evaluationSlice';
-import { Box, Button, Grid, Paper, Typography } from '@mui/material';
+import { Box, Button, Grid, Paper, styled, Typography } from '@mui/material';
 import AppVersion from 'renderer/components/AppVersion';
 import Page from 'renderer/components/layout/Page';
 import PageContent from 'renderer/components/layout/PageContent';
 import { RouteName } from 'renderer/routes';
+
+const Wrapper = styled(Box)`
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+`;
 
 export default function WelcomePage() {
   const navigate = useNavigate();
@@ -68,16 +77,7 @@ export default function WelcomePage() {
     <Page>
       <HeaderBar />
       <PageContent>
-        <Box
-          sx={{
-            height: '100%',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            alignItems: 'center',
-            gap: 4,
-          }}
-        >
+        <Wrapper>
           <Paper
             sx={{
               maxWidth: 800,
@@ -122,7 +122,7 @@ export default function WelcomePage() {
               </Grid>
             </Grid>
           </Box>
-        </Box>
+        </Wrapper>
 
         <AppVersion />
       </PageContent>

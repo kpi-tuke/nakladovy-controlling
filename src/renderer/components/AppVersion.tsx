@@ -1,5 +1,4 @@
 import { Typography } from '@mui/material';
-import { right } from '@popperjs/core';
 
 const AppVersion = () => {
   return (
@@ -8,6 +7,7 @@ const AppVersion = () => {
         position: 'fixed',
         bottom: 0,
         right: 10,
+        color: (theme) => theme.palette.text.primary,
       }}
     >
       verzia 2.0.0
