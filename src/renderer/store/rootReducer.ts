@@ -1,7 +1,6 @@
 import { PayloadAction } from '@reduxjs/toolkit';
 import { isNumeric } from 'renderer/helper';
 import { SortDirection } from 'renderer/types/sortDirection';
-import { RootState } from './store';
 
 export enum HeaderType {
   STRING = 'STRING',
@@ -160,8 +159,8 @@ export const sortTableByYear = {
 
     const sortedHeaders =
       action.payload === 'desc'
-        ? [...headers].sort((a, b) => +b - +a)
-        : [...headers].sort((a, b) => +a - +b);
+        ? [...headers].sort((a, b) => +b.label - +a.label)
+        : [...headers].sort((a, b) => +a.label - +b.label);
 
     const sortedData: CellValue[][] = Array.from(
       { length: data.length },
