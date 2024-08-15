@@ -62,7 +62,7 @@ export function indexCalculation(
   const absoluteChainIndexes = subtractArrays(
     costSumsForYears,
     incomeSumsForYears
-  );
+  ).slice(0, -1);
 
   const reaction = divideArrays(costDiff, incomeDiff);
 

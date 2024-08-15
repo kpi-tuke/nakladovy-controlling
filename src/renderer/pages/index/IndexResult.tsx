@@ -55,7 +55,9 @@ export default function IndexResult() {
           newPageAfter={false}
         />
       </Paper>
+
       <Spacer height={40} />
+
       <Paper>
         <TableStatic
           corner={'Ekonomické ukazovatele'}
