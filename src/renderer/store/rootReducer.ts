@@ -195,7 +195,22 @@ export const sortTableByItemNumber = {
         ? [...values].sort((a, b) => +a - +b)
         : [...values].sort((a, b) => +b - +a);
 
-    const sortedItems = items.sort((a, b) => {
+    const { validValues, invalidValues } = items.reduce(
+      (acc, item) => {
+        const number = item.split('-')[0].replaceAll(' ', '');
+
+        if (isNumeric(number)) {
+          acc.validValues.push(item);
+        } else {
+          acc.invalidValues.push(item);
+        }
+
+        return acc;
+      },
+      { invalidValues: [], validValues: [] }
+    );
+
+    const sortedItems = validValues.sort((a, b) => {
       const aNumber = a.split('-')[0].replaceAll(' ', '');
       const bNumber = b.split('-')[0].replaceAll(' ', '');
 
@@ -203,6 +218,8 @@ export const sortTableByItemNumber = {
         ? +bNumber - +aNumber
         : +aNumber - +bNumber;
     });
+
+    const finalItems = [...sortedItems, ...invalidValues];
 
     const formattedData: { [key: string]: CellValue[] } = {};
 
@@ -218,7 +235,7 @@ export const sortTableByItemNumber = {
 
     state.headers = headers;
     state.data = sortedData;
-    state.items = sortedItems;
+    state.items = finalItems;
     state.values = sortedValues;
     state.text = text;
 
