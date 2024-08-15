@@ -22,7 +22,7 @@ import CustomYAxisLabel from './CustomYAxisLabel';
 
 type LineData = {
   name: string;
-  values: number[];
+  values: (number | string)[];
 };
 
 type ReferenceLine = {

@@ -9,7 +9,7 @@ import BarGraph from 'renderer/components/graph/BarGraph';
 import LineGraph from 'renderer/components/graph/LineGraph';
 
 export default function IndexResult() {
-  const { data, headers, values } = useAppSelector(selectIndex);
+  const { data, headers, values, items } = useAppSelector(selectIndex);
   const {
     chainIndexes,
     absoluteChainIndexes,
@@ -152,23 +152,13 @@ export default function IndexResult() {
 
         <Grid item xs={12}>
           <LineGraph
-            title="Náklady, výnosy a iné ekonomické položky"
+            title="Trend vývoja ekonomických veličin"
             height={420}
-            labels={betweenYears}
-            data={[
-              {
-                name: 'Náklady',
-                values: costSumsForYears,
-              },
-              {
-                name: 'Výnosy',
-                values: incomeSumsForYears,
-              },
-              {
-                name: 'Iné ekonomické položky',
-                values: customValueSumsForYears,
-              },
-            ]}
+            labels={headers.slice(1).map((h) => h.label)}
+            data={items.filter(Boolean).map((item, index) => ({
+              name: item,
+              values: data[index].slice(1),
+            }))}
           />
         </Grid>
       </Grid>
