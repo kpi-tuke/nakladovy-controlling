@@ -1,13 +1,24 @@
 import TableStatic from '../../components/TableStatic';
 import { structureCalculation } from './structureCalculation';
 import { useAppSelector } from '../../store/hooks';
-import { hasStructureChanged, selectStructure } from './structureSlice';
+import { selectStructure } from './structureSlice';
 import SectionTitle from 'renderer/components/SectionTitle';
 import Spacer from 'renderer/components/Spacer';
-import { Grid, Paper } from '@mui/material';
+import { Box, Grid, Paper, styled, TextField } from '@mui/material';
 import React from 'react';
 import BarGraph from 'renderer/components/graph/BarGraph';
 import PieGraph from 'renderer/components/graph/PieGraph';
+
+const InputWrapper = styled(Box)`
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: center;
+`;
+
+const YearLabel = styled(SectionTitle)`
+  margin-bottom: 0;
+`;
 
 export default function StructureResult() {
   const { data, items, headers } = useAppSelector(selectStructure);
@@ -25,13 +36,28 @@ export default function StructureResult() {
   }, [data, items]);
 
   const { rowSums, totalCost, colSums } = structureCalculation(filteredData);
-  const hasStructureChange = useAppSelector(hasStructureChanged);
-
-  console.log('StructureResult', hasStructureChange);
 
   return (
     <div>
       <Spacer height={40} hideInPrint />
+
+      <InputWrapper>
+        <YearLabel>Sledované obdobie</YearLabel>
+        <TextField
+          sx={{
+            background: (theme) => theme.palette.background.paper,
+          }}
+          inputProps={{
+            style: {
+              textAlign: 'center',
+            },
+          }}
+          placeholder="Zadajte obdobie"
+        />
+      </InputWrapper>
+
+      <Spacer height={40} />
+
       <SectionTitle className="new-page">Analýza ukazovateľov</SectionTitle>
       <Paper>
         <TableStatic
