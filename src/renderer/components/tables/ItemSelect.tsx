@@ -1,5 +1,5 @@
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { defaultState } from '../../store/rootReducer';
+import { DefaultState } from '../../store/rootReducer';
 import { RootState } from '../../store/store';
 import {
   Table,
@@ -29,7 +29,7 @@ export default function ItemSelect({
   selector,
   actions,
 }: {
-  selector: (state: RootState) => defaultState;
+  selector: (state: RootState) => DefaultState;
   actions: any;
 }) {
   const {

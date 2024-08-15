@@ -1,7 +1,7 @@
 import TableStatic from '../../components/TableStatic';
 import { structureCalculation } from './structureCalculation';
 import { useAppSelector } from '../../store/hooks';
-import { selectStructure } from './structureSlice';
+import { hasStructureChanged, selectStructure } from './structureSlice';
 import SectionTitle from 'renderer/components/SectionTitle';
 import Spacer from 'renderer/components/Spacer';
 import { Grid, Paper } from '@mui/material';
@@ -25,6 +25,9 @@ export default function StructureResult() {
   }, [data, items]);
 
   const { rowSums, totalCost, colSums } = structureCalculation(filteredData);
+  const hasStructureChange = useAppSelector(hasStructureChanged);
+
+  console.log('StructureResult', hasStructureChange);
 
   return (
     <div>

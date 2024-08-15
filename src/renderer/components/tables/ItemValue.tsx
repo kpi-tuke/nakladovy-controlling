@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { useAppSelector } from '../../store/hooks';
-import { defaultState } from '../../store/rootReducer';
+import { DefaultState } from '../../store/rootReducer';
 import { RootState } from '../../store/store';
 import {
   Table,
@@ -20,7 +20,7 @@ const TableCellStyled = styled(TableCell)`
 export default function ItemValue({
   selector,
 }: {
-  selector: (state: RootState) => defaultState;
+  selector: (state: RootState) => DefaultState;
 }) {
   const { corner, items } = useAppSelector(selector);
 

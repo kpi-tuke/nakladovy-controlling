@@ -11,6 +11,7 @@ import BarGraph from 'renderer/components/graph/BarGraph';
 
 export default function EconomicResult() {
   const { headers, data, values } = useAppSelector(selectEconomic);
+
   const {
     costData,
     incomeData,

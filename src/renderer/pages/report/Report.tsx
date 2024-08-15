@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Grid, styled, ThemeProvider } from '@mui/material';
+import { Box, styled, Typography } from '@mui/material';
 import Timeline from '@mui/lab/Timeline';
 import TimelineItem from '@mui/lab/TimelineItem';
 import TimelineSeparator from '@mui/lab/TimelineSeparator';
@@ -7,9 +7,14 @@ import TimelineConnector from '@mui/lab/TimelineConnector';
 import TimelineContent from '@mui/lab/TimelineContent';
 import TimelineDot from '@mui/lab/TimelineDot';
 import { RouteName } from 'renderer/routes';
-import { lightTheme } from 'renderer/theme/theme';
 import { useTheme } from 'renderer/components/providers/ThemeProvider';
-import useEnhancedEffect from '@mui/material/utils/useEnhancedEffect';
+import { useAppSelector } from 'renderer/store/hooks';
+import { hasEconomicChanged } from '../economic/economicSlice';
+import { hasStructureChanged } from '../structure/structureSlice';
+import { hasCvpChanged } from '../cvp/cvpSlice';
+import { hasSortimentChanged } from '../sortiment/sortimentSlice';
+import { hasIndexChanged } from '../index/indexSlice';
+import { hasParetoChanged } from '../pareto/paretoSlice';
 
 const Wrapper = styled(Box)`
   position: relative;
@@ -45,6 +50,24 @@ const TimelineWrapper = styled(Box)`
   }
 `;
 
+const Center = styled(Box)`
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: ${({ theme }) => theme.pageHeader.height + 20}px;
+`;
+
+const Text = styled(Typography)`
+  text-align: center;
+  font-size: 20px;
+  color: ${({ theme }) => theme.palette.text.secondary};
+`;
+
 type Props = {
   EconomicAnalysisPage: () => React.ReactElement;
   StructureAnalysisPage: () => React.ReactElement;
@@ -71,6 +94,21 @@ const Report: React.FC<Props> = ({
   const paretoRef = React.useRef(null);
   const sortimentRef = React.useRef(null);
 
+  const hasEconomicChange = useAppSelector(hasEconomicChanged);
+  const hasStructureChange = useAppSelector(hasStructureChanged);
+  const hasCvpChange = useAppSelector(hasCvpChanged);
+  const hasSortimentChange = useAppSelector(hasSortimentChanged);
+  const hasIndexChange = useAppSelector(hasIndexChanged);
+  const hasParetoChange = useAppSelector(hasParetoChanged);
+
+  const hasAnyAnalysisChange =
+    !hasEconomicChange &&
+    !hasStructureChange &&
+    !hasCvpChange &&
+    !hasSortimentChange &&
+    !hasIndexChange &&
+    !hasParetoChange;
+
   React.useEffect(() => {
     if (mode === 'dark') {
       switchColorMode();
@@ -91,18 +129,47 @@ const Report: React.FC<Props> = ({
         },
       }}
     >
-      <div ref={economicRef}></div>
-      <EconomicAnalysisPage />
-      <div className="new-page" ref={structureRef}></div>
-      <StructureAnalysisPage />
-      <div className="new-page" ref={indexRef}></div>
-      <IndexAnalysisPage />
-      <div className="new-page" ref={cvpRef}></div>
-      <CVPAnalysisPage />
-      <div className="new-page" ref={sortimentRef}></div>
-      <SortimentAnalysisPage />
-      <div className="new-page" ref={paretoRef}></div>
-      <ParetoAnalysisPage />
+      {hasEconomicChange && (
+        <div ref={economicRef}>
+          <EconomicAnalysisPage />
+        </div>
+      )}
+
+      {hasStructureChange && (
+        <div className="new-page" ref={structureRef}>
+          <StructureAnalysisPage />
+        </div>
+      )}
+
+      {hasIndexChange && (
+        <div className="new-page" ref={indexRef}>
+          <IndexAnalysisPage />
+        </div>
+      )}
+
+      {hasCvpChange && (
+        <div className="new-page" ref={cvpRef}>
+          <CVPAnalysisPage />
+        </div>
+      )}
+
+      {hasSortimentChange && (
+        <div className="new-page" ref={sortimentRef}>
+          <SortimentAnalysisPage />
+        </div>
+      )}
+
+      {hasParetoChange && (
+        <div className="new-page" ref={paretoRef}>
+          <ParetoAnalysisPage />
+        </div>
+      )}
+
+      {hasAnyAnalysisChange && (
+        <Center>
+          <Text>Žiadna analýza nebola zatiaľ zmenená</Text>
+        </Center>
+      )}
 
       <TimelineWrapper
         sx={{
@@ -114,36 +181,60 @@ const Report: React.FC<Props> = ({
       >
         <TimelineComponent
           items={[
-            {
-              label: 'Ekonomická analýza hospodárenia',
-              id: RouteName.ECONOMIC_ANALYSIS,
-              ref: economicRef,
-            },
-            {
-              label: 'Štruktúrna analýza nákladov',
-              id: RouteName.STRUCTURE_ANALYSIS,
-              ref: structureRef,
-            },
-            {
-              label: 'Indexná analýza',
-              id: RouteName.INDEX_ANALYSIS,
-              ref: indexRef,
-            },
-            {
-              label: 'CVP analýza',
-              id: RouteName.CVP_ANALYSIS,
-              ref: cvpRef,
-            },
-            {
-              label: 'Sortimentná analýza',
-              id: RouteName.SORTIMENT_ANALYSIS,
-              ref: sortimentRef,
-            },
-            {
-              label: 'Pareto analýza',
-              id: RouteName.PERETO_ANALYSIS,
-              ref: paretoRef,
-            },
+            ...(hasEconomicChange
+              ? [
+                  {
+                    label: 'Ekonomická analýza hospodárenia',
+                    id: RouteName.ECONOMIC_ANALYSIS,
+                    ref: economicRef,
+                  },
+                ]
+              : []),
+            ...(hasStructureChange
+              ? [
+                  {
+                    label: 'Štruktúrna analýza nákladov',
+                    id: RouteName.STRUCTURE_ANALYSIS,
+                    ref: structureRef,
+                  },
+                ]
+              : []),
+            ...(hasIndexChange
+              ? [
+                  {
+                    label: 'Indexná analýza',
+                    id: RouteName.INDEX_ANALYSIS,
+                    ref: indexRef,
+                  },
+                ]
+              : []),
+            ...(hasCvpChange
+              ? [
+                  {
+                    label: 'CVP analýza',
+                    id: RouteName.CVP_ANALYSIS,
+                    ref: cvpRef,
+                  },
+                ]
+              : []),
+            ...(hasSortimentChange
+              ? [
+                  {
+                    label: 'Sortimentná analýza',
+                    id: RouteName.SORTIMENT_ANALYSIS,
+                    ref: sortimentRef,
+                  },
+                ]
+              : []),
+            ...(hasParetoChange
+              ? [
+                  {
+                    label: 'Pareto analýza',
+                    id: RouteName.PERETO_ANALYSIS,
+                    ref: paretoRef,
+                  },
+                ]
+              : []),
           ]}
         />
       </TimelineWrapper>

@@ -1,8 +1,16 @@
 import { colors, createTheme, PaletteColorOptions } from '@mui/material';
 
 declare module '@mui/material/styles' {
-  interface Theme {}
-  interface ThemeOptions {}
+  interface Theme {
+    pageHeader: {
+      height: number;
+    };
+  }
+  interface ThemeOptions {
+    pageHeader: {
+      height: number;
+    };
+  }
   interface Palette {
     backgroundPrint: {
       default: string;
@@ -34,6 +42,9 @@ export const lightTheme = createTheme({
       default: '#000',
     },
   },
+  pageHeader: {
+    height: 60,
+  },
 });
 
 export const darkTheme = createTheme({
@@ -48,6 +59,9 @@ export const darkTheme = createTheme({
     title: {
       default: '#fff',
     },
+  },
+  pageHeader: {
+    height: 64,
   },
   components: {
     MuiCardHeader: {

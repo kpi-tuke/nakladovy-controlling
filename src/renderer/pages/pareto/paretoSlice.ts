@@ -1,13 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit';
 import {
-  defaultState,
+  DefaultState,
   HeaderType,
   openProject,
   rootReducer,
 } from '../../store/rootReducer';
 import { RootState } from '../../store/store';
+import isEqual from 'lodash.isequal';
 
-const initialParetoState: defaultState = {
+const initialParetoState: DefaultState = {
   id: 6,
   title: 'Pareto analýza nákladov',
   corner: 'Druhové náklady',
@@ -32,7 +33,7 @@ export const paretoSlice = createSlice({
   initialState: initialParetoState,
   reducers: {
     ...rootReducer,
-    reset: (state: defaultState) => {
+    reset: (state: DefaultState) => {
       state.headers = initialParetoState.headers;
       state.data = initialParetoState.data;
       state.items = initialParetoState.items;
@@ -46,3 +47,7 @@ export const paretoSlice = createSlice({
 export const paretoActions = paretoSlice.actions;
 export const paretoReducer = paretoSlice.reducer;
 export const selectPareto = (state: RootState) => state.pareto;
+
+export const hasParetoChanged = (state: RootState) => {
+  return !isEqual(state.pareto, initialParetoState);
+};

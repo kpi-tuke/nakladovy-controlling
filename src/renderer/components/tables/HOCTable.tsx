@@ -22,7 +22,7 @@ import {
 } from './Table';
 import TableActionButton from './TableActionButton';
 import { useError } from '../providers/ErrorProvider';
-import { defaultState, HeaderType } from 'renderer/store/rootReducer';
+import { DefaultState, HeaderType } from 'renderer/store/rootReducer';
 
 const TableWrapper = styled(Box)`
   overflow-x: auto;
@@ -40,7 +40,7 @@ export default function withTable(
 
     const { headers, data, dynRows, dynCols } = useAppSelector(
       selector
-    ) as defaultState;
+    ) as DefaultState;
 
     const deleteRow = (row: number) => {
       dispatch(actions.deleteRow(row));

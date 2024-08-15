@@ -1,15 +1,16 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../../store/store';
 import {
-  defaultState,
+  DefaultState,
   HeaderType,
   openProject,
   rootReducer,
   sortTableByItemNumber,
 } from '../../store/rootReducer';
 import { costOptions } from 'renderer/chartOfAccounts';
+import isEqual from 'lodash.isequal';
 
-const initialStructureState: defaultState = {
+const initialStructureState: DefaultState = {
   id: 2,
   title: 'Štruktúrna analýza nákladov',
   corner: 'Druhové náklady | Kalkulačné náklady→',
@@ -37,7 +38,7 @@ const structureSlice = createSlice({
   initialState: initialStructureState,
   reducers: {
     ...rootReducer,
-    reset: (state: defaultState) => {
+    reset: (state: DefaultState) => {
       state.headers = initialStructureState.headers;
       state.data = initialStructureState.data;
       state.items = initialStructureState.items;
@@ -52,3 +53,7 @@ const structureSlice = createSlice({
 export const structureActions = structureSlice.actions;
 export const selectStructure = (state: RootState) => state.structure;
 export const structureReducer = structureSlice.reducer;
+
+export const hasStructureChanged = (state: RootState) => {
+  return !isEqual(state.structure, initialStructureState);
+};

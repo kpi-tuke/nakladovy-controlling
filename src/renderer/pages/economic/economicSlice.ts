@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import {
   changeAccount,
-  defaultState,
+  DefaultState,
   HeaderType,
   openProject,
   rootReducer,
@@ -14,8 +14,9 @@ import {
   profitOptions,
   allOptions,
 } from 'renderer/chartOfAccounts';
+import isEqual from 'lodash.isequal';
 
-const initialEconomicState: defaultState = {
+const initialEconomicState: DefaultState = {
   id: 1,
   title: 'Ekonomická analýza hospodárenia',
   corner: 'Ekonomická veličina (€)',
@@ -46,7 +47,7 @@ export const economicSlice = createSlice({
   initialState: initialEconomicState,
   reducers: {
     ...rootReducer,
-    reset: (state: defaultState) => {
+    reset: (state: DefaultState) => {
       state.headers = initialEconomicState.headers;
       state.data = initialEconomicState.data;
       state.items = initialEconomicState.items;
@@ -63,4 +64,7 @@ export const economicSlice = createSlice({
 export const economicActions = economicSlice.actions;
 export const selectEconomic = (state: RootState) => state.economic;
 export const economicReducer = economicSlice.reducer;
-// economicSlice.getInitialState: () => State
+
+export const hasEconomicChanged = (state: RootState) => {
+  return !isEqual(state.economic, initialEconomicState);
+};

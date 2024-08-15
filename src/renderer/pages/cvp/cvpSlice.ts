@@ -1,9 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../store/store';
-import { defaultState, HeaderType, rootReducer } from '../../store/rootReducer';
+import { DefaultState, HeaderType, rootReducer } from '../../store/rootReducer';
 import { MeasureUnit } from 'renderer/theme/measureUnit';
+import isEqual from 'lodash.isequal';
 
-export interface CVPState extends defaultState {
+export interface CVPState extends DefaultState {
   fixTotal: number;
   minProfit: number;
 }
@@ -73,7 +74,6 @@ const CVPSlice = createSlice({
   initialState: initialCVPState,
   reducers: {
     ...rootReducer,
-    // @ts-ignore
     reset: (state) => {
       state.headers = initialCVPState.headers;
       state.data = initialCVPState.data;
@@ -89,7 +89,6 @@ const CVPSlice = createSlice({
       state.text = action.payload.text;
       state.fixTotal = action.payload.fixTotal;
       state.minProfit = action.payload.minProfit;
-      // state = action.payload
     },
   },
 });
@@ -97,3 +96,7 @@ const CVPSlice = createSlice({
 export const CVPActions = CVPSlice.actions;
 export const selectCVP = (state: RootState) => state.cvp;
 export const CVPReducer = CVPSlice.reducer;
+
+export const hasCvpChanged = (state: RootState) => {
+  return !isEqual(state.cvp, initialCVPState);
+};

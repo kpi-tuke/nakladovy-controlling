@@ -1,6 +1,7 @@
 import { PayloadAction } from '@reduxjs/toolkit';
 import { isNumeric } from 'renderer/helper';
 import { SortDirection } from 'renderer/types/sortDirection';
+import { RootState } from './store';
 
 export enum HeaderType {
   STRING = 'STRING',
@@ -20,7 +21,7 @@ export type Header = {
 
 export type CellValue = number | string;
 
-export interface defaultState {
+export interface DefaultState {
   id: number;
   title: string;
   corner: string;
@@ -52,7 +53,7 @@ export interface dataOnCords {
 
 export const rootReducer = {
   setHeadersOnIndex: (
-    state: { headers: Header[] },
+    state: DefaultState,
     action: PayloadAction<dataOnIndex>
   ) => {
     state.headers[action.payload.index] = {
@@ -61,21 +62,18 @@ export const rootReducer = {
     };
   },
   setItemsOnIndex: (
-    state: { items: string[] },
+    state: DefaultState,
     action: PayloadAction<dataOnIndex>
   ) => {
     state.items[action.payload.index] = action.payload.data;
   },
   setValuesOnIndex: (
-    state: { values: string[] },
+    state: DefaultState,
     action: PayloadAction<dataOnIndex>
   ) => {
     state.values[action.payload.index] = action.payload.data;
   },
-  setDataOnIndex: (
-    state: { data: CellValue[][] },
-    action: PayloadAction<dataOnCords>
-  ) => {
+  setDataOnIndex: (state: DefaultState, action: PayloadAction<dataOnCords>) => {
     if (action.payload.type === HeaderType.SELECT) {
       console.log('payload: ', action.payload);
       state.data[action.payload.row][action.payload.col] = action.payload.data;
@@ -87,17 +85,13 @@ export const rootReducer = {
         : action.payload.data;
     }
   },
-  addColumn: (state: { headers: Header[]; data: CellValue[][] }): void => {
+  addColumn: (state: DefaultState): void => {
     state.headers.push({ label: '', type: HeaderType.STRING });
     state.data.map((rowData: any) => {
       rowData.push(0);
     });
   },
-  addRow: (state: {
-    items: string[];
-    data: CellValue[][];
-    accounts: string[];
-  }) => {
+  addRow: (state: DefaultState) => {
     state.items.push('');
     state.accounts.push('');
     let arr: any[] = [];
@@ -106,50 +100,32 @@ export const rootReducer = {
     }
     state.data.push(arr);
   },
-  deleteRow: (
-    state: { items: string[]; data: CellValue[][]; values: string[] },
-    action: PayloadAction<number>
-  ) => {
+  deleteRow: (state: DefaultState, action: PayloadAction<number>) => {
     if (state.items.length === 1) return;
     state.items.splice(action.payload, 1);
     state.data.splice(action.payload, 1);
     state.values.splice(action.payload, 1);
   },
-  deleteColumn: (
-    state: { headers: Header[]; data: CellValue[][] },
-    action: PayloadAction<number>
-  ) => {
+  deleteColumn: (state: DefaultState, action: PayloadAction<number>) => {
     if (state.headers.length === 1) return;
     state.data.map((rowData: CellValue[]) => {
       rowData.splice(action.payload, 1);
     });
     state.headers.splice(action.payload, 1);
   },
-  changeText: (state: { text: string }, action: PayloadAction<string>) => {
+  changeText: (state: DefaultState, action: PayloadAction<string>) => {
     state.text = action.payload;
   },
 };
 
 export const changeAccount = {
-  changeAccount: (
-    state: { accounts: string[] },
-    action: PayloadAction<dataOnIndex>
-  ) => {
+  changeAccount: (state: DefaultState, action: PayloadAction<dataOnIndex>) => {
     state.accounts[action.payload.index] = action.payload.data;
   },
 };
 
 export const openProject = {
-  openProject: (
-    state: {
-      headers: Header[];
-      data: CellValue[][];
-      items: string[];
-      values: string[];
-      text: string;
-    },
-    action: PayloadAction<defaultState>
-  ) => {
+  openProject: (state: DefaultState, action: PayloadAction<DefaultState>) => {
     state.headers = action.payload.headers;
     state.data = action.payload.data;
     state.items = action.payload.items;
@@ -160,14 +136,7 @@ export const openProject = {
 
 export const sortTableByYear = {
   sortTableByYear: (
-    state: {
-      headers: Header[];
-      data: CellValue[][];
-      items: string[];
-      values: string[];
-      text: string;
-      id: number;
-    },
+    state: DefaultState,
     action: PayloadAction<SortDirection>
   ) => {
     const { headers, data, items, values, text, id } = state;
@@ -217,13 +186,7 @@ export const sortTableByYear = {
 
 export const sortTableByItemNumber = {
   sortTableByItemNumber: (
-    state: {
-      headers: Header[];
-      data: CellValue[][];
-      items: string[];
-      values: string[];
-      text: string;
-    },
+    state: DefaultState,
     action: PayloadAction<SortDirection>
   ) => {
     const { headers, data, items, values, text } = state;

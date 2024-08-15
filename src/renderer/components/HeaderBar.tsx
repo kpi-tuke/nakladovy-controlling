@@ -15,7 +15,7 @@ import { useSnackbar } from './providers/SnackbarProvider';
 import ColorModeButton from './ColorModeButton';
 
 const Wrapper = styled(Box)`
-  height: 7vh;
+  height: ${({ theme }) => theme.pageHeader.height}px;
   box-shadow: 0px 15px 10px -15px rgba(0, 0, 0, 0.2);
   position: fixed;
   top: 0;

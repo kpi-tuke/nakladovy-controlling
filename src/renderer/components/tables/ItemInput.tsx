@@ -1,5 +1,5 @@
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { defaultState } from '../../store/rootReducer';
+import { DefaultState } from '../../store/rootReducer';
 import { RootState } from '../../store/store';
 import {
   ActionCellBottom,
@@ -18,7 +18,7 @@ export default function ItemInput({
 }: {
   corner: string[];
   inputs: string[];
-  selector: (state: RootState) => defaultState;
+  selector: (state: RootState) => DefaultState;
   actions: any;
 }) {
   const { corner, items } = useAppSelector(selector);

@@ -1,13 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../../store/store';
 import {
-  defaultState,
+  DefaultState,
   HeaderType,
   openProject,
   rootReducer,
 } from '../../store/rootReducer';
+import isEqual from 'lodash.isequal';
 
-const initialSortimentState: defaultState = {
+const initialSortimentState: DefaultState = {
   id: 5,
   title: 'Sortimentná analýza',
   corner: 'Ekonomická položka',
@@ -45,7 +46,7 @@ const sortimentSlice = createSlice({
   initialState: initialSortimentState,
   reducers: {
     ...rootReducer,
-    reset: (state: defaultState) => {
+    reset: (state: DefaultState) => {
       state.headers = initialSortimentState.headers;
       state.data = initialSortimentState.data;
       state.items = initialSortimentState.items;
@@ -59,3 +60,7 @@ const sortimentSlice = createSlice({
 export const sortimentReducer = sortimentSlice.reducer;
 export const selectSortiment = (state: RootState) => state.sortiment;
 export const sortimentActions = sortimentSlice.actions;
+
+export const hasSortimentChanged = (state: RootState) => {
+  return !isEqual(state.sortiment, initialSortimentState);
+};

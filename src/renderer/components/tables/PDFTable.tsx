@@ -1,6 +1,6 @@
 import { splitTable } from '../../helper';
 import { RootState } from '../../store/store';
-import { defaultState } from '../../store/rootReducer';
+import { DefaultState } from '../../store/rootReducer';
 import { useAppSelector } from '../../store/hooks';
 import { Paper, Typography } from '@mui/material';
 import {
@@ -16,7 +16,7 @@ import React from 'react';
 export default function PDFTable({
   selector,
 }: {
-  selector: (state: RootState) => defaultState;
+  selector: (state: RootState) => DefaultState;
 }) {
   const { corner, headers, items, data } = useAppSelector(selector);
   const colsPerTable = 5;

@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import {
   changeAccount,
-  defaultState,
+  DefaultState,
   HeaderType,
   openProject,
   rootReducer,
@@ -10,8 +10,9 @@ import {
 } from '../../store/rootReducer';
 import { RootState } from '../../store/store';
 import { allOptions, customOption } from 'renderer/chartOfAccounts';
+import isEqual from 'lodash.isequal';
 
-const initialIndexState: defaultState = {
+const initialIndexState: DefaultState = {
   id: 3,
   title: 'Analýza reťazových a bázických indexov',
   corner: 'Ekonomická položka (€)',
@@ -54,7 +55,6 @@ export const indexSlice = createSlice({
   initialState: initialIndexState,
   reducers: {
     ...rootReducer,
-    // @ts-ignore
     reset: (state) => {
       state.headers = initialIndexState.headers;
       state.data = initialIndexState.data;
@@ -72,3 +72,7 @@ export const indexSlice = createSlice({
 export const indexActions = indexSlice.actions;
 export const selectIndex = (state: RootState) => state.index;
 export const indexReducer = indexSlice.reducer;
+
+export const hasIndexChanged = (state: RootState) => {
+  return !isEqual(state.index, initialIndexState);
+};
