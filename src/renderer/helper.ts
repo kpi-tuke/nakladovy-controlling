@@ -78,3 +78,17 @@ export const sumArrays = (array1: number[], array2: number[]): number[] => {
 export const isNumeric = (str: string): boolean => {
   return /^\d+$/.test(str);
 };
+
+export const transposeMatrix = (matrix: any[][]): any[][] => {
+  const transposed: number[][] = [];
+
+  for (let i = 0; i < matrix[0].length; i++) {
+    const newRow: number[] = [];
+    for (let j = 0; j < matrix.length; j++) {
+      newRow.push(matrix[j][i]);
+    }
+    transposed.push(newRow);
+  }
+
+  return transposed;
+};

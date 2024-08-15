@@ -8,6 +8,7 @@ import { Box, Grid, Paper, styled, TextField } from '@mui/material';
 import React from 'react';
 import BarGraph from 'renderer/components/graph/BarGraph';
 import PieGraph from 'renderer/components/graph/PieGraph';
+import { transposeMatrix } from 'renderer/helper';
 
 const InputWrapper = styled(Box)`
   display: flex;
@@ -62,12 +63,9 @@ export default function StructureResult() {
       <Paper>
         <TableStatic
           corner={'Druhové náklady'}
-          header={[...items.filter(Boolean), 'Spolu']}
-          inputs={[
-            ['(Nj) - náklady jednotkové (€)', ''],
-            ['(Š) - štruktúra (%)', ''],
-          ]}
-          data={[
+          header={['(Nj) - náklady jednotkové (€)', '(Š) - štruktúra (%)']}
+          inputs={[...items.filter(Boolean).map((i) => [i, '']), ['Spolu', '']]}
+          data={transposeMatrix([
             [
               ...rowSums.map((value: number) => value.toString()),
               totalCost.toString(),
@@ -81,7 +79,7 @@ export default function StructureResult() {
               }),
               '100',
             ],
-          ]}
+          ])}
         />
       </Paper>
 
@@ -90,12 +88,9 @@ export default function StructureResult() {
       <Paper>
         <TableStatic
           corner={'Kalkulačné náklady'}
-          header={[...headers.map((h) => h.label), 'SPOLU']}
-          inputs={[
-            ['(Nj) - náklady jednotkové (€)', ''],
-            ['(Š) - štruktúra (%)', ''],
-          ]}
-          data={[
+          inputs={[...headers.map((h) => [h.label, '']), ['SPOLU', '']]}
+          header={['(Nj) - náklady jednotkové (€)', '(Š) - štruktúra (%)']}
+          data={transposeMatrix([
             [
               ...colSums.map((value: number) => value.toString()),
               totalCost.toString(),
@@ -109,7 +104,7 @@ export default function StructureResult() {
               }),
               '100',
             ],
-          ]}
+          ])}
         />
       </Paper>
 
