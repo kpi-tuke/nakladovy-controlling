@@ -65,6 +65,8 @@ export default function ItemSelect({
     dispatch(actions.addRow());
   };
 
+  const disableAddRow = items.some((item) => !item);
+
   return (
     <Table
       sx={{
@@ -136,7 +138,11 @@ export default function ItemSelect({
 
         <TableRow>
           <AddCell colSpan={2}>
-            <TableActionButton buttonType="add" onClick={addRow} />
+            <TableActionButton
+              buttonType="add"
+              onClick={addRow}
+              disabled={disableAddRow}
+            />
           </AddCell>
         </TableRow>
       </TableBody>

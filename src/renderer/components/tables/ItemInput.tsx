@@ -33,6 +33,8 @@ export default function ItemInput({
     dispatch(actions.addRow());
   };
 
+  const disableAddRow = items.some((item) => !item);
+
   return (
     <Table>
       <TableHead>
@@ -56,7 +58,11 @@ export default function ItemInput({
 
         <TableRow>
           <ActionCellBottom>
-            <TableActionButton buttonType="add" onClick={addRow} />
+            <TableActionButton
+              buttonType="add"
+              onClick={addRow}
+              disabled={disableAddRow}
+            />
           </ActionCellBottom>
         </TableRow>
       </TableBody>
