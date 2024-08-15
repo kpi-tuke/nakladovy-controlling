@@ -43,6 +43,8 @@ export default function HeaderSelect({
     )
     .map((option: any) => option.label);
 
+  const disableAddButton = header.some((value) => !value);
+
   return (
     <TableHead>
       <TableRow>
@@ -59,7 +61,11 @@ export default function HeaderSelect({
         ))}
         {header.length < selectCol.length && (
           <ActionCellRight $topBorder={false}>
-            <TableActionButton buttonType="add" onClick={addColumn} />
+            <TableActionButton
+              buttonType="add"
+              onClick={addColumn}
+              disabled={disableAddButton}
+            />
           </ActionCellRight>
         )}
       </TableRow>

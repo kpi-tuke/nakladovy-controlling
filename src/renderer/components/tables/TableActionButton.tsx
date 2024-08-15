@@ -32,6 +32,7 @@ const ButtonStyled = styled(Button)<{ $type: 'add' | 'delete' }>`
 interface Props {
   buttonType: 'add' | 'delete';
   onClick: VoidFunction;
+  disabled?: boolean;
 }
 
 const TableActionButton: React.FC<Props> = ({ buttonType, ...props }) => {

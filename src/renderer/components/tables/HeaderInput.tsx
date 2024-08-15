@@ -20,6 +20,8 @@ export default function HeaderInput({
     dispatch(actions.addColumn());
   };
 
+  const disableAddButton = header.some((value) => !value);
+
   return (
     <TableHead>
       <TableRow>
@@ -33,7 +35,11 @@ export default function HeaderInput({
         ))}
         {
           <ActionCellRight $topBorder={false}>
-            <TableActionButton buttonType="add" onClick={addColumn} />
+            <TableActionButton
+              buttonType="add"
+              onClick={addColumn}
+              disabled={disableAddButton}
+            />
           </ActionCellRight>
         }
       </TableRow>
