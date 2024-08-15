@@ -73,7 +73,6 @@ export default function EconomicResult() {
               '\\frac{N_{s (511-518)}}{V}',
             ],
             ['h<sub>d</sub> - nákladovosť daní', '\\frac{N_{d (531-538)}}{V}'],
-            ['P<sub>o</sub> - celková produktivita', ''],
           ]}
           data={[
             costData,
@@ -90,8 +89,6 @@ export default function EconomicResult() {
             financialConstData,
             servicesConstData,
             taxesConstData,
-            // TODO: doplnit po konzultacii (celková produktivita)
-            [0],
           ]}
         />
       </Paper>

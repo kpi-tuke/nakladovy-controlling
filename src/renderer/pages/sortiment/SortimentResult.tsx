@@ -36,6 +36,9 @@ export default function SortimentResult() {
           corner={'Ukazovatele sortimentnej analýzy'}
           header={headers.map((h) => h.label)}
           inputs={[
+            ['(T) - tržby (€)', `T = P_{c} * Q`],
+            ['(NC) - náklady celkom (€)', `NC = N_{p} + N_{n}`],
+            ['(Z<sub>c</sub>) - celopodnikový zisk (€)', `Z_{c} = T - NC`],
             [
               '(Rt) - rentabilita tržieb (%)',
               `R_{t}=\\frac{ZP}{P_{cj}}\\times 100`,
@@ -60,11 +63,11 @@ export default function SortimentResult() {
               '(NP<sub>c</sub>) - nepriame (režijné) náklady celkom (€)',
               `NP_{c} = ÚVP - P_{c}`,
             ],
-            ['(T) - tržby (€)', `T = P_{c} * Q`],
-            ['(NC) - náklady celkom (€)', `NC = N_{p} + N_{n}`],
-            ['(Z<sub>c</sub>) - celopodnikový zisk (€)', `Z_{c} = T - NC`],
           ]}
           data={[
+            income,
+            totalCosts,
+            totalProfit,
             rentIncome,
             rentCost,
             marginGross,
@@ -74,9 +77,6 @@ export default function SortimentResult() {
             unitProfit,
             totalDirectCosts,
             totalIndirectCosts,
-            income,
-            totalCosts,
-            totalProfit,
           ]}
         />
       </Paper>

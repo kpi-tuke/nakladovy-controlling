@@ -12,7 +12,7 @@ import { costOptions } from 'renderer/chartOfAccounts';
 const initialStructureState: defaultState = {
   id: 2,
   title: 'Štruktúrna analýza nákladov',
-  corner: '↓Nákladové druhy | Kalkulačné položky→',
+  corner: 'Druhové náklady | Kalkulačné náklady→',
   headers: [
     {
       type: HeaderType.STRING,

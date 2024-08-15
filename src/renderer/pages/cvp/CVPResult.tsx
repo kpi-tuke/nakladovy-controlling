@@ -102,7 +102,7 @@ export default function CVPResult() {
           header={items}
           inputs={[
             [
-              '(N<sub>0</sub>) - nulový bod',
+              '(N<sub>0</sub>) - nulový bod (množstvo)',
               `N_{0}=\\frac{F_{n}}{P_{cj}-N_{vj}}`,
             ],
             [

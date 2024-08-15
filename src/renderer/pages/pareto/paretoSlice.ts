@@ -10,7 +10,7 @@ import { RootState } from '../../store/store';
 const initialParetoState: defaultState = {
   id: 6,
   title: 'Pareto analýza nákladov',
-  corner: 'Názov druhových nákladov',
+  corner: 'Druhové náklady',
   headers: [
     {
       type: HeaderType.STRING,

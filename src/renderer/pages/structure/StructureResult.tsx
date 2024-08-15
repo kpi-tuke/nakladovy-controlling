@@ -32,8 +32,8 @@ export default function StructureResult() {
       <SectionTitle className="new-page">Analýza ukazovateľov</SectionTitle>
       <Paper>
         <TableStatic
-          corner={'Nákladové druhy'}
-          header={[...items.filter(Boolean), 'SPOLU']}
+          corner={'Druhové náklady'}
+          header={[...items.filter(Boolean), 'Spolu']}
           inputs={[
             ['(Nj) - náklady jednotkové (€)', ''],
             ['(Š) - štruktúra (%)', ''],
@@ -60,7 +60,7 @@ export default function StructureResult() {
 
       <Paper>
         <TableStatic
-          corner={'Druhové náklady'}
+          corner={'Kalkulačné náklady'}
           header={[...headers.map((h) => h.label), 'SPOLU']}
           inputs={[
             ['(Nj) - náklady jednotkové (€)', ''],

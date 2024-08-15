@@ -14,7 +14,9 @@
     "start:main": "cross-env NODE_ENV=development electron -r ts-node/register/transpile-only ./src/main/main.ts",
     "start:renderer": "cross-env NODE_ENV=development TS_NODE_TRANSPILE_ONLY=true webpack serve --config ./.erb/configs/webpack.config.renderer.dev.ts",
     "test": "jest",
-    "pretty": "prettier --write \"./**/*.{js,jsx,mjs,cjs,ts,tsx,json}\""
+    "pretty": "prettier --write \"./**/*.{js,jsx,mjs,cjs,ts,tsx,json}\"",
+    "build-mac": "electron-builder build -m",
+    "build-win": "electron-builder build -w --x64"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
@@ -71,7 +73,18 @@
     },
     "win": {
       "target": [
-        "nsis"
+        {
+          "target": "zip",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "msi",
+          "arch": [
+            "x64"
+          ]
+        }
       ]
     },
     "linux": {
