@@ -3,6 +3,7 @@ import { isNumeric } from 'renderer/helper';
 import { SortDirection } from 'renderer/types/sortDirection';
 
 export enum HeaderType {
+  NUMBER = 'NUMBER',
   STRING = 'STRING',
   SELECT = 'SELECT',
 }
@@ -57,7 +58,7 @@ export const rootReducer = {
   ) => {
     state.headers[action.payload.index] = {
       label: action.payload.data,
-      type: HeaderType.STRING,
+      type: HeaderType.NUMBER,
     };
   },
   setItemsOnIndex: (
@@ -73,8 +74,10 @@ export const rootReducer = {
     state.values[action.payload.index] = action.payload.data;
   },
   setDataOnIndex: (state: DefaultState, action: PayloadAction<dataOnCords>) => {
-    if (action.payload.type === HeaderType.SELECT) {
-      console.log('payload: ', action.payload);
+    if (
+      action.payload.type === HeaderType.SELECT ||
+      action.payload.type === HeaderType.STRING
+    ) {
       state.data[action.payload.row][action.payload.col] = action.payload.data;
     } else {
       state.data[action.payload.row][action.payload.col] = isNaN(
@@ -85,7 +88,7 @@ export const rootReducer = {
     }
   },
   addColumn: (state: DefaultState): void => {
-    state.headers.push({ label: '', type: HeaderType.STRING });
+    state.headers.push({ label: '', type: HeaderType.NUMBER });
     state.data.map((rowData: any) => {
       rowData.push(0);
     });

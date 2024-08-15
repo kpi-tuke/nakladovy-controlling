@@ -1,7 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../store/store';
 import { DefaultState, HeaderType, rootReducer } from '../../store/rootReducer';
-import { MeasureUnit } from 'renderer/theme/measureUnit';
 import isEqual from 'lodash.isequal';
 
 export interface CVPState extends DefaultState {
@@ -15,45 +14,27 @@ const initialCVPState: CVPState = {
   corner: 'Názov výrobku',
   headers: [
     {
-      type: HeaderType.STRING,
+      type: HeaderType.NUMBER,
       label: '(Q) - objem produkcie',
     },
     {
-      type: HeaderType.SELECT,
+      type: HeaderType.STRING,
       label: 'merná jednotka',
-      options: [
-        {
-          label: MeasureUnit.PIECE,
-          value: MeasureUnit.PIECE,
-        },
-        {
-          label: MeasureUnit.KILOGRAM,
-          value: MeasureUnit.KILOGRAM,
-        },
-        {
-          label: MeasureUnit.TONNE,
-          value: MeasureUnit.TONNE,
-        },
-        {
-          label: MeasureUnit.GRAM,
-          value: MeasureUnit.GRAM,
-        },
-      ],
     },
     {
-      type: HeaderType.STRING,
+      type: HeaderType.NUMBER,
       label: '(Pcj) - predajná cena jednotková (€)',
     },
     {
-      type: HeaderType.STRING,
+      type: HeaderType.NUMBER,
       label: '(Nvj) - variabilné náklady jednotkové (€)',
     },
     {
-      type: HeaderType.STRING,
+      type: HeaderType.NUMBER,
       label: '(F<sub>n</sub>) fixné náklady (€)',
     },
     {
-      type: HeaderType.STRING,
+      type: HeaderType.NUMBER,
       label: '(Z<sub>min</sub>) minimálny zisk (€)',
     },
   ],

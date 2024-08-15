@@ -14,7 +14,7 @@ const initialParetoState: DefaultState = {
   corner: 'Druhové náklady',
   headers: [
     {
-      type: HeaderType.STRING,
+      type: HeaderType.NUMBER,
       label: '(N) - výška nákladov (€)',
     },
   ],

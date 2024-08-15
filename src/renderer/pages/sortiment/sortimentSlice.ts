@@ -14,7 +14,7 @@ const initialSortimentState: DefaultState = {
   corner: 'Ekonomická položka',
   headers: [
     {
-      type: HeaderType.STRING,
+      type: HeaderType.NUMBER,
       label: 'Výrobok A',
     },
   ],

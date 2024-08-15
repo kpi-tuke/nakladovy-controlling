@@ -51,11 +51,10 @@ export default function withTable(
     };
 
     const handleChangeData = function (
-      event: ChangeEvent<HTMLInputElement>,
+      value: string,
       row: number,
       col: number,
-      cellType?: HeaderType,
-      value?: string
+      cellType?: HeaderType
     ) {
       if (cellType === HeaderType.SELECT) {
         dispatch(
@@ -66,18 +65,22 @@ export default function withTable(
             type: HeaderType.SELECT,
           })
         );
+      } else if (cellType === HeaderType.STRING) {
+        dispatch(
+          actions.setDataOnIndex({
+            data: value,
+            row,
+            col,
+            type: HeaderType.STRING,
+          })
+        );
       } else {
-        if (
-          event.target.value.startsWith('0') &&
-          !event.target.value.startsWith('0.')
-        )
-          event.target.value = event.target.value.slice(1);
+        if (value.startsWith('0') && !value.startsWith('0.'))
+          value = value.slice(1);
 
         dispatch(
           actions.setDataOnIndex({
-            data: Math.abs(
-              Math.round(parseFloat(event.target.value) * 100) / 100
-            ),
+            data: Math.abs(Math.round(parseFloat(value) * 100) / 100),
             row,
             col,
           })
@@ -123,14 +126,16 @@ export default function withTable(
                       <TableRow key={row}>
                         {rowData.map((value: number, col: number) => (
                           <TableCell key={row + ':' + col}>
-                            {headers[col].type === 'STRING' ? (
+                            {headers[col].type === HeaderType.NUMBER ||
+                            headers[col].type === HeaderType.STRING ? (
                               <TextField
                                 defaultValue={value}
                                 onBlur={(e) =>
                                   handleChangeData(
-                                    e as React.FocusEvent<HTMLInputElement>,
+                                    e.target.value ?? '',
                                     row,
-                                    col
+                                    col,
+                                    headers[col].type
                                   )
                                 }
                                 onWheel={(event) => event.currentTarget.blur()}
@@ -165,11 +170,10 @@ export default function withTable(
                                 clearIcon={false}
                                 onChange={(e, value) => {
                                   handleChangeData(
-                                    e as React.ChangeEvent<HTMLInputElement>,
+                                    value.value,
                                     row,
                                     col,
-                                    headers[col].type,
-                                    value.value
+                                    headers[col].type
                                   );
                                 }}
                                 sx={{

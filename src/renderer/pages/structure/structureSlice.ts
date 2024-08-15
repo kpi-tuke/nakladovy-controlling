@@ -16,7 +16,7 @@ const initialStructureState: DefaultState = {
   corner: 'Druhové náklady | Kalkulačné náklady→',
   headers: [
     {
-      type: HeaderType.STRING,
+      type: HeaderType.NUMBER,
       label: 'Priamy materiál',
     },
   ],

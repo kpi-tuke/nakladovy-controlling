@@ -18,15 +18,15 @@ const initialIndexState: DefaultState = {
   corner: 'Ekonomická položka (€)',
   headers: [
     {
-      type: HeaderType.STRING,
+      type: HeaderType.NUMBER,
       label: 'Bázický rok',
     },
     {
-      type: HeaderType.STRING,
+      type: HeaderType.NUMBER,
       label: '2000',
     },
     {
-      type: HeaderType.STRING,
+      type: HeaderType.NUMBER,
       label: '2001',
     },
   ],
