@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSelector, createSlice } from '@reduxjs/toolkit';
 import {
   changeAccount,
   DefaultState,
@@ -8,7 +8,7 @@ import {
   sortTableByItemNumber,
   sortTableByYear,
 } from '../../store/rootReducer';
-import { RootState } from '../../store/store';
+import { RootSelectors, RootState } from '../../store/store';
 import {
   costOptions,
   profitOptions,
@@ -62,9 +62,33 @@ export const economicSlice = createSlice({
 });
 
 export const economicActions = economicSlice.actions;
-export const selectEconomic = (state: RootState) => state.economic;
 export const economicReducer = economicSlice.reducer;
+
+export const selectEconomic = (state: RootState) => state.economic;
 
 export const hasEconomicChanged = (state: RootState) => {
   return !isEqual(state.economic, initialEconomicState);
+};
+
+export const selectHeaderByIndex = (index) =>
+  createSelector(
+    [(state: RootState) => state.economic.headers],
+    (headers) => headers[index],
+  );
+
+export const selectors: RootSelectors = {
+  headers: (state: RootState) => state.economic.headers,
+  selectHeaderByIndex: (index) =>
+    createSelector(
+      [(state: RootState) => state.economic.headers],
+      (headers) => headers[index],
+    ),
+  data: (state: RootState) => state.economic.data,
+  dynRows: (state: RootState) => state.economic.dynRows,
+  dynCols: (state: RootState) => state.economic.dynCols,
+  text: (state: RootState) => state.economic.text,
+  items: (state: RootState) => state.economic.items,
+  corner: (state: RootState) => state.economic.corner,
+  values: (state: RootState) => state.economic.values,
+  itemSelectOptions: (state: RootState) => state.economic.itemSelectOptions,
 };

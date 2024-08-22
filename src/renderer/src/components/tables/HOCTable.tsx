@@ -22,6 +22,7 @@ import {
 import TableActionButton from './TableActionButton';
 import { useError } from '../providers/ErrorProvider';
 import { DefaultState, HeaderType } from '@renderer/store/rootReducer';
+import { RootSelectors } from '@renderer/store/store';
 
 const TableWrapper = styled(Box)`
   overflow-x: auto;
@@ -30,16 +31,17 @@ const TableWrapper = styled(Box)`
 export default function withTable(
   TableInput: (props: any) => JSX.Element,
   TableDataHeader: (props: any) => JSX.Element,
-  selector: any,
+  selectors: RootSelectors,
   actions: any,
 ) {
   return () => {
     const dispatch = useAppDispatch();
     const { openError } = useError();
 
-    const { headers, data, dynRows, dynCols } = useAppSelector(
-      selector,
-    ) as DefaultState;
+    const headers = useAppSelector(selectors.headers);
+    const data = useAppSelector(selectors.data);
+    const dynRows = useAppSelector(selectors.dynRows);
+    const dynCols = useAppSelector(selectors.dynCols);
 
     const deleteRow = (row: number) => {
       dispatch(actions.deleteRow(row));
@@ -110,16 +112,12 @@ export default function withTable(
         <Paper className="hideInPrint">
           <Grid container>
             <Grid xs={4} item>
-              <TableInput selector={selector} actions={actions} />
+              <TableInput selectors={selectors} actions={actions} />
             </Grid>
             <Grid xs={8} item>
               <TableWrapper>
                 <DataTable>
-                  <TableDataHeader
-                    header={headers.map((h) => h.label)}
-                    dynCols={dynCols}
-                    actions={actions}
-                  />
+                  <TableDataHeader selectors={selectors} actions={actions} />
                   <TableBody>
                     {data.map((rowData, row) => (
                       <TableRow key={row}>
@@ -231,7 +229,7 @@ export default function withTable(
           </Grid>
         </Paper>
 
-        <PDFTable selector={selector} />
+        {/* <PDFTable selector={selector} /> */}
       </>
     );
   };

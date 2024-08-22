@@ -1,38 +1,42 @@
-import { useAppDispatch } from '../../store/hooks';
+import { RootSelectors } from '@renderer/store/store';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { ActionCellRight, TableCell, TableHead, TableRow } from './Table';
 import TableActionButton from './TableActionButton';
 import TableInput from './TableInput';
+import React from 'react';
 
-export default function HeaderInput({
-  header,
-  actions,
-}: {
-  header: string[];
+type Props = {
+  selectors: RootSelectors;
   actions: any;
-}) {
-  const dispatch = useAppDispatch();
+};
 
-  const handleChangeHeader = function (event: any, idx: number) {
-    dispatch(actions.setHeadersOnIndex({ data: event.value, index: idx }));
-  };
+const HeaderInput: React.FC<Props> = ({ selectors, actions }) => {
+  const dispatch = useAppDispatch();
 
   const addColumn = () => {
     dispatch(actions.addColumn());
   };
 
-  const disableAddButton = header.some((value) => !value);
+  const headers = useAppSelector(selectors.headers);
+
+  const disableAddButton = headers.some((value) => !value);
+
+  // rerender headers only if it's length changes
+  const headersArray = React.useMemo(() => {
+    return headers.map((_, index) => (
+      <Input
+        key={index}
+        actions={actions}
+        index={index}
+        selectors={selectors}
+      />
+    ));
+  }, [headers.length]);
 
   return (
     <TableHead>
       <TableRow>
-        {header.map((value: string, idx: number) => (
-          <TableCell key={idx}>
-            <TableInput
-              defaultValue={value}
-              onBlur={(e) => handleChangeHeader(e.target, idx)}
-            />
-          </TableCell>
-        ))}
+        {headersArray}
         {
           <ActionCellRight $topBorder={false}>
             <TableActionButton
@@ -45,4 +49,33 @@ export default function HeaderInput({
       </TableRow>
     </TableHead>
   );
-}
+};
+
+export default HeaderInput;
+
+type InputProps = {
+  selectors: RootSelectors;
+  actions: any;
+  index: number;
+};
+
+const Input: React.FC<InputProps> = React.memo(
+  ({ actions, index, selectors }) => {
+    const dispatch = useAppDispatch();
+
+    const header = useAppSelector(selectors.selectHeaderByIndex(index));
+
+    const handleChangeHeader = (value: string, index: number) => {
+      dispatch(actions.setHeadersOnIndex({ data: value, index }));
+    };
+
+    return (
+      <TableCell>
+        <TableInput
+          defaultValue={header.label}
+          onChange={(e) => handleChangeHeader(e.target.value, index)}
+        />
+      </TableCell>
+    );
+  },
+);

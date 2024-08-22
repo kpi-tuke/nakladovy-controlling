@@ -10,7 +10,7 @@ import IndexResult from './pages/index/IndexResult';
 import { indexActions, selectIndex } from './pages/index/indexSlice';
 import {
   economicActions,
-  selectEconomic,
+  selectors as economicSelectors,
 } from './pages/economic/economicSlice';
 import EconomicResult from './pages/economic/EconomicResult';
 import ItemSelect from './components/tables/ItemSelect';
@@ -40,56 +40,57 @@ import ErrorProvider from './components/providers/ErrorProvider';
 import HeaderBar from './components/HeaderBar';
 import ThemeProvider from './components/providers/ThemeProvider';
 import { MathJaxContext } from 'better-react-mathjax';
+import Test from './components/Test';
 
 export default function App() {
   const EconomicAnalysis: () => JSX.Element = withAnalysis(
-    selectEconomic,
+    economicSelectors,
     economicActions,
     ItemSelect,
     HeaderInput,
     EconomicResult,
     RouteName.ECONOMIC_ANALYSIS,
   );
-  const StructureAnalysis: () => JSX.Element = withAnalysis(
-    selectStructure,
-    structureActions,
-    ItemSelect,
-    HeaderSelect,
-    StructureResult,
-    RouteName.STRUCTURE_ANALYSIS,
-  );
-  const IndexAnalysis: () => JSX.Element = withAnalysis(
-    selectIndex,
-    indexActions,
-    ItemSelect,
-    HeaderInput,
-    IndexResult,
-    RouteName.INDEX_ANALYSIS,
-  );
-  const CVPAnalysis: () => JSX.Element = withAnalysis(
-    selectCVP,
-    CVPActions,
-    ItemInput,
-    HeaderValue,
-    CVPResult,
-    RouteName.CVP_ANALYSIS,
-  );
-  const SortimentAnalysis: () => JSX.Element = withAnalysis(
-    selectSortiment,
-    sortimentActions,
-    ItemValue,
-    HeaderInput,
-    SortimentResult,
-    RouteName.SORTIMENT_ANALYSIS,
-  );
-  const ParetoAnalysis: () => JSX.Element = withAnalysis(
-    selectPareto,
-    paretoActions,
-    ItemInput,
-    HeaderValue,
-    ParetoResult,
-    RouteName.PERETO_ANALYSIS,
-  );
+  // const StructureAnalysis: () => JSX.Element = withAnalysis(
+  //   selectStructure,
+  //   structureActions,
+  //   ItemSelect,
+  //   HeaderSelect,
+  //   StructureResult,
+  //   RouteName.STRUCTURE_ANALYSIS,
+  // );
+  // const IndexAnalysis: () => JSX.Element = withAnalysis(
+  //   selectIndex,
+  //   indexActions,
+  //   ItemSelect,
+  //   HeaderInput,
+  //   IndexResult,
+  //   RouteName.INDEX_ANALYSIS,
+  // );
+  // const CVPAnalysis: () => JSX.Element = withAnalysis(
+  //   selectCVP,
+  //   CVPActions,
+  //   ItemInput,
+  //   HeaderValue,
+  //   CVPResult,
+  //   RouteName.CVP_ANALYSIS,
+  // );
+  // const SortimentAnalysis: () => JSX.Element = withAnalysis(
+  //   selectSortiment,
+  //   sortimentActions,
+  //   ItemValue,
+  //   HeaderInput,
+  //   SortimentResult,
+  //   RouteName.SORTIMENT_ANALYSIS,
+  // );
+  // const ParetoAnalysis: () => JSX.Element = withAnalysis(
+  //   selectPareto,
+  //   paretoActions,
+  //   ItemInput,
+  //   HeaderValue,
+  //   ParetoResult,
+  //   RouteName.PERETO_ANALYSIS,
+  // );
   return (
     <MathJaxContext>
       <Provider store={store}>
@@ -98,6 +99,7 @@ export default function App() {
             <SnackbarProvider>
               <AnalysisSaveProvider>
                 <Router>
+                  <Test />
                   <HeaderBar />
                   <Routes>
                     <Route path={RouteName.HOME} element={<WelcomePage />} />
@@ -109,7 +111,7 @@ export default function App() {
                       path={RouteName.ECONOMIC_ANALYSIS}
                       element={<EconomicAnalysis />}
                     />
-                    <Route
+                    {/* <Route
                       path={RouteName.PERETO_ANALYSIS}
                       element={<ParetoAnalysis />}
                     />
@@ -141,7 +143,7 @@ export default function App() {
                           ParetoAnalysisPage={ParetoAnalysis}
                         />
                       }
-                    />
+                    /> */}
                   </Routes>
                 </Router>
               </AnalysisSaveProvider>

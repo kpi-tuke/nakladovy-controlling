@@ -1,7 +1,6 @@
 import { useSelector } from 'react-redux';
 import TextArea from '../components/Textarea';
-import { DefaultState } from '../store/rootReducer';
-import { RootState } from '../store/store';
+import { RootSelectors } from '../store/store';
 import withTable from '../components/tables/HOCTable';
 import Page from '@renderer/components/layout/Page';
 import PageContent from '@renderer/components/layout/PageContent';
@@ -19,7 +18,7 @@ const PrintPageTitle = styled(Typography)`
 `;
 
 export default function withAnalysis(
-  selector: (state: RootState) => DefaultState,
+  selectors: RootSelectors,
   actions: any,
   TableItems: (props: any) => JSX.Element,
   TableHeaders: (props: any) => JSX.Element,
@@ -27,13 +26,14 @@ export default function withAnalysis(
   routeName: string,
 ) {
   return () => {
-    const { text } = useSelector(selector);
+    const text = useSelector(selectors.text);
+
     const dispatch = useAppDispatch();
 
     const Table: () => JSX.Element = withTable(
       TableItems,
       TableHeaders,
-      selector,
+      selectors,
       actions,
     );
 
