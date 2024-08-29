@@ -6,6 +6,8 @@ import {
 } from '@mui/material';
 import SectionTitle from './SectionTitle';
 import { useTheme } from './providers/ThemeProvider';
+import { RootSelectors } from '@renderer/store/store';
+import { useAppDispatch, useAppSelector } from '@renderer/store/hooks';
 
 const StyledTextareaAutosize = styled(TextareaAutosize)`
   &::placeholder {
@@ -16,19 +18,19 @@ const StyledTextareaAutosize = styled(TextareaAutosize)`
 `;
 
 type Props = {
-  onChangeDebounced?: (value: string) => void;
-  defaultValue?: string;
+  selectors: RootSelectors;
+  actions: any;
 };
 
-const Textarea: React.FC<Props> = ({
-  defaultValue,
-  onChangeDebounced: onChange,
-}) => {
+const Textarea: React.FC<Props> = ({ selectors, actions }) => {
   const theme = useMuiTheme();
   const { mode } = useTheme();
+  const dispatch = useAppDispatch();
+
+  const text = useAppSelector(selectors.text);
 
   const debouncedOnChange = (value: string) => {
-    onChange?.(value);
+    dispatch(actions.changeText(value));
   };
 
   const onChangeDebounced = debounce(debouncedOnChange, 1000);
@@ -42,7 +44,7 @@ const Textarea: React.FC<Props> = ({
       <SectionTitle>Záver a zhodnotenie analýzy</SectionTitle>
 
       <StyledTextareaAutosize
-        defaultValue={defaultValue}
+        defaultValue={text}
         onChange={(e) => {
           handleChange(e);
         }}
