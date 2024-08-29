@@ -30,9 +30,18 @@ const initialEconomicState: DefaultState = {
   data: [[0], [0], [0]],
   items: [costOptions[0].label, profitOptions[0].label, ''],
   values: [
-    costOptions[0].value.toString(),
-    profitOptions[0].value.toString(),
-    '',
+    {
+      id: '1',
+      value: costOptions[0].value.toString(),
+    },
+    {
+      id: '2',
+      value: profitOptions[0].value.toString(),
+    },
+    {
+      id: '3',
+      value: '',
+    },
   ],
   text: '',
   accounts: [''],
@@ -83,6 +92,11 @@ export const selectors: RootSelectors = {
     createSelector(
       [(state: RootState) => state.economic.headers],
       (headers) => headers[index],
+    ),
+  selectValueByIndex: (index) =>
+    createSelector(
+      [(state: RootState) => state.economic.values],
+      (values) => values[index],
     ),
   data: (state: RootState) => state.economic.data,
   dynRows: (state: RootState) => state.economic.dynRows,

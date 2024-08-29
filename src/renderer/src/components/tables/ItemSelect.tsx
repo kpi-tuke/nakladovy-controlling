@@ -19,135 +19,158 @@ const AddCell = styled(TableCell)`
   height: 28px;
 `;
 
+type ItemSelectProps = {
+  selectors: RootSelectors;
+  actions: any;
+};
+
+const ItemSelect: React.FC<ItemSelectProps> = ({ selectors, actions }) => {
+  const corner = useAppSelector(selectors.corner);
+  const items = useAppSelector(selectors.items);
+  const values = useAppSelector(selectors.values);
+
+  const dispatch = useAppDispatch();
+
+  const addRow = () => {
+    dispatch(actions.addRow());
+  };
+
+  const disableAddRow = items.some((item) => !item);
+
+  return (
+    <Table
+      sx={{
+        width: '100%',
+        borderRight: (theme) => `1px solid ${theme.palette.divider}`,
+      }}
+    >
+      <TableHead>
+        <TableRow>
+          <TableCorner>{corner}</TableCorner>
+        </TableRow>
+      </TableHead>
+      <TableBody>
+        {values.map((value, index) => {
+          return (
+            <Row
+              key={value.id}
+              selectors={selectors}
+              actions={actions}
+              index={index}
+            />
+          );
+        })}
+
+        <TableRow>
+          <AddCell colSpan={2}>
+            <TableActionButton
+              buttonType="add"
+              onClick={addRow}
+              disabled={disableAddRow}
+            />
+          </AddCell>
+        </TableRow>
+      </TableBody>
+    </Table>
+  );
+};
+
+export default ItemSelect;
+
 type Option = {
   label: string;
   value: number;
   type: string;
 };
 
-const ItemSelect = React.memo(
-  ({ selectors, actions }: { selectors: RootSelectors; actions: any }) => {
-    const corner = useAppSelector(selectors.corner);
-    const items = useAppSelector(selectors.items);
-    const values = useAppSelector(selectors.values);
-    const itemSelectOptions = useAppSelector(selectors.itemSelectOptions);
+type RowProps = {
+  selectors: RootSelectors;
+  actions: any;
+  index: number;
+};
 
-    const dispatch = useAppDispatch();
+const Row: React.FC<RowProps> = React.memo(({ selectors, actions, index }) => {
+  const dispatch = useAppDispatch();
 
-    const handleAutocompleteChange = (value: Option, idx: number) => {
-      const savedValue =
-        value.label === ADD_CUSTOM_ITEM_LABEL ? '' : value.label;
+  const itemSelectOptions = useAppSelector(selectors.itemSelectOptions);
+  const items = useAppSelector(selectors.items);
+  const value = useAppSelector(selectors.selectValueByIndex(index));
 
-      dispatch(actions.setItemsOnIndex({ data: savedValue, index: idx }));
-      dispatch(
-        actions.setValuesOnIndex({ data: value.value.toString(), index: idx }),
-      );
+  const handleAutocompleteChange = (newValue: Option) => {
+    const savedValue =
+      newValue.label === ADD_CUSTOM_ITEM_LABEL ? '' : newValue.label;
 
-      if (!items.includes(value.label) && idx === items.length - 1) {
-        dispatch(actions.addRow());
-      }
-    };
+    dispatch(actions.setItemsOnIndex({ data: savedValue, index }));
 
-    const handleInputChange = (value: string, idx: number) => {
-      dispatch(actions.setItemsOnIndex({ data: value, index: idx }));
-
-      // TODOTODO netreba to ani riesit lebo stale tam bude -1 len...
-      // TODO: docasne nastavenie -1 pretoze tato polozka nema svoju value
-      // dispatch(actions.setValuesOnIndex({ data: -1, index: idx }));
-    };
-
-    const addRow = () => {
-      dispatch(actions.addRow());
-    };
-
-    const disableAddRow = items.some((item) => !item);
-
-    console.log('- ITEM RERENDER');
-
-    return (
-      <Table
-        sx={{
-          width: '100%',
-          borderRight: (theme) => `1px solid ${theme.palette.divider}`,
-        }}
-      >
-        <TableHead>
-          <TableRow>
-            <TableCorner>{corner}</TableCorner>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {items.map((value: string, row: number) => {
-            console.log('rerender: ', row);
-
-            return (
-              <TableRow key={row}>
-                <TableCell>
-                  {values[row] != '-1' ? (
-                    <Autocomplete
-                      value={itemSelectOptions.find(
-                        (option) => option.label === value,
-                      )}
-                      options={itemSelectOptions}
-                      groupBy={(option) => option.type}
-                      getOptionLabel={(option) => option.label}
-                      getOptionDisabled={(option) =>
-                        items.includes(option.label) &&
-                        option.label !== ADD_CUSTOM_ITEM_LABEL
-                      }
-                      renderInput={(params) => <TextField {...params} />}
-                      clearIcon={null}
-                      // @ts-ignore
-                      onChange={(e, value) =>
-                        handleAutocompleteChange(value, row)
-                      }
-                      sx={{
-                        position: 'absolute',
-                        inset: 0,
-
-                        '.MuiOutlinedInput-root': {
-                          borderRadius: '0',
-                          height: '48px',
-                          paddingRight: '36px !important',
-
-                          fieldset: {
-                            border: 'none',
-                            height: '48px',
-                          },
-                        },
-
-                        input: {
-                          height: `${48 - 18}px !important`,
-                          padding: '0px !important',
-                        },
-                      }}
-                    />
-                  ) : (
-                    <TableInput
-                      placeholder="Zadajte názov položky..."
-                      inputTextAlign="left"
-                      defaultValue={value}
-                      onBlur={(e) => handleInputChange(e.target.value, row)}
-                    />
-                  )}
-                </TableCell>
-              </TableRow>
-            );
-          })}
-
-          <TableRow>
-            <AddCell colSpan={2}>
-              <TableActionButton
-                buttonType="add"
-                onClick={addRow}
-                disabled={disableAddRow}
-              />
-            </AddCell>
-          </TableRow>
-        </TableBody>
-      </Table>
+    dispatch(
+      actions.setValuesOnIndex({
+        index,
+        data: {
+          value: newValue.value.toString(),
+          id: value.id,
+        },
+      }),
     );
-  },
-);
 
-export default ItemSelect;
+    if (!items.includes(newValue.label) && index === items.length - 1) {
+      dispatch(actions.addRow());
+    }
+  };
+
+  const handleInputChange = (value: string) => {
+    dispatch(actions.setItemsOnIndex({ data: value, index }));
+  };
+
+  return (
+    <TableRow>
+      <TableCell>
+        {value.value != '-1' ? (
+          <Autocomplete
+            value={itemSelectOptions.find(
+              (option) => option.value == value.value,
+            )}
+            options={itemSelectOptions}
+            groupBy={(option) => option.type}
+            getOptionLabel={(option) => option.label}
+            getOptionDisabled={(option) =>
+              items.includes(option.label) &&
+              option.label !== ADD_CUSTOM_ITEM_LABEL
+            }
+            renderInput={(params) => <TextField {...params} />}
+            clearIcon={null}
+            onChange={(_, value) => {
+              handleAutocompleteChange(value);
+            }}
+            sx={{
+              position: 'absolute',
+              inset: 0,
+
+              '.MuiOutlinedInput-root': {
+                borderRadius: '0',
+                height: '48px',
+                paddingRight: '36px !important',
+
+                fieldset: {
+                  border: 'none',
+                  height: '48px',
+                },
+              },
+
+              input: {
+                height: `${48 - 18}px !important`,
+                padding: '0px !important',
+              },
+            }}
+          />
+        ) : (
+          <TableInput
+            placeholder="Zadajte názov položky..."
+            inputTextAlign="left"
+            defaultValue={value}
+            onBlur={(e) => handleInputChange(e.target.value)}
+          />
+        )}
+      </TableCell>
+    </TableRow>
+  );
+});

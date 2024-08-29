@@ -54,7 +54,7 @@ type InputProps = {
 };
 
 const Input: React.FC<InputProps> = React.memo(
-  ({ actions, index, selectors }) => {
+  ({ selectors, actions, index }) => {
     const dispatch = useAppDispatch();
 
     const header = useAppSelector(selectors.selectHeaderByIndex(index));

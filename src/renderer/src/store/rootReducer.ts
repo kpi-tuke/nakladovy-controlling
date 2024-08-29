@@ -21,6 +21,11 @@ export type Header = {
   options?: HeaderOption[];
 };
 
+export type Value = {
+  id: string;
+  value: string;
+};
+
 export type CellValue = number | string;
 
 export interface DefaultState {
@@ -30,7 +35,7 @@ export interface DefaultState {
   headers: Header[];
   data: CellValue[][];
   items: string[];
-  values: string[];
+  values: Value[];
   text: string;
   accounts: string[];
   sortable: boolean;
@@ -78,7 +83,13 @@ export const rootReducer = {
   },
   setValuesOnIndex: (
     state: DefaultState,
-    action: PayloadAction<dataOnIndex>,
+    action: PayloadAction<{
+      index: number;
+      data: {
+        id: string;
+        value: string;
+      };
+    }>,
   ) => {
     state.values[action.payload.index] = action.payload.data;
   },
@@ -104,6 +115,10 @@ export const rootReducer = {
   },
   addRow: (state: DefaultState) => {
     state.items.push('');
+    state.values.push({
+      id: uuidv4(),
+      value: '',
+    });
     state.accounts.push('');
     let arr: any[] = [];
     for (let i = 0; i < state.data[0].length; i++) {
@@ -200,18 +215,12 @@ export const sortTableByItemNumber = {
     state: DefaultState,
     action: PayloadAction<SortDirection>,
   ) => {
-    const { headers, data, items, values, text } = state;
+    const { data, items, values } = state;
 
-    const sortedValues =
-      action.payload === 'desc'
-        ? [...values].sort((a, b) => +a - +b)
-        : [...values].sort((a, b) => +b - +a);
-
-    const { validValues, invalidValues } = items.reduce(
+    // VALUES
+    const { validValues, invalidValues } = values.reduce(
       (acc, item) => {
-        const number = item.split('-')[0].replaceAll(' ', '');
-
-        if (isNumeric(number)) {
+        if (!!item.value) {
           acc.validValues.push(item);
         } else {
           acc.invalidValues.push(item);
@@ -219,10 +228,33 @@ export const sortTableByItemNumber = {
 
         return acc;
       },
-      { invalidValues: [], validValues: [] },
+      { invalidValues: [] as Value[], validValues: [] as Value[] },
     );
 
-    const sortedItems = validValues.sort((a, b) => {
+    const sortedValidValues =
+      action.payload === SortDirection.ASC
+        ? validValues.sort((a, b) => +a.value - +b.value)
+        : validValues.sort((a, b) => +b.value - +a.value);
+
+    const sortedValues = [...sortedValidValues, ...invalidValues];
+
+    // ITEMS
+    const { validItems, invalidItems } = items.reduce(
+      (acc, item) => {
+        const number = item.split('-')[0].replaceAll(' ', '');
+
+        if (isNumeric(number)) {
+          acc.validItems.push(item);
+        } else {
+          acc.invalidItems.push(item);
+        }
+
+        return acc;
+      },
+      { invalidItems: [] as string[], validItems: [] as string[] },
+    );
+
+    const sortedValidItems = validItems.sort((a, b) => {
       const aNumber = a.split('-')[0].replaceAll(' ', '');
       const bNumber = b.split('-')[0].replaceAll(' ', '');
 
@@ -231,25 +263,24 @@ export const sortTableByItemNumber = {
         : +aNumber - +bNumber;
     });
 
-    const finalItems = [...sortedItems, ...invalidValues];
+    const sortedItems = [...sortedValidItems, ...invalidItems];
 
+    // DATA
     const formattedData: { [key: string]: CellValue[] } = {};
 
     values.forEach((value, index) => {
-      formattedData[value] = data[index];
+      formattedData[value.value] = data[index];
     });
 
     const sortedData: CellValue[][] = [];
 
     sortedValues.forEach((item) => {
-      sortedData.push(formattedData[item]);
+      sortedData.push(formattedData[item.value]);
     });
 
-    state.headers = headers;
     state.data = sortedData;
-    state.items = finalItems;
+    state.items = sortedItems;
     state.values = sortedValues;
-    state.text = text;
 
     return;
   },
