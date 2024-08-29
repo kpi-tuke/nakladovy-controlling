@@ -82,7 +82,7 @@ const PDFTable: React.FC<PDFTableProps> = ({ selectors }) => {
                         maxWidth: '13.3vw',
                       }}
                     >
-                      {header}
+                      <span dangerouslySetInnerHTML={{ __html: header }} />
                     </TableCell>
                   ))}
                 </TableRow>
