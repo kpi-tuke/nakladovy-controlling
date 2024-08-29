@@ -32,6 +32,10 @@ export type RootSelectors = {
   selectHeaderByIndex: (index: number) => (state: RootState) => Header;
   selectValueByIndex: (index: number) => (state: RootState) => Value;
   data: (state: RootState) => CellValue[][];
+  selectDataByPosition: (
+    row: number,
+    col: number,
+  ) => (state: RootState) => CellValue;
   dynRows: (state: RootState) => boolean | undefined;
   dynCols: (state: RootState) => boolean | undefined;
   text: (state: RootState) => string;

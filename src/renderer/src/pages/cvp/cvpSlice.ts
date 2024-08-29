@@ -119,6 +119,11 @@ export const selectors: RootSelectors = {
       (values) => values[index],
     ),
   data: createSelector([(state: RootState) => state.cvp.data], (data) => data),
+  selectDataByPosition: (row: number, col: number) =>
+    createSelector(
+      [(state: RootState) => state.cvp.data],
+      (data) => data[row][col],
+    ),
   dynRows: createSelector(
     [(state: RootState) => state.cvp.dynRows],
     (dynRows) => dynRows,

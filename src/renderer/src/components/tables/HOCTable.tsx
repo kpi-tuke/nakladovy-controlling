@@ -21,8 +21,9 @@ import {
 } from './Table';
 import TableActionButton from './TableActionButton';
 import { useError } from '../providers/ErrorProvider';
-import { HeaderType } from '@renderer/store/rootReducer';
+import { CellValue, HeaderType } from '@renderer/store/rootReducer';
 import { RootSelectors } from '@renderer/store/store';
+import React from 'react';
 
 const TableWrapper = styled(Box)`
   overflow-x: auto;
@@ -38,55 +39,12 @@ export default function withTable(
     const dispatch = useAppDispatch();
     const { openError } = useError();
 
-    const headers = useAppSelector(selectors.headers);
     const data = useAppSelector(selectors.data);
-    const dynRows = useAppSelector(selectors.dynRows);
     const dynCols = useAppSelector(selectors.dynCols);
-
-    const deleteRow = (row: number) => {
-      dispatch(actions.deleteRow(row));
-    };
+    const values = useAppSelector(selectors.values);
 
     const deleteColumn = (col: number) => {
       dispatch(actions.deleteColumn(col));
-    };
-
-    const handleChangeData = function (
-      value: string,
-      row: number,
-      col: number,
-      cellType?: HeaderType,
-    ) {
-      if (cellType === HeaderType.SELECT) {
-        dispatch(
-          actions.setDataOnIndex({
-            data: value,
-            row,
-            col,
-            type: HeaderType.SELECT,
-          }),
-        );
-      } else if (cellType === HeaderType.STRING) {
-        dispatch(
-          actions.setDataOnIndex({
-            data: value,
-            row,
-            col,
-            type: HeaderType.STRING,
-          }),
-        );
-      } else {
-        if (value.startsWith('0') && !value.startsWith('0.'))
-          value = value.slice(1);
-
-        dispatch(
-          actions.setDataOnIndex({
-            data: Math.abs(Math.round(parseFloat(value) * 100) / 100),
-            row,
-            col,
-          }),
-        );
-      }
     };
 
     const sortByYear = (sortDirection: SortDirection) => {
@@ -119,94 +77,17 @@ export default function withTable(
                 <DataTable>
                   <TableDataHeader selectors={selectors} actions={actions} />
                   <TableBody>
-                    {data.map((rowData, row) => (
-                      <TableRow key={row}>
-                        {rowData.map((value, col) => (
-                          <TableCell key={row + ':' + col}>
-                            {headers[col].type === HeaderType.NUMBER ||
-                            headers[col].type === HeaderType.STRING ? (
-                              <TextField
-                                defaultValue={value}
-                                onBlur={(e) =>
-                                  handleChangeData(
-                                    e.target.value ?? '',
-                                    row,
-                                    col,
-                                    headers[col].type,
-                                  )
-                                }
-                                onWheel={(event) => event.currentTarget.blur()}
-                                sx={{
-                                  position: 'absolute',
-                                  inset: 0,
-
-                                  '& .MuiOutlinedInput-root': {
-                                    borderRadius: '0',
-                                    '& fieldset': {
-                                      border: 'none',
-                                    },
-                                  },
-
-                                  input: {
-                                    height: '48px',
-                                    padding: 0,
-                                    textAlign: 'center',
-                                  },
-                                }}
-                              />
-                            ) : (
-                              <Autocomplete
-                                value={headers[col].options?.find(
-                                  (option) => option.value === value.toString(),
-                                )}
-                                options={headers[col].options ?? []}
-                                getOptionLabel={(option) => option.label}
-                                renderInput={(params) => (
-                                  <TextField {...params} />
-                                )}
-                                clearIcon={false}
-                                onChange={(e, value) => {
-                                  handleChangeData(
-                                    value?.value ?? '',
-                                    row,
-                                    col,
-                                    headers[col].type,
-                                  );
-                                }}
-                                sx={{
-                                  position: 'absolute',
-                                  inset: 0,
-
-                                  '.MuiOutlinedInput-root': {
-                                    borderRadius: '0',
-                                    height: '48px',
-                                    paddingRight: '36px !important',
-
-                                    fieldset: {
-                                      border: 'none',
-                                      height: '48px',
-                                    },
-                                  },
-
-                                  input: {
-                                    height: `${48 - 18}px !important`,
-                                    padding: '0px !important',
-                                  },
-                                }}
-                              />
-                            )}
-                          </TableCell>
-                        ))}
-                        {dynRows && (
-                          <ActionCellRight>
-                            <TableActionButton
-                              buttonType="delete"
-                              onClick={() => deleteRow(row)}
-                            />
-                          </ActionCellRight>
-                        )}
-                      </TableRow>
-                    ))}
+                    {data.map((rowData, row) => {
+                      return (
+                        <Row
+                          key={values[row].id}
+                          row={row}
+                          data={rowData}
+                          selectors={selectors}
+                          actions={actions}
+                        />
+                      );
+                    })}
                     <TableRow>
                       {data[0].map((_value, col) => {
                         return (
@@ -234,3 +115,159 @@ export default function withTable(
     );
   };
 }
+
+type RowProps = {
+  data: CellValue[];
+  row: number;
+  selectors: RootSelectors;
+  actions: any;
+};
+
+const Row: React.FC<RowProps> = React.memo(
+  ({ data, row, selectors, actions }) => {
+    const dispatch = useAppDispatch();
+
+    const dynRows = useAppSelector(selectors.dynRows);
+    const headers = useAppSelector(selectors.headers);
+
+    const deleteRow = (row: number) => {
+      dispatch(actions.deleteRow(row));
+    };
+
+    return (
+      <TableRow>
+        {data.map((_, col) => (
+          <Cell
+            key={headers[col].id}
+            actions={actions}
+            selectors={selectors}
+            col={col}
+            row={row}
+          />
+        ))}
+        {dynRows && (
+          <ActionCellRight>
+            <TableActionButton
+              buttonType="delete"
+              onClick={() => deleteRow(row)}
+            />
+          </ActionCellRight>
+        )}
+      </TableRow>
+    );
+  },
+);
+
+type CellProps = {
+  row: number;
+  col: number;
+  selectors: RootSelectors;
+  actions: any;
+};
+
+const Cell: React.FC<CellProps> = React.memo(
+  ({ row, col, selectors, actions }) => {
+    const dispatch = useAppDispatch();
+
+    const header = useAppSelector(selectors.selectHeaderByIndex(col));
+    const value = useAppSelector(selectors.selectDataByPosition(row, col));
+
+    const handleChangeData = function (value: string, cellType?: HeaderType) {
+      if (cellType === HeaderType.SELECT) {
+        dispatch(
+          actions.setDataOnIndex({
+            data: value,
+            row,
+            col,
+            type: HeaderType.SELECT,
+          }),
+        );
+      } else if (cellType === HeaderType.STRING) {
+        dispatch(
+          actions.setDataOnIndex({
+            data: value,
+            row,
+            col,
+            type: HeaderType.STRING,
+          }),
+        );
+      } else {
+        if (value.startsWith('0') && !value.startsWith('0.'))
+          value = value.slice(1);
+
+        dispatch(
+          actions.setDataOnIndex({
+            data: Math.abs(Math.round(parseFloat(value) * 100) / 100),
+            row,
+            col,
+          }),
+        );
+      }
+    };
+
+    return (
+      <TableCell>
+        {header.type === HeaderType.NUMBER ||
+        header.type === HeaderType.STRING ? (
+          <TextField
+            defaultValue={value}
+            onChange={(e) =>
+              handleChangeData(e.target.value ?? '', header.type)
+            }
+            onWheel={(event) => event.currentTarget.blur()}
+            sx={{
+              position: 'absolute',
+              inset: 0,
+
+              '& .MuiOutlinedInput-root': {
+                borderRadius: '0',
+                '& fieldset': {
+                  border: 'none',
+                },
+              },
+
+              input: {
+                height: '48px',
+                padding: 0,
+                textAlign: 'center',
+              },
+            }}
+          />
+        ) : (
+          <Autocomplete
+            value={header.options?.find(
+              (option) => option.value === value.toString(),
+            )}
+            options={header.options ?? []}
+            getOptionLabel={(option) => option.label}
+            renderInput={(params) => <TextField {...params} />}
+            clearIcon={false}
+            onChange={(e, value) => {
+              handleChangeData(value?.value ?? '', header.type);
+            }}
+            sx={{
+              position: 'absolute',
+              inset: 0,
+
+              '.MuiOutlinedInput-root': {
+                borderRadius: '0',
+                height: '48px',
+                paddingRight: '36px !important',
+
+                fieldset: {
+                  border: 'none',
+                  height: '48px',
+                },
+              },
+
+              input: {
+                height: `${48 - 18}px !important`,
+                padding: '0px !important',
+              },
+            }}
+          />
+        )}
+      </TableCell>
+    );
+  },
+);

@@ -82,6 +82,11 @@ export const selectors: RootSelectors = {
     [(state: RootState) => state.pareto.data],
     (data) => data,
   ),
+  selectDataByPosition: (row: number, col: number) =>
+    createSelector(
+      [(state: RootState) => state.pareto.data],
+      (data) => data[row][col],
+    ),
   dynRows: createSelector(
     [(state: RootState) => state.pareto.dynRows],
     (dynRows) => dynRows,

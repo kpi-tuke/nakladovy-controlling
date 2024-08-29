@@ -117,6 +117,11 @@ export const selectors: RootSelectors = {
     [(state: RootState) => state.index.data],
     (data) => data,
   ),
+  selectDataByPosition: (row: number, col: number) =>
+    createSelector(
+      [(state: RootState) => state.index.data],
+      (data) => data[row][col],
+    ),
   dynRows: createSelector(
     [(state: RootState) => state.index.dynRows],
     (dynRows) => dynRows,

@@ -87,23 +87,55 @@ export const selectHeaderByIndex = (index) =>
   );
 
 export const selectors: RootSelectors = {
-  headers: (state: RootState) => state.economic.headers,
+  headers: createSelector(
+    [(state: RootState) => state.economic.headers],
+    (headers) => headers,
+  ),
   selectHeaderByIndex: (index) =>
     createSelector(
       [(state: RootState) => state.economic.headers],
       (headers) => headers[index],
     ),
+  values: createSelector(
+    [(state: RootState) => state.economic.values],
+    (values) => values,
+  ),
   selectValueByIndex: (index) =>
     createSelector(
       [(state: RootState) => state.economic.values],
       (values) => values[index],
     ),
-  data: (state: RootState) => state.economic.data,
-  dynRows: (state: RootState) => state.economic.dynRows,
-  dynCols: (state: RootState) => state.economic.dynCols,
-  text: (state: RootState) => state.economic.text,
-  items: (state: RootState) => state.economic.items,
-  corner: (state: RootState) => state.economic.corner,
-  values: (state: RootState) => state.economic.values,
-  itemSelectOptions: (state: RootState) => state.economic.itemSelectOptions,
+  data: createSelector(
+    [(state: RootState) => state.economic.data],
+    (data) => data,
+  ),
+  selectDataByPosition: (row: number, col: number) =>
+    createSelector(
+      [(state: RootState) => state.economic.data],
+      (data) => data[row][col],
+    ),
+  dynRows: createSelector(
+    [(state: RootState) => state.economic.dynRows],
+    (dynRows) => dynRows,
+  ),
+  dynCols: createSelector(
+    [(state: RootState) => state.economic.dynCols],
+    (dynCols) => dynCols,
+  ),
+  text: createSelector(
+    [(state: RootState) => state.economic.text],
+    (text) => text,
+  ),
+  items: createSelector(
+    [(state: RootState) => state.economic.items],
+    (items) => items,
+  ),
+  corner: createSelector(
+    [(state: RootState) => state.economic.corner],
+    (corner) => corner,
+  ),
+  itemSelectOptions: createSelector(
+    [(state: RootState) => state.economic.itemSelectOptions],
+    (itemSelectOptions) => itemSelectOptions,
+  ),
 };
