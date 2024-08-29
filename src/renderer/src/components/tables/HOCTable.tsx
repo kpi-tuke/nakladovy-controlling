@@ -23,7 +23,7 @@ import TableActionButton from './TableActionButton';
 import { useError } from '../providers/ErrorProvider';
 import { CellValue, HeaderType } from '@renderer/store/rootReducer';
 import { RootSelectors } from '@renderer/store/store';
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 
 const TableWrapper = styled(Box)`
   overflow-x: auto;
@@ -43,6 +43,9 @@ export default function withTable(
     const dynCols = useAppSelector(selectors.dynCols);
     const values = useAppSelector(selectors.values);
 
+    const tableContentRef = useRef<HTMLDivElement>(null);
+    const prevDataLength = useRef<number>(data[0]?.length || 0);
+
     const deleteColumn = (col: number) => {
       dispatch(actions.deleteColumn(col));
     };
@@ -59,6 +62,19 @@ export default function withTable(
       dispatch(actions.sortTableByItemNumber(sortDirection));
     };
 
+    useEffect(() => {
+      const currentDataLength = data[0]?.length || 0;
+
+      if (currentDataLength > prevDataLength.current) {
+        if (tableContentRef.current) {
+          tableContentRef.current.scrollLeft =
+            tableContentRef.current.scrollWidth;
+        }
+      }
+
+      prevDataLength.current = currentDataLength;
+    }, [data]);
+
     return (
       <>
         <Title
@@ -73,7 +89,7 @@ export default function withTable(
               <TableInput selectors={selectors} actions={actions} />
             </Grid>
             <Grid xs={8} item>
-              <TableWrapper>
+              <TableWrapper ref={tableContentRef}>
                 <DataTable>
                   <TableDataHeader selectors={selectors} actions={actions} />
                   <TableBody>
