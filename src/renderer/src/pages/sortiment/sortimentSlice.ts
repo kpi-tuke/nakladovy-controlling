@@ -32,19 +32,31 @@ const initialSortimentState: DefaultState = {
   values: [
     {
       id: '1',
-      value: 'Predajná cena jednotková',
+      value: '(P<sub>n</sub>) - priame náklady (€)',
     },
     {
       id: '2',
-      value: 'Úplné vlastné náklady jednotkové',
+      value: '(ÚVN) -  úplné vlastné náklady výkonu (€)',
     },
     {
       id: '3',
-      value: 'Priame náklady jednotkové',
+      value: '(P<sub>cj</sub>) - predajná cena (jednotková) (€)',
     },
     {
       id: '4',
-      value: 'Objem výroby',
+      value: '(Q) - objem výroby (ks...)',
+    },
+    {
+      id: '5',
+      value: '(P<sub>m</sub>) - priamy materiál',
+    },
+    {
+      id: '6',
+      value: '(P<sub>mz</sub>) - priame mzdy',
+    },
+    {
+      id: '7',
+      value: '(P<sub>o</sub>) - ostatné priame náklady',
     },
   ],
   text: '',
