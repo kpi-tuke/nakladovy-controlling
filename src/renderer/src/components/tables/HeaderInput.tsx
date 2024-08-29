@@ -19,7 +19,7 @@ const HeaderInput: React.FC<Props> = ({ selectors, actions }) => {
     dispatch(actions.addColumn());
   };
 
-  const disableAddButton = headers.some((value) => !value);
+  const disableAddButton = headers.some((header) => !header.label);
 
   return (
     <TableHead>
