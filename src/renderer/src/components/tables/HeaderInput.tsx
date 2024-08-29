@@ -5,12 +5,12 @@ import TableActionButton from './TableActionButton';
 import TableInput from './TableInput';
 import React from 'react';
 
-type Props = {
+type HeaderInputProps = {
   selectors: RootSelectors;
   actions: any;
 };
 
-const HeaderInput: React.FC<Props> = ({ selectors, actions }) => {
+const HeaderInput: React.FC<HeaderInputProps> = ({ selectors, actions }) => {
   const dispatch = useAppDispatch();
 
   const headers = useAppSelector(selectors.headers);

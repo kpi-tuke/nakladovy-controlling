@@ -1,7 +1,6 @@
 import styled from '@emotion/styled';
 import { useAppSelector } from '../../store/hooks';
-import { DefaultState } from '../../store/rootReducer';
-import { RootState } from '../../store/store';
+import { RootSelectors } from '../../store/store';
 import {
   Table,
   TableBody,
@@ -17,12 +16,13 @@ const TableCellStyled = styled(TableCell)`
   text-align: left;
 `;
 
-export default function ItemValue({
-  selector,
-}: {
-  selector: (state: RootState) => DefaultState;
-}) {
-  const { corner, items } = useAppSelector(selector);
+type ItemValueProps = {
+  selectors: RootSelectors;
+};
+
+const ItemValue: React.FC<ItemValueProps> = ({ selectors }) => {
+  const corner = useAppSelector(selectors.corner);
+  const items = useAppSelector(selectors.items);
 
   return (
     <Table>
@@ -48,4 +48,6 @@ export default function ItemValue({
       </TableBody>
     </Table>
   );
-}
+};
+
+export default ItemValue;

@@ -1,5 +1,5 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { RootState } from '../../store/store';
+import { createSelector, createSlice } from '@reduxjs/toolkit';
+import { RootSelectors, RootState } from '../../store/store';
 import {
   DefaultState,
   HeaderType,
@@ -14,6 +14,7 @@ const initialSortimentState: DefaultState = {
   corner: 'Ekonomická položka',
   headers: [
     {
+      id: '1',
       type: HeaderType.NUMBER,
       label: 'Výrobok A',
     },
@@ -29,10 +30,22 @@ const initialSortimentState: DefaultState = {
     '(P<sub>o</sub>) - ostatné priame náklady',
   ],
   values: [
-    'Predajná cena jednotková',
-    'Úplné vlastné náklady jednotkové',
-    'Priame náklady jednotkové',
-    'Objem výroby',
+    {
+      id: '1',
+      value: 'Predajná cena jednotková',
+    },
+    {
+      id: '2',
+      value: 'Úplné vlastné náklady jednotkové',
+    },
+    {
+      id: '3',
+      value: 'Priame náklady jednotkové',
+    },
+    {
+      id: '4',
+      value: 'Objem výroby',
+    },
   ],
   text: '',
   accounts: [''],
@@ -58,9 +71,59 @@ const sortimentSlice = createSlice({
 });
 
 export const sortimentReducer = sortimentSlice.reducer;
-export const selectSortiment = (state: RootState) => state.sortiment;
 export const sortimentActions = sortimentSlice.actions;
+
+export const selectSortiment = (state: RootState) => state.sortiment;
 
 export const hasSortimentChanged = (state: RootState) => {
   return !isEqual(state.sortiment, initialSortimentState);
+};
+
+export const selectors: RootSelectors = {
+  headers: createSelector(
+    [(state: RootState) => state.sortiment.headers],
+    (headers) => headers,
+  ),
+  selectHeaderByIndex: (index) =>
+    createSelector(
+      [(state: RootState) => state.sortiment.headers],
+      (headers) => headers[index],
+    ),
+  values: createSelector(
+    [(state: RootState) => state.sortiment.values],
+    (values) => values,
+  ),
+  selectValueByIndex: (index) =>
+    createSelector(
+      [(state: RootState) => state.sortiment.values],
+      (values) => values[index],
+    ),
+  data: createSelector(
+    [(state: RootState) => state.sortiment.data],
+    (data) => data,
+  ),
+  dynRows: createSelector(
+    [(state: RootState) => state.sortiment.dynRows],
+    (dynRows) => dynRows,
+  ),
+  dynCols: createSelector(
+    [(state: RootState) => state.sortiment.dynCols],
+    (dynCols) => dynCols,
+  ),
+  text: createSelector(
+    [(state: RootState) => state.sortiment.text],
+    (text) => text,
+  ),
+  items: createSelector(
+    [(state: RootState) => state.sortiment.items],
+    (items) => items,
+  ),
+  corner: createSelector(
+    [(state: RootState) => state.sortiment.corner],
+    (corner) => corner,
+  ),
+  itemSelectOptions: createSelector(
+    [(state: RootState) => state.sortiment.itemSelectOptions],
+    (itemSelectOptions) => itemSelectOptions,
+  ),
 };

@@ -1,11 +1,11 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSelector, createSlice } from '@reduxjs/toolkit';
 import {
   DefaultState,
   HeaderType,
   openProject,
   rootReducer,
 } from '../../store/rootReducer';
-import { RootState } from '../../store/store';
+import { RootSelectors, RootState } from '../../store/store';
 import isEqual from 'lodash.isequal';
 
 const initialParetoState: DefaultState = {
@@ -14,13 +14,19 @@ const initialParetoState: DefaultState = {
   corner: 'Druhové náklady',
   headers: [
     {
+      id: '1',
       type: HeaderType.NUMBER,
       label: '(N) - výška nákladov (€)',
     },
   ],
   data: [[0]],
   items: ['Názov chyby'],
-  values: ['Názov chyby'],
+  values: [
+    {
+      id: '1',
+      value: 'Názov chyby',
+    },
+  ],
   text: '',
   accounts: [''],
   sortable: false,
@@ -45,9 +51,59 @@ export const paretoSlice = createSlice({
 });
 
 export const paretoActions = paretoSlice.actions;
-export const paretoReducer = paretoSlice.reducer;
 export const selectPareto = (state: RootState) => state.pareto;
+
+export const paretoReducer = paretoSlice.reducer;
 
 export const hasParetoChanged = (state: RootState) => {
   return !isEqual(state.pareto, initialParetoState);
+};
+
+export const selectors: RootSelectors = {
+  headers: createSelector(
+    [(state: RootState) => state.pareto.headers],
+    (headers) => headers,
+  ),
+  selectHeaderByIndex: (index) =>
+    createSelector(
+      [(state: RootState) => state.pareto.headers],
+      (headers) => headers[index],
+    ),
+  values: createSelector(
+    [(state: RootState) => state.pareto.values],
+    (values) => values,
+  ),
+  selectValueByIndex: (index) =>
+    createSelector(
+      [(state: RootState) => state.pareto.values],
+      (values) => values[index],
+    ),
+  data: createSelector(
+    [(state: RootState) => state.pareto.data],
+    (data) => data,
+  ),
+  dynRows: createSelector(
+    [(state: RootState) => state.pareto.dynRows],
+    (dynRows) => dynRows,
+  ),
+  dynCols: createSelector(
+    [(state: RootState) => state.pareto.dynCols],
+    (dynCols) => dynCols,
+  ),
+  text: createSelector(
+    [(state: RootState) => state.pareto.text],
+    (text) => text,
+  ),
+  items: createSelector(
+    [(state: RootState) => state.pareto.items],
+    (items) => items,
+  ),
+  corner: createSelector(
+    [(state: RootState) => state.pareto.corner],
+    (corner) => corner,
+  ),
+  itemSelectOptions: createSelector(
+    [(state: RootState) => state.pareto.itemSelectOptions],
+    (itemSelectOptions) => itemSelectOptions,
+  ),
 };

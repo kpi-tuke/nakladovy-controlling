@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSelector, createSlice } from '@reduxjs/toolkit';
 import {
   changeAccount,
   DefaultState,
@@ -8,7 +8,7 @@ import {
   sortTableByItemNumber,
   sortTableByYear,
 } from '../../store/rootReducer';
-import { RootState } from '../../store/store';
+import { RootSelectors, RootState } from '../../store/store';
 import { allOptions, customOption } from '@renderer/chartOfAccounts';
 import isEqual from 'lodash.isequal';
 
@@ -18,14 +18,17 @@ const initialIndexState: DefaultState = {
   corner: 'Ekonomická položka (€)',
   headers: [
     {
+      id: '1',
       type: HeaderType.NUMBER,
       label: 'Bázický rok',
     },
     {
+      id: '2',
       type: HeaderType.NUMBER,
       label: '2000',
     },
     {
+      id: '3',
       type: HeaderType.NUMBER,
       label: '2001',
     },
@@ -40,7 +43,20 @@ const initialIndexState: DefaultState = {
     '666 - Výnosy z krátkodobého finančného majetku',
     '',
   ],
-  values: ['501', '666', ''],
+  values: [
+    {
+      id: '1',
+      value: '501',
+    },
+    {
+      id: '2',
+      value: '666',
+    },
+    {
+      id: '3',
+      value: '',
+    },
+  ],
   itemSelectOptions: [...allOptions, customOption],
   text: '',
   accounts: [''],
@@ -50,8 +66,8 @@ const initialIndexState: DefaultState = {
   dynCols: true,
 };
 
-export const indexSlice: any = createSlice({
-  name: 'chain',
+export const indexSlice = createSlice({
+  name: 'index',
   initialState: initialIndexState,
   reducers: {
     ...rootReducer,
@@ -70,9 +86,59 @@ export const indexSlice: any = createSlice({
 });
 
 export const indexActions = indexSlice.actions;
-export const selectIndex = (state: RootState) => state.index;
 export const indexReducer = indexSlice.reducer;
+
+export const selectIndex = (state: RootState) => state.index;
 
 export const hasIndexChanged = (state: RootState) => {
   return !isEqual(state.index, initialIndexState);
+};
+
+export const selectors: RootSelectors = {
+  headers: createSelector(
+    [(state: RootState) => state.index.headers],
+    (headers) => headers,
+  ),
+  selectHeaderByIndex: (index) =>
+    createSelector(
+      [(state: RootState) => state.index.headers],
+      (headers) => headers[index],
+    ),
+  values: createSelector(
+    [(state: RootState) => state.index.values],
+    (values) => values,
+  ),
+  selectValueByIndex: (index) =>
+    createSelector(
+      [(state: RootState) => state.index.values],
+      (values) => values[index],
+    ),
+  data: createSelector(
+    [(state: RootState) => state.index.data],
+    (data) => data,
+  ),
+  dynRows: createSelector(
+    [(state: RootState) => state.index.dynRows],
+    (dynRows) => dynRows,
+  ),
+  dynCols: createSelector(
+    [(state: RootState) => state.index.dynCols],
+    (dynCols) => dynCols,
+  ),
+  text: createSelector(
+    [(state: RootState) => state.index.text],
+    (text) => text,
+  ),
+  items: createSelector(
+    [(state: RootState) => state.index.items],
+    (items) => items,
+  ),
+  corner: createSelector(
+    [(state: RootState) => state.index.corner],
+    (corner) => corner,
+  ),
+  itemSelectOptions: createSelector(
+    [(state: RootState) => state.index.itemSelectOptions],
+    (itemSelectOptions) => itemSelectOptions,
+  ),
 };

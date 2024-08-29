@@ -1,13 +1,21 @@
 import { Typography } from '@mui/material';
 import { TableCell, TableHead, TableRow } from './Table';
+import { RootSelectors } from '@renderer/store/store';
+import { useAppSelector } from '@renderer/store/hooks';
 
-export default function HeaderValue({ header }: { header: string[] }) {
+type HeaderValueProps = {
+  selectors: RootSelectors;
+};
+
+const HeaderValue: React.FC<HeaderValueProps> = ({ selectors }) => {
+  const headers = useAppSelector(selectors.headers);
+
   return (
     <TableHead>
       <TableRow>
-        {header.map((value: string, idx: number) => (
+        {headers.map((header) => (
           <TableCell
-            key={idx}
+            key={header.id}
             sx={{
               minWidth: '12.75vw',
               maxWidth: '12.75vw',
@@ -20,11 +28,13 @@ export default function HeaderValue({ header }: { header: string[] }) {
                 fontSize: '14px',
                 fontWeight: 'bold',
               }}
-              dangerouslySetInnerHTML={{ __html: value }}
+              dangerouslySetInnerHTML={{ __html: header.label }}
             />
           </TableCell>
         ))}
       </TableRow>
     </TableHead>
   );
-}
+};
+
+export default HeaderValue;

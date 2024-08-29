@@ -7,7 +7,10 @@ import './App.css';
 import WelcomePage from './pages/WelcomePage';
 import withAnalysis from './pages/withAnalysis';
 import IndexResult from './pages/index/IndexResult';
-import { indexActions, selectIndex } from './pages/index/indexSlice';
+import {
+  indexActions,
+  selectors as indexSelectors,
+} from './pages/index/indexSlice';
 import {
   economicActions,
   selectors as economicSelectors,
@@ -21,13 +24,16 @@ import {
 } from './pages/structure/structureSlice';
 import StructureResult from './pages/structure/StructureResult';
 import {
-  selectSortiment,
+  selectors as sortimentSelectors,
   sortimentActions,
 } from './pages/sortiment/sortimentSlice';
 import SortimentResult from './pages/sortiment/SortimentResult';
-import { CVPActions, selectCVP } from './pages/cvp/cvpSlice';
+import { CVPActions, selectors as cvpSelectors } from './pages/cvp/cvpSlice';
 import CVPResult from './pages/cvp/CVPResult';
-import { paretoActions, selectPareto } from './pages/pareto/paretoSlice';
+import {
+  paretoActions,
+  selectors as paretoSelectors,
+} from './pages/pareto/paretoSlice';
 import ParetoResult from './pages/pareto/ParetoResult';
 import HeaderSelect from './components/tables/HeaderSelect';
 import HeaderValue from './components/tables/HeaderValue';
@@ -58,38 +64,38 @@ export default function App() {
     StructureResult,
     RouteName.STRUCTURE_ANALYSIS,
   );
-  // const IndexAnalysis: () => JSX.Element = withAnalysis(
-  //   selectIndex,
-  //   indexActions,
-  //   ItemSelect,
-  //   HeaderInput,
-  //   IndexResult,
-  //   RouteName.INDEX_ANALYSIS,
-  // );
-  // const CVPAnalysis: () => JSX.Element = withAnalysis(
-  //   selectCVP,
-  //   CVPActions,
-  //   ItemInput,
-  //   HeaderValue,
-  //   CVPResult,
-  //   RouteName.CVP_ANALYSIS,
-  // );
-  // const SortimentAnalysis: () => JSX.Element = withAnalysis(
-  //   selectSortiment,
-  //   sortimentActions,
-  //   ItemValue,
-  //   HeaderInput,
-  //   SortimentResult,
-  //   RouteName.SORTIMENT_ANALYSIS,
-  // );
-  // const ParetoAnalysis: () => JSX.Element = withAnalysis(
-  //   selectPareto,
-  //   paretoActions,
-  //   ItemInput,
-  //   HeaderValue,
-  //   ParetoResult,
-  //   RouteName.PERETO_ANALYSIS,
-  // );
+  const IndexAnalysis: () => JSX.Element = withAnalysis(
+    indexSelectors,
+    indexActions,
+    ItemSelect,
+    HeaderInput,
+    IndexResult,
+    RouteName.INDEX_ANALYSIS,
+  );
+  const CVPAnalysis: () => JSX.Element = withAnalysis(
+    cvpSelectors,
+    CVPActions,
+    ItemInput,
+    HeaderValue,
+    CVPResult,
+    RouteName.CVP_ANALYSIS,
+  );
+  const SortimentAnalysis: () => JSX.Element = withAnalysis(
+    sortimentSelectors,
+    sortimentActions,
+    ItemValue,
+    HeaderInput,
+    SortimentResult,
+    RouteName.SORTIMENT_ANALYSIS,
+  );
+  const ParetoAnalysis: () => JSX.Element = withAnalysis(
+    paretoSelectors,
+    paretoActions,
+    ItemInput,
+    HeaderValue,
+    ParetoResult,
+    RouteName.PERETO_ANALYSIS,
+  );
   return (
     <MathJaxContext>
       <Provider store={store}>
@@ -113,23 +119,23 @@ export default function App() {
                       path={RouteName.STRUCTURE_ANALYSIS}
                       element={<StructureAnalysis />}
                     />
-                    {/* <Route
-                      path={RouteName.PERETO_ANALYSIS}
-                      element={<ParetoAnalysis />}
+                    <Route
+                      path={RouteName.CVP_ANALYSIS}
+                      element={<CVPAnalysis />}
                     />
                     <Route
                       path={RouteName.SORTIMENT_ANALYSIS}
                       element={<SortimentAnalysis />}
                     />
                     <Route
-                      path={RouteName.CVP_ANALYSIS}
-                      element={<CVPAnalysis />}
-                    />
-                    <Route
                       path={RouteName.INDEX_ANALYSIS}
                       element={<IndexAnalysis />}
                     />
-                    
+                    <Route
+                      path={RouteName.PERETO_ANALYSIS}
+                      element={<ParetoAnalysis />}
+                    />
+
                     <Route
                       path={RouteName.EVALUATION}
                       element={
@@ -142,7 +148,7 @@ export default function App() {
                           ParetoAnalysisPage={ParetoAnalysis}
                         />
                       }
-                    /> */}
+                    />
                   </Routes>
                 </Router>
               </AnalysisSaveProvider>
