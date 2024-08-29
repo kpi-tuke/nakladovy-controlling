@@ -16,7 +16,7 @@ import EconomicResult from './pages/economic/EconomicResult';
 import ItemSelect from './components/tables/ItemSelect';
 import HeaderInput from './components/tables/HeaderInput';
 import {
-  selectStructure,
+  selectors as structureSelectors,
   structureActions,
 } from './pages/structure/structureSlice';
 import StructureResult from './pages/structure/StructureResult';
@@ -50,14 +50,14 @@ export default function App() {
     EconomicResult,
     RouteName.ECONOMIC_ANALYSIS,
   );
-  // const StructureAnalysis: () => JSX.Element = withAnalysis(
-  //   selectStructure,
-  //   structureActions,
-  //   ItemSelect,
-  //   HeaderSelect,
-  //   StructureResult,
-  //   RouteName.STRUCTURE_ANALYSIS,
-  // );
+  const StructureAnalysis: () => JSX.Element = withAnalysis(
+    structureSelectors,
+    structureActions,
+    ItemSelect,
+    HeaderSelect,
+    StructureResult,
+    RouteName.STRUCTURE_ANALYSIS,
+  );
   // const IndexAnalysis: () => JSX.Element = withAnalysis(
   //   selectIndex,
   //   indexActions,
@@ -109,6 +109,10 @@ export default function App() {
                       path={RouteName.ECONOMIC_ANALYSIS}
                       element={<EconomicAnalysis />}
                     />
+                    <Route
+                      path={RouteName.STRUCTURE_ANALYSIS}
+                      element={<StructureAnalysis />}
+                    />
                     {/* <Route
                       path={RouteName.PERETO_ANALYSIS}
                       element={<ParetoAnalysis />}
@@ -125,10 +129,7 @@ export default function App() {
                       path={RouteName.INDEX_ANALYSIS}
                       element={<IndexAnalysis />}
                     />
-                    <Route
-                      path={RouteName.STRUCTURE_ANALYSIS}
-                      element={<StructureAnalysis />}
-                    />
+                    
                     <Route
                       path={RouteName.EVALUATION}
                       element={

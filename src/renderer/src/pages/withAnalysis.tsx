@@ -20,9 +20,9 @@ const PrintPageTitle = styled(Typography)`
 export default function withAnalysis(
   selectors: RootSelectors,
   actions: any,
-  TableItems: (props: any) => JSX.Element,
-  TableHeaders: (props: any) => JSX.Element,
-  Result: () => JSX.Element,
+  TableItems: React.FC<any>,
+  TableHeaders: React.FC<any>,
+  Result: React.FC,
   routeName: string,
 ) {
   return () => {

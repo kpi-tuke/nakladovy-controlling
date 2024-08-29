@@ -29,8 +29,8 @@ const TableWrapper = styled(Box)`
 `;
 
 export default function withTable(
-  TableInput: (props: any) => JSX.Element,
-  TableDataHeader: (props: any) => JSX.Element,
+  TableInput: React.FC<any>,
+  TableDataHeader: React.FC<any>,
   selectors: RootSelectors,
   actions: any,
 ) {

@@ -1,5 +1,5 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { RootState } from '../../store/store';
+import { createSelector, createSlice } from '@reduxjs/toolkit';
+import { RootSelectors, RootState } from '../../store/store';
 import {
   DefaultState,
   HeaderType,
@@ -16,14 +16,23 @@ const initialStructureState: DefaultState = {
   corner: 'Druhové náklady | Kalkulačné náklady→',
   headers: [
     {
+      id: '1',
       type: HeaderType.NUMBER,
       label: 'Priamy materiál',
     },
   ],
   data: [[0], [0]],
   items: [costOptions[0].label, ''],
-  values: [costOptions[0].value.toString(), ''],
-  // options: groupedOptions,
+  values: [
+    {
+      id: '1',
+      value: costOptions[0].value.toString(),
+    },
+    {
+      id: '2',
+      value: '',
+    },
+  ],
   text: '',
   accounts: [''],
   sortable: false,
@@ -51,9 +60,59 @@ const structureSlice = createSlice({
 });
 
 export const structureActions = structureSlice.actions;
-export const selectStructure = (state: RootState) => state.structure;
 export const structureReducer = structureSlice.reducer;
+
+export const selectStructure = (state: RootState) => state.structure;
 
 export const hasStructureChanged = (state: RootState) => {
   return !isEqual(state.structure, initialStructureState);
+};
+
+export const selectors: RootSelectors = {
+  headers: createSelector(
+    [(state: RootState) => state.structure.headers],
+    (headers) => headers,
+  ),
+  selectHeaderByIndex: (index) =>
+    createSelector(
+      [(state: RootState) => state.structure.headers],
+      (headers) => headers[index],
+    ),
+  values: createSelector(
+    [(state: RootState) => state.structure.values],
+    (values) => values,
+  ),
+  selectValueByIndex: (index) =>
+    createSelector(
+      [(state: RootState) => state.structure.values],
+      (values) => values[index],
+    ),
+  data: createSelector(
+    [(state: RootState) => state.structure.data],
+    (data) => data,
+  ),
+  dynRows: createSelector(
+    [(state: RootState) => state.structure.dynRows],
+    (dynRows) => dynRows,
+  ),
+  dynCols: createSelector(
+    [(state: RootState) => state.structure.dynCols],
+    (dynCols) => dynCols,
+  ),
+  text: createSelector(
+    [(state: RootState) => state.structure.text],
+    (text) => text,
+  ),
+  items: createSelector(
+    [(state: RootState) => state.structure.items],
+    (items) => items,
+  ),
+  corner: createSelector(
+    [(state: RootState) => state.structure.corner],
+    (corner) => corner,
+  ),
+  itemSelectOptions: createSelector(
+    [(state: RootState) => state.structure.itemSelectOptions],
+    (itemSelectOptions) => itemSelectOptions,
+  ),
 };
