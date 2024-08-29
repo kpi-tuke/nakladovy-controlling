@@ -41,11 +41,11 @@ const Title: React.FC<Props> = ({ onSortYear, onSortItems }) => {
               <Dropdown
                 options={[
                   {
-                    onClick: () => onSortYear('asc'),
+                    onClick: () => onSortYear(SortDirection.ASC),
                     label: 'Vzostupne',
                   },
                   {
-                    onClick: () => onSortYear('desc'),
+                    onClick: () => onSortYear(SortDirection.DESC),
                     label: 'Zostupne',
                   },
                 ]}
@@ -60,11 +60,11 @@ const Title: React.FC<Props> = ({ onSortYear, onSortItems }) => {
               <Dropdown
                 options={[
                   {
-                    onClick: () => onSortItems('asc'),
+                    onClick: () => onSortItems(SortDirection.ASC),
                     label: 'Vzostupne',
                   },
                   {
-                    onClick: () => onSortItems('desc'),
+                    onClick: () => onSortItems(SortDirection.DESC),
                     label: 'Zostupne',
                   },
                 ]}

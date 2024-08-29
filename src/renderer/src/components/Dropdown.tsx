@@ -45,7 +45,13 @@ const Dropdown: React.FC<Props> = ({ options, children }) => {
         }}
       >
         {options.map((option, index) => (
-          <MenuItem key={index} onClick={option.onClick}>
+          <MenuItem
+            key={index}
+            onClick={() => {
+              option.onClick();
+              handleClose();
+            }}
+          >
             {option.label}
           </MenuItem>
         ))}
