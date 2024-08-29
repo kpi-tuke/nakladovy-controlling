@@ -1,6 +1,7 @@
 import { PayloadAction } from '@reduxjs/toolkit';
 import { isNumeric } from '@renderer/helper';
 import { SortDirection } from '@renderer/types/sortDirection';
+import { v4 as uuidv4 } from 'uuid';
 
 export enum HeaderType {
   NUMBER = 'NUMBER',
@@ -14,6 +15,7 @@ type HeaderOption = {
 };
 
 export type Header = {
+  id: string;
   label: string;
   type: HeaderType;
   options?: HeaderOption[];
@@ -52,12 +54,19 @@ export interface dataOnCords {
 }
 
 export const rootReducer = {
-  setHeadersOnIndex: (
+  setHeaderOnIndex: (
     state: DefaultState,
-    action: PayloadAction<dataOnIndex>,
+    action: PayloadAction<{
+      index: number;
+      data: {
+        id: string;
+        value: string;
+      };
+    }>,
   ) => {
     state.headers[action.payload.index] = {
-      label: action.payload.data,
+      id: action.payload.data.id,
+      label: action.payload.data.value,
       type: HeaderType.NUMBER,
     };
   },
@@ -88,7 +97,7 @@ export const rootReducer = {
     }
   },
   addColumn: (state: DefaultState): void => {
-    state.headers.push({ label: '', type: HeaderType.NUMBER });
+    state.headers.push({ id: uuidv4(), label: '', type: HeaderType.NUMBER });
     state.data.map((rowData: any) => {
       rowData.push(0);
     });

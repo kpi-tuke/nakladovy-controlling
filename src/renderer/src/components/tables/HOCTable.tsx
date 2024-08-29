@@ -21,7 +21,7 @@ import {
 } from './Table';
 import TableActionButton from './TableActionButton';
 import { useError } from '../providers/ErrorProvider';
-import { DefaultState, HeaderType } from '@renderer/store/rootReducer';
+import { HeaderType } from '@renderer/store/rootReducer';
 import { RootSelectors } from '@renderer/store/store';
 
 const TableWrapper = styled(Box)`

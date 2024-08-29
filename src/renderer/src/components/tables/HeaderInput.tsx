@@ -13,39 +13,33 @@ type Props = {
 const HeaderInput: React.FC<Props> = ({ selectors, actions }) => {
   const dispatch = useAppDispatch();
 
+  const headers = useAppSelector(selectors.headers);
+
   const addColumn = () => {
     dispatch(actions.addColumn());
   };
 
-  const headers = useAppSelector(selectors.headers);
-
   const disableAddButton = headers.some((value) => !value);
-
-  // rerender headers only if it's length changes
-  const headersArray = React.useMemo(() => {
-    return headers.map((_, index) => (
-      <Input
-        key={index}
-        actions={actions}
-        index={index}
-        selectors={selectors}
-      />
-    ));
-  }, [headers.length]);
 
   return (
     <TableHead>
       <TableRow>
-        {headersArray}
-        {
-          <ActionCellRight $topBorder={false}>
-            <TableActionButton
-              buttonType="add"
-              onClick={addColumn}
-              disabled={disableAddButton}
-            />
-          </ActionCellRight>
-        }
+        {headers.map((header, index) => (
+          <Input
+            key={header.id}
+            actions={actions}
+            index={index}
+            selectors={selectors}
+          />
+        ))}
+
+        <ActionCellRight $topBorder={false}>
+          <TableActionButton
+            buttonType="add"
+            onClick={addColumn}
+            disabled={disableAddButton}
+          />
+        </ActionCellRight>
       </TableRow>
     </TableHead>
   );
@@ -66,7 +60,15 @@ const Input: React.FC<InputProps> = React.memo(
     const header = useAppSelector(selectors.selectHeaderByIndex(index));
 
     const handleChangeHeader = (value: string, index: number) => {
-      dispatch(actions.setHeadersOnIndex({ data: value, index }));
+      dispatch(
+        actions.setHeaderOnIndex({
+          index,
+          data: {
+            id: header.id,
+            value,
+          },
+        }),
+      );
     };
 
     return (

@@ -40,7 +40,6 @@ import ErrorProvider from './components/providers/ErrorProvider';
 import HeaderBar from './components/HeaderBar';
 import ThemeProvider from './components/providers/ThemeProvider';
 import { MathJaxContext } from 'better-react-mathjax';
-import Test from './components/Test';
 
 export default function App() {
   const EconomicAnalysis: () => JSX.Element = withAnalysis(
@@ -99,7 +98,6 @@ export default function App() {
             <SnackbarProvider>
               <AnalysisSaveProvider>
                 <Router>
-                  <Test />
                   <HeaderBar />
                   <Routes>
                     <Route path={RouteName.HOME} element={<WelcomePage />} />

@@ -22,6 +22,7 @@ const initialEconomicState: DefaultState = {
   corner: 'Ekonomická veličina (€)',
   headers: [
     {
+      id: '1',
       type: HeaderType.NUMBER,
       label: '2000',
     },

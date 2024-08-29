@@ -28,7 +28,7 @@ export default function HeaderSelect({
     idx: number,
   ) {
     dispatch(
-      actions.setHeadersOnIndex({ data: event.target.value, index: idx }),
+      actions.setHeaderOnIndex({ data: event.target.value, index: idx }),
     );
   };
 
