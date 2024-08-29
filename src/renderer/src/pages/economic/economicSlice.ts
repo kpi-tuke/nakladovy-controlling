@@ -136,6 +136,6 @@ export const selectors: RootSelectors = {
   ),
   itemSelectOptions: createSelector(
     [(state: RootState) => state.economic.itemSelectOptions],
-    (itemSelectOptions) => itemSelectOptions,
+    (itemSelectOptions) => itemSelectOptions ?? [],
   ),
 };

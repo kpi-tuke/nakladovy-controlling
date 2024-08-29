@@ -110,7 +110,7 @@ export default function withTable(
           </Grid>
         </Paper>
 
-        {/* <PDFTable selector={selector} /> */}
+        <PDFTable selectors={selectors} />
       </>
     );
   };
@@ -242,7 +242,7 @@ const Cell: React.FC<CellProps> = React.memo(
             getOptionLabel={(option) => option.label}
             renderInput={(params) => <TextField {...params} />}
             clearIcon={false}
-            onChange={(e, value) => {
+            onChange={(_, value) => {
               handleChangeData(value?.value ?? '', header.type);
             }}
             sx={{

@@ -28,6 +28,18 @@ export type Value = {
 
 export type CellValue = number | string;
 
+export type ItemSelectOption = {
+  value: number;
+  label: string;
+  type: InputSelectType;
+};
+
+export enum InputSelectType {
+  COSTS = 'Náklady',
+  PROFITS = 'Výnosy',
+  CUSTOM = 'custom',
+}
+
 export interface DefaultState {
   id: number;
   title: string;
@@ -42,8 +54,7 @@ export interface DefaultState {
   hasAnalytic: boolean;
   dynRows?: boolean;
   dynCols?: boolean;
-  // TODO: prepisat
-  itemSelectOptions?: any;
+  itemSelectOptions?: ItemSelectOption[];
 }
 
 export interface dataOnIndex {

@@ -1,14 +1,6 @@
-export type InputSelectOption = {
-  value: number;
-  label: string;
-};
+import { InputSelectType, ItemSelectOption } from './store/rootReducer';
 
-export enum InputSelectType {
-  COSTS = 'Náklady',
-  PROFITS = 'Výnosy',
-}
-
-const profits: InputSelectOption[] = [
+const profits: Omit<ItemSelectOption, 'type'>[] = [
   { value: 601, label: '601 - Tržby za vlastné výrobky' },
   { value: 602, label: '602 - Tržby z predaja služieb' },
   { value: 604, label: '604 - Tržby za tovar' },
@@ -51,7 +43,7 @@ const profits: InputSelectOption[] = [
   { value: 668, label: '668 - Ostatné finančné výnosy' },
 ];
 
-const costs = [
+const costs: Omit<ItemSelectOption, 'type'>[] = [
   { value: 501, label: '501 - Spotreba materiálu' },
   { value: 502, label: '502 - Spotreba energie' },
   { value: 503, label: '503 - Spotreba ostatných neskladovateľných dodávok' },
@@ -134,12 +126,12 @@ const costs = [
   },
 ];
 
-export const costOptions = costs.map((item) => ({
+export const costOptions: ItemSelectOption[] = costs.map((item) => ({
   ...item,
   type: InputSelectType.COSTS,
 }));
 
-export const profitOptions = profits.map((item) => ({
+export const profitOptions: ItemSelectOption[] = profits.map((item) => ({
   ...item,
   type: InputSelectType.PROFITS,
 }));
@@ -151,4 +143,5 @@ export const ADD_CUSTOM_ITEM_LABEL = 'Iná položka...';
 export const customOption = {
   value: -1,
   label: ADD_CUSTOM_ITEM_LABEL,
+  type: InputSelectType.CUSTOM,
 };

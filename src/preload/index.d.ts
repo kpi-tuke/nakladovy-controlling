@@ -3,7 +3,7 @@ import { ElectronAPI } from '@electron-toolkit/preload';
 declare global {
   interface Window {
     electron: {
-      printToPdf: (fileName: string) => Promise<void>;
+      printToPdf: (fileName: string) => Promise<boolean>;
       chooseFilePath: () => Promise<string>;
       saveProject: (state: string) => Promise<boolean>;
       openProject: () => void;

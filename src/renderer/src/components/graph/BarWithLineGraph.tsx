@@ -119,11 +119,7 @@ const BarWithLineGraph: React.FC<Props> = ({
             interval="preserveStartEnd"
             label={
               yAxisLabelLeft ? (
-                <CustomYAxisLabel
-                  value={yAxisLabelLeft}
-                  angle={-90}
-                  position="insideBottom"
-                />
+                <CustomYAxisLabel value={yAxisLabelLeft} angle={-90} />
               ) : undefined
             }
             tickCount={10}
@@ -136,11 +132,7 @@ const BarWithLineGraph: React.FC<Props> = ({
             domain={[0, 100]}
             label={
               yAxisLabelRight ? (
-                <CustomYAxisLabel
-                  value={yAxisLabelRight}
-                  angle={90}
-                  position="insideBottom"
-                />
+                <CustomYAxisLabel value={yAxisLabelRight} angle={90} />
               ) : undefined
             }
           />

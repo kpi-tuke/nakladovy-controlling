@@ -30,7 +30,7 @@ type ContextType = {
 };
 
 const ErrorContext = React.createContext<ContextType>({
-  openError: (error: Error) => {},
+  openError: (_: Error) => {},
 });
 
 type Props = {

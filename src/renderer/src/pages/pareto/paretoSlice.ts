@@ -109,6 +109,6 @@ export const selectors: RootSelectors = {
   ),
   itemSelectOptions: createSelector(
     [(state: RootState) => state.pareto.itemSelectOptions],
-    (itemSelectOptions) => itemSelectOptions,
+    (itemSelectOptions) => itemSelectOptions ?? [],
   ),
 };

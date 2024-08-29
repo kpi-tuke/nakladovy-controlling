@@ -5,22 +5,11 @@ import { Text } from 'recharts';
 interface YAxisLabelProps {
   value: string;
   angle?: number;
-  position?:
-    | 'insideLeft'
-    | 'insideRight'
-    | 'insideTop'
-    | 'insideBottom'
-    | 'outsideLeft'
-    | 'outsideRight'
-    | 'outsideTop'
-    | 'outsideBottom';
 }
 
 const CustomYAxisLabel: React.FC<YAxisLabelProps> = ({
   value,
   angle = -90,
-  position = 'insideLeft',
-  ...props
 }) => {
   const theme = useTheme();
 

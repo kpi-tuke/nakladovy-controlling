@@ -13,6 +13,7 @@ import TableInput from './TableInput';
 import TableActionButton from './TableActionButton';
 import { ADD_CUSTOM_ITEM_LABEL } from '@renderer/chartOfAccounts';
 import React from 'react';
+import { ItemSelectOption } from '@renderer/store/rootReducer';
 
 const AddCell = styled(TableCell)`
   position: relative;
@@ -77,12 +78,6 @@ const ItemSelect: React.FC<ItemSelectProps> = ({ selectors, actions }) => {
 
 export default ItemSelect;
 
-type Option = {
-  label: string;
-  value: number;
-  type: string;
-};
-
 type RowProps = {
   selectors: RootSelectors;
   actions: any;
@@ -96,7 +91,9 @@ const Row: React.FC<RowProps> = React.memo(({ selectors, actions, index }) => {
   const items = useAppSelector(selectors.items);
   const value = useAppSelector(selectors.selectValueByIndex(index));
 
-  const handleAutocompleteChange = (newValue: Option) => {
+  const handleAutocompleteChange = (newValue: ItemSelectOption | null) => {
+    if (!newValue) return;
+
     const savedValue =
       newValue.label === ADD_CUSTOM_ITEM_LABEL ? '' : newValue.label;
 
@@ -127,7 +124,7 @@ const Row: React.FC<RowProps> = React.memo(({ selectors, actions, index }) => {
         {value.value != '-1' ? (
           <Autocomplete
             value={itemSelectOptions.find(
-              (option) => option.value == value.value,
+              (option) => option.value.toString() == value.value,
             )}
             options={itemSelectOptions}
             groupBy={(option) => option.type}

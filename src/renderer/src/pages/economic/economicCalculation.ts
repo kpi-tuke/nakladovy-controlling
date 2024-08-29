@@ -1,22 +1,24 @@
-import { CellValue } from '@renderer/store/rootReducer';
+import { CellValue, Value } from '@renderer/store/rootReducer';
 import { divideArrays, subtractArrays, sumArrays } from '../../helper';
 
 export function economicCalculation(
   data: CellValue[][],
-  values: any,
+  values: Value[],
   length: number,
 ) {
   let costsByYear: number[] = Array.from({ length: length }, () => 0);
   let incomeByYear: number[] = Array.from({ length: length }, () => 0);
 
   //sums of costs and incomes by year
-  data.map((rowData: number[], row: number) => {
-    rowData.map((value: number, col: number) => {
+  data.map((rowData, row) => {
+    rowData.map((value, col) => {
       // 500-599 codes of costs, 600-699 codes od incomes
-      if (parseInt(values[row]) >= 600) {
-        incomeByYear[col] = parseFloat((incomeByYear[col] + value).toFixed(12));
+      if (parseInt(values[row].value) >= 600) {
+        incomeByYear[col] = parseFloat(
+          (incomeByYear[col] + +value).toFixed(12),
+        );
       } else {
-        costsByYear[col] = parseFloat((costsByYear[col] + value).toFixed(12));
+        costsByYear[col] = parseFloat((costsByYear[col] + +value).toFixed(12));
       }
     });
   });
@@ -61,12 +63,13 @@ export function economicCalculation(
   }
 
   // 561 - 569
-  const values561569indexes = [];
+  const values561569indexes: number[] = [];
   values.forEach((value, index) => {
-    if (value >= 561 && value <= 569) {
+    if (+value.value >= 561 && +value.value <= 569) {
       values561569indexes.push(index);
     }
   });
+
   let financialConstByYear = values561569indexes.reduce(
     (acc, index) => {
       return sumArrays(acc, data[index] as number[]);
@@ -76,12 +79,13 @@ export function economicCalculation(
   financialConstByYear = divideArrays(financialConstByYear, incomeByYear);
 
   // 511 - 518
-  const values511518indexes = [];
+  const values511518indexes: number[] = [];
   values.forEach((value, index) => {
-    if (value >= 511 && value <= 518) {
+    if (+value.value >= 511 && +value.value <= 518) {
       values511518indexes.push(index);
     }
   });
+
   let servicesConstByYear = values511518indexes.reduce(
     (acc, index) => {
       return sumArrays(acc, data[index] as number[]);
@@ -91,12 +95,13 @@ export function economicCalculation(
   servicesConstByYear = divideArrays(servicesConstByYear, incomeByYear);
 
   // 531 - 538
-  const values531538indexes = [];
+  const values531538indexes: number[] = [];
   values.forEach((value, index) => {
-    if (value >= 531 && value <= 538) {
+    if (+value.value >= 531 && +value.value <= 538) {
       values531538indexes.push(index);
     }
   });
+
   let taxesConstByYear = values531538indexes.reduce(
     (acc, index) => {
       return sumArrays(acc, data[index] as number[]);

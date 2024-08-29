@@ -144,6 +144,6 @@ export const selectors: RootSelectors = {
   ),
   itemSelectOptions: createSelector(
     [(state: RootState) => state.index.itemSelectOptions],
-    (itemSelectOptions) => itemSelectOptions,
+    (itemSelectOptions) => itemSelectOptions ?? [],
   ),
 };

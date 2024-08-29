@@ -143,6 +143,6 @@ export const selectors: RootSelectors = {
   ),
   itemSelectOptions: createSelector(
     [(state: RootState) => state.cvp.itemSelectOptions],
-    (itemSelectOptions) => itemSelectOptions,
+    (itemSelectOptions) => itemSelectOptions ?? [],
   ),
 };

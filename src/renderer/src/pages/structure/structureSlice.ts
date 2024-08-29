@@ -118,6 +118,6 @@ export const selectors: RootSelectors = {
   ),
   itemSelectOptions: createSelector(
     [(state: RootState) => state.structure.itemSelectOptions],
-    (itemSelectOptions) => itemSelectOptions,
+    (itemSelectOptions) => itemSelectOptions ?? [],
   ),
 };

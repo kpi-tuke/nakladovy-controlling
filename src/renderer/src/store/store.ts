@@ -7,7 +7,7 @@ import { paretoReducer } from '../pages/pareto/paretoSlice';
 import { sortimentReducer } from '../pages/sortiment/sortimentSlice';
 import { structureReducer } from '../pages/structure/structureSlice';
 import { evaluationReducer } from '../pages/report/evaluationSlice';
-import { CellValue, Header, Value } from './rootReducer';
+import { CellValue, Header, ItemSelectOption, Value } from './rootReducer';
 
 export const store = configureStore({
   reducer: {
@@ -42,5 +42,5 @@ export type RootSelectors = {
   items: (state: RootState) => string[];
   corner: (state: RootState) => string;
   values: (state: RootState) => Value[];
-  itemSelectOptions: (state: RootState) => any[];
+  itemSelectOptions: (state: RootState) => ItemSelectOption[];
 };

@@ -1,6 +1,5 @@
 import { splitTable } from '../../helper';
-import { RootState } from '../../store/store';
-import { DefaultState } from '../../store/rootReducer';
+import { RootSelectors } from '../../store/store';
 import { useAppSelector } from '../../store/hooks';
 import { Paper, Typography } from '@mui/material';
 import {
@@ -12,13 +11,23 @@ import {
   TableHead,
 } from './Table';
 import React from 'react';
+import { CellValue } from '@renderer/store/rootReducer';
 
-export default function PDFTable({
-  selector,
-}: {
-  selector: (state: RootState) => DefaultState;
-}) {
-  const { corner, headers, items, data } = useAppSelector(selector);
+type Table = {
+  headers: string[];
+  data: CellValue[][];
+};
+
+type PDFTableProps = {
+  selectors: RootSelectors;
+};
+
+const PDFTable: React.FC<PDFTableProps> = ({ selectors }) => {
+  const corner = useAppSelector(selectors.corner);
+  const headers = useAppSelector(selectors.headers);
+  const items = useAppSelector(selectors.items);
+  const data = useAppSelector(selectors.data);
+
   const colsPerTable = 5;
   const { separatedHeaders, separatedData } = splitTable(
     colsPerTable,
@@ -27,7 +36,7 @@ export default function PDFTable({
   );
 
   const mergedData = React.useMemo(() => {
-    const tables = [];
+    const tables: Table[] = [];
 
     for (
       let headersIndex = 0;
@@ -128,4 +137,6 @@ export default function PDFTable({
       ))}
     </>
   );
-}
+};
+
+export default PDFTable;

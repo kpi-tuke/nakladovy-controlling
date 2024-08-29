@@ -80,11 +80,7 @@ const BarGraph: React.FC<Props> = ({
             stroke={primaryTextColor}
             label={
               yAxisLabel ? (
-                <CustomYAxisLabel
-                  value={yAxisLabel}
-                  angle={-90}
-                  position="insideBottom"
-                />
+                <CustomYAxisLabel value={yAxisLabel} angle={-90} />
               ) : undefined
             }
           />
