@@ -3,7 +3,7 @@ import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { ActionCellRight, TableCell, TableHead, TableRow } from './Table';
 import TableActionButton from './TableActionButton';
 import TableInput from './TableInput';
-import React from 'react';
+import React, { forwardRef, memo, useEffect, useRef } from 'react';
 
 type HeaderInputProps = {
   selectors: RootSelectors;
@@ -12,8 +12,10 @@ type HeaderInputProps = {
 
 const HeaderInput: React.FC<HeaderInputProps> = ({ selectors, actions }) => {
   const dispatch = useAppDispatch();
-
   const headers = useAppSelector(selectors.headers);
+
+  const inputRef = useRef<HTMLInputElement>(null);
+  const prevHeadersLength = useRef<number>(headers?.length || 0);
 
   const addColumn = () => {
     dispatch(actions.addColumn());
@@ -21,11 +23,22 @@ const HeaderInput: React.FC<HeaderInputProps> = ({ selectors, actions }) => {
 
   const disableAddButton = headers.some((header) => !header.label);
 
+  useEffect(() => {
+    const currentHeadersLength = headers.length || 0;
+
+    if (currentHeadersLength > prevHeadersLength.current) {
+      inputRef.current?.focus();
+    }
+
+    prevHeadersLength.current = currentHeadersLength;
+  }, [headers]);
+
   return (
     <TableHead>
       <TableRow>
         {headers.map((header, index) => (
           <Input
+            ref={index === headers.length - 1 ? inputRef : null}
             key={header.id}
             actions={actions}
             index={index}
@@ -51,10 +64,11 @@ type InputProps = {
   selectors: RootSelectors;
   actions: any;
   index: number;
+  ref: any;
 };
 
-const Input: React.FC<InputProps> = React.memo(
-  ({ selectors, actions, index }) => {
+const Input: React.FC<InputProps> = memo(
+  forwardRef(({ selectors, actions, index }, ref) => {
     const dispatch = useAppDispatch();
 
     const header = useAppSelector(selectors.selectHeaderByIndex(index));
@@ -74,10 +88,11 @@ const Input: React.FC<InputProps> = React.memo(
     return (
       <TableCell>
         <TableInput
+          ref={ref as any}
           defaultValue={header.label}
           onChange={(e) => handleChangeHeader(e.target.value, index)}
         />
       </TableCell>
     );
-  },
+  }),
 );
