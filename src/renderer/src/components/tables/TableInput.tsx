@@ -4,7 +4,7 @@ import React, { forwardRef } from 'react';
 type Props = TextFieldProps & {
   bold?: boolean;
   inputTextAlign?: 'center' | 'left' | 'right';
-  ref: any;
+  ref?: any;
 };
 
 const TableInput: React.FC<Props> = forwardRef(
