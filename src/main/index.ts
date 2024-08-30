@@ -8,7 +8,7 @@ import {
 } from 'electron';
 import { join } from 'path';
 import { optimizer, is, electronApp } from '@electron-toolkit/utils';
-import icon from '../../resources/icon.png?asset';
+import icon from '../../assets/icon.png?asset';
 import MenuBuilder from './menu';
 import path from 'path';
 import fs from 'fs';

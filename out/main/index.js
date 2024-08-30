@@ -3,7 +3,7 @@ const electron = require("electron");
 const path = require("path");
 const utils = require("@electron-toolkit/utils");
 const fs = require("fs");
-const icon = path.join(__dirname, "../../resources/icon.png");
+const icon = path.join(__dirname, "./chunks/icon-D6bAUhBQ.png");
 class MenuBuilder {
   mainWindow;
   constructor(mainWindow2) {
