@@ -216,6 +216,7 @@ const Cell: React.FC<CellProps> = React.memo(
             data: Math.abs(Math.round(parseFloat(value) * 100) / 100),
             row,
             col,
+            type: HeaderType.NUMBER,
           }),
         );
       }
@@ -226,7 +227,7 @@ const Cell: React.FC<CellProps> = React.memo(
         {header.type === HeaderType.NUMBER ||
         header.type === HeaderType.STRING ? (
           <TextField
-            defaultValue={value}
+            value={value}
             onChange={(e) =>
               handleChangeData(e.target.value ?? '', header.type)
             }
