@@ -1,14 +1,25 @@
 import { Typography } from '@mui/material';
-import { TableCell, TableHead, TableRow } from './Table';
+import { ActionCellRight, TableCell, TableHead, TableRow } from './Table';
 import { RootSelectors } from '@renderer/store/store';
-import { useAppSelector } from '@renderer/store/hooks';
+import { useAppDispatch, useAppSelector } from '@renderer/store/hooks';
+import TableActionButton from './TableActionButton';
 
 type HeaderValueProps = {
   selectors: RootSelectors;
+  actions: any;
 };
 
-const HeaderValue: React.FC<HeaderValueProps> = ({ selectors }) => {
+const HeaderValue: React.FC<HeaderValueProps> = ({ selectors, actions }) => {
+  const dispatch = useAppDispatch();
+
   const headers = useAppSelector(selectors.headers);
+  const dynCols = useAppSelector(selectors.dynCols);
+
+  const addColumn = () => {
+    dispatch(actions.addColumn());
+  };
+
+  const disableAddButton = headers.some((header) => !header.label);
 
   return (
     <TableHead>
@@ -32,6 +43,16 @@ const HeaderValue: React.FC<HeaderValueProps> = ({ selectors }) => {
             />
           </TableCell>
         ))}
+
+        {dynCols && (
+          <ActionCellRight $topBorder={false}>
+            <TableActionButton
+              buttonType="add"
+              onClick={addColumn}
+              disabled={disableAddButton}
+            />
+          </ActionCellRight>
+        )}
       </TableRow>
     </TableHead>
   );

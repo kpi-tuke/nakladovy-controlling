@@ -13,6 +13,7 @@ type HeaderInputProps = {
 const HeaderInput: React.FC<HeaderInputProps> = ({ selectors, actions }) => {
   const dispatch = useAppDispatch();
   const headers = useAppSelector(selectors.headers);
+  const dynCols = useAppSelector(selectors.dynCols);
 
   const inputRef = useRef<HTMLInputElement>(null);
   const prevHeadersLength = useRef<number>(headers?.length || 0);
@@ -46,13 +47,15 @@ const HeaderInput: React.FC<HeaderInputProps> = ({ selectors, actions }) => {
           />
         ))}
 
-        <ActionCellRight $topBorder={false}>
-          <TableActionButton
-            buttonType="add"
-            onClick={addColumn}
-            disabled={disableAddButton}
-          />
-        </ActionCellRight>
+        {dynCols && (
+          <ActionCellRight $topBorder={false}>
+            <TableActionButton
+              buttonType="add"
+              onClick={addColumn}
+              disabled={disableAddButton}
+            />
+          </ActionCellRight>
+        )}
       </TableRow>
     </TableHead>
   );

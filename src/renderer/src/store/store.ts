@@ -43,4 +43,5 @@ export type RootSelectors = {
   corner: (state: RootState) => string;
   values: (state: RootState) => Value[];
   itemSelectOptions: (state: RootState) => ItemSelectOption[];
+  getRowType: (index: number) => (state: RootState) => CellValue;
 };

@@ -21,7 +21,7 @@ import {
 } from './Table';
 import TableActionButton from './TableActionButton';
 import { useError } from '../providers/ErrorProvider';
-import { CellValue, HeaderType } from '@renderer/store/rootReducer';
+import { CellValue, CellType } from '@renderer/store/rootReducer';
 import { RootSelectors } from '@renderer/store/store';
 import React, { useEffect, useRef } from 'react';
 
@@ -187,50 +187,51 @@ const Cell: React.FC<CellProps> = React.memo(
 
     const header = useAppSelector(selectors.selectHeaderByIndex(col));
     const value = useAppSelector(selectors.selectDataByPosition(row, col));
+    const rowType = useAppSelector(selectors.getRowType(row));
 
-    const handleChangeData = function (value: string, cellType?: HeaderType) {
-      if (cellType === HeaderType.SELECT) {
-        dispatch(
-          actions.setDataOnIndex({
-            data: value,
-            row,
-            col,
-            type: HeaderType.SELECT,
-          }),
-        );
-      } else if (cellType === HeaderType.STRING) {
-        dispatch(
-          actions.setDataOnIndex({
-            data: value,
-            row,
-            col,
-            type: HeaderType.STRING,
-          }),
-        );
-      } else {
+    const handleChangeData = function (value: string) {
+      // zmena , na . pri cislach, lebo inak sa hodnota zmeni na 0
+      if (rowType === CellType.NUMBER) {
         value = value.replace(',', '.');
 
-        dispatch(
-          actions.setDataOnIndex({
-            data: value,
-            row,
-            col,
-            type: HeaderType.NUMBER,
-          }),
-        );
+        // zakazanie zadat viac . alebo , v cisle
+        if (value.split('.').length > 2) {
+          return;
+        }
+
+        // zakazanie zadat pismeno v cisle
+        if (/[a-zA-Z]/.test(value)) {
+          return;
+        }
+
+        // remove unnecessary 0 from beginning of the number
+        if (/^\d+\.\d+$/.test(value)) {
+          value = parseFloat(value).toString();
+        }
+
+        // zabranenie zadat viacero 0 na zaciatok cisla
+        if (/^0+(?!\.)/.test(value)) {
+          value = parseFloat(value).toString();
+        }
       }
+
+      dispatch(
+        actions.setDataOnIndex({
+          data: rowType === CellType.NUMBER ? +value : value,
+          row,
+          col,
+          type: rowType,
+        }),
+      );
     };
 
     return (
       <TableCell>
-        {header.type === HeaderType.NUMBER ||
-        header.type === HeaderType.STRING ? (
+        {rowType === CellType.NUMBER || rowType === CellType.STRING ? (
           <TextField
-            placeholder={header.type === HeaderType.NUMBER ? '0' : ''}
+            placeholder={rowType === CellType.NUMBER ? '0' : ''}
             value={value}
-            onChange={(e) =>
-              handleChangeData(e.target.value ?? '', header.type)
-            }
+            onChange={(e) => handleChangeData(e.target.value ?? '')}
             onWheel={(event) => event.currentTarget.blur()}
             sx={{
               position: 'absolute',
@@ -260,7 +261,7 @@ const Cell: React.FC<CellProps> = React.memo(
             renderInput={(params) => <TextField {...params} />}
             clearIcon={false}
             onChange={(_, value) => {
-              handleChangeData(value?.value ?? '', header.type);
+              handleChangeData(value?.value ?? '');
             }}
             sx={{
               position: 'absolute',

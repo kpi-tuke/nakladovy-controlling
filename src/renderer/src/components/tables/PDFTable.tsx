@@ -55,10 +55,12 @@ const PDFTable: React.FC<PDFTableProps> = ({ selectors }) => {
   return (
     <>
       {mergedData.map((table, index) => (
-        <div className={`hideInScreen  ${index > 0 ? 'new-page' : ''}`}>
+        <div
+          key={index}
+          className={`hideInScreen  ${index > 0 ? 'new-page' : ''}`}
+        >
           <Paper>
             <Table
-              key={index}
               sx={{
                 width: 'unset',
               }}

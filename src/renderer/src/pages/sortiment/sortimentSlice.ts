@@ -2,7 +2,7 @@ import { createSelector, createSlice } from '@reduxjs/toolkit';
 import { RootSelectors, RootState } from '../../store/store';
 import {
   DefaultState,
-  HeaderType,
+  CellType,
   openProject,
   rootReducer,
 } from '../../store/rootReducer';
@@ -15,7 +15,7 @@ const initialSortimentState: DefaultState = {
   headers: [
     {
       id: '1',
-      type: HeaderType.NUMBER,
+      type: CellType.NUMBER,
       label: 'Výrobok A',
     },
   ],
@@ -58,6 +58,15 @@ const initialSortimentState: DefaultState = {
       id: '7',
       value: '(P<sub>o</sub>) - ostatné priame náklady',
     },
+  ],
+  rowTypes: [
+    CellType.NUMBER,
+    CellType.NUMBER,
+    CellType.NUMBER,
+    CellType.NUMBER,
+    CellType.NUMBER,
+    CellType.NUMBER,
+    CellType.NUMBER,
   ],
   text: '',
   accounts: [''],
@@ -143,4 +152,9 @@ export const selectors: RootSelectors = {
     [(state: RootState) => state.sortiment.itemSelectOptions],
     (itemSelectOptions) => itemSelectOptions ?? [],
   ),
+  getRowType: (index) =>
+    createSelector(
+      [(state: RootState) => state.sortiment.rowTypes],
+      (rowTypes) => rowTypes[index],
+    ),
 };

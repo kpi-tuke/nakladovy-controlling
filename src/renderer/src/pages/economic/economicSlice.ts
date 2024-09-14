@@ -2,7 +2,7 @@ import { createSelector, createSlice } from '@reduxjs/toolkit';
 import {
   changeAccount,
   DefaultState,
-  HeaderType,
+  CellType,
   openProject,
   rootReducer,
   sortTableByItemNumber,
@@ -23,7 +23,7 @@ const initialEconomicState: DefaultState = {
   headers: [
     {
       id: '1',
-      type: HeaderType.NUMBER,
+      type: CellType.NUMBER,
       label: '2000',
     },
   ],
@@ -43,6 +43,7 @@ const initialEconomicState: DefaultState = {
       value: '',
     },
   ],
+  rowTypes: [CellType.NUMBER, CellType.NUMBER, CellType.NUMBER],
   text: '',
   accounts: [''],
   sortable: true,
@@ -50,6 +51,7 @@ const initialEconomicState: DefaultState = {
   dynRows: true,
   dynCols: true,
   itemSelectOptions: allOptions,
+  newRowType: CellType.NUMBER,
 };
 
 export const economicSlice = createSlice({
@@ -138,4 +140,9 @@ export const selectors: RootSelectors = {
     [(state: RootState) => state.economic.itemSelectOptions],
     (itemSelectOptions) => itemSelectOptions ?? [],
   ),
+  getRowType: (index) =>
+    createSelector(
+      [(state: RootState) => state.economic.rowTypes],
+      (rowTypes) => rowTypes[index],
+    ),
 };

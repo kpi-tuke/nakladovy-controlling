@@ -3,7 +3,7 @@ import { isNumeric } from '@renderer/helper';
 import { SortDirection } from '@renderer/types/sortDirection';
 import { v4 as uuidv4 } from 'uuid';
 
-export enum HeaderType {
+export enum CellType {
   NUMBER = 'NUMBER',
   STRING = 'STRING',
   SELECT = 'SELECT',
@@ -17,7 +17,7 @@ type HeaderOption = {
 export type Header = {
   id: string;
   label: string;
-  type: HeaderType;
+  type: CellType;
   options?: HeaderOption[];
 };
 
@@ -55,6 +55,8 @@ export interface DefaultState {
   dynRows?: boolean;
   dynCols?: boolean;
   itemSelectOptions?: ItemSelectOption[];
+  rowTypes: CellType[];
+  newRowType?: CellType;
 }
 
 export interface dataOnIndex {
@@ -66,7 +68,7 @@ export interface dataOnCords {
   data: number;
   row: number;
   col: number;
-  type: HeaderType;
+  type: CellType;
 }
 
 export const rootReducer = {
@@ -83,7 +85,7 @@ export const rootReducer = {
     state.headers[action.payload.index] = {
       id: action.payload.data.id,
       label: action.payload.data.value,
-      type: HeaderType.NUMBER,
+      type: CellType.NUMBER,
     };
   },
   setItemsOnIndex: (
@@ -106,8 +108,8 @@ export const rootReducer = {
   },
   setDataOnIndex: (state: DefaultState, action: PayloadAction<dataOnCords>) => {
     if (
-      action.payload.type === HeaderType.SELECT ||
-      action.payload.type === HeaderType.STRING
+      action.payload.type === CellType.SELECT ||
+      action.payload.type === CellType.STRING
     ) {
       state.data[action.payload.row][action.payload.col] = action.payload.data;
     } else {
@@ -119,9 +121,9 @@ export const rootReducer = {
     }
   },
   addColumn: (state: DefaultState): void => {
-    state.headers.push({ id: uuidv4(), label: '', type: HeaderType.NUMBER });
-    state.data.map((rowData: any) => {
-      rowData.push(0);
+    state.headers.push({ id: uuidv4(), label: '', type: CellType.NUMBER });
+    state.data.map((rowData, index) => {
+      rowData.push(state.rowTypes[index] === CellType.NUMBER ? 0 : '');
     });
   },
   addRow: (state: DefaultState) => {
@@ -130,12 +132,12 @@ export const rootReducer = {
       id: uuidv4(),
       value: '',
     });
-    state.accounts.push('');
     let arr: any[] = [];
     for (let i = 0; i < state.data[0].length; i++) {
-      arr.push(0);
+      arr.push(state.newRowType === CellType.NUMBER ? 0 : '');
     }
     state.data.push(arr);
+    state.rowTypes.push(state.newRowType || CellType.NUMBER);
   },
   deleteRow: (state: DefaultState, action: PayloadAction<number>) => {
     if (state.items.length === 1) return;

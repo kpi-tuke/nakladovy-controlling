@@ -2,7 +2,7 @@ import { createSelector, createSlice } from '@reduxjs/toolkit';
 import { RootSelectors, RootState } from '../../store/store';
 import {
   DefaultState,
-  HeaderType,
+  CellType,
   openProject,
   rootReducer,
   sortTableByItemNumber,
@@ -17,7 +17,7 @@ const initialStructureState: DefaultState = {
   headers: [
     {
       id: '1',
-      type: HeaderType.NUMBER,
+      type: CellType.NUMBER,
       label: 'Priamy materiál',
     },
   ],
@@ -33,6 +33,7 @@ const initialStructureState: DefaultState = {
       value: '',
     },
   ],
+  rowTypes: [CellType.NUMBER, CellType.NUMBER],
   text: '',
   accounts: [''],
   sortable: false,
@@ -40,6 +41,7 @@ const initialStructureState: DefaultState = {
   dynRows: true,
   dynCols: true,
   itemSelectOptions: costOptions,
+  newRowType: CellType.NUMBER,
 };
 
 const structureSlice = createSlice({
@@ -120,4 +122,9 @@ export const selectors: RootSelectors = {
     [(state: RootState) => state.structure.itemSelectOptions],
     (itemSelectOptions) => itemSelectOptions ?? [],
   ),
+  getRowType: (index) =>
+    createSelector(
+      [(state: RootState) => state.structure.rowTypes],
+      (rowTypes) => rowTypes[index],
+    ),
 };

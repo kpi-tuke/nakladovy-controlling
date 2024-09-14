@@ -75,8 +75,8 @@ export default function App() {
   const CVPAnalysis: () => JSX.Element = withAnalysis(
     cvpSelectors,
     CVPActions,
-    ItemInput,
-    HeaderValue,
+    ItemValue,
+    HeaderInput,
     CVPResult,
     RouteName.CVP_ANALYSIS,
   );

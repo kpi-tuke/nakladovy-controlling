@@ -22,6 +22,7 @@ const ItemInput: React.FC<ItemInputProps> = ({ selectors, actions }) => {
 
   const corner = useAppSelector(selectors.corner);
   const values = useAppSelector(selectors.values);
+  const dynRows = useAppSelector(selectors.dynRows);
 
   const addRow = () => {
     dispatch(actions.addRow());
@@ -48,15 +49,17 @@ const ItemInput: React.FC<ItemInputProps> = ({ selectors, actions }) => {
           );
         })}
 
-        <TableRow>
-          <ActionCellBottom>
-            <TableActionButton
-              buttonType="add"
-              onClick={addRow}
-              disabled={disableAddRow}
-            />
-          </ActionCellBottom>
-        </TableRow>
+        {dynRows && (
+          <TableRow>
+            <ActionCellBottom>
+              <TableActionButton
+                buttonType="add"
+                onClick={addRow}
+                disabled={disableAddRow}
+              />
+            </ActionCellBottom>
+          </TableRow>
+        )}
       </TableBody>
     </Table>
   );

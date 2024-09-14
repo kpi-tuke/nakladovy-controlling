@@ -1,6 +1,6 @@
 import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootSelectors, RootState } from '../../store/store';
-import { DefaultState, HeaderType, rootReducer } from '../../store/rootReducer';
+import { DefaultState, CellType, rootReducer } from '../../store/rootReducer';
 import isEqual from 'lodash.isequal';
 
 export interface CVPState extends DefaultState {
@@ -15,47 +15,52 @@ const initialCVPState: CVPState = {
   headers: [
     {
       id: '1',
-      type: HeaderType.NUMBER,
-      label: '(Q) - objem produkcie',
-    },
-    {
-      id: '2',
-
-      type: HeaderType.STRING,
-      label: 'merná jednotka',
-    },
-    {
-      id: '3',
-
-      type: HeaderType.NUMBER,
-      label: '(Pcj) - predajná cena jednotková (€)',
-    },
-    {
-      id: '4',
-
-      type: HeaderType.NUMBER,
-      label: '(Nvj) - variabilné náklady jednotkové (€)',
-    },
-    {
-      id: '5',
-
-      type: HeaderType.NUMBER,
-      label: '(F<sub>n</sub>) fixné náklady (€)',
-    },
-    {
-      id: '6',
-
-      type: HeaderType.NUMBER,
-      label: '(Z<sub>min</sub>) minimálny zisk (€)',
+      type: CellType.STRING,
+      label: 'Výrobok A',
     },
   ],
-  items: ['Výrobok A'],
-  data: [[0, '', 0, 0, 0, 0]],
+  data: [[0], [''], [0], [0], [0], [0]],
   values: [
     {
       id: '1',
-      value: 'Výrobok A',
+      value: '(Q) - objem produkcie (množstvo)',
     },
+    {
+      id: '2',
+      value: 'merná jednotka',
+    },
+    {
+      id: '3',
+      value: '(Pcj) - predajná cena jednotková (€)',
+    },
+    {
+      id: '4',
+      value: '(Nvj) - variabilné náklady jednotkové (€)',
+    },
+    {
+      id: '5',
+      value: '(F<sub>n</sub>) fixné náklady (€)',
+    },
+    {
+      id: '6',
+      value: '(Z<sub>min</sub>) minimálny zisk (€)',
+    },
+  ],
+  items: [
+    '(Q) - objem produkcie (množstvo)',
+    'merná jednotka',
+    '(Pcj) - predajná cena jednotková (€)',
+    '(Nvj) - variabilné náklady jednotkové (€)',
+    '(F<sub>n</sub>) fixné náklady (€)',
+    '(Z<sub>min</sub>) minimálny zisk (€)',
+  ],
+  rowTypes: [
+    CellType.NUMBER,
+    CellType.STRING,
+    CellType.NUMBER,
+    CellType.NUMBER,
+    CellType.NUMBER,
+    CellType.NUMBER,
   ],
   text: '',
   accounts: [''],
@@ -63,7 +68,8 @@ const initialCVPState: CVPState = {
   hasAnalytic: false,
   fixTotal: 0,
   minProfit: 0,
-  dynRows: true,
+  dynRows: false,
+  dynCols: true,
 };
 
 const CVPSlice = createSlice({
@@ -145,4 +151,9 @@ export const selectors: RootSelectors = {
     [(state: RootState) => state.cvp.itemSelectOptions],
     (itemSelectOptions) => itemSelectOptions ?? [],
   ),
+  getRowType: (index) =>
+    createSelector(
+      [(state: RootState) => state.cvp.rowTypes],
+      (rowTypes) => rowTypes[index],
+    ),
 };

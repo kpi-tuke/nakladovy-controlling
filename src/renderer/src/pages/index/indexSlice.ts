@@ -2,7 +2,7 @@ import { createSelector, createSlice } from '@reduxjs/toolkit';
 import {
   changeAccount,
   DefaultState,
-  HeaderType,
+  CellType,
   openProject,
   rootReducer,
   sortTableByItemNumber,
@@ -19,17 +19,17 @@ const initialIndexState: DefaultState = {
   headers: [
     {
       id: '1',
-      type: HeaderType.NUMBER,
+      type: CellType.NUMBER,
       label: 'Bázický rok',
     },
     {
       id: '2',
-      type: HeaderType.NUMBER,
+      type: CellType.NUMBER,
       label: '2000',
     },
     {
       id: '3',
-      type: HeaderType.NUMBER,
+      type: CellType.NUMBER,
       label: '2001',
     },
   ],
@@ -57,6 +57,7 @@ const initialIndexState: DefaultState = {
       value: '',
     },
   ],
+  rowTypes: [CellType.NUMBER, CellType.NUMBER, CellType.NUMBER],
   itemSelectOptions: [...allOptions, customOption],
   text: '',
   accounts: [''],
@@ -64,6 +65,7 @@ const initialIndexState: DefaultState = {
   hasAnalytic: true,
   dynRows: true,
   dynCols: true,
+  newRowType: CellType.NUMBER,
 };
 
 export const indexSlice = createSlice({
@@ -146,4 +148,9 @@ export const selectors: RootSelectors = {
     [(state: RootState) => state.index.itemSelectOptions],
     (itemSelectOptions) => itemSelectOptions ?? [],
   ),
+  getRowType: (index) =>
+    createSelector(
+      [(state: RootState) => state.index.rowTypes],
+      (rowTypes) => rowTypes[index],
+    ),
 };

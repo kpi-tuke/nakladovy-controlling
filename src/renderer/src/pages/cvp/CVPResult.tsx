@@ -6,9 +6,18 @@ import { Grid, Paper } from '@mui/material';
 import SectionTitle from '@renderer/components/SectionTitle';
 import Spacer from '@renderer/components/Spacer';
 import LineGraph from '@renderer/components/graph/LineGraph';
+import { transposeMatrix } from '@renderer/helper';
+import { useMemo } from 'react';
+
+type Graph = {
+  title: string;
+  labels: string[];
+  series: { data: number[] }[];
+};
 
 export default function CVPResult() {
-  const { data, items } = useAppSelector(selectCVP);
+  const { data, headers } = useAppSelector(selectCVP);
+
   const {
     volumes,
     prices,
@@ -21,72 +30,70 @@ export default function CVPResult() {
     fixedCosts,
     capacityUsage,
     fixTotals,
-  } = cvpCalculation(data);
+  } = cvpCalculation(transposeMatrix(data));
 
-  const graphs: {
-    value: string;
-    series: { name: string; data: number[] }[];
-    labels: string[];
-  }[] = [];
+  const graphs = useMemo(() => {
+    return headers.map((header, idx) => {
+      const costTotal: number[] = [];
+      const incomeTotal: number[] = [];
+      const osX: number[] = [0];
 
-  items.forEach((product: any, idx: number) => {
-    const costTotal: number[] = [];
-    const incomeTotal: number[] = [];
-    const osX: number[] = [0];
+      if (zeroTon[idx] === 0)
+        if (volumes[idx] === 0) osX.push(5);
+        else osX.push(volumes[idx] * 2);
+      else osX.push(zeroTon[idx]);
 
-    if (zeroTon[idx] === 0)
-      if (volumes[idx] === 0) osX.push(5);
-      else osX.push(volumes[idx] * 2);
-    else osX.push(zeroTon[idx]);
+      if (zeroProf[idx] === zeroTon[idx]) {
+        if (zeroProf[idx] === 0) osX.push(osX[1] * 2);
+        else osX.push(zeroTon[idx] * 2);
+      } else osX.push(zeroProf[idx]);
 
-    if (zeroProf[idx] === zeroTon[idx]) {
-      if (zeroProf[idx] === 0) osX.push(osX[1] * 2);
-      else osX.push(zeroTon[idx] * 2);
-    } else osX.push(zeroProf[idx]);
+      if (volumes[idx] === 0)
+        osX.push(Math.max(...osX) + Math.max(...osX) * 0.3);
+      else if (volumes[idx] === zeroTon[idx])
+        osX.push(Math.round(zeroTon[idx] / 2));
+      else osX.push(volumes[idx]);
 
-    if (volumes[idx] === 0) osX.push(Math.max(...osX) + Math.max(...osX) * 0.3);
-    else if (volumes[idx] === zeroTon[idx])
-      osX.push(Math.round(zeroTon[idx] / 2));
-    else osX.push(volumes[idx]);
+      osX.push(Math.max(...osX) + Math.max(...osX) * 0.3);
 
-    osX.push(Math.max(...osX) + Math.max(...osX) * 0.3);
+      osX.map((vol: number) => {
+        costTotal.push(
+          Math.round((costs[idx] * vol + fixTotals[idx]) * 100) / 100,
+        );
 
-    osX.map((vol: number) => {
-      costTotal.push(
-        Math.round((costs[idx] * vol + fixTotals[idx]) * 100) / 100,
-      );
+        incomeTotal.push(Math.round(prices[idx] * vol * 100) / 100);
+      });
 
-      incomeTotal.push(Math.round(prices[idx] * vol * 100) / 100);
+      costTotal.sort(function (a, b) {
+        return a - b;
+      });
+
+      incomeTotal.sort(function (a, b) {
+        return a - b;
+      });
+
+      osX.sort(function (a, b) {
+        return a - b;
+      });
+
+      const series = [
+        {
+          name: 'Náklady',
+          data: costTotal,
+        },
+        {
+          name: 'Výnosy',
+          data: incomeTotal,
+        },
+      ];
+
+      return {
+        title: header.label,
+        series,
+        labels: osX.map((value) => value.toString()),
+      } as Graph;
     });
-
-    costTotal.sort(function (a, b) {
-      return a - b;
-    });
-
-    incomeTotal.sort(function (a, b) {
-      return a - b;
-    });
-
-    osX.sort(function (a, b) {
-      return a - b;
-    });
-
-    const series = [
-      {
-        name: 'Náklady',
-        data: costTotal,
-      },
-      {
-        name: 'Výnosy',
-        data: incomeTotal,
-      },
-    ];
-    graphs.push({
-      value: product,
-      series,
-      labels: osX.map((value) => value.toString()),
-    });
-  });
+  }, [headers, volumes, prices, zeroTon, zeroProf, zeroEur, costs]);
 
   return (
     <div>
@@ -99,7 +106,7 @@ export default function CVPResult() {
       <Paper>
         <TableStatic
           corner={'Ekonomické ukazovatele'}
-          header={items}
+          header={headers.map((header) => header.label)}
           inputs={[
             [
               '(N<sub>0</sub>) - nulový bod (množstvo)',
@@ -173,7 +180,7 @@ export default function CVPResult() {
                 className={index % 2 === 0 && index !== 0 ? 'new-page' : ''}
               >
                 <LineGraph
-                  title={'NULOVÝ BOD: ' + graph.value.toUpperCase()}
+                  title={'NULOVÝ BOD: ' + graph.title.toUpperCase()}
                   labels={graph.labels}
                   height={420}
                   data={[

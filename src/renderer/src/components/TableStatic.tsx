@@ -101,8 +101,11 @@ const TableStatic: React.FC<Props> = ({
       </TableData>
 
       {separatedData.map((table, index) => (
-        <div className={`hideInScreen ${newPageAfter ? 'new-page-after' : ''}`}>
-          <TableStyled key={index}>
+        <div
+          key={index}
+          className={`hideInScreen ${newPageAfter ? 'new-page-after' : ''}`}
+        >
+          <TableStyled>
             <TableHead>
               <TableRow>
                 <TableCorner>{corner}</TableCorner>

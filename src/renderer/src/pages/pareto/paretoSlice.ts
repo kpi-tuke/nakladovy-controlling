@@ -1,7 +1,7 @@
 import { createSelector, createSlice } from '@reduxjs/toolkit';
 import {
   DefaultState,
-  HeaderType,
+  CellType,
   openProject,
   rootReducer,
 } from '../../store/rootReducer';
@@ -15,7 +15,7 @@ const initialParetoState: DefaultState = {
   headers: [
     {
       id: '1',
-      type: HeaderType.NUMBER,
+      type: CellType.NUMBER,
       label: '(N) - výška nákladov (€)',
     },
   ],
@@ -27,11 +27,13 @@ const initialParetoState: DefaultState = {
       value: 'Názov chyby',
     },
   ],
+  rowTypes: [CellType.NUMBER],
   text: '',
   accounts: [''],
   sortable: false,
   hasAnalytic: false,
   dynRows: true,
+  newRowType: CellType.NUMBER,
 };
 
 export const paretoSlice = createSlice({
@@ -111,4 +113,9 @@ export const selectors: RootSelectors = {
     [(state: RootState) => state.pareto.itemSelectOptions],
     (itemSelectOptions) => itemSelectOptions ?? [],
   ),
+  getRowType: (index) =>
+    createSelector(
+      [(state: RootState) => state.pareto.rowTypes],
+      (rowTypes) => rowTypes[index],
+    ),
 };
