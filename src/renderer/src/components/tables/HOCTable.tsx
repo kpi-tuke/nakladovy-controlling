@@ -217,7 +217,7 @@ const Cell: React.FC<CellProps> = React.memo(
 
       dispatch(
         actions.setDataOnIndex({
-          data: rowType === CellType.NUMBER ? +value : value,
+          data: value,
           row,
           col,
           type: rowType,

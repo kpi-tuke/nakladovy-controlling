@@ -1,3 +1,5 @@
+import { formatNumber } from '@renderer/utils/formatNumber';
+
 export function paretoCalculation(data: number[][], items: string[]) {
   let valuesWithCauses: Map<string, number> = new Map<string, number>();
   let values: number[] = [];
@@ -11,7 +13,7 @@ export function paretoCalculation(data: number[][], items: string[]) {
     percentages.push(0);
     percentagesKumul.push(0);
     valuesWithCauses.set(items[i], data[i][0]);
-    sum = parseFloat((sum + data[i][0]).toFixed(12));
+    sum = parseFloat((sum + formatNumber(data[i][0])).toFixed(12));
   }
 
   let map: Map<string, number> = new Map(
@@ -25,7 +27,7 @@ export function paretoCalculation(data: number[][], items: string[]) {
     if (sum === 0) temp = 0;
     else temp = parseFloat((temp + (value * 100) / sum).toFixed(12));
 
-    val = parseFloat((val + value).toFixed(12));
+    val = parseFloat((val + formatNumber(value)).toFixed(12));
     valuesKumul[idx] = val;
 
     if (sum === 0) percentages[idx] = 0;

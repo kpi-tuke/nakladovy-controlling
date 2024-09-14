@@ -1,3 +1,4 @@
+import { formatNumber } from '@renderer/utils/formatNumber';
 import {
   divideArrays,
   subtractArrays,
@@ -6,10 +7,20 @@ import {
 } from '../../helper';
 
 export function sortimentCalculation(data: number[][]) {
-  const directCost: number[] = data[0].map((value) => value);
-  const totalCost: number[] = data[1].map((value) => value);
-  const price: number[] = data[2].map((value) => value);
-  const volume: number[] = data[3].map((value) => value);
+  const directCost: number[] = data[0].map(formatNumber);
+
+  const totalCost: number[] = data[1].map(formatNumber);
+
+  const price: number[] = data[2].map(formatNumber);
+
+  const volume: number[] = data[3].map(formatNumber);
+
+  const priamyMaterial: number[] = data[4].map(formatNumber);
+
+  const priameMzdy: number[] = data[5].map(formatNumber);
+
+  const ostatnePriameNaklady: number[] = data[6].map(formatNumber);
+
   const marginProfit: number[] = subtractArrays(price, totalCost);
   const marginGross: number[] = subtractArrays(price, directCost);
 
@@ -34,13 +45,16 @@ export function sortimentCalculation(data: number[][]) {
 
   const rentIncome: number[] = divideArrays(marginProfit, price);
 
-  const totalDirectCosts = sumArrays(sumArrays(data[4], data[5]), data[6]);
+  const totalDirectCosts = sumArrays(
+    sumArrays(priamyMaterial, priameMzdy),
+    ostatnePriameNaklady,
+  );
 
-  const totalIndirectCosts = subtractArrays(data[1], totalDirectCosts);
+  const totalIndirectCosts = subtractArrays(totalCost, totalDirectCosts);
 
-  const unitProfit = subtractArrays(totalDirectCosts, data[1]);
+  const unitProfit = subtractArrays(totalDirectCosts, totalCost);
 
-  const income = multiplyArrays(totalDirectCosts, data[3]);
+  const income = multiplyArrays(totalDirectCosts, volume);
 
   const totalCosts = sumArrays(totalDirectCosts, totalIndirectCosts);
 

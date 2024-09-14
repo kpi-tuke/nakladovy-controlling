@@ -15,14 +15,14 @@ export function cvpCalculation(data: CellValue[][]) {
 
   data.forEach((rowData, idx) => {
     // objem produkcie
-    volumes[idx] = rowData[0] as number;
+    volumes[idx] = parseFloat(rowData[0] as string);
     // predajná cena jednotková
-    prices[idx] = rowData[2] as number;
+    prices[idx] = parseFloat(rowData[2] as string);
     // variabilné náklady jednotkové
-    costs[idx] = rowData[3] as number;
+    costs[idx] = parseFloat(rowData[3] as string);
 
-    fixTotals[idx] = rowData[4] as number;
-    minProfits[idx] = rowData[5] as number;
+    fixTotals[idx] = parseFloat(rowData[4] as string);
+    minProfits[idx] = parseFloat(rowData[5] as string);
   });
 
   // nulový bod
