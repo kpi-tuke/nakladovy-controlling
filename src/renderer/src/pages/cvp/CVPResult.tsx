@@ -117,7 +117,7 @@ export default function CVPResult() {
               `N_{0}=\\frac{F{n}}{1-\\frac{N_{vj}}{P_{cj}}}`,
             ],
             [
-              '(N<sub>0</sub>) - nulový bod Zmin (ks)',
+              '(N<sub>0</sub>) - nulový bod Zmin (množstvo)',
               `N_{0}=\\frac{F_{n}+Z_{min}}{P_{cj}-N_{vj}}`,
             ],
             [
@@ -133,34 +133,20 @@ export default function CVPResult() {
               `NF_{j}=\\frac{F_{n}}{Q}`,
             ],
             [
-              '(VK<sub>krit</sub>) - kritické využitie výrobnej kapacity',
+              '(VK<sub>krit</sub>) - kritické využitie výrobnej kapacity (%)',
               `VK_{krit}=\\frac{N_{0}(ton)}{Q * 100%}`,
             ],
+            ['Merná jednotka'],
           ]}
           data={[
-            [...zeroTon.map((value: number) => Math.round(value * 100) / 100)],
-            [...zeroEur.map((value: number) => Math.round(value * 100) / 100)],
-            [...zeroProf.map((value: number) => Math.round(value * 100) / 100)],
-            [
-              ...zeroSellPrice.map(
-                (value: number) => Math.round(value * 100) / 100,
-              ),
-            ],
-            [
-              ...paymentMoney.map(
-                (value: number) => Math.round(value * 100) / 100,
-              ),
-            ],
-            [
-              ...fixedCosts.map(
-                (value: number) => Math.round(value * 100) / 100,
-              ),
-            ],
-            [
-              ...capacityUsage.map(
-                (value: number) => Math.round(value * 100) / 100,
-              ),
-            ],
+            zeroTon,
+            zeroEur,
+            zeroProf,
+            zeroSellPrice,
+            paymentMoney,
+            fixedCosts,
+            capacityUsage,
+            data[1],
           ]}
         />
       </Paper>

@@ -11,7 +11,7 @@ export interface CVPState extends DefaultState {
 const initialCVPState: CVPState = {
   id: 4,
   title: 'CVP analýza',
-  corner: 'Názov výrobku',
+  corner: 'ekonomické veličiny (€)',
   headers: [
     {
       id: '1',
@@ -19,7 +19,7 @@ const initialCVPState: CVPState = {
       label: 'Výrobok A',
     },
   ],
-  data: [[0], [''], [0], [0], [0], [0]],
+  data: [[0], [''], [0], [0], [0], [0], [0]],
   values: [
     {
       id: '1',
@@ -45,6 +45,10 @@ const initialCVPState: CVPState = {
       id: '6',
       value: '(Z<sub>min</sub>) minimálny zisk (€)',
     },
+    {
+      id: '7',
+      value: '(VK) výrobná kapacita (množstvo)',
+    },
   ],
   items: [
     '(Q) - objem produkcie (množstvo)',
@@ -53,10 +57,12 @@ const initialCVPState: CVPState = {
     '(Nvj) - variabilné náklady jednotkové (€)',
     '(F<sub>n</sub>) fixné náklady (€)',
     '(Z<sub>min</sub>) minimálny zisk (€)',
+    '(VK) výrobná kapacita (množstvo)',
   ],
   rowTypes: [
     CellType.NUMBER,
     CellType.STRING,
+    CellType.NUMBER,
     CellType.NUMBER,
     CellType.NUMBER,
     CellType.NUMBER,

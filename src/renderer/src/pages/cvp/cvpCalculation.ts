@@ -5,6 +5,7 @@ import {
   subtractArrays,
   sumArrays,
 } from '../../helper';
+import { formatNumber } from '@renderer/utils/formatNumber';
 
 export function cvpCalculation(data: CellValue[][]) {
   const volumes: number[] = [];
@@ -12,17 +13,22 @@ export function cvpCalculation(data: CellValue[][]) {
   const costs: number[] = [];
   const fixTotals: number[] = [];
   const minProfits: number[] = [];
+  const productionCapacity: number[] = [];
 
   data.forEach((rowData, idx) => {
     // objem produkcie
-    volumes[idx] = parseFloat(rowData[0] as string);
-    // predajná cena jednotková
-    prices[idx] = parseFloat(rowData[2] as string);
-    // variabilné náklady jednotkové
-    costs[idx] = parseFloat(rowData[3] as string);
+    volumes[idx] = formatNumber(rowData[0]);
 
-    fixTotals[idx] = parseFloat(rowData[4] as string);
-    minProfits[idx] = parseFloat(rowData[5] as string);
+    // predajná cena jednotková
+    prices[idx] = formatNumber(rowData[2]);
+
+    // variabilné náklady jednotkové
+    costs[idx] = formatNumber(rowData[3]);
+
+    fixTotals[idx] = formatNumber(rowData[4]);
+    minProfits[idx] = formatNumber(rowData[5]);
+
+    productionCapacity[idx] = formatNumber(rowData[6]);
   });
 
   // nulový bod
@@ -57,7 +63,7 @@ export function cvpCalculation(data: CellValue[][]) {
   // kritické využitie výrobnej kapacity
   const capacityUsage = divideArrays(
     zeroTon,
-    multiplyArrays(volumes, new Array(volumes.length).fill(100)),
+    multiplyArrays(productionCapacity, new Array(volumes.length).fill(100)),
   );
 
   return {

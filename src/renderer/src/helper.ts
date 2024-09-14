@@ -1,4 +1,5 @@
 import { CellValue } from './store/rootReducer';
+import { formatNumber } from './utils/formatNumber';
 
 // [ [1,2,3], [4,5,6], [7,8,9] ] => [ [ [1,2],[4,5],[7,8] ], [ [3],[6],[9] ] ]
 export function splitTable(
@@ -37,7 +38,7 @@ export const divideArrays = (
   let arr: number[] = [];
   for (let i = 0; i < numerator.length; i++) {
     if (numerator[i] === 0 || denominator[i] === 0) arr.push(0);
-    else arr.push(Math.round((100 * numerator[i]) / denominator[i]) / 100);
+    else arr.push(formatNumber(numerator[i] / denominator[i]));
   }
   return arr;
 };
