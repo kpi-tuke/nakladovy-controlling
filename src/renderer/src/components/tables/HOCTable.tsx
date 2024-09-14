@@ -208,12 +208,11 @@ const Cell: React.FC<CellProps> = React.memo(
           }),
         );
       } else {
-        if (value.startsWith('0') && !value.startsWith('0.'))
-          value = value.slice(1);
+        value = value.replace(',', '.');
 
         dispatch(
           actions.setDataOnIndex({
-            data: Math.abs(Math.round(parseFloat(value) * 100) / 100),
+            data: value,
             row,
             col,
             type: HeaderType.NUMBER,
@@ -227,6 +226,7 @@ const Cell: React.FC<CellProps> = React.memo(
         {header.type === HeaderType.NUMBER ||
         header.type === HeaderType.STRING ? (
           <TextField
+            placeholder={header.type === HeaderType.NUMBER ? '0' : ''}
             value={value}
             onChange={(e) =>
               handleChangeData(e.target.value ?? '', header.type)
