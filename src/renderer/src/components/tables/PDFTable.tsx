@@ -50,7 +50,7 @@ const PDFTable: React.FC<PDFTableProps> = ({ selectors }) => {
     }
 
     return tables;
-  }, []);
+  }, [separatedHeaders, separatedData]);
 
   return (
     <>
