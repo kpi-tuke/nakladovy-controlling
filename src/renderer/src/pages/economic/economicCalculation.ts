@@ -39,7 +39,7 @@ export function economicCalculation(
   let costIndicatorByYear: number[] = divideArrays(costsByYear, incomeByYear);
 
   // 501 code of material costs
-  const values501index = values.findIndex((value: any) => value == 501);
+  const values501index = values.findIndex((value) => value.value === '501');
   let materialCostByYear = Array.from({ length: data[0].length }, () => 0);
   if (values501index !== -1) {
     const values501 = data[values501index] as number[];
@@ -47,7 +47,7 @@ export function economicCalculation(
   }
 
   // 521 code of wage costs
-  const values521index = values.findIndex((value: any) => value == 521);
+  const values521index = values.findIndex((value) => value.value === '521');
   let wageCostByYear = Array.from({ length: data[0].length }, () => 0);
   if (values521index !== -1) {
     const values521 = data[values521index] as number[];
@@ -55,11 +55,11 @@ export function economicCalculation(
   }
 
   // 551 code of wage costs
-  const values551index = values.findIndex((value: any) => value == 521);
+  const values551index = values.findIndex((value) => value.value === '551');
   let depreciationCostByYear = Array.from({ length: data[0].length }, () => 0);
   if (values551index !== -1) {
     const values551 = data[values551index] as number[];
-    wageCostByYear = divideArrays(values551, incomeByYear);
+    depreciationCostByYear = divideArrays(values551, incomeByYear);
   }
 
   // 561 - 569
@@ -76,6 +76,7 @@ export function economicCalculation(
     },
     Array.from({ length: data[0].length }, () => 0),
   );
+
   financialConstByYear = divideArrays(financialConstByYear, incomeByYear);
 
   // 511 - 518
@@ -110,6 +111,17 @@ export function economicCalculation(
   );
   taxesConstByYear = divideArrays(taxesConstByYear, incomeByYear);
 
+  const constItemsByYear = values.reduce(
+    (acc, value, index) => {
+      if (+value.value >= 501 && +value.value <= 599) {
+        acc[index] = data[index] as number[];
+      }
+
+      return acc;
+    },
+    [Array.from({ length: values.length }, () => [] as any[])] as any[],
+  );
+
   return {
     costData: costsByYear,
     incomeData: incomeByYear,
@@ -124,5 +136,6 @@ export function economicCalculation(
     financialConstData: financialConstByYear,
     servicesConstData: servicesConstByYear,
     taxesConstData: taxesConstByYear,
+    constItemsByYear,
   };
 }

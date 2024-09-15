@@ -1,14 +1,14 @@
 const graphColors = [
-  '#02b2af',
-  '#72ccff',
-  '#da01fe',
-  '#9001cb',
-  '#ffa501',
-  '#ff6f00',
-  '#00c853',
-  '#6200ea',
-  '#ff1744',
-  '#00b8d4',
+  '#2b56ff', // Blue
+  '#fa7f05', // Orange
+  '#2ca02c', // Green
+  '#fa0505', // Red
+  '#a005fa', // Purple
+  '#8c564b', // Brown
+  '#e377c2', // Pink
+  '#7f7f7f', // Gray
+  '#fae505', // Yellow
+  '#00ffdd', // Cyan
 ];
 
 export function getColorByIndex(index: number): string {
