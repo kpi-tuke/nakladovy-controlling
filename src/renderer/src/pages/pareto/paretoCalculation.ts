@@ -35,7 +35,7 @@ export function paretoCalculation(data: number[][], items: string[]) {
 
     percentagesKumul[idx] = Math.round(temp * 100) / 100;
     causes.push(key);
-    values.push(value);
+    values.push(!!value ? value : 0);
     idx++;
   }
 
