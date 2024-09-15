@@ -116,7 +116,7 @@ export default function StructureResult() {
       <Grid container spacing={2}>
         <Grid item xs={12} md={6}>
           <PieGraph
-            title="Štruktúra nákladov (%)"
+            title="Štruktúra druhových nákladov (%)"
             height={420}
             data={rowSums.map((value, index) => ({
               name: items[index],
@@ -141,7 +141,7 @@ export default function StructureResult() {
 
         <Grid item xs={12} md={6}>
           <PieGraph
-            title="ŠTRUKTÚRA KALKULAČNÝCH POLOŽIEK"
+            title="Štruktúra kalkulačných nákladov"
             height={420}
             data={colSums.filter(Boolean).map((value, index) => ({
               name: headers[index].label,
@@ -152,7 +152,7 @@ export default function StructureResult() {
 
         <Grid item xs={12} md={6}>
           <BarGraph
-            title="Kalkulačné položky"
+            title="Kalkulačné náklady (€)"
             height={420}
             labels={['']}
             data={headers.filter(Boolean).map((header, index) => ({

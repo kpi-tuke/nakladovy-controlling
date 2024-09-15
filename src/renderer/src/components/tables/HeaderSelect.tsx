@@ -8,12 +8,13 @@ import React from 'react';
 const selectCol = [
   { value: 7, label: 'Priamy materiál' },
   { value: 8, label: 'Priame mzdy' },
-  { value: 9, label: 'Ostatné náklady' },
-  { value: 10, label: 'Výrobná réžia' },
-  { value: 11, label: 'Správna réžia' },
-  { value: 12, label: 'Odbytová réžia' },
-  { value: 13, label: 'Zásobovacia réžia' },
-  { value: 14, label: 'Dopravná réžia' },
+  { value: 9, label: 'Ostatné priame náklady' },
+  { value: 10, label: 'výrobná réžia technologická' },
+  { value: 11, label: 'výrobná réžia všeobecná' },
+  { value: 12, label: 'Správna réžia' },
+  { value: 13, label: 'Odbytová réžia' },
+  { value: 14, label: 'Zásobovacia réžia' },
+  { value: 15, label: 'Dopravná réžia' },
 ];
 
 type HeaderSelectProps = {

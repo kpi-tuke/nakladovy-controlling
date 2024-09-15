@@ -11,6 +11,7 @@ import {
 } from 'recharts';
 import { getColorByIndex } from './colors';
 import CustomLegend from './CustomLegend';
+import { useTheme } from '@mui/material';
 
 type PieData = {
   name: string;
@@ -24,6 +25,12 @@ type Props = {
 };
 
 const PieGraph: React.FC<Props> = ({ height, title, data }) => {
+  const {
+    palette: {
+      text: { primary: primaryTextColor },
+    },
+  } = useTheme();
+
   const RADIAN = Math.PI / 180;
   const renderCustomizedLabel = ({
     cx,
@@ -41,7 +48,8 @@ const PieGraph: React.FC<Props> = ({ height, title, data }) => {
       <text
         x={x}
         y={y}
-        fill="white"
+        fill={primaryTextColor}
+        fontWeight={'bold'}
         textAnchor={x > cx ? 'start' : 'end'}
         dominantBaseline="central"
       >
