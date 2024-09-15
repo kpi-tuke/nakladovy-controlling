@@ -204,14 +204,20 @@ const Cell: React.FC<CellProps> = React.memo(
           return;
         }
 
-        // remove unnecessary 0 from beginning of the number
-        if (/^\d+\.\d+$/.test(value)) {
-          value = parseFloat(value).toString();
-        }
+        if (!/0+$/.test(value)) {
+          // remove unnecessary 0 from beginning of the number
+          if (/^\d+\.\d+$/.test(value)) {
+            value = parseFloat(value).toString();
+          }
 
-        // zabranenie zadat viacero 0 na zaciatok cisla
-        if (/^0+(?!\.)/.test(value)) {
-          value = parseFloat(value).toString();
+          if (/^0+\.\d+/.test(value)) {
+            console.log('value: ', value);
+          }
+
+          // zabranenie zadat viacero 0 na zaciatok cisla
+          if (/^0+/.test(value) && !/^0+\./.test(value)) {
+            value = parseFloat(value).toString();
+          }
         }
       }
 
