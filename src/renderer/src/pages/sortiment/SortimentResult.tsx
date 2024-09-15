@@ -35,7 +35,7 @@ export default function SortimentResult() {
           header={headers.map((h) => h.label)}
           inputs={[
             [
-              '(N<sub>p</sub>) - priame náklady celkom (€)',
+              '(N<sub>p</sub>) - priame náklady (€)',
               `\\(N_{p} = N_{pm} + N_{pmz} + N_{opn}\\)`,
             ],
             [

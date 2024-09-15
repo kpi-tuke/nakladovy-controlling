@@ -11,7 +11,7 @@ export interface CVPState extends DefaultState {
 const initialCVPState: CVPState = {
   id: 4,
   title: 'CVP analýza',
-  corner: 'ekonomické veličiny (€)',
+  corner: 'Ekonomické veličiny (€)',
   headers: [
     {
       id: '1',

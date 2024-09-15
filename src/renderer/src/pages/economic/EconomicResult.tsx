@@ -166,6 +166,7 @@ export default function EconomicResult() {
             values: profitData,
           },
         ]}
+        showLegend={false}
       />
 
       <Spacer height={40} hideInPrint />

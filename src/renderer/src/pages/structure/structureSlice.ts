@@ -13,7 +13,7 @@ import isEqual from 'lodash.isequal';
 const initialStructureState: DefaultState = {
   id: 2,
   title: 'Štruktúrna analýza nákladov',
-  corner: 'Druhové náklady | Kalkulačné náklady→',
+  corner: 'Druhové náklady | Kalkulačné náklady →',
   headers: [
     {
       id: '1',
