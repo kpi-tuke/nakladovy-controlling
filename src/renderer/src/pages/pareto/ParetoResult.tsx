@@ -15,15 +15,16 @@ export default function ParetoResult() {
   return (
     <>
       <Spacer height={40} hideInPrint />
-      <SectionTitle className="new-page">Analýza ukazovateľov</SectionTitle>
+      <SectionTitle className="new-page">Príčiny vzniku nákladov</SectionTitle>
       <Paper>
         <TableStatic
           corner={'Druhové náklady'}
           header={[
-            '(N) - výška nákladov (€)',
-            'Kumulované náklady (€)',
-            'Štruktúra nákladov (%)',
-            'Kumulovaná štruktúra nákladov (%)',
+            '(N) Náklady (€)',
+            '(NK) Náklady kumulované (€)',
+            '(Š) Štruktúra (%)',
+            '(ŠK) Štruktúra kumulovaná (%)',
+            'Kategória',
           ]}
           inputs={[...causes.map((value: string) => [value, ''])]}
           data={values.map((value: number, idx: number) => {
@@ -32,6 +33,11 @@ export default function ParetoResult() {
               valuesKumul[idx],
               percentages[idx],
               percentagesKumul[idx],
+              percentagesKumul[idx] > 98
+                ? 'C'
+                : percentagesKumul[idx] > 80
+                  ? 'B'
+                  : 'A',
             ];
           })}
         />

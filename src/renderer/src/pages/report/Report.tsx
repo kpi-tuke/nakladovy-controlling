@@ -209,7 +209,7 @@ const Report: React.FC<Props> = ({
             ...(hasIndexChange
               ? [
                   {
-                    label: 'Indexná analýza',
+                    label: 'Indexná analýza nákladov',
                     id: RouteName.INDEX_ANALYSIS,
                     ref: indexRef,
                   },
@@ -236,7 +236,7 @@ const Report: React.FC<Props> = ({
             ...(hasParetoChange
               ? [
                   {
-                    label: 'Pareto analýza',
+                    label: 'Pareto analýza nákladov',
                     id: RouteName.PERETO_ANALYSIS,
                     ref: paretoRef,
                   },

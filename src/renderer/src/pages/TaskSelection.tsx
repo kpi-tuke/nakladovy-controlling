@@ -39,8 +39,9 @@ const items: AnalysisItem[] = [
   },
   {
     to: RouteName.PERETO_ANALYSIS,
-    title: 'Pareto analýza',
-    description: 'Sledovanie príčin vzniku nákladov na základe pravidla 80/20.',
+    title: 'Pareto analýza nákladov',
+    description:
+      'Sledovanie a odhaľovanie príčin vzniku kritických nákladov na základe Pareto pravidla 80/20.',
   },
 ];
 

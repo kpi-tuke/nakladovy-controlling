@@ -48,12 +48,12 @@ export const routes: { [key in RouteName]: Route } = {
     save: true,
   },
   [RouteName.INDEX_ANALYSIS]: {
-    title: 'Indexná analýza',
+    title: 'Indexná analýza nákladov',
     printToPDF: true,
     save: true,
   },
   [RouteName.PERETO_ANALYSIS]: {
-    title: 'Pareto analýza',
+    title: 'Pareto analýza nákladov',
     printToPDF: true,
     save: true,
   },

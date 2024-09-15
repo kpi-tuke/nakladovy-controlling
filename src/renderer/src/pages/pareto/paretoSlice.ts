@@ -11,7 +11,7 @@ import isEqual from 'lodash.isequal';
 const initialParetoState: DefaultState = {
   id: 6,
   title: 'Pareto analýza nákladov',
-  corner: 'Druhové náklady',
+  corner: 'Príčiny vzniku nákladov a Hodnota (€)',
   headers: [
     {
       id: '1',
