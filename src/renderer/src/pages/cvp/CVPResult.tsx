@@ -25,11 +25,11 @@ export default function CVPResult() {
     zeroProf,
     zeroEur,
     costs,
-    zeroSellPrice,
-    paymentMoney,
-    fixedCosts,
     capacityUsage,
     fixTotals,
+    totalCosts,
+    incomeTotal,
+    economicResult,
   } = cvpCalculation(transposeMatrix(data));
 
   const graphs = useMemo(() => {
@@ -108,6 +108,9 @@ export default function CVPResult() {
           corner={'Ekonomické ukazovatele'}
           header={headers.map((header) => header.label)}
           inputs={[
+            ['(Nc) náklady celkové (€)', `N_{c}=\\frac{N_{f} + Q*N_{vj}}`],
+            ['(T) tržby celkové (€)', `T=\\frac{Q} + P_{cj}`],
+            ['(VH) výsledok hospodárenia (€)', `VH=T - V_{c}`],
             [
               '(N<sub>0</sub>) - nulový bod (množstvo)',
               `N_{0}=\\frac{F_{n}}{P_{cj}-N_{vj}}`,
@@ -121,30 +124,18 @@ export default function CVPResult() {
               `N_{0}=\\frac{F_{n}+Z_{min}}{P_{cj}-N_{vj}}`,
             ],
             [
-              '(P<sub>c</sub>) - pri predajnej cene (€)',
-              `N_{0}=\\frac{F_{n}}{Q+N_{vj}}`,
-            ],
-            [
-              '(P<sub>ú</sub>) - príspevok na úhradu fixných nákladov a zisku (€)',
-              `P_{ú}=\P_{cj}-N_{vj}`,
-            ],
-            [
-              '(NF<sub>j</sub>) - náklady fixné jednotkové (€)',
-              `NF_{j}=\\frac{F_{n}}{Q}`,
-            ],
-            [
               '(VK<sub>krit</sub>) - kritické využitie výrobnej kapacity (%)',
               `VK_{krit}=\\frac{N_{0}(ton)}{Q * 100%}`,
             ],
             ['Merná jednotka'],
           ]}
           data={[
+            totalCosts,
+            incomeTotal,
+            economicResult,
             zeroTon,
             zeroEur,
             zeroProf,
-            zeroSellPrice,
-            paymentMoney,
-            fixedCosts,
             capacityUsage,
             data[1],
           ]}
@@ -181,19 +172,13 @@ export default function CVPResult() {
                   ]}
                   referenceLines={[
                     {
-                      x: zeroProf[index].toString(),
-                      stroke: '#ff00bb',
-                      label: 'Minimálny zisk',
-                      width: 110,
-                    },
-                    {
                       x: zeroTon[index].toString(),
                       stroke: '#FF4e4e',
                       label: 'Nulový bod',
                       width: 90,
                     },
                   ]}
-                  yAxisLabel="hodnota ukazovateľa (koeficient)"
+                  yAxisLabel="ekonomická veličina (€)"
                   xAxisLabel={`objem produkcie jednotky ${
                     data[index][1] ? `(${data[index][1]})` : ''
                   }`}

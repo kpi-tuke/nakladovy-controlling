@@ -25,9 +25,13 @@ export function cvpCalculation(data: CellValue[][]) {
     // variabilné náklady jednotkové
     costs[idx] = formatNumber(rowData[3]);
 
+    // fixne náklady
     fixTotals[idx] = formatNumber(rowData[4]);
+
+    // minimanly zisk
     minProfits[idx] = formatNumber(rowData[5]);
 
+    // vyrobná kapacita
     productionCapacity[idx] = formatNumber(rowData[6]);
   });
 
@@ -66,6 +70,12 @@ export function cvpCalculation(data: CellValue[][]) {
     multiplyArrays(productionCapacity, new Array(volumes.length).fill(100)),
   );
 
+  const totalCosts = sumArrays(fixTotals, multiplyArrays(volumes, costs));
+
+  const incomeTotal = multiplyArrays(volumes, prices);
+
+  const economicResult = subtractArrays(incomeTotal, totalCosts);
+
   return {
     volumes,
     prices,
@@ -79,5 +89,8 @@ export function cvpCalculation(data: CellValue[][]) {
     paymentMoney,
     fixedCosts,
     capacityUsage,
+    totalCosts,
+    incomeTotal,
+    economicResult,
   };
 }
