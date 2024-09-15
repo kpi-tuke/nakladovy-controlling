@@ -69,16 +69,13 @@ const TableStatic: React.FC<Props> = ({
             {inputs.map((value: string[], row: number) => {
               return (
                 <TableRow key={row}>
-                  <Tooltip
-                    placement="right"
-                    title={value[1] !== '' && <MathJax>{value[1]}</MathJax>}
-                  >
+                  <CustomTooltip title={value[1]}>
                     <TableCell
                       key={value[0]}
                       dangerouslySetInnerHTML={{ __html: value[0] }}
                       sx={{ textAlign: 'left', padding: '0 9px' }}
                     />
-                  </Tooltip>
+                  </CustomTooltip>
 
                   {data[row].map((value: number, col: number) => {
                     return (
@@ -151,3 +148,16 @@ const TableStatic: React.FC<Props> = ({
 };
 
 export default TableStatic;
+
+type CustomTooltipProps = {
+  title?: string;
+  children: React.ReactElement;
+};
+
+const CustomTooltip: React.FC<CustomTooltipProps> = ({ title, children }) => {
+  return (
+    <Tooltip placement="right" title={!!title && <MathJax>{title}</MathJax>}>
+      {children}
+    </Tooltip>
+  );
+};
