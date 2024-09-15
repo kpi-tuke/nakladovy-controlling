@@ -39,41 +39,56 @@ export default function EconomicResult() {
           corner={'Ekonomické ukazovatele'}
           header={headers.map((h) => h.label)}
           inputs={[
-            ['(N<sub>c</sub>) - náklady celkom (€)', `\\sum N `],
-            ['(V<sub>c</sub>) - výnosy celkom (€)', `\\sum V `],
+            ['(N<sub>c</sub>) - náklady celkom (€)', `\\(\\sum N\\)`],
+            ['(V<sub>c</sub>) - výnosy celkom (€)', `\\(\\sum V\\)`],
             [
               '(VH) - výsledok hospodárenia (€)',
-              `\\begin{align*}
+              `\\(\\begin{align*}
               \\text{ZISK} & \\quad V > N \\\\
               \\text{STRATA} & \\quad V < N
-              \\end{align*}`,
+              \\end{align*}\\)`,
             ],
-            ['(R<sub>n</sub>) - rentabilita nákladov', `R_{n}=\\frac{Z}{N}`],
-            ['(R<sub>v</sub>) - rentabilita výnosov', `R_{v}=\\frac{Z}{V}`],
-            ['(N<sub>ú</sub>) - nákladová účinnosť', `N_{u}=\\frac{V}{N}`],
-            ['(e) - efektívnosť', `e=\\frac{V}{N}`],
-            ['(h<sub>c</sub>) - nákladovosť celkom', `h_{c}=\\frac{N}{V}`],
+            [
+              '(R<sub>n</sub>) - rentabilita nákladov',
+              `\\(R_{n}=\\frac{Z}{N}\\)`,
+            ],
+            [
+              '(R<sub>v</sub>) - rentabilita výnosov',
+              `\\(R_{v}=\\frac{Z}{V}\\)`,
+            ],
+            [
+              '(N<sub>ú</sub>) - nákladová účinnosť',
+              `\\(N_{u}=\\frac{V}{N}\\)`,
+            ],
+            ['(e) - efektívnosť', `\\(e=\\frac{V}{N}\\)`],
+            [
+              '(h<sub>c</sub>) - nákladovosť celkom',
+              `\\(h_{c}=\\frac{N}{V}\\)`,
+            ],
             [
               'h<sub>m</sub> - materiálová nákladovosť',
-              '\\frac{N_{MAT (501)}}{V}',
+              '\\(\\frac{N_{MAT (501)}}{V}\\)',
             ],
             [
               'h<sub>mz</sub> - mzdová nákladovosť',
-              '\\frac{N_{MZDY (521)}}{V}',
+              '\\(\\frac{N_{MZDY (521)}}{V}\\)',
             ],
             [
               'h<sub>o</sub> - odpisová nákladovosť',
-              '\\frac{N_{odpí (551)}}{V}',
+              '\\(\\frac{N_{odpí (551)}}{V}\\)',
             ],
             [
               'h<sub>f</sub> - finančná nákladovosť',
-              '\\frac{N_{F (561-569)}}{V}',
+              '\\(\\frac{N_{F (561-569)}}{V}\\)',
             ],
             [
               'h<sub>s</sub> - nákladovosť služieb',
-              '\\frac{N_{s (511-518)}}{V}',
+              '\\(\\frac{N_{s (511-518)}}{V}\\)',
             ],
-            ['h<sub>d</sub> - nákladovosť daní', '\\frac{N_{d (531-538)}}{V}'],
+            [
+              'h<sub>d</sub> - nákladovosť daní',
+              '\\(\\frac{N_{d (531-538)}}{V}\\)',
+            ],
           ]}
           data={[
             costData,

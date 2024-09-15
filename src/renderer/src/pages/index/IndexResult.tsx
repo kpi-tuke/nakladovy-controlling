@@ -39,12 +39,18 @@ export default function IndexResult() {
           corner={'Ekonomické ukazovatele'}
           header={[...newHeaders]}
           inputs={[
-            ['(I<sub>b</sub>) - bázický index', `I_{b} = \\frac{N_{i}}{N_{b}}`],
+            [
+              '(I<sub>b</sub>) - bázický index',
+              `\\(I_{b} = \\frac{N_{i}}{N_{b}}\\)`,
+            ],
             [
               '(AR<sub>b</sub>) - absolútny bázický index',
-              `AR_{b} = N_{i} - N_{b}`,
+              `\\(AR_{b} = N_{i} - N_{b}\\)`,
             ],
-            ['(T<sub>rb</sub>) - bázické tempo rastu', `T_{rb} = I_{b} * 100%`],
+            [
+              '(T<sub>rb</sub>) - bázické tempo rastu',
+              `\\(T_{rb} = I_{b} * 100%\\)`,
+            ],
           ]}
           data={[
             baseIndexes,
@@ -64,24 +70,24 @@ export default function IndexResult() {
           inputs={[
             [
               '(I<sub>r</sub>) - reťazový index',
-              `I_{r} = \\frac{N_{i+1}}{N_{i}}`,
+              `\\(I_{r} = \\frac{N_{i+1}}{N_{i}}\\)`,
             ],
-            ['(AR) - absolutný reťazový index', `AR = N_{1} - N_{0}`],
+            ['(AR) - absolutný reťazový index', `\\(AR = N_{1} - N_{0}\\)`],
             [
               '(P<sub>zn</sub>) - percento zmeny nákladov (%)',
-              `P_{zn} = = (\\frac{N_{i+1}}{N_{i}} \\times) - 100`,
+              `\\(P_{zn} = = (\\frac{N_{i+1}}{N_{i}} \\times) - 100\\)`,
             ],
             [
               '(P<sub>zv</sub>) - percento zmeny výnosov (%)',
-              `P_{zn} = = (\\frac{V_{i+1}}{V_{i}} \\times) - 100`,
+              `\\(P_{zn} = = (\\frac{V_{i+1}}{V_{i}} \\times) - 100\\)`,
             ],
             [
               '(K<sub>r</sub>) - koeficient reakcie',
-              `K_{r} = \\frac{P_{zn}}{P_{zv}}`,
+              `\\(K_{r} = \\frac{P_{zn}}{P_{zv}}\\)`,
             ],
             [
               '(T<sub>rr</sub>) - reťazové tempo rastu',
-              `T_{rr} = \\frac{P_{zn}}{P_{zv}}`,
+              `\\(T_{rr} = \\frac{P_{zn}}{P_{zv}}\\)`,
             ],
           ]}
           data={[

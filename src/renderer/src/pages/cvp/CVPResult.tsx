@@ -108,24 +108,27 @@ export default function CVPResult() {
           corner={'Ekonomické ukazovatele'}
           header={headers.map((header) => header.label)}
           inputs={[
-            ['(Nc) náklady celkové (€)', `N_{c}=\\frac{N_{f} + Q*N_{vj}}`],
-            ['(T) tržby celkové (€)', `T=\\frac{Q} + P_{cj}`],
-            ['(VH) výsledok hospodárenia (€)', `VH=T - V_{c}`],
+            [
+              '(Nc) náklady celkové (€)',
+              `\\( N_{c} = N_{f} + (Q * N_{vj})  \\)`,
+            ],
+            ['(T) tržby celkové (€)', `\\(T=Q + P_{cj}\\)`],
+            ['(VH) výsledok hospodárenia (€)', `\\(VH = T - N_{c}\\)`],
             [
               '(N<sub>0</sub>) - nulový bod (množstvo)',
-              `N_{0}=\\frac{F_{n}}{P_{cj}-N_{vj}}`,
+              `\\(N_{0}=\\frac{F_{n}}{P_{cj}-N_{vj}}\\)`,
             ],
             [
               '(N<sub>0</sub>) - nulový bod (€)',
-              `N_{0}=\\frac{F{n}}{1-\\frac{N_{vj}}{P_{cj}}}`,
+              `\\(N_{0}=\\frac{F{n}}{1-\\frac{N_{vj}}{P_{cj}}}\\)`,
             ],
             [
               '(N<sub>0</sub>) - nulový bod Zmin (množstvo)',
-              `N_{0}=\\frac{F_{n}+Z_{min}}{P_{cj}-N_{vj}}`,
+              `\\(N_{0}=\\frac{F_{n}+Z_{min}}{P_{cj}-N_{vj}}\\)`,
             ],
             [
               '(VK<sub>krit</sub>) - kritické využitie výrobnej kapacity (%)',
-              `VK_{krit}=\\frac{N_{0}(ton)}{Q * 100%}`,
+              `\\(VK_{krit}=\\frac{N_{0}(ton)}{Q * 100%}\\)`,
             ],
             ['Merná jednotka'],
           ]}

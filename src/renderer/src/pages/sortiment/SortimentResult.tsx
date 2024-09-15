@@ -36,32 +36,41 @@ export default function SortimentResult() {
           corner={'Ukazovatele sortimentnej analýzy'}
           header={headers.map((h) => h.label)}
           inputs={[
-            ['(T) - tržby (€)', `T = P_{c} * Q`],
-            ['(NC) - náklady celkom (€)', `NC = N_{p} + N_{n}`],
-            ['(Z<sub>c</sub>) - celopodnikový zisk (€)', `Z_{c} = T - NC`],
+            ['(T) - tržby (€)', `\\(T = P_{c} * Q\\)`],
+            ['(NC) - náklady celkom (€)', `\\(NC = N_{p} + N_{n}\\)`],
+            [
+              '(Z<sub>c</sub>) - celopodnikový zisk (€)',
+              `\\(Z_{c} = T - NC\\)`,
+            ],
             [
               '(Rt) - rentabilita tržieb (%)',
-              `R_{t}=\\frac{ZP}{P_{cj}}\\times 100`,
+              `\\(R_{t}=\\frac{ZP}{P_{cj}}\\times 100\\)`,
             ],
             [
               '(Rn) - rentabilita nákladov (%)',
-              `R_{n}=\\frac{ZP}{ÚVN}\\times 100`,
+              `\\(R_{n}=\\frac{ZP}{ÚVN}\\times 100\\)`,
             ],
-            ['(Hr) - hrubé rozpätie (€)', `H_{r}={P_{cj}}-{P_{n}}`],
-            ['(Pú) - príspevok na úhradu (€)', `P_{ú}=1-\\frac{P_{n}}{P_{cj}}`],
-            ['(ZP) - zisková prirážka (€)', `ZP = P_{cj} - ÚVN`],
+            ['(Hr) - hrubé rozpätie (€)', `\\(H_{r}={P_{cj}}-{P_{n}}\\)`],
+            [
+              '(Pú) - príspevok na úhradu (€)',
+              `\\(P_{ú}=1-\\frac{P_{n}}{P_{cj}}\\)`,
+            ],
+            ['(ZP) - zisková prirážka (€)', `\\(ZP = P_{cj} - ÚVN\\)`],
             [
               '(Z) - zisk pri pôvodnej výrobnej štruktúre (€)',
-              `Z =((P_{cj} - P_{n}) - (ÚVN - P_{n})) \\times Q`,
+              `\\(Z =((P_{cj} - P_{n}) - (ÚVN - P_{n})) \\times Q\\)`,
             ],
-            ['(Z<sub>j</sub>) - zisk jednotkový (€)', `Z_{j} = P_{c} - ÚVN`],
+            [
+              '(Z<sub>j</sub>) - zisk jednotkový (€)',
+              `\\(Z_{j} = P_{c} - ÚVN\\)`,
+            ],
             [
               '(N<sub>p</sub>) - priame náklady celkom (€)',
-              `N_{p} = P_{m} + P_{mz} + P_{o}`,
+              `\\(N_{p} = P_{m} + P_{mz} + P_{o}\\)`,
             ],
             [
               '(NP<sub>c</sub>) - nepriame (režijné) náklady celkom (€)',
-              `NP_{c} = ÚVP - P_{c}`,
+              `\\(NP_{c} = ÚVP - P_{c}\\)`,
             ],
           ]}
           data={[
