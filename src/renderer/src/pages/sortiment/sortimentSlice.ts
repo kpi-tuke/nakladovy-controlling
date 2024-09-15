@@ -11,7 +11,7 @@ import isEqual from 'lodash.isequal';
 const initialSortimentState: DefaultState = {
   id: 5,
   title: 'Sortimentná analýza',
-  corner: 'Ekonomická položka',
+  corner: 'Ekonomická veličina',
   headers: [
     {
       id: '1',
@@ -19,24 +19,31 @@ const initialSortimentState: DefaultState = {
       label: 'Výrobok A',
     },
   ],
-  data: [[0], [0], [0], [0], [0], [0], [0]],
+  data: [[0], [0], [0], [0], [0], [0]],
   items: [
-    '(P<sub>n</sub>) - priame náklady (€)',
-    '(ÚVN) -  úplné vlastné náklady výkonu (€)',
+    '(N<sub>pm</sub>) - priamy materiál',
+    '(N<sub>pmz</sub>) - priame mzdy',
+    '(N<sub>opn</sub>) - ostatné priame náklady',
+    '(ÚVNV) -  úplné vlastné náklady výkonu (€)',
     '(P<sub>cj</sub>) - predajná cena (jednotková) (€)',
-    '(Q) - objem výroby (ks...)',
-    '(P<sub>m</sub>) - priamy materiál',
-    '(P<sub>mz</sub>) - priame mzdy',
-    '(P<sub>o</sub>) - ostatné priame náklady',
+    '(Q) - objem výroby (ks)',
   ],
   values: [
     {
-      id: '1',
-      value: '(P<sub>n</sub>) - priame náklady (€)',
+      id: '5',
+      value: '(N<sub>pm</sub>) - priamy materiál',
+    },
+    {
+      id: '6',
+      value: '(N<sub>pmz</sub>) - priame mzdy',
+    },
+    {
+      id: '7',
+      value: '(N<sub>opn</sub>) - ostatné priame náklady',
     },
     {
       id: '2',
-      value: '(ÚVN) -  úplné vlastné náklady výkonu (€)',
+      value: '(ÚVNV) -  úplné vlastné náklady výkonu (€)',
     },
     {
       id: '3',
@@ -44,19 +51,7 @@ const initialSortimentState: DefaultState = {
     },
     {
       id: '4',
-      value: '(Q) - objem výroby (ks...)',
-    },
-    {
-      id: '5',
-      value: '(P<sub>m</sub>) - priamy materiál',
-    },
-    {
-      id: '6',
-      value: '(P<sub>mz</sub>) - priame mzdy',
-    },
-    {
-      id: '7',
-      value: '(P<sub>o</sub>) - ostatné priame náklady',
+      value: '(Q) - objem výroby (ks)',
     },
   ],
   rowTypes: [

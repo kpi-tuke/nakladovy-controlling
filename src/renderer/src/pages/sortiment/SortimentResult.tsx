@@ -28,64 +28,62 @@ export default function SortimentResult() {
     <div>
       <Spacer height={40} hideInPrint />
 
-      <SectionTitle className="new-page">
-        Ukazovatele sortimentnej analýzy
-      </SectionTitle>
+      <SectionTitle className="new-page">Analýza ukazovateľov</SectionTitle>
       <Paper>
         <TableStatic
-          corner={'Ukazovatele sortimentnej analýzy'}
+          corner={'Ekonomické ukazovatele'}
           header={headers.map((h) => h.label)}
           inputs={[
-            ['(T) - tržby (€)', `\\(T = P_{c} * Q\\)`],
-            ['(NC) - náklady celkom (€)', `\\(NC = N_{p} + N_{n}\\)`],
             [
-              '(Z<sub>c</sub>) - celopodnikový zisk (€)',
-              `\\(Z_{c} = T - NC\\)`,
+              '(N<sub>p</sub>) - priame náklady celkom (€)',
+              `\\(N_{p} = N_{pm} + N_{pmz} + N_{opn}\\)`,
             ],
             [
-              '(Rt) - rentabilita tržieb (%)',
-              `\\(R_{t}=\\frac{ZP}{P_{cj}}\\times 100\\)`,
-            ],
-            [
-              '(Rn) - rentabilita nákladov (%)',
-              `\\(R_{n}=\\frac{ZP}{ÚVN}\\times 100\\)`,
-            ],
-            ['(Hr) - hrubé rozpätie (€)', `\\(H_{r}={P_{cj}}-{P_{n}}\\)`],
-            [
-              '(Pú) - príspevok na úhradu (€)',
-              `\\(P_{ú}=1-\\frac{P_{n}}{P_{cj}}\\)`,
-            ],
-            ['(ZP) - zisková prirážka (€)', `\\(ZP = P_{cj} - ÚVN\\)`],
-            [
-              '(Z) - zisk pri pôvodnej výrobnej štruktúre (€)',
-              `\\(Z =((P_{cj} - P_{n}) - (ÚVN - P_{n})) \\times Q\\)`,
+              '(N<sub>r</sub>) - réžijné náklady (nepriame)',
+              `\\(N_{r} = ÚVNV - N_{p}\\)`,
             ],
             [
               '(Z<sub>j</sub>) - zisk jednotkový (€)',
-              `\\(Z_{j} = P_{c} - ÚVN\\)`,
+              `\\(Z_{j} = N_{p} - ÚVNV\\)`,
             ],
             [
-              '(N<sub>p</sub>) - priame náklady celkom (€)',
-              `\\(N_{p} = P_{m} + P_{mz} + P_{o}\\)`,
+              '(R<sub>n</sub>) - rentabilita nákladov (%)',
+              `\\(R_{n}=\\frac{Z_{j}}{ÚVNV}\\times 100\\)`,
             ],
             [
-              '(NP<sub>c</sub>) - nepriame (režijné) náklady celkom (€)',
-              `\\(NP_{c} = ÚVP - P_{c}\\)`,
+              '(R<sub>t</sub>) - rentabilita tržieb (%)',
+              `\\(R_{t}=\\frac{Z_{j}}{P_{cj}}\\times 100\\)`,
+            ],
+            [
+              '(H<sub>r</sub>) - hrubé rozpätie (€)',
+              `\\(H_{r}={P_{cj}} - {N_{p}}\\)`,
+            ],
+            [
+              '(Pú) - príspevok na úhradu (€)',
+              `\\(P_{ú}=1-\\frac{N_{p}}{P_{cj}}\\)`,
+            ],
+            ['(T) - tržby celkové (€)', `\\(T = Z_{j} * Q\\)`],
+            ['(NC) - náklady celkové (€)', `\\(NC = N_{p} + N_{r}\\)`],
+            ['(Z<sub>c</sub>) - zisk celkový (€)', `\\(Z_{c} = T - NC\\)`],
+            ['(ZP) - zisková prirážka (€)', `\\(ZP = P_{cj} - ÚVNV\\)`],
+            [
+              '(Z) - zisk pri pôvodnej výrobnej štruktúre (€)',
+              `\\(Z =((P_{cj} - N_{p}) - (ÚVNV - N_{P})) \\times Q\\)`,
             ],
           ]}
           data={[
+            totalDirectCosts,
+            totalIndirectCosts,
+            unitProfit,
+            rentCost,
+            rentIncome,
+            marginGross,
+            allowance,
             income,
             totalCosts,
             totalProfit,
-            rentIncome,
-            rentCost,
-            marginGross,
-            allowance,
             marginProfit,
             profit,
-            unitProfit,
-            totalDirectCosts,
-            totalIndirectCosts,
           ]}
         />
       </Paper>
@@ -119,6 +117,7 @@ export default function SortimentResult() {
               values: [marginGross[index]],
             }))}
             showValueInBar
+            yAxisLabel="ekonomický ukazovateľ (€)"
           />
         </Grid>
 
@@ -132,6 +131,7 @@ export default function SortimentResult() {
               values: [allowance[index]],
             }))}
             showValueInBar
+            yAxisLabel="ekonomický ukazovateľ (€)"
           />
         </Grid>
       </Grid>

@@ -28,8 +28,7 @@ const items: AnalysisItem[] = [
   {
     to: RouteName.SORTIMENT_ANALYSIS,
     title: 'Sortimentná analýza',
-    description:
-      'lýza ekonomických ukazovateľov pre optimálnu štruktúru výrobného sortimentu.',
+    description: 'Stanovenie optimálnej štruktúry výrobného sortimentu.',
   },
   {
     to: RouteName.INDEX_ANALYSIS,
