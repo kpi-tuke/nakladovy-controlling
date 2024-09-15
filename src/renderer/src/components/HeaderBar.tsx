@@ -106,6 +106,7 @@ const HeaderBar = () => {
                 fontSize: 24,
                 fontWeight: 600,
                 color: (theme) => theme.palette.title.default,
+                textTransform: 'uppercase',
               }}
             >
               {routeDetails?.title}

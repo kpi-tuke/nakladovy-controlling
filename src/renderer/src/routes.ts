@@ -18,12 +18,12 @@ export enum RouteName {
 
 export const routes: { [key in RouteName]: Route } = {
   [RouteName.HOME]: {
-    title: 'Úvod',
+    title: 'Nákladový controling',
     printToPDF: false,
     save: false,
   },
   [RouteName.SELECT]: {
-    title: 'Výber analýzy',
+    title: 'Prehľad analýz',
     printToPDF: false,
     save: false,
   },

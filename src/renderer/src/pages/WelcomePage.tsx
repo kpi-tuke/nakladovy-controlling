@@ -82,13 +82,15 @@ export default function WelcomePage() {
             }}
           >
             <Typography>
-              Vitajte v aplikácii pre Nákladový Controlling. Táto softvérová
-              aplikácia slúži na riešenie praktických príkladov a prípadových
-              štúdií zameraných na využívanie ekonomických analýz v rámci
-              manažérskeho rozhodovania. Obsahuje rôzne typy ekonomických analýz
-              orientovaných na ekonomickú veličinu - náklady. Výstupy
-              jednotlivých ekonomických analýz obsahujú grafické metódy a sú
-              realizované vo formáte pdf.
+              Vitajte v aplikácii Nákladový Controlling. Softvérová aplikácia
+              Nákladový Controlling je podsystém systému riadenia a podporný
+              prostriedok rozhodovacieho procesu. Slúži na koordináciu procesov
+              plánovania, kalkulovania, rozpočtovania a kontroly podnikových
+              výrobných faktorov. Obsahuje rôzne typy ekonomických,
+              štatistických finančných analýz orientovaných na ekonomické
+              veličiny vyjadrujúce úroveň výkonnosti výrobných podnikov.
+              Nákladový Controlling je softvérová aplikácia, ktorá „MÁ PODNIK
+              POD KONTROLOU“.
             </Typography>
           </Paper>
 
