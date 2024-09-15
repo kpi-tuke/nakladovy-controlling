@@ -15,7 +15,7 @@ import isEqual from 'lodash.isequal';
 const initialIndexState: DefaultState = {
   id: 3,
   title: 'Analýza reťazových a bázických indexov',
-  corner: 'Ekonomická položka (€)',
+  corner: 'Ekonomická veličina (€)',
   headers: [
     {
       id: '1',

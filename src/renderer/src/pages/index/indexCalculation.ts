@@ -1,41 +1,39 @@
+import { Value } from '@renderer/store/rootReducer';
 import { divideArrays, subtractArrays } from '../../helper';
+import { formatNumber } from '@renderer/utils/formatNumber';
 
 export function indexCalculation(
   data: number[][],
   headers: string[],
-  values: any,
+  values: Value[],
 ) {
   const costSumsForYears: number[] = headers.slice(1).map(() => 0);
   const incomeSumsForYears: number[] = headers.slice(1).map(() => 0);
   const customValueSumsForYears: number[] = headers.slice(1).map(() => 0);
 
-  let costSumBase: number = 0;
+  let costSumBase = 0;
   const betweenYears: string[] = [];
 
   data.map((rowData: number[], row: number) => {
     rowData.slice(1).map((value: number, col: number) => {
       // 600-699 codes of incomes
-      if (parseInt(values[row]) >= 600) {
-        incomeSumsForYears[col] = parseFloat(
-          (incomeSumsForYears[col] + value).toFixed(12),
-        );
+      if (parseInt(values[row].value) >= 600) {
+        incomeSumsForYears[col] = formatNumber(incomeSumsForYears[col] + value);
         // 500-599 codes of costs
-      } else if (parseInt(values[row]) >= 500) {
-        costSumsForYears[col] = parseFloat(
-          (costSumsForYears[col] + value).toFixed(12),
-        );
+      } else if (parseInt(values[row].value) >= 500) {
+        costSumsForYears[col] = formatNumber(costSumsForYears[col] + value);
         // custom value
-      } else if (parseInt(values[row]) === -1) {
-        customValueSumsForYears[col] = parseFloat(
-          (customValueSumsForYears[col] + value).toFixed(12),
+      } else if (parseInt(values[row].value) === -1) {
+        customValueSumsForYears[col] = formatNumber(
+          customValueSumsForYears[col] + value,
         );
       }
     });
   });
 
   for (let i = 0; i < values.length; i++) {
-    if (values[i] < 600)
-      costSumBase = parseFloat((costSumBase + data[i][0]).toFixed(12));
+    if (+values[i].value < 600)
+      costSumBase = formatNumber(costSumBase + data[i][0]);
   }
 
   const incomeDiff = subtractArrays(

@@ -33,8 +33,9 @@ const items: AnalysisItem[] = [
   },
   {
     to: RouteName.INDEX_ANALYSIS,
-    title: 'Indexná analýza',
-    description: 'Zhodnotenie trendu vývoja druhových nákladov.',
+    title: 'Indexná analýza nákladov',
+    description:
+      'Porovnávanie nákladov v sledovanom období podielom (index) a rozdielom (absolútna diferencia).',
   },
   {
     to: RouteName.PERETO_ANALYSIS,

@@ -31,9 +31,7 @@ export default function IndexResult() {
   return (
     <>
       <Spacer height={40} hideInPrint />
-      <SectionTitle className="new-page">
-        Analýza Indexov a Rozdielov
-      </SectionTitle>
+      <SectionTitle className="new-page">Analýza ukazovateľov</SectionTitle>
       <Paper>
         <TableStatic
           corner={'Ekonomické ukazovatele'}
@@ -44,19 +42,11 @@ export default function IndexResult() {
               `\\(I_{b} = \\frac{N_{i}}{N_{b}}\\)`,
             ],
             [
-              '(AR<sub>b</sub>) - absolútny bázický index',
-              `\\(AR_{b} = N_{i} - N_{b}\\)`,
-            ],
-            [
-              '(T<sub>rb</sub>) - bázické tempo rastu',
-              `\\(T_{rb} = I_{b} * 100%\\)`,
+              '(AD<sub>b</sub>) - absolútna diferencia (bázická)',
+              `\\(AD_{b} = N_{i} - N_{b}\\)`,
             ],
           ]}
-          data={[
-            baseIndexes,
-            absoluteBaseIndexes,
-            baseIndexes.map((value) => value * 100),
-          ]}
+          data={[baseIndexes, absoluteBaseIndexes]}
           newPageAfter={false}
         />
       </Paper>
@@ -72,7 +62,10 @@ export default function IndexResult() {
               '(I<sub>r</sub>) - reťazový index',
               `\\(I_{r} = \\frac{N_{i+1}}{N_{i}}\\)`,
             ],
-            ['(AR) - absolutný reťazový index', `\\(AR = N_{1} - N_{0}\\)`],
+            [
+              '(AD<sub>r</sub>) - absolútna diferencia (reťazová)',
+              `\\(AD_{r} = N_{1} - N_{0}\\)`,
+            ],
             [
               '(P<sub>zn</sub>) - percento zmeny nákladov (%)',
               `\\(P_{zn} = = (\\frac{N_{i+1}}{N_{i}} \\times) - 100\\)`,
@@ -85,10 +78,6 @@ export default function IndexResult() {
               '(K<sub>r</sub>) - koeficient reakcie',
               `\\(K_{r} = \\frac{P_{zn}}{P_{zv}}\\)`,
             ],
-            [
-              '(T<sub>rr</sub>) - reťazové tempo rastu',
-              `\\(T_{rr} = \\frac{P_{zn}}{P_{zv}}\\)`,
-            ],
           ]}
           data={[
             chainIndexes,
@@ -96,7 +85,6 @@ export default function IndexResult() {
             costDiff.map((value: number) => value.toString()),
             incomeDiff.map((value: number) => value.toString()),
             reaction,
-            chainIndexes.map((value) => value * 100),
           ]}
         />
       </Paper>
@@ -125,6 +113,26 @@ export default function IndexResult() {
           />
         </Grid>
 
+        {data.map((row, index) =>
+          !!items[index] ? (
+            <Grid item xs={12}>
+              <BarGraph
+                title={`VÝVOJ EKONOMICKEJ VELIČINY - ${items[index]}`}
+                height={420}
+                labels={headers.slice(1).map((h) => h.label)}
+                data={[
+                  {
+                    name: items[index],
+                    values: row.slice(1) as number[],
+                  },
+                ]}
+                yAxisLabel="ekonomická veličina (€)"
+                showLegend={false}
+              />
+            </Grid>
+          ) : null,
+        )}
+
         <Grid item xs={12}>
           <BarGraph
             title="BÁZICKÝ INDEX"
@@ -152,18 +160,6 @@ export default function IndexResult() {
               },
             ]}
             showLegend={false}
-          />
-        </Grid>
-
-        <Grid item xs={12}>
-          <LineGraph
-            title="Trend vývoja ekonomických veličin"
-            height={420}
-            labels={headers.slice(1).map((h) => h.label)}
-            data={items.filter(Boolean).map((item, index) => ({
-              name: item,
-              values: data[index].slice(1),
-            }))}
           />
         </Grid>
       </Grid>
