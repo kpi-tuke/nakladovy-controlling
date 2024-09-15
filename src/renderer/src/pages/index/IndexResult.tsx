@@ -6,7 +6,6 @@ import SectionTitle from '@renderer/components/SectionTitle';
 import Spacer from '@renderer/components/Spacer';
 import { Grid, Paper } from '@mui/material';
 import BarGraph from '@renderer/components/graph/BarGraph';
-import LineGraph from '@renderer/components/graph/LineGraph';
 
 export default function IndexResult() {
   const { data, headers, values, items } = useAppSelector(selectIndex);
