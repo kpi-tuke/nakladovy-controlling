@@ -17,7 +17,7 @@ const items: AnalysisItem[] = [
     to: RouteName.STRUCTURE_ANALYSIS,
     title: 'Štruktúrna analýza nákladov',
     description:
-      'Analýza štruktúry nákladov podľa druhového a kalkulačného členenia.',
+      'Stanovenie štruktúry nákladov podľa druhového a kalkulačného členenia.',
   },
   {
     to: RouteName.CVP_ANALYSIS,

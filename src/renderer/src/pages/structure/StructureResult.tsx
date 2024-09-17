@@ -141,7 +141,7 @@ export default function StructureResult() {
 
         <Grid item xs={12} md={6}>
           <PieGraph
-            title="Štruktúra kalkulačných nákladov"
+            title="Štruktúra kalkulačných nákladov (%)"
             height={420}
             data={colSums.filter(Boolean).map((value, index) => ({
               name: headers[index].label,
@@ -159,7 +159,7 @@ export default function StructureResult() {
               name: header.label,
               values: [colSums[index]],
             }))}
-            yAxisLabel="Kalkulačné náklady"
+            yAxisLabel="Náklady (€)"
             showValueInBar={true}
           />
         </Grid>

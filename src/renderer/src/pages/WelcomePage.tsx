@@ -87,10 +87,10 @@ export default function WelcomePage() {
               prostriedok rozhodovacieho procesu. Slúži na koordináciu procesov
               plánovania, kalkulovania, rozpočtovania a kontroly podnikových
               výrobných faktorov. Obsahuje rôzne typy ekonomických,
-              štatistických finančných analýz orientovaných na ekonomické
-              veličiny vyjadrujúce úroveň výkonnosti výrobných podnikov.
-              Nákladový Controlling je softvérová aplikácia, ktorá „MÁ PODNIK
-              POD KONTROLOU“.
+              štatistických analýz orientovaných na ekonomické veličiny
+              vyjadrujúce úroveň výkonnosti priemyselných podnikov. Nákladový
+              Controlling je softvérová aplikácia, ktorá „MÁ PODNIK POD
+              KONTROLOU“.
             </Typography>
           </Paper>
 

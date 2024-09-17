@@ -18,7 +18,7 @@ export default function ParetoResult() {
       <SectionTitle className="new-page">Príčiny vzniku nákladov</SectionTitle>
       <Paper>
         <TableStatic
-          corner={'Druhové náklady'}
+          corner={'Príčiny vzniku nákladov'}
           header={[
             '(N) Náklady (€)',
             '(NK) Náklady kumulované (€)',
