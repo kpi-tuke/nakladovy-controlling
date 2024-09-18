@@ -8,13 +8,11 @@ import { Paper } from '@mui/material';
 
 import LineGraph from '@renderer/components/graph/LineGraph';
 import BarGraph from '@renderer/components/graph/BarGraph';
-import { useMemo } from 'react';
 
 export default function EconomicResult() {
   const headers = useAppSelector(economicSelectors.headers);
   const data = useAppSelector(economicSelectors.data);
   const values = useAppSelector(economicSelectors.values);
-  const items = useAppSelector(economicSelectors.items);
 
   const {
     costData,
@@ -30,31 +28,13 @@ export default function EconomicResult() {
     financialConstData,
     servicesConstData,
     taxesConstData,
-    constItemsByYear,
   } = economicCalculation(data, values, headers.length ?? 0);
-
-  const constItemsData = useMemo(() => {
-    return values.reduce(
-      (acc, value, index) => {
-        if (+value.value >= 501 && +value.value <= 599) {
-          acc.push({
-            name: items[index],
-            values: constItemsByYear[index],
-          });
-        }
-
-        return acc;
-      },
-      [] as { name: string; values: number[] }[],
-    );
-  }, [values, items, constItemsByYear]);
 
   return (
     <>
       <Spacer height={40} hideInPrint />
-      <SectionTitle className="new-page">
-        Analýza ekonomických ukazovateľov
-      </SectionTitle>
+      <Spacer height={20} />
+      <SectionTitle>Analýza ekonomických ukazovateľov</SectionTitle>
       <Paper>
         <TableStatic
           corner="Ekonomické veličiny"
@@ -153,11 +133,12 @@ export default function EconomicResult() {
             values: incomeData,
           },
         ]}
+        yAxisLabel="ekonomická veličina (€)"
       />
       <Spacer height={40} hideInPrint />
 
       <BarGraph
-        title={'výsledok hospodárenia '}
+        title={'výsledok hospodárenia (ZISK/STRATA)'}
         height={420}
         labels={headers.map((h) => h.label)}
         data={[
@@ -167,6 +148,7 @@ export default function EconomicResult() {
           },
         ]}
         showLegend={false}
+        yAxisLabel="výsledok hospodárenia (€)"
       />
 
       <Spacer height={40} hideInPrint />
@@ -205,7 +187,26 @@ export default function EconomicResult() {
         title="Prehľad ukazovateľov nákladovosti"
         height={420}
         labels={headers.map((h) => h.label)}
-        data={constItemsData}
+        data={[
+          {
+            name: 'materiálová nákladovosť h<sub>m</sub>',
+            values: materialCostData,
+          },
+          { name: 'mzdová nákladovosť h<sub>mz</sub>', values: wageCostData },
+          {
+            name: 'odpisová nákladovosť h<sub>o</sub>',
+            values: depreciationCostData,
+          },
+          {
+            name: 'finančná nákladovosť h<sub>f</sub>',
+            values: financialConstData,
+          },
+          {
+            name: 'nákladovosť služieb h<sub>s</sub>',
+            values: servicesConstData,
+          },
+          { name: 'nákladovosť daní h<sub>d</sub>', values: taxesConstData },
+        ]}
       />
     </>
   );
