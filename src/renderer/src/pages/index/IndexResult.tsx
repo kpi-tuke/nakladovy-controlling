@@ -4,7 +4,7 @@ import { useAppSelector } from '../../store/hooks';
 import { selectIndex } from '../index/indexSlice';
 import SectionTitle from '@renderer/components/SectionTitle';
 import Spacer from '@renderer/components/Spacer';
-import { Grid, Paper } from '@mui/material';
+import { Grid, Paper, Typography } from '@mui/material';
 import BarGraph from '@renderer/components/graph/BarGraph';
 
 export default function IndexResult() {
@@ -20,7 +20,8 @@ export default function IndexResult() {
     incomeSumsForYears,
     betweenYears,
     reaction,
-    absoluteBaseIndexes,
+    bazickyIndex,
+    absolutnaDiferencia,
   } = indexCalculation(
     data as number[][],
     headers.map((h) => h.label),
@@ -31,24 +32,47 @@ export default function IndexResult() {
     <>
       <Spacer height={40} hideInPrint />
       <SectionTitle className="new-page">Analýza ukazovateľov</SectionTitle>
-      <Paper>
-        <TableStatic
-          corner={'Ekonomické ukazovatele'}
-          header={[...newHeaders]}
-          inputs={[
-            [
-              '(I<sub>b</sub>) - bázický index',
-              `\\(I_{b} = \\frac{N_{i}}{N_{b}}\\)`,
-            ],
-            [
-              '(AD<sub>b</sub>) - absolútna diferencia (bázická)',
-              `\\(AD_{b} = N_{i} - N_{b}\\)`,
-            ],
-          ]}
-          data={[baseIndexes, absoluteBaseIndexes]}
-          newPageAfter={false}
-        />
-      </Paper>
+
+      <div>
+        {items.filter(Boolean).map((item, index) => (
+          <Paper
+            key={index}
+            sx={{
+              '&:not(:last-child)': {
+                marginBottom: '40px',
+              },
+            }}
+          >
+            <Typography
+              variant="h6"
+              gutterBottom
+              sx={{
+                marginLeft: 2,
+                marginTop: 1,
+                fontSize: '18px',
+              }}
+            >
+              {item}
+            </Typography>
+            <TableStatic
+              corner={'Ekonomické ukazovatele'}
+              header={[...newHeaders]}
+              inputs={[
+                [
+                  '(I<sub>b</sub>) - bázický index',
+                  `\\(I_{b} = \\frac{N_{i}}{N_{b}}\\)`,
+                ],
+                [
+                  '(AD<sub>b</sub>) - absolútna diferencia (bázická)',
+                  `\\(AD_{b} = N_{i} - N_{b}\\)`,
+                ],
+              ]}
+              data={[bazickyIndex[index], absolutnaDiferencia[index]]}
+              newPageAfter={false}
+            />
+          </Paper>
+        ))}
+      </div>
 
       <Spacer height={40} />
 
@@ -65,6 +89,18 @@ export default function IndexResult() {
               '(AD<sub>r</sub>) - absolútna diferencia (reťazová)',
               `\\(AD_{r} = N_{1} - N_{0}\\)`,
             ],
+          ]}
+          data={[chainIndexes, absoluteChainIndexes]}
+        />
+      </Paper>
+
+      <Spacer height={40} />
+
+      <Paper>
+        <TableStatic
+          corner={'Ekonomické ukazovatele'}
+          header={[...betweenYears]}
+          inputs={[
             [
               '(P<sub>zn</sub>) - percento zmeny nákladov (%)',
               `\\(P_{zn} = = (\\frac{N_{i+1}}{N_{i}} \\times) - 100\\)`,
@@ -79,8 +115,6 @@ export default function IndexResult() {
             ],
           ]}
           data={[
-            chainIndexes,
-            absoluteChainIndexes,
             costDiff.map((value: number) => value.toString()),
             incomeDiff.map((value: number) => value.toString()),
             reaction,

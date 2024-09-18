@@ -83,6 +83,30 @@ export function indexCalculation(
     newHeaders.push(headers[i]);
   }
 
+  const bazickyIndex = data.reduce((acc, row) => {
+    const sum = row.slice(1).map((value) => {
+      if (value == 0) {
+        return 0;
+      } else {
+        return formatNumber(value / row[0]);
+      }
+    });
+
+    acc.push(sum);
+
+    return acc;
+  }, [] as number[][]);
+
+  const absolutnaDiferencia = data.reduce((acc, row) => {
+    const sum = row.slice(1).map((value) => {
+      return formatNumber(value - row[0]);
+    });
+
+    acc.push(sum);
+
+    return acc;
+  }, [] as number[][]);
+
   return {
     newHeaders,
     costSumsForYears,
@@ -97,5 +121,7 @@ export function indexCalculation(
     incomeDiff,
     reaction,
     betweenYears,
+    bazickyIndex,
+    absolutnaDiferencia,
   };
 }
