@@ -1,7 +1,7 @@
 import TableStatic from '../../components/TableStatic';
 import { structureCalculation } from './structureCalculation';
 import { useAppSelector } from '../../store/hooks';
-import { selectStructure } from './structureSlice';
+import { selectors } from './structureSlice';
 import SectionTitle from '@renderer/components/SectionTitle';
 import Spacer from '@renderer/components/Spacer';
 import { Box, Grid, Paper, styled, TextField } from '@mui/material';
@@ -23,7 +23,9 @@ const YearLabel = styled(SectionTitle)`
 `;
 
 export default function StructureResult() {
-  const { data, items, headers } = useAppSelector(selectStructure);
+  const data = useAppSelector(selectors.data);
+  const headers = useAppSelector(selectors.headers);
+  const items = useAppSelector(selectors.items);
 
   const filteredData = React.useMemo(() => {
     const filteredData: CellValue[][] = [];
@@ -134,7 +136,7 @@ export default function StructureResult() {
               name: item,
               values: [rowSums[index]],
             }))}
-            yAxisLabel="Náklady (€)"
+            yAxisLabel="náklady (€)"
             showValueInBar={true}
           />
         </Grid>
@@ -159,7 +161,7 @@ export default function StructureResult() {
               name: header.label,
               values: [colSums[index]],
             }))}
-            yAxisLabel="Náklady (€)"
+            yAxisLabel="náklady (€)"
             showValueInBar={true}
           />
         </Grid>
