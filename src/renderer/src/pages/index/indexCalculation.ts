@@ -7,85 +7,40 @@ export function indexCalculation(
   headers: string[],
   values: Value[],
 ) {
-  const costSumsForYears: number[] = headers.slice(1).map(() => 0);
-  const incomeSumsForYears: number[] = headers.slice(1).map(() => 0);
-  const customValueSumsForYears: number[] = headers.slice(1).map(() => 0);
-
-  let costSumBase = 0;
-  const betweenYears: string[] = [];
+  const costSumsForYears: number[] = Array.from(
+    { length: headers.length - 1 },
+    () => 0,
+  );
+  const incomeSumsForYears: number[] = Array.from(
+    { length: headers.length - 1 },
+    () => 0,
+  );
 
   data.map((rowData: number[], row: number) => {
     rowData.slice(1).map((value: number, col: number) => {
       // 600-699 codes of incomes
       if (parseInt(values[row].value) >= 600) {
-        incomeSumsForYears[col] = formatNumber(incomeSumsForYears[col] + value);
+        incomeSumsForYears[col] = formatNumber(
+          formatNumber(incomeSumsForYears[col]) + formatNumber(value),
+        );
         // 500-599 codes of costs
       } else if (parseInt(values[row].value) >= 500) {
-        costSumsForYears[col] = formatNumber(costSumsForYears[col] + value);
-        // custom value
-      } else if (parseInt(values[row].value) === -1) {
-        customValueSumsForYears[col] = formatNumber(
-          customValueSumsForYears[col] + value,
+        costSumsForYears[col] = formatNumber(
+          formatNumber(costSumsForYears[col]) + formatNumber(value),
         );
+        // custom value
       }
     });
   });
 
-  for (let i = 0; i < values.length; i++) {
-    if (+values[i].value < 600)
-      costSumBase = formatNumber(costSumBase + data[i][0]);
-  }
-
-  const incomeDiff = subtractArrays(
-    divideArrays(
-      incomeSumsForYears.slice(1).map((value) => value * 100),
-      incomeSumsForYears.slice(0, -1),
-    ),
-    incomeSumsForYears.map(() => 100),
-  );
-
-  const costDiff = subtractArrays(
-    divideArrays(
-      costSumsForYears.slice(1).map((value) => value * 100),
-      costSumsForYears.slice(0, -1),
-    ),
-    costSumsForYears.map(() => 100),
-  );
-
-  const chainIndexes = divideArrays(
-    costSumsForYears.slice(1),
-    costSumsForYears.slice(0, -1),
-  );
-
-  const absoluteChainIndexes = subtractArrays(
-    costSumsForYears,
-    incomeSumsForYears,
-  ).slice(0, -1);
-
-  const reaction = divideArrays(costDiff, incomeDiff);
-
-  const baseIndexes = divideArrays(
-    costSumsForYears,
-    costSumsForYears.map(() => costSumBase),
-  );
-
-  const absoluteBaseIndexes = subtractArrays(
-    costSumsForYears,
-    costSumsForYears.map(() => costSumBase),
-  );
-
+  const betweenYears: string[] = [];
   for (let i = 0; i < headers.length - 2; i++) {
     betweenYears[i] = headers[i + 1] + '/' + headers[i + 2];
   }
 
-  let newHeaders: string[] = [];
-  for (let i = 1; i < headers.length; i++) {
-    newHeaders.push(headers[i]);
-  }
-
   const bazickyIndex = data.reduce((acc, row) => {
     const sum = row.slice(1).map((value) => {
-      if (value == 0) {
+      if (value == 0 || row[0] == 0) {
         return 0;
       } else {
         return formatNumber(value / row[0]);
@@ -107,21 +62,59 @@ export function indexCalculation(
     return acc;
   }, [] as number[][]);
 
+  const percentoZmenyNakladov: number[] = [];
+
+  if (headers.length > 2) {
+    for (let i = 1; i < headers.length - 1; i++) {
+      const n1 = costSumsForYears[i];
+      const n0 = costSumsForYears[i - 1];
+
+      let val;
+
+      if (n0 === 0 || n1 === 0) {
+        val = 0;
+      } else {
+        val = n1 / n0;
+      }
+
+      console.log('val: ', val);
+
+      percentoZmenyNakladov.push(val * 100 - 100);
+    }
+  }
+
+  const percentoZmenyVynosov: number[] = [];
+
+  if (headers.length > 2) {
+    for (let i = 1; i < headers.length - 1; i++) {
+      const n1 = incomeSumsForYears[i];
+      const n0 = incomeSumsForYears[i - 1];
+
+      let val;
+
+      if (n0 === 0 || n1 === 0) {
+        val = 0;
+      } else {
+        val = n1 / n0;
+      }
+
+      percentoZmenyVynosov.push(val * 100 - 100);
+    }
+  }
+
+  const koeficientReakcie = divideArrays(
+    percentoZmenyNakladov,
+    percentoZmenyVynosov,
+  );
+
   return {
-    newHeaders,
     costSumsForYears,
     incomeSumsForYears,
-    customValueSumsForYears,
-    costSumBase,
-    chainIndexes,
-    absoluteChainIndexes,
-    baseIndexes,
-    absoluteBaseIndexes,
-    costDiff,
-    incomeDiff,
-    reaction,
-    betweenYears,
     bazickyIndex,
     absolutnaDiferencia,
+    betweenYears,
+    percentoZmenyNakladov,
+    percentoZmenyVynosov,
+    koeficientReakcie,
   };
 }

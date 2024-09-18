@@ -10,18 +10,14 @@ import BarGraph from '@renderer/components/graph/BarGraph';
 export default function IndexResult() {
   const { data, headers, values, items } = useAppSelector(selectIndex);
   const {
-    chainIndexes,
-    absoluteChainIndexes,
-    baseIndexes,
-    newHeaders,
-    costDiff,
-    incomeDiff,
     costSumsForYears,
     incomeSumsForYears,
     betweenYears,
-    reaction,
     bazickyIndex,
     absolutnaDiferencia,
+    percentoZmenyNakladov,
+    percentoZmenyVynosov,
+    koeficientReakcie,
   } = indexCalculation(
     data as number[][],
     headers.map((h) => h.label),
@@ -56,7 +52,7 @@ export default function IndexResult() {
             </Typography>
             <TableStatic
               corner={'Ekonomické ukazovatele'}
-              header={[...newHeaders]}
+              header={headers.slice(1).map((h) => h.label)}
               inputs={[
                 [
                   '(I<sub>b</sub>) - bázický index',
@@ -90,7 +86,11 @@ export default function IndexResult() {
               `\\(AD_{r} = N_{1} - N_{0}\\)`,
             ],
           ]}
-          data={[chainIndexes, absoluteChainIndexes]}
+          data={[
+            [],
+            [],
+            // chainIndexes, absoluteChainIndexes
+          ]}
         />
       </Paper>
 
@@ -103,11 +103,11 @@ export default function IndexResult() {
           inputs={[
             [
               '(P<sub>zn</sub>) - percento zmeny nákladov (%)',
-              `\\(P_{zn} = = (\\frac{N_{i+1}}{N_{i}} \\times) - 100\\)`,
+              `\\(P_{zn} = = (\\frac{N_{i+1}}{N_{i}} \\times 100) - 100\\)`,
             ],
             [
               '(P<sub>zv</sub>) - percento zmeny výnosov (%)',
-              `\\(P_{zn} = = (\\frac{V_{i+1}}{V_{i}} \\times) - 100\\)`,
+              `\\(P_{zn} = = (\\frac{V_{i+1}}{V_{i}} \\times 100) - 100\\)`,
             ],
             [
               '(K<sub>r</sub>) - koeficient reakcie',
@@ -115,9 +115,9 @@ export default function IndexResult() {
             ],
           ]}
           data={[
-            costDiff.map((value: number) => value.toString()),
-            incomeDiff.map((value: number) => value.toString()),
-            reaction,
+            percentoZmenyNakladov,
+            percentoZmenyVynosov,
+            koeficientReakcie,
           ]}
         />
       </Paper>
@@ -166,7 +166,7 @@ export default function IndexResult() {
           ) : null,
         )}
 
-        <Grid item xs={12}>
+        {/* <Grid item xs={12}>
           <BarGraph
             title="BÁZICKÝ INDEX"
             height={420}
@@ -194,7 +194,7 @@ export default function IndexResult() {
             ]}
             showLegend={false}
           />
-        </Grid>
+        </Grid> */}
       </Grid>
     </>
   );
