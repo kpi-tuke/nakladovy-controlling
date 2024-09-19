@@ -129,15 +129,12 @@ export default function IndexResult() {
               <BarGraph
                 title={`VÝVOJ EKONOMICKEJ VELIČINY - ${items[index]}`}
                 height={420}
-                labels={headers.slice(1).map((h) => h.label)}
-                data={[
-                  {
-                    name: items[index],
-                    values: row.slice(1) as number[],
-                  },
-                ]}
+                labels={['']}
+                data={headers.slice(1).map((_, index) => ({
+                  name: headers[index + 1].label,
+                  values: [+row.slice(1)[index]],
+                }))}
                 yAxisLabel="ekonomická veličina (€)"
-                showLegend={false}
               />
             </Grid>
           ) : null,
