@@ -18,6 +18,8 @@ export default function IndexResult() {
     percentoZmenyNakladov,
     percentoZmenyVynosov,
     koeficientReakcie,
+    retazovyIndexNakladov,
+    absolutnaDiferenciaNakladov,
   } = indexCalculation(
     data as number[][],
     headers.map((h) => h.label),
@@ -86,11 +88,7 @@ export default function IndexResult() {
               `\\(AD_{r} = N_{1} - N_{0}\\)`,
             ],
           ]}
-          data={[
-            [],
-            [],
-            // chainIndexes, absoluteChainIndexes
-          ]}
+          data={[retazovyIndexNakladov, absolutnaDiferenciaNakladov]}
         />
       </Paper>
 
@@ -103,11 +101,11 @@ export default function IndexResult() {
           inputs={[
             [
               '(P<sub>zn</sub>) - percento zmeny nákladov (%)',
-              `\\(P_{zn} = = (\\frac{N_{i+1}}{N_{i}} \\times 100) - 100\\)`,
+              `\\(P_{zn} = (\\frac{N_{i+1}}{N_{i}} \\times 100) - 100\\)`,
             ],
             [
               '(P<sub>zv</sub>) - percento zmeny výnosov (%)',
-              `\\(P_{zn} = = (\\frac{V_{i+1}}{V_{i}} \\times 100) - 100\\)`,
+              `\\(P_{zn} = (\\frac{V_{i+1}}{V_{i}} \\times 100) - 100\\)`,
             ],
             [
               '(K<sub>r</sub>) - koeficient reakcie',

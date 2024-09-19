@@ -63,6 +63,8 @@ export function indexCalculation(
   }, [] as number[][]);
 
   const percentoZmenyNakladov: number[] = [];
+  const retazovyIndexNakladov: number[] = [];
+  const absolutnaDiferenciaNakladov: number[] = [];
 
   if (headers.length > 2) {
     for (let i = 1; i < headers.length - 1; i++) {
@@ -80,6 +82,8 @@ export function indexCalculation(
       console.log('val: ', val);
 
       percentoZmenyNakladov.push(val * 100 - 100);
+      retazovyIndexNakladov.push(val);
+      absolutnaDiferenciaNakladov.push(n1 - n0);
     }
   }
 
@@ -116,5 +120,7 @@ export function indexCalculation(
     percentoZmenyNakladov,
     percentoZmenyVynosov,
     koeficientReakcie,
+    retazovyIndexNakladov,
+    absolutnaDiferenciaNakladov,
   };
 }
