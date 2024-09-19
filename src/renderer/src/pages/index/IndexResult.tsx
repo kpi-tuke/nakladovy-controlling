@@ -10,8 +10,6 @@ import BarGraph from '@renderer/components/graph/BarGraph';
 export default function IndexResult() {
   const { data, headers, values, items } = useAppSelector(selectIndex);
   const {
-    costSumsForYears,
-    incomeSumsForYears,
     betweenYears,
     bazickyIndex,
     absolutnaDiferencia,
@@ -125,25 +123,6 @@ export default function IndexResult() {
       <SectionTitle>Dashboarding</SectionTitle>
 
       <Grid container spacing={2}>
-        <Grid item xs={12}>
-          <BarGraph
-            title="VÝVOJ EKONOMICKÝCH VELIČÍN"
-            height={420}
-            labels={headers.slice(1).map((h) => h.label)}
-            data={[
-              {
-                name: 'Náklady',
-                values: costSumsForYears,
-              },
-              {
-                name: 'Výnosy',
-                values: incomeSumsForYears,
-              },
-            ]}
-            yAxisLabel="ekonomická veličina (€)"
-          />
-        </Grid>
-
         {data.map((row, index) =>
           !!items[index] ? (
             <Grid item xs={12}>
@@ -164,18 +143,15 @@ export default function IndexResult() {
           ) : null,
         )}
 
-        {/* <Grid item xs={12}>
+        <Grid item xs={12}>
           <BarGraph
             title="BÁZICKÝ INDEX"
             height={420}
             labels={headers.slice(1).map((h) => h.label)}
-            data={[
-              {
-                name: 'Bázický index',
-                values: baseIndexes,
-              },
-            ]}
-            showLegend={false}
+            data={items.map((item, index) => ({
+              name: item,
+              values: bazickyIndex[index],
+            }))}
           />
         </Grid>
 
@@ -184,15 +160,12 @@ export default function IndexResult() {
             title="REŤAZOVÝ INDEX"
             height={420}
             labels={betweenYears}
-            data={[
-              {
-                name: 'Percento zmeny výnosov',
-                values: chainIndexes,
-              },
-            ]}
-            showLegend={false}
+            data={items.map((item, index) => ({
+              name: item,
+              values: absolutnaDiferencia[index],
+            }))}
           />
-        </Grid> */}
+        </Grid>
       </Grid>
     </>
   );

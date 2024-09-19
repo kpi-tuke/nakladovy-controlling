@@ -1,5 +1,5 @@
 import { Value } from '@renderer/store/rootReducer';
-import { divideArrays, subtractArrays } from '../../helper';
+import { divideArrays } from '../../helper';
 import { formatNumber } from '@renderer/utils/formatNumber';
 
 export function indexCalculation(
@@ -28,7 +28,6 @@ export function indexCalculation(
         costSumsForYears[col] = formatNumber(
           formatNumber(costSumsForYears[col]) + formatNumber(value),
         );
-        // custom value
       }
     });
   });
@@ -79,11 +78,9 @@ export function indexCalculation(
         val = n1 / n0;
       }
 
-      console.log('val: ', val);
-
-      percentoZmenyNakladov.push(val * 100 - 100);
-      retazovyIndexNakladov.push(val);
-      absolutnaDiferenciaNakladov.push(n1 - n0);
+      percentoZmenyNakladov.push(formatNumber(val * 100 - 100));
+      retazovyIndexNakladov.push(formatNumber(val));
+      absolutnaDiferenciaNakladov.push(formatNumber(n1 - n0));
     }
   }
 
@@ -99,10 +96,10 @@ export function indexCalculation(
       if (n0 === 0 || n1 === 0) {
         val = 0;
       } else {
-        val = n1 / n0;
+        val = formatNumber(n1 / n0);
       }
 
-      percentoZmenyVynosov.push(val * 100 - 100);
+      percentoZmenyVynosov.push(formatNumber(val * 100 - 100));
     }
   }
 
@@ -112,8 +109,6 @@ export function indexCalculation(
   );
 
   return {
-    costSumsForYears,
-    incomeSumsForYears,
     bazickyIndex,
     absolutnaDiferencia,
     betweenYears,
