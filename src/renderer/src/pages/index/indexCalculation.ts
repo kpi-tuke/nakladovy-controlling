@@ -109,6 +109,8 @@ export function indexCalculation(
   );
 
   return {
+    costSumsForYears,
+    incomeSumsForYears,
     bazickyIndex,
     absolutnaDiferencia,
     betweenYears,

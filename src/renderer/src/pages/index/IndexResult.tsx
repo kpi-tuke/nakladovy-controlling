@@ -20,6 +20,8 @@ export default function IndexResult() {
   const additionalData = useAppSelector(selectors.getAdditionalData!) as any;
 
   const {
+    costSumsForYears,
+    incomeSumsForYears,
     betweenYears,
     bazickyIndex,
     absolutnaDiferencia,
@@ -133,6 +135,26 @@ export default function IndexResult() {
             ],
           ]}
           data={[retazovyIndexNakladov, absolutnaDiferenciaNakladov]}
+        />
+      </Paper>
+
+      <Spacer height={40} />
+
+      <Paper>
+        <TableStatic
+          corner={'Ekonomické ukazovatele'}
+          header={headers.slice(1).map((h) => h.label)}
+          inputs={[
+            [
+              '(N<sub>c</sub>) - náklady celkom (€)',
+              `\\(N_{c}\\) = \\(\\sum N\\)`,
+            ],
+            [
+              '(V<sub>c</sub>) - výnosy celkom (€)',
+              `\\(V_{c}\\) = \\(\\sum V\\)`,
+            ],
+          ]}
+          data={[costSumsForYears, incomeSumsForYears]}
         />
       </Paper>
 

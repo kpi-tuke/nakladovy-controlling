@@ -2,7 +2,6 @@ import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import PDFTable from './PDFTable';
 import Title from '../Title';
 import {
-  Autocomplete,
   Box,
   Grid,
   Paper,
@@ -185,7 +184,6 @@ const Cell: React.FC<CellProps> = React.memo(
   ({ row, col, selectors, actions }) => {
     const dispatch = useAppDispatch();
 
-    const header = useAppSelector(selectors.selectHeaderByIndex(col));
     const value = useAppSelector(selectors.selectDataByPosition(row, col));
     const rowType = useAppSelector(selectors.getRowType(row));
 
