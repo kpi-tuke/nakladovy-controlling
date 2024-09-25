@@ -163,7 +163,7 @@ const Row: React.FC<RowProps> = React.memo(({ selectors, actions, index }) => {
           <TableInput
             placeholder="Zadajte názov položky..."
             inputTextAlign="left"
-            defaultValue={value}
+            defaultValue={items[index]}
             onBlur={(e) => handleInputChange(e.target.value)}
           />
         )}
