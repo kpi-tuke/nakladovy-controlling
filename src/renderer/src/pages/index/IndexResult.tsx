@@ -7,6 +7,7 @@ import Spacer from '@renderer/components/Spacer';
 import { Grid, Paper, Typography } from '@mui/material';
 import BarGraph from '@renderer/components/graph/BarGraph';
 import TableSelect from '@renderer/components/tables/TableSelect';
+import { useEffect, useState } from 'react';
 
 export default function IndexResult() {
   const dispatch = useAppDispatch();
@@ -30,6 +31,26 @@ export default function IndexResult() {
     headers.map((h) => h.label),
     values,
   );
+
+  const [selectValues, setSelectValues] = useState(['']);
+
+  const handleSelectChange = (index: number, value: string) => {
+    setSelectValues((prev) => {
+      const newValues = [...prev];
+      newValues[index] = value;
+      return newValues;
+    });
+  };
+
+  useEffect(() => {
+    if (selectValues.length < betweenYears.length) {
+      setSelectValues([...selectValues, '']);
+    } else {
+      setSelectValues(selectValues.slice(0, selectValues.length - 1));
+    }
+  }, [betweenYears.length]);
+
+  console.log('selectValues: ', selectValues);
 
   return (
     <>
@@ -82,7 +103,7 @@ export default function IndexResult() {
       <Paper>
         <TableStatic
           corner={'Ekonomické ukazovatele'}
-          header={[...betweenYears]}
+          header={betweenYears}
           inputs={[
             [
               '(I<sub>r</sub>) - reťazový index',
@@ -102,7 +123,7 @@ export default function IndexResult() {
       <Paper>
         <TableStatic
           corner={'Ekonomické ukazovatele'}
-          header={[...betweenYears]}
+          header={betweenYears}
           inputs={[
             [
               '(P<sub>zn</sub>) - percento zmeny nákladov (%)',
@@ -124,9 +145,13 @@ export default function IndexResult() {
           ]}
           footer={{
             label: 'vývoj nákladov podľa koeficienta reakcie ',
-            items: betweenYears.map((_, index) => (
+            items: selectValues.map((value, index) => (
               <TableSelect
                 key={index}
+                value={value}
+                onChange={(e) =>
+                  handleSelectChange(index, e.target.value as string)
+                }
                 options={[
                   'proporcionálny',
                   'degresívny',

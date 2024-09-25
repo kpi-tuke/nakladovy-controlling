@@ -57,6 +57,9 @@ export interface DefaultState {
   itemSelectOptions?: ItemSelectOption[];
   rowTypes: CellType[];
   newRowType?: CellType;
+  additionalData?: {
+    [key in string]: any;
+  };
 }
 
 export interface dataOnIndex {
