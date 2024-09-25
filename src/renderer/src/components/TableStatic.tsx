@@ -9,6 +9,7 @@ import {
 import { styled, Tooltip, Typography } from '@mui/material';
 import { TableData } from './tables/TableData';
 import { MathJax } from 'better-react-mathjax';
+import React from 'react';
 
 const TableStyled = styled(Table)`
   width: unset;
@@ -20,6 +21,10 @@ type Props = {
   corner: string;
   inputs: string[][];
   newPageAfter?: boolean;
+  footer?: {
+    label: string;
+    items: React.ReactNode[];
+  };
 };
 
 const TableStatic: React.FC<Props> = ({
@@ -28,6 +33,7 @@ const TableStatic: React.FC<Props> = ({
   corner,
   inputs,
   newPageAfter = true,
+  footer,
 }) => {
   let separatedData: number[][][] = [];
   let separatedHeaders: string[][] = [];
@@ -93,6 +99,26 @@ const TableStatic: React.FC<Props> = ({
                 </TableRow>
               );
             })}
+
+            {footer && (
+              <TableRow>
+                <TableCell sx={{ textAlign: 'left', padding: '0 9px' }}>
+                  {footer.label}
+                </TableCell>
+
+                {footer.items.map((item, index) => (
+                  <TableCell
+                    sx={{
+                      textAlign: 'center',
+                      overflow: 'hidden',
+                    }}
+                    key={index}
+                  >
+                    {item}
+                  </TableCell>
+                ))}
+              </TableRow>
+            )}
           </TableBody>
         </TableStyled>
       </TableData>

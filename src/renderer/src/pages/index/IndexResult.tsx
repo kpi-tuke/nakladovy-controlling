@@ -6,6 +6,7 @@ import SectionTitle from '@renderer/components/SectionTitle';
 import Spacer from '@renderer/components/Spacer';
 import { Grid, Paper, Typography } from '@mui/material';
 import BarGraph from '@renderer/components/graph/BarGraph';
+import TableSelect from '@renderer/components/tables/TableSelect';
 
 export default function IndexResult() {
   const { data, headers, values, items } = useAppSelector(selectIndex);
@@ -115,6 +116,20 @@ export default function IndexResult() {
             percentoZmenyVynosov,
             koeficientReakcie,
           ]}
+          footer={{
+            label: 'vývoj nákladov podľa koeficienta reakcie ',
+            items: betweenYears.map((_, index) => (
+              <TableSelect
+                key={index}
+                options={[
+                  'proporcionálny',
+                  'degresívny',
+                  'progresívny',
+                  'regresívny',
+                ]}
+              />
+            )),
+          }}
         />
       </Paper>
 
