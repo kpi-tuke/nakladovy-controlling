@@ -19,39 +19,49 @@ const initialSortimentState: DefaultState = {
       label: 'Výrobok A',
     },
   ],
-  data: [[0], [0], [0], [0], [0], [0]],
+  data: [[0], [0], [0], [0], [0], [0], [0], ['']],
   items: [
+    '(N<sub>p</sub>) - priame náklady (€)',
     '(N<sub>pm</sub>) - priamy materiál',
     '(N<sub>pmz</sub>) - priame mzdy',
     '(N<sub>opn</sub>) - ostatné priame náklady',
     '(ÚVNV) -  úplné vlastné náklady výkonu (€)',
     '(P<sub>cj</sub>) - predajná cena (jednotková) (€)',
-    '(Q) - objem výroby (ks)',
+    '(Q) - objem výroby (množstvo)',
+    'Merná jednotka',
   ],
   values: [
     {
-      id: '5',
-      value: '(N<sub>pm</sub>) - priamy materiál',
-    },
-    {
-      id: '6',
-      value: '(N<sub>pmz</sub>) - priame mzdy',
-    },
-    {
-      id: '7',
-      value: '(N<sub>opn</sub>) - ostatné priame náklady',
+      id: '1',
+      value: '(N<sub>p</sub>) - priame náklady (€)',
     },
     {
       id: '2',
-      value: '(ÚVNV) -  úplné vlastné náklady výkonu (€)',
+      value: '(N<sub>pm</sub>) - priamy materiál',
     },
     {
       id: '3',
-      value: '(P<sub>cj</sub>) - predajná cena (jednotková) (€)',
+      value: '(N<sub>pmz</sub>) - priame mzdy',
     },
     {
       id: '4',
-      value: '(Q) - objem výroby (ks)',
+      value: '(N<sub>opn</sub>) - ostatné priame náklady',
+    },
+    {
+      id: '5',
+      value: '(ÚVNV) -  úplné vlastné náklady výkonu (€)',
+    },
+    {
+      id: '6',
+      value: '(P<sub>cj</sub>) - predajná cena (jednotková) (€)',
+    },
+    {
+      id: '7',
+      value: '(Q) - objem výroby (množstvo)',
+    },
+    {
+      id: '8',
+      value: ' Merná jednotka',
     },
   ],
   rowTypes: [
@@ -62,6 +72,7 @@ const initialSortimentState: DefaultState = {
     CellType.NUMBER,
     CellType.NUMBER,
     CellType.NUMBER,
+    CellType.STRING,
   ],
   text: '',
   accounts: [''],

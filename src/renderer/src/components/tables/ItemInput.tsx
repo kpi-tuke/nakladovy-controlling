@@ -98,6 +98,7 @@ const Input: React.FC<InputProps> = React.memo(
           <TableInput
             defaultValue={value.value}
             onChange={(e) => handleChangeInput(e.target)}
+            inputTextAlign="left"
           />
         </TableCell>
       </TableRow>

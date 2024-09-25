@@ -7,17 +7,17 @@ import {
 } from '../../helper';
 
 export function sortimentCalculation(data: number[][]) {
-  const priamyMaterial = data[0].map(formatNumber);
+  const priamyMaterial = data[1].map(formatNumber);
 
-  const priameMzdy = data[1].map(formatNumber);
+  const priameMzdy = data[2].map(formatNumber);
 
-  const ostatnePriameNaklady = data[2].map(formatNumber);
+  const ostatnePriameNaklady = data[3].map(formatNumber);
 
-  const totalCost = data[3].map(formatNumber);
+  const totalCost = data[4].map(formatNumber);
 
-  const price = data[4].map(formatNumber);
+  const price = data[5].map(formatNumber);
 
-  const volume = data[5].map(formatNumber);
+  const volume = data[6].map(formatNumber);
 
   const totalDirectCosts = sumArrays(
     sumArrays(priamyMaterial, priameMzdy),
@@ -56,11 +56,9 @@ export function sortimentCalculation(data: number[][]) {
     formatNumber,
   );
 
-  const unitProfit = subtractArrays(totalDirectCosts, totalCost).map(
-    formatNumber,
-  );
+  const unitProfit = subtractArrays(price, totalCost).map(formatNumber);
 
-  const income = multiplyArrays(unitProfit, volume).map(formatNumber);
+  const income = multiplyArrays(price, volume).map(formatNumber);
 
   const totalCosts = sumArrays(totalDirectCosts, totalIndirectCosts).map(
     formatNumber,
