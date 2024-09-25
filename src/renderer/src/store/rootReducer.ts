@@ -158,6 +158,18 @@ export const rootReducer = {
   changeText: (state: DefaultState, action: PayloadAction<string>) => {
     state.text = action.payload;
   },
+  setAdditionalData: (
+    state: DefaultState,
+    action: PayloadAction<{
+      key: string;
+      value: any;
+    }>,
+  ) => {
+    state.additionalData = {
+      ...state.additionalData,
+      [action.payload.key]: action.payload.value,
+    };
+  },
 };
 
 export const changeAccount = {
@@ -173,6 +185,7 @@ export const openProject = {
     state.items = action.payload.items;
     state.values = action.payload.values;
     state.text = action.payload.text;
+    state.additionalData = action.payload.additionalData;
   },
 };
 

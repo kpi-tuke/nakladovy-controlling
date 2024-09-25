@@ -7,7 +7,7 @@ import Spacer from '@renderer/components/Spacer';
 import { Grid, Paper, Typography } from '@mui/material';
 import BarGraph from '@renderer/components/graph/BarGraph';
 import TableSelect from '@renderer/components/tables/TableSelect';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 export default function IndexResult() {
   const dispatch = useAppDispatch();
@@ -16,6 +16,8 @@ export default function IndexResult() {
   const headers = useAppSelector(selectors.headers);
   const values = useAppSelector(selectors.values);
   const items = useAppSelector(selectors.items);
+  // @ts-ignore
+  const additionalData = useAppSelector(selectors.getAdditionalData!) as any;
 
   const {
     betweenYears,
@@ -32,25 +34,41 @@ export default function IndexResult() {
     values,
   );
 
-  const [selectValues, setSelectValues] = useState(['']);
+  const selectValues = additionalData?.selectValues || [];
 
   const handleSelectChange = (index: number, value: string) => {
-    setSelectValues((prev) => {
-      const newValues = [...prev];
-      newValues[index] = value;
-      return newValues;
-    });
+    const newValues = [...selectValues];
+    newValues[index] = value;
+
+    dispatch(
+      indexActions.setAdditionalData({
+        key: 'selectValues',
+        value: newValues,
+      }),
+    );
   };
 
   useEffect(() => {
     if (selectValues.length < betweenYears.length) {
-      setSelectValues([...selectValues, '']);
-    } else {
-      setSelectValues(selectValues.slice(0, selectValues.length - 1));
+      const newValues = Array.from(
+        { length: betweenYears.length - selectValues.length },
+        () => '',
+      );
+      dispatch(
+        indexActions.setAdditionalData({
+          key: 'selectValues',
+          value: [...selectValues, ...newValues],
+        }),
+      );
+    } else if (selectValues.length > betweenYears.length) {
+      dispatch(
+        indexActions.setAdditionalData({
+          key: 'selectValues',
+          value: selectValues.slice(0, selectValues.length - 1),
+        }),
+      );
     }
   }, [betweenYears.length]);
-
-  console.log('selectValues: ', selectValues);
 
   return (
     <>

@@ -44,4 +44,7 @@ export type RootSelectors = {
   values: (state: RootState) => Value[];
   itemSelectOptions: (state: RootState) => ItemSelectOption[];
   getRowType: (index: number) => (state: RootState) => CellValue;
+  getAdditionalData?: (
+    key: string,
+  ) => (state: RootState) => { [key in string]: any };
 };
