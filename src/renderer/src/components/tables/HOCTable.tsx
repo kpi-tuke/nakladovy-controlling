@@ -229,30 +229,32 @@ const Cell: React.FC<CellProps> = React.memo(
 
     return (
       <TableCell>
-        {rowType === CellType.NUMBER || rowType === CellType.STRING ? (
-          <TextField
-            placeholder={rowType === CellType.NUMBER ? '0' : ''}
-            value={value}
-            onChange={(e) => handleChangeData(e.target.value ?? '')}
-            onWheel={(event) => event.currentTarget.blur()}
-            sx={{
-              position: 'absolute',
-              inset: 0,
+        <TextField
+          placeholder={rowType === CellType.NUMBER ? '0' : ''}
+          value={value}
+          onChange={(e) => handleChangeData(e.target.value ?? '')}
+          onWheel={(event) => event.currentTarget.blur()}
+          sx={{
+            position: 'absolute',
+            inset: 0,
 
-              '& .MuiOutlinedInput-root': {
-                borderRadius: '0',
-                '& fieldset': {
-                  border: 'none',
-                },
+            '& .MuiOutlinedInput-root': {
+              borderRadius: '0',
+              '& fieldset': {
+                border: 'none',
               },
+            },
 
-              input: {
-                height: '48px',
-                padding: 0,
-                textAlign: 'center',
-              },
-            }}
-          />
+            input: {
+              height: '48px',
+              padding: 0,
+              textAlign: 'center',
+            },
+          }}
+        />
+        {/* Toto sa odstranovalo ale nechavam to tu, keby sa to chcelo v buducnosti pridat */}
+        {/* {rowType === CellType.NUMBER || rowType === CellType.STRING ? (
+          
         ) : (
           <Autocomplete
             value={header.options?.find(
@@ -286,7 +288,7 @@ const Cell: React.FC<CellProps> = React.memo(
               },
             }}
           />
-        )}
+        )} */}
       </TableCell>
     );
   },
