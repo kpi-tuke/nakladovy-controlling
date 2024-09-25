@@ -127,4 +127,9 @@ export const selectors: RootSelectors = {
       [(state: RootState) => state.structure.rowTypes],
       (rowTypes) => rowTypes[index],
     ),
+  // @ts-ignore
+  getAdditionalData: createSelector(
+    [(state: RootState) => state.structure],
+    (structureData) => structureData.additionalData,
+  ),
 };

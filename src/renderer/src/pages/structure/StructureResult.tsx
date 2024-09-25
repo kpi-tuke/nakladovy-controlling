@@ -1,7 +1,7 @@
 import TableStatic from '../../components/TableStatic';
 import { structureCalculation } from './structureCalculation';
-import { useAppSelector } from '../../store/hooks';
-import { selectors } from './structureSlice';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { selectors, structureActions } from './structureSlice';
 import SectionTitle from '@renderer/components/SectionTitle';
 import Spacer from '@renderer/components/Spacer';
 import { Box, Grid, Paper, styled, TextField } from '@mui/material';
@@ -23,9 +23,15 @@ const YearLabel = styled(SectionTitle)`
 `;
 
 export default function StructureResult() {
+  const dispatch = useAppDispatch();
+
   const data = useAppSelector(selectors.data);
   const headers = useAppSelector(selectors.headers);
   const items = useAppSelector(selectors.items);
+  //@ts-ignore
+  const additionalData = useAppSelector(selectors.getAdditionalData!) as any;
+
+  const period = additionalData?.period ?? '';
 
   const filteredData = React.useMemo(() => {
     const filteredData: CellValue[][] = [];
@@ -40,6 +46,15 @@ export default function StructureResult() {
   }, [data, items]);
 
   const { rowSums, totalCost, colSums } = structureCalculation(filteredData);
+
+  const handleTextChange = (value: string) => {
+    dispatch(
+      structureActions.setAdditionalData({
+        key: 'period',
+        value,
+      }),
+    );
+  };
 
   return (
     <div>
@@ -57,6 +72,8 @@ export default function StructureResult() {
             },
           }}
           placeholder="Zadajte obdobie"
+          onChange={(e) => handleTextChange(e.target.value)}
+          value={period}
         />
       </InputWrapper>
 
