@@ -27,7 +27,7 @@ type Props = {
   children: ReactNode;
 };
 
-const AnalysisSaveProvider: React.FC<Props> = ({ children }) => {
+const SaveDataProvider: React.FC<Props> = ({ children }) => {
   const economic = useAppSelector(selectEconomic);
   const structure = useAppSelector(selectStructure);
   const cvp = useAppSelector(selectCVP);
@@ -114,6 +114,6 @@ const AnalysisSaveProvider: React.FC<Props> = ({ children }) => {
   );
 };
 
-export default AnalysisSaveProvider;
+export default SaveDataProvider;
 
-export const useAnalysisSave = () => useContext(SaveContext);
+export const useDataSave = () => useContext(SaveContext);

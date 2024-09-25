@@ -40,7 +40,7 @@ import HeaderValue from './components/tables/HeaderValue';
 import ItemInput from './components/tables/ItemInput';
 import ItemValue from './components/tables/ItemValue';
 import { RouteName } from './routes';
-import AnalysisSaveProvider from './components/providers/AnalysisSaveProvider';
+import SaveDataProvider from './components/providers/AnalysisSaveProvider';
 import SnackbarProvider from './components/providers/SnackbarProvider';
 import ErrorProvider from './components/providers/ErrorProvider';
 import HeaderBar from './components/HeaderBar';
@@ -102,7 +102,7 @@ export default function App() {
         <ThemeProvider>
           <ErrorProvider>
             <SnackbarProvider>
-              <AnalysisSaveProvider>
+              <SaveDataProvider>
                 <Router>
                   <HeaderBar />
                   <Routes>
@@ -151,7 +151,7 @@ export default function App() {
                     />
                   </Routes>
                 </Router>
-              </AnalysisSaveProvider>
+              </SaveDataProvider>
             </SnackbarProvider>
           </ErrorProvider>
         </ThemeProvider>

@@ -1,7 +1,7 @@
 import TableStatic from '../../components/TableStatic';
 import { indexCalculation } from './indexCalculation';
-import { useAppSelector } from '../../store/hooks';
-import { selectIndex } from '../index/indexSlice';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { indexActions, selectors } from '../index/indexSlice';
 import SectionTitle from '@renderer/components/SectionTitle';
 import Spacer from '@renderer/components/Spacer';
 import { Grid, Paper, Typography } from '@mui/material';
@@ -9,7 +9,13 @@ import BarGraph from '@renderer/components/graph/BarGraph';
 import TableSelect from '@renderer/components/tables/TableSelect';
 
 export default function IndexResult() {
-  const { data, headers, values, items } = useAppSelector(selectIndex);
+  const dispatch = useAppDispatch();
+
+  const data = useAppSelector(selectors.data);
+  const headers = useAppSelector(selectors.headers);
+  const values = useAppSelector(selectors.values);
+  const items = useAppSelector(selectors.items);
+
   const {
     betweenYears,
     bazickyIndex,

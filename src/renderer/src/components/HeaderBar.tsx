@@ -10,7 +10,7 @@ import {
 import { routes, RouteName } from '@renderer/routes';
 import React from 'react';
 import { ArrowBack, Print, Save } from '@mui/icons-material';
-import { useAnalysisSave } from './providers/AnalysisSaveProvider';
+import { useDataSave } from './providers/AnalysisSaveProvider';
 import { useSnackbar } from './providers/SnackbarProvider';
 import ColorModeButton from './ColorModeButton';
 
@@ -26,7 +26,7 @@ const Wrapper = styled(Box)`
 `;
 
 const HeaderBar = () => {
-  const { save, saveButtonDisabled } = useAnalysisSave();
+  const { save, saveButtonDisabled } = useDataSave();
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const { open } = useSnackbar();
