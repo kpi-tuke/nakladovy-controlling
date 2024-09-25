@@ -2,12 +2,10 @@ import TableStatic from '../../components/TableStatic';
 import { cvpCalculation } from './cvpCalculation';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { CVPActions, selectCVP, selectors } from './cvpSlice';
-import { Box, Grid, Paper, styled, TextField } from '@mui/material';
+import { Box, Paper, styled, TextField } from '@mui/material';
 import SectionTitle from '@renderer/components/SectionTitle';
 import Spacer from '@renderer/components/Spacer';
-import LineGraph from '@renderer/components/graph/LineGraph';
 import { transposeMatrix } from '@renderer/helper';
-import { useMemo } from 'react';
 
 const InputWrapper = styled(Box)`
   display: flex;
@@ -20,11 +18,11 @@ const YearLabel = styled(SectionTitle)`
   margin-bottom: 0;
 `;
 
-type Graph = {
-  title: string;
-  labels: string[];
-  series: { data: number[] }[];
-};
+// type Graph = {
+//   title: string;
+//   labels: string[];
+//   series: { data: number[] }[];
+// };
 
 export default function CVPResult() {
   const dispatch = useAppDispatch();
@@ -37,14 +35,14 @@ export default function CVPResult() {
   const fixCosts = additionalData?.fixCosts ?? 0;
 
   const {
-    volumes,
-    prices,
+    // volumes,
+    // prices,
     zeroTon,
     zeroProf,
     zeroEur,
-    costs,
+    // costs,
     capacityUsage,
-    fixTotals,
+    // fixTotals,
     totalCosts,
     incomeTotal,
     economicResult,

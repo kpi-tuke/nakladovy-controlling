@@ -12,7 +12,6 @@ export default function SortimentResult() {
   const {
     marginGross,
     marginProfit,
-    profit,
     rentCost,
     rentIncome,
     allowance,
