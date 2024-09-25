@@ -7,7 +7,7 @@ import {
 } from '../../helper';
 import { formatNumber } from '@renderer/utils/formatNumber';
 
-export function cvpCalculation(data: CellValue[][]) {
+export function cvpCalculation(data: CellValue[][], fixCosts) {
   const volumes: number[] = [];
   const prices: number[] = [];
   const costs: number[] = [];
@@ -20,19 +20,19 @@ export function cvpCalculation(data: CellValue[][]) {
     volumes[idx] = formatNumber(rowData[0]);
 
     // predajná cena jednotková
-    prices[idx] = formatNumber(rowData[2]);
+    prices[idx] = formatNumber(rowData[1]);
 
     // variabilné náklady jednotkové
-    costs[idx] = formatNumber(rowData[3]);
+    costs[idx] = formatNumber(rowData[2]);
 
     // fixne náklady
-    fixTotals[idx] = formatNumber(rowData[4]);
+    fixTotals[idx] = formatNumber(fixCosts);
 
     // minimanly zisk
-    minProfits[idx] = formatNumber(rowData[5]);
+    minProfits[idx] = formatNumber(rowData[4]);
 
     // vyrobná kapacita
-    productionCapacity[idx] = formatNumber(rowData[6]);
+    productionCapacity[idx] = formatNumber(rowData[5]);
   });
 
   // nulový bod
@@ -67,7 +67,7 @@ export function cvpCalculation(data: CellValue[][]) {
   // kritické využitie výrobnej kapacity
   const capacityUsage = divideArrays(
     zeroTon,
-    multiplyArrays(productionCapacity, new Array(volumes.length).fill(100)),
+    multiplyArrays(volumes, new Array(volumes.length).fill(100)),
   );
 
   const totalCosts = sumArrays(fixTotals, multiplyArrays(volumes, costs));

@@ -19,19 +19,15 @@ const initialCVPState: CVPState = {
       label: 'Výrobok A',
     },
   ],
-  data: [[0], [''], [0], [0], [0], [0], [0]],
+  data: [[0], [0], [0], [0], [0], [0]],
   values: [
     {
       id: '1',
       value: '(Q) - objem produkcie (množstvo)',
     },
     {
-      id: '2',
-      value: 'merná jednotka',
-    },
-    {
       id: '3',
-      value: '(Pcj) - predajná cena jednotková (€)',
+      value: '(Pc) - predajná cena jednotková (€)',
     },
     {
       id: '4',
@@ -52,8 +48,7 @@ const initialCVPState: CVPState = {
   ],
   items: [
     '(Q) - objem produkcie (množstvo)',
-    'merná jednotka',
-    '(Pcj) - predajná cena jednotková (€)',
+    '(Pc) - predajná cena jednotková (€)',
     '(Nvj) - variabilné náklady jednotkové (€)',
     '(F<sub>n</sub>) fixné náklady (€)',
     '(Z<sub>min</sub>) minimálny zisk (€)',
@@ -61,7 +56,6 @@ const initialCVPState: CVPState = {
   ],
   rowTypes: [
     CellType.NUMBER,
-    CellType.STRING,
     CellType.NUMBER,
     CellType.NUMBER,
     CellType.NUMBER,
@@ -162,4 +156,9 @@ export const selectors: RootSelectors = {
       [(state: RootState) => state.cvp.rowTypes],
       (rowTypes) => rowTypes[index],
     ),
+  // @ts-ignore
+  getAdditionalData: createSelector(
+    [(state: RootState) => state.cvp],
+    (cvpData) => cvpData.additionalData,
+  ),
 };

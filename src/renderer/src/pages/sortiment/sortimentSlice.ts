@@ -19,7 +19,7 @@ const initialSortimentState: DefaultState = {
       label: 'Výrobok A',
     },
   ],
-  data: [[0], [0], [0], [0], [0], [0], [0], ['']],
+  data: [[0], [0], [0], [0], [0], [0], [0]],
   items: [
     '(N<sub>p</sub>) - priame náklady (€)',
     '(N<sub>pm</sub>) - priamy materiál',
@@ -28,7 +28,6 @@ const initialSortimentState: DefaultState = {
     '(ÚVNV) -  úplné vlastné náklady výkonu (€)',
     '(P<sub>cj</sub>) - predajná cena (jednotková) (€)',
     '(Q) - objem výroby (množstvo)',
-    'Merná jednotka',
   ],
   values: [
     {
@@ -59,10 +58,6 @@ const initialSortimentState: DefaultState = {
       id: '7',
       value: '(Q) - objem výroby (množstvo)',
     },
-    {
-      id: '8',
-      value: ' Merná jednotka',
-    },
   ],
   rowTypes: [
     CellType.NUMBER,
@@ -72,7 +67,6 @@ const initialSortimentState: DefaultState = {
     CellType.NUMBER,
     CellType.NUMBER,
     CellType.NUMBER,
-    CellType.STRING,
   ],
   text: '',
   accounts: [''],
