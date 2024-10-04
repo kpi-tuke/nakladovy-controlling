@@ -19,6 +19,7 @@ import { hasSortimentChanged } from '../sortiment/sortimentSlice';
 import { hasIndexChanged } from '../index/indexSlice';
 import { hasParetoChanged } from '../pareto/paretoSlice';
 import { hasTrendChanged } from '../trend/trendSlice';
+import { hasVariationChanged } from '../variation/variationSlice';
 
 const Wrapper = styled(Box)`
   position: relative;
@@ -80,6 +81,7 @@ type Props = {
   SortimentAnalysisPage: () => React.ReactElement;
   ParetoAnalysisPage: () => React.ReactElement;
   TrendAnalysisPage: () => React.ReactElement;
+  VariationAnalysisPage: () => React.ReactElement;
 };
 
 const Report: React.FC<Props> = ({
@@ -90,6 +92,7 @@ const Report: React.FC<Props> = ({
   SortimentAnalysisPage,
   ParetoAnalysisPage,
   TrendAnalysisPage,
+  VariationAnalysisPage,
 }) => {
   const { setMode, mode } = useTheme();
 
@@ -100,6 +103,7 @@ const Report: React.FC<Props> = ({
   const paretoRef = React.useRef(null);
   const sortimentRef = React.useRef(null);
   const trendRef = React.useRef(null);
+  const variationRef = React.useRef(null);
 
   const hasEconomicChange = useAppSelector(hasEconomicChanged);
   const hasStructureChange = useAppSelector(hasStructureChanged);
@@ -108,6 +112,7 @@ const Report: React.FC<Props> = ({
   const hasIndexChange = useAppSelector(hasIndexChanged);
   const hasParetoChange = useAppSelector(hasParetoChanged);
   const hasTrendChange = useAppSelector(hasTrendChanged);
+  const hasVariationChange = useAppSelector(hasVariationChanged);
 
   const hasAnyAnalysisChange =
     !hasEconomicChange &&
@@ -116,7 +121,8 @@ const Report: React.FC<Props> = ({
     !hasSortimentChange &&
     !hasIndexChange &&
     !hasParetoChange &&
-    !hasTrendChange;
+    !hasTrendChange &&
+    !hasVariationChange;
 
   const prevMode = useRef<ColorMode>();
 
@@ -181,6 +187,12 @@ const Report: React.FC<Props> = ({
       {hasTrendChange && (
         <div className="new-page" ref={trendRef}>
           <TrendAnalysisPage />
+        </div>
+      )}
+
+      {hasVariationChange && (
+        <div className="new-page" ref={variationRef}>
+          <VariationAnalysisPage />
         </div>
       )}
 
@@ -260,6 +272,15 @@ const Report: React.FC<Props> = ({
                     label: 'Trendová analýza nákladov',
                     id: RouteName.TREND_ANALYSIS,
                     ref: trendRef,
+                  },
+                ]
+              : []),
+            ...(hasVariationChange
+              ? [
+                  {
+                    label: 'Odchýlková analýza nákladov',
+                    id: RouteName.VARIATION_ANALYSIS,
+                    ref: variationRef,
                   },
                 ]
               : []),

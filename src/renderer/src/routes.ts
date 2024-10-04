@@ -14,6 +14,7 @@ export enum RouteName {
   INDEX_ANALYSIS = '/indexAnalysis',
   STRUCTURE_ANALYSIS = '/structureAnalysis',
   TREND_ANALYSIS = '/trendAnalysis',
+  VARIATION_ANALYSIS = '/variationAnalysis',
   EVALUATION = '/evaluation',
 }
 
@@ -60,6 +61,11 @@ export const routes: { [key in RouteName]: Route } = {
   },
   [RouteName.TREND_ANALYSIS]: {
     title: 'Trendová analýza nákladov',
+    printToPDF: true,
+    save: true,
+  },
+  [RouteName.VARIATION_ANALYSIS]: {
+    title: 'Odchýlková analýza nákladov',
     printToPDF: true,
     save: true,
   },

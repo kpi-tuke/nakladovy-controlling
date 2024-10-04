@@ -48,6 +48,11 @@ const items: AnalysisItem[] = [
     description:
       'Sledovanie trendu vývoja nákladov a stanovenie ukazovateľov trendu v sledovanom období.',
   },
+  {
+    to: RouteName.VARIATION_ANALYSIS,
+    title: 'Odchýlková analýza nákladov',
+    description: '',
+  },
 ];
 
 export default function TaskSelection() {

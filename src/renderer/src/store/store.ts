@@ -9,6 +9,7 @@ import { structureReducer } from '../pages/structure/structureSlice';
 import { evaluationReducer } from '../pages/report/evaluationSlice';
 import { CellValue, Header, ItemSelectOption, Value } from './rootReducer';
 import { trendReducer } from '@renderer/pages/trend/trendSlice';
+import { variationReducer } from '@renderer/pages/variation/variationSlice';
 
 export const store = configureStore({
   reducer: {
@@ -19,6 +20,7 @@ export const store = configureStore({
     structure: structureReducer,
     pareto: paretoReducer,
     trend: trendReducer,
+    variation: variationReducer,
     evaluation: evaluationReducer,
     project: projectReducer,
   },

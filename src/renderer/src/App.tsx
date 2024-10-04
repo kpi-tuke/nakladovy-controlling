@@ -51,6 +51,11 @@ import {
   selectors as trendSelectors,
 } from './pages/trend/trendSlice';
 import TrendResult from './pages/trend/TrendResult';
+import {
+  variationActions,
+  selectors as variationSelectors,
+} from './pages/variation/variationSlice';
+import VariationResults from './pages/variation/VariationResults';
 
 export default function App() {
   const EconomicAnalysis: () => JSX.Element = withAnalysis(
@@ -109,6 +114,15 @@ export default function App() {
     TrendResult,
     RouteName.TREND_ANALYSIS,
   );
+  const VariationAnalysis: () => JSX.Element = withAnalysis(
+    variationSelectors,
+    variationActions,
+    ItemSelect,
+    HeaderInput,
+    VariationResults,
+    RouteName.VARIATION_ANALYSIS,
+  );
+
   return (
     <MathJaxContext>
       <Provider store={store}>
@@ -152,6 +166,10 @@ export default function App() {
                       path={RouteName.TREND_ANALYSIS}
                       element={<TrendAnalysis />}
                     />
+                    <Route
+                      path={RouteName.VARIATION_ANALYSIS}
+                      element={<VariationAnalysis />}
+                    />
 
                     <Route
                       path={RouteName.EVALUATION}
@@ -164,6 +182,7 @@ export default function App() {
                           SortimentAnalysisPage={SortimentAnalysis}
                           ParetoAnalysisPage={ParetoAnalysis}
                           TrendAnalysisPage={TrendAnalysis}
+                          VariationAnalysisPage={VariationAnalysis}
                         />
                       }
                     />
