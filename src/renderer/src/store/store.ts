@@ -8,6 +8,7 @@ import { sortimentReducer } from '../pages/sortiment/sortimentSlice';
 import { structureReducer } from '../pages/structure/structureSlice';
 import { evaluationReducer } from '../pages/report/evaluationSlice';
 import { CellValue, Header, ItemSelectOption, Value } from './rootReducer';
+import { trendReducer } from '@renderer/pages/trend/trendSlice';
 
 export const store = configureStore({
   reducer: {
@@ -17,6 +18,7 @@ export const store = configureStore({
     cvp: CVPReducer,
     structure: structureReducer,
     pareto: paretoReducer,
+    trend: trendReducer,
     evaluation: evaluationReducer,
     project: projectReducer,
   },

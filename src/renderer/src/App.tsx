@@ -46,6 +46,11 @@ import ErrorProvider from './components/providers/ErrorProvider';
 import HeaderBar from './components/HeaderBar';
 import ThemeProvider from './components/providers/ThemeProvider';
 import { MathJaxContext } from 'better-react-mathjax';
+import {
+  trendActions,
+  selectors as trendSelectors,
+} from './pages/trend/trendSlice';
+import TrendResult from './pages/trend/TrendResult';
 
 export default function App() {
   const EconomicAnalysis: () => JSX.Element = withAnalysis(
@@ -96,6 +101,14 @@ export default function App() {
     ParetoResult,
     RouteName.PERETO_ANALYSIS,
   );
+  const TrendAnalysis: () => JSX.Element = withAnalysis(
+    trendSelectors,
+    trendActions,
+    ItemSelect,
+    HeaderInput,
+    TrendResult,
+    RouteName.TREND_ANALYSIS,
+  );
   return (
     <MathJaxContext>
       <Provider store={store}>
@@ -135,6 +148,10 @@ export default function App() {
                       path={RouteName.PERETO_ANALYSIS}
                       element={<ParetoAnalysis />}
                     />
+                    <Route
+                      path={RouteName.TREND_ANALYSIS}
+                      element={<TrendAnalysis />}
+                    />
 
                     <Route
                       path={RouteName.EVALUATION}
@@ -146,6 +163,7 @@ export default function App() {
                           CVPAnalysisPage={CVPAnalysis}
                           SortimentAnalysisPage={SortimentAnalysis}
                           ParetoAnalysisPage={ParetoAnalysis}
+                          TrendAnalysisPage={TrendAnalysis}
                         />
                       }
                     />

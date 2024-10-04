@@ -42,6 +42,12 @@ const items: AnalysisItem[] = [
     description:
       'Sledovanie a odhaľovanie príčin vzniku kritických nákladov na základe Pareto pravidla 80/20.',
   },
+  {
+    to: RouteName.TREND_ANALYSIS,
+    title: 'Trendová analýza nákladov',
+    description:
+      'Sledovanie trendu vývoja nákladov a stanovenie ukazovateľov trendu v sledovanom období.',
+  },
 ];
 
 export default function TaskSelection() {

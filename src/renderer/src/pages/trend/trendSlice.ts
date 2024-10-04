@@ -1,24 +1,24 @@
 import { createSelector, createSlice } from '@reduxjs/toolkit';
 import {
+  allOptions,
+  costOptions,
+  profitOptions,
+} from '@renderer/chartOfAccounts';
+import {
+  CellType,
   changeAccount,
   DefaultState,
-  CellType,
   openProject,
   rootReducer,
   sortTableByItemNumber,
   sortTableByYear,
-} from '../../store/rootReducer';
-import { RootSelectors, RootState } from '../../store/store';
-import {
-  costOptions,
-  profitOptions,
-  allOptions,
-} from '@renderer/chartOfAccounts';
+} from '@renderer/store/rootReducer';
+import { RootSelectors, RootState } from '@renderer/store/store';
 import isEqual from 'lodash.isequal';
 
-const initialEconomicState: DefaultState = {
+const initialTrendState: DefaultState = {
   id: 1,
-  title: 'Ekonomická analýza hospodárenia',
+  title: 'Trendová analýza nákladov',
   corner: 'Ekonomická veličina (€)',
   headers: [
     {
@@ -54,17 +54,17 @@ const initialEconomicState: DefaultState = {
   newRowType: CellType.NUMBER,
 };
 
-export const economicSlice = createSlice({
-  name: 'economic',
-  initialState: initialEconomicState,
+export const trendSlice = createSlice({
+  name: 'trend',
+  initialState: initialTrendState,
   reducers: {
     ...rootReducer,
     reset: (state: DefaultState) => {
-      state.headers = initialEconomicState.headers;
-      state.data = initialEconomicState.data;
-      state.items = initialEconomicState.items;
-      state.values = initialEconomicState.values;
-      state.text = initialEconomicState.text;
+      state.headers = initialTrendState.headers;
+      state.data = initialTrendState.data;
+      state.items = initialTrendState.items;
+      state.values = initialTrendState.values;
+      state.text = initialTrendState.text;
     },
     ...openProject,
     ...changeAccount,
@@ -73,70 +73,68 @@ export const economicSlice = createSlice({
   },
 });
 
-export const economicActions = economicSlice.actions;
-export const economicReducer = economicSlice.reducer;
+export const trendActions = trendSlice.actions;
+export const trendReducer = trendSlice.reducer;
 
-export const selectEconomic = (state: RootState) => state.economic;
-
-export const hasEconomicChanged = (state: RootState) => {
-  return !isEqual(state.economic, initialEconomicState);
+export const hasTrendChanged = (state: RootState) => {
+  return !isEqual(state.economic, initialTrendState);
 };
 
 export const selectors: RootSelectors = {
   headers: createSelector(
-    [(state: RootState) => state.economic.headers],
+    [(state: RootState) => state.trend.headers],
     (headers) => headers,
   ),
   selectHeaderByIndex: (index) =>
     createSelector(
-      [(state: RootState) => state.economic.headers],
+      [(state: RootState) => state.trend.headers],
       (headers) => headers[index],
     ),
   values: createSelector(
-    [(state: RootState) => state.economic.values],
+    [(state: RootState) => state.trend.values],
     (values) => values,
   ),
   selectValueByIndex: (index) =>
     createSelector(
-      [(state: RootState) => state.economic.values],
+      [(state: RootState) => state.trend.values],
       (values) => values[index],
     ),
   data: createSelector(
-    [(state: RootState) => state.economic.data],
+    [(state: RootState) => state.trend.data],
     (data) => data,
   ),
   selectDataByPosition: (row: number, col: number) =>
     createSelector(
-      [(state: RootState) => state.economic.data],
+      [(state: RootState) => state.trend.data],
       (data) => data[row][col],
     ),
   dynRows: createSelector(
-    [(state: RootState) => state.economic.dynRows],
+    [(state: RootState) => state.trend.dynRows],
     (dynRows) => dynRows,
   ),
   dynCols: createSelector(
-    [(state: RootState) => state.economic.dynCols],
+    [(state: RootState) => state.trend.dynCols],
     (dynCols) => dynCols,
   ),
   text: createSelector(
-    [(state: RootState) => state.economic.text],
+    [(state: RootState) => state.trend.text],
     (text) => text,
   ),
   items: createSelector(
-    [(state: RootState) => state.economic.items],
+    [(state: RootState) => state.trend.items],
     (items) => items,
   ),
   corner: createSelector(
-    [(state: RootState) => state.economic.corner],
+    [(state: RootState) => state.trend.corner],
     (corner) => corner,
   ),
   itemSelectOptions: createSelector(
-    [(state: RootState) => state.economic.itemSelectOptions],
+    [(state: RootState) => state.trend.itemSelectOptions],
     (itemSelectOptions) => itemSelectOptions ?? [],
   ),
   getRowType: (index) =>
     createSelector(
-      [(state: RootState) => state.economic.rowTypes],
+      [(state: RootState) => state.trend.rowTypes],
       (rowTypes) => rowTypes[index],
     ),
 };
