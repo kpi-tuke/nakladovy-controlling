@@ -53,6 +53,12 @@ const items: AnalysisItem[] = [
     title: 'Odchýlková analýza nákladov',
     description: '',
   },
+  {
+    to: RouteName.TAX_ANALYSIS,
+    title: 'Daňová analýza nákladov',
+    description:
+      'Stanovenie daňovej povinnosti na základe analýzy daňovo uznaných  a neuznaných nákladov.',
+  },
 ];
 
 export default function TaskSelection() {

@@ -16,9 +16,9 @@ import {
 import { RootSelectors, RootState } from '@renderer/store/store';
 import isEqual from 'lodash.isequal';
 
-const initialTrendState: DefaultState = {
+const initialTaxState: DefaultState = {
   id: 1,
-  title: 'Trendová analýza nákladov',
+  title: 'Daňová analýza nákladov',
   corner: 'Ekonomická veličina (€)',
   headers: [
     {
@@ -54,17 +54,17 @@ const initialTrendState: DefaultState = {
   newRowType: CellType.NUMBER,
 };
 
-export const trendSlice = createSlice({
-  name: 'trend',
-  initialState: initialTrendState,
+export const taxSlice = createSlice({
+  name: 'tax',
+  initialState: initialTaxState,
   reducers: {
     ...rootReducer,
     reset: (state: DefaultState) => {
-      state.headers = initialTrendState.headers;
-      state.data = initialTrendState.data;
-      state.items = initialTrendState.items;
-      state.values = initialTrendState.values;
-      state.text = initialTrendState.text;
+      state.headers = initialTaxState.headers;
+      state.data = initialTaxState.data;
+      state.items = initialTaxState.items;
+      state.values = initialTaxState.values;
+      state.text = initialTaxState.text;
     },
     ...openProject,
     ...changeAccount,
@@ -73,68 +73,62 @@ export const trendSlice = createSlice({
   },
 });
 
-export const trendActions = trendSlice.actions;
-export const trendReducer = trendSlice.reducer;
+export const taxActions = taxSlice.actions;
+export const taxReducer = taxSlice.reducer;
 
-export const hasTrendChanged = (state: RootState) => {
-  return !isEqual(state.trend, initialTrendState);
+export const hasTaxChanged = (state: RootState) => {
+  return !isEqual(state.tax, initialTaxState);
 };
 
 export const selectors: RootSelectors = {
   headers: createSelector(
-    [(state: RootState) => state.trend.headers],
+    [(state: RootState) => state.tax.headers],
     (headers) => headers,
   ),
   selectHeaderByIndex: (index) =>
     createSelector(
-      [(state: RootState) => state.trend.headers],
+      [(state: RootState) => state.tax.headers],
       (headers) => headers[index],
     ),
   values: createSelector(
-    [(state: RootState) => state.trend.values],
+    [(state: RootState) => state.tax.values],
     (values) => values,
   ),
   selectValueByIndex: (index) =>
     createSelector(
-      [(state: RootState) => state.trend.values],
+      [(state: RootState) => state.tax.values],
       (values) => values[index],
     ),
-  data: createSelector(
-    [(state: RootState) => state.trend.data],
-    (data) => data,
-  ),
+  data: createSelector([(state: RootState) => state.tax.data], (data) => data),
   selectDataByPosition: (row: number, col: number) =>
     createSelector(
-      [(state: RootState) => state.trend.data],
+      [(state: RootState) => state.tax.data],
       (data) => data[row][col],
     ),
   dynRows: createSelector(
-    [(state: RootState) => state.trend.dynRows],
+    [(state: RootState) => state.tax.dynRows],
     (dynRows) => dynRows,
   ),
   dynCols: createSelector(
-    [(state: RootState) => state.trend.dynCols],
+    [(state: RootState) => state.tax.dynCols],
     (dynCols) => dynCols,
   ),
-  text: createSelector(
-    [(state: RootState) => state.trend.text],
-    (text) => text,
-  ),
+  text: createSelector([(state: RootState) => state.tax.text], (text) => text),
   items: createSelector(
-    [(state: RootState) => state.trend.items],
+    [(state: RootState) => state.tax.items],
     (items) => items,
   ),
   corner: createSelector(
-    [(state: RootState) => state.trend.corner],
+    [(state: RootState) => state.tax.corner],
     (corner) => corner,
   ),
   itemSelectOptions: createSelector(
-    [(state: RootState) => state.trend.itemSelectOptions],
+    [(state: RootState) => state.tax.itemSelectOptions],
     (itemSelectOptions) => itemSelectOptions ?? [],
   ),
   getRowType: (index) =>
     createSelector(
-      [(state: RootState) => state.trend.rowTypes],
+      [(state: RootState) => state.tax.rowTypes],
       (rowTypes) => rowTypes[index],
     ),
 };

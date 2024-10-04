@@ -56,6 +56,8 @@ import {
   selectors as variationSelectors,
 } from './pages/variation/variationSlice';
 import VariationResults from './pages/variation/VariationResults';
+import { taxActions, selectors as taxSelectors } from './pages/tax/taxSlice';
+import TaxResult from './pages/tax/taxResult';
 
 export default function App() {
   const EconomicAnalysis: () => JSX.Element = withAnalysis(
@@ -122,6 +124,14 @@ export default function App() {
     VariationResults,
     RouteName.VARIATION_ANALYSIS,
   );
+  const TaxAnalysis: () => JSX.Element = withAnalysis(
+    taxSelectors,
+    taxActions,
+    ItemSelect,
+    HeaderInput,
+    TaxResult,
+    RouteName.TAX_ANALYSIS,
+  );
 
   return (
     <MathJaxContext>
@@ -170,6 +180,10 @@ export default function App() {
                       path={RouteName.VARIATION_ANALYSIS}
                       element={<VariationAnalysis />}
                     />
+                    <Route
+                      path={RouteName.TAX_ANALYSIS}
+                      element={<TaxAnalysis />}
+                    />
 
                     <Route
                       path={RouteName.EVALUATION}
@@ -183,6 +197,7 @@ export default function App() {
                           ParetoAnalysisPage={ParetoAnalysis}
                           TrendAnalysisPage={TrendAnalysis}
                           VariationAnalysisPage={VariationAnalysis}
+                          TaxAnalysisPage={TaxAnalysis}
                         />
                       }
                     />

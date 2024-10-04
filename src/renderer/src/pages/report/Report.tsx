@@ -20,6 +20,7 @@ import { hasIndexChanged } from '../index/indexSlice';
 import { hasParetoChanged } from '../pareto/paretoSlice';
 import { hasTrendChanged } from '../trend/trendSlice';
 import { hasVariationChanged } from '../variation/variationSlice';
+import { hasTaxChanged } from '../tax/taxSlice';
 
 const Wrapper = styled(Box)`
   position: relative;
@@ -82,6 +83,7 @@ type Props = {
   ParetoAnalysisPage: () => React.ReactElement;
   TrendAnalysisPage: () => React.ReactElement;
   VariationAnalysisPage: () => React.ReactElement;
+  TaxAnalysisPage: () => React.ReactElement;
 };
 
 const Report: React.FC<Props> = ({
@@ -93,6 +95,7 @@ const Report: React.FC<Props> = ({
   ParetoAnalysisPage,
   TrendAnalysisPage,
   VariationAnalysisPage,
+  TaxAnalysisPage,
 }) => {
   const { setMode, mode } = useTheme();
 
@@ -104,6 +107,7 @@ const Report: React.FC<Props> = ({
   const sortimentRef = React.useRef(null);
   const trendRef = React.useRef(null);
   const variationRef = React.useRef(null);
+  const taxRef = React.useRef(null);
 
   const hasEconomicChange = useAppSelector(hasEconomicChanged);
   const hasStructureChange = useAppSelector(hasStructureChanged);
@@ -113,6 +117,7 @@ const Report: React.FC<Props> = ({
   const hasParetoChange = useAppSelector(hasParetoChanged);
   const hasTrendChange = useAppSelector(hasTrendChanged);
   const hasVariationChange = useAppSelector(hasVariationChanged);
+  const hasTaxChange = useAppSelector(hasTaxChanged);
 
   const hasAnyAnalysisChange =
     !hasEconomicChange &&
@@ -122,7 +127,8 @@ const Report: React.FC<Props> = ({
     !hasIndexChange &&
     !hasParetoChange &&
     !hasTrendChange &&
-    !hasVariationChange;
+    !hasVariationChange &&
+    !hasTaxChange;
 
   const prevMode = useRef<ColorMode>();
 
@@ -193,6 +199,12 @@ const Report: React.FC<Props> = ({
       {hasVariationChange && (
         <div className="new-page" ref={variationRef}>
           <VariationAnalysisPage />
+        </div>
+      )}
+
+      {hasTaxChange && (
+        <div className="new-page" ref={taxRef}>
+          <TaxAnalysisPage />
         </div>
       )}
 
@@ -281,6 +293,15 @@ const Report: React.FC<Props> = ({
                     label: 'Odchýlková analýza nákladov',
                     id: RouteName.VARIATION_ANALYSIS,
                     ref: variationRef,
+                  },
+                ]
+              : []),
+            ...(hasTaxChange
+              ? [
+                  {
+                    label: 'Daňová analýza nákladov',
+                    id: RouteName.TAX_ANALYSIS,
+                    ref: taxRef,
                   },
                 ]
               : []),
