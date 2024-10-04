@@ -14,21 +14,10 @@ const items: AnalysisItem[] = [
       'Hodnotenie úrovne hospodárenia podniku z hľadiska efektívnosti a hospodárnosti.',
   },
   {
-    to: RouteName.STRUCTURE_ANALYSIS,
-    title: 'Štruktúrna analýza nákladov',
-    description:
-      'Stanovenie štruktúry nákladov podľa druhového a kalkulačného členenia.',
-  },
-  {
     to: RouteName.CVP_ANALYSIS,
     title: 'CVP analýza',
     description:
       'Analýza zameraná na určenie kritického objemu výroby a stanovenie nulového bodu.',
-  },
-  {
-    to: RouteName.SORTIMENT_ANALYSIS,
-    title: 'Sortimentná analýza',
-    description: 'Stanovenie optimálnej štruktúry výrobného sortimentu.',
   },
   {
     to: RouteName.INDEX_ANALYSIS,
@@ -37,10 +26,20 @@ const items: AnalysisItem[] = [
       'Porovnávanie nákladov v sledovanom období podielom (index) a rozdielom (absolútna diferencia).',
   },
   {
-    to: RouteName.PERETO_ANALYSIS,
-    title: 'Pareto analýza nákladov',
+    to: RouteName.STRUCTURE_ANALYSIS,
+    title: 'Štruktúrna analýza nákladov',
     description:
-      'Sledovanie a odhaľovanie príčin vzniku kritických nákladov na základe Pareto pravidla 80/20.',
+      'Stanovenie štruktúry nákladov podľa druhového a kalkulačného členenia.',
+  },
+  {
+    to: RouteName.SORTIMENT_ANALYSIS,
+    title: 'Sortimentná analýza',
+    description: 'Stanovenie optimálnej štruktúry výrobného sortimentu.',
+  },
+  {
+    to: RouteName.VARIATION_ANALYSIS,
+    title: 'Odchýlková analýza nákladov',
+    description: '',
   },
   {
     to: RouteName.TREND_ANALYSIS,
@@ -49,9 +48,10 @@ const items: AnalysisItem[] = [
       'Sledovanie trendu vývoja nákladov a stanovenie ukazovateľov trendu v sledovanom období.',
   },
   {
-    to: RouteName.VARIATION_ANALYSIS,
-    title: 'Odchýlková analýza nákladov',
-    description: '',
+    to: RouteName.PERETO_ANALYSIS,
+    title: 'Pareto analýza nákladov',
+    description:
+      'Sledovanie a odhaľovanie príčin vzniku kritických nákladov na základe Pareto pravidla 80/20.',
   },
   {
     to: RouteName.TAX_ANALYSIS,
