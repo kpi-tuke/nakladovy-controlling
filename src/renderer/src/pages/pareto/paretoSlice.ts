@@ -11,12 +11,12 @@ import isEqual from 'lodash.isequal';
 const initialParetoState: DefaultState = {
   id: 6,
   title: 'Pareto analýza nákladov',
-  corner: 'Príčina vzniku nákladov / druhové náklady',
+  corner: 'Druhové náklady / Príčina vzniku nákladov',
   headers: [
     {
       id: '1',
       type: CellType.NUMBER,
-      label: '(N) náklady (€)',
+      label: '(N) Náklady (€)',
     },
   ],
   data: [[0]],

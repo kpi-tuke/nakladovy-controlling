@@ -15,7 +15,7 @@ export default function ParetoResult() {
   return (
     <>
       <Spacer height={40} hideInPrint />
-      <SectionTitle className="new-page">Príčiny vzniku nákladov</SectionTitle>
+      <SectionTitle className="new-page">Analýza nákladov</SectionTitle>
       <Paper>
         <TableStatic
           corner={'Príčiny vzniku nákladov'}

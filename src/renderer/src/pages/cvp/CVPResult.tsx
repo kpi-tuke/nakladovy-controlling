@@ -184,7 +184,7 @@ export default function CVPResult() {
             zeroEur,
             zeroProf,
             capacityUsage,
-            data[1],
+            data[5],
           ]}
         />
       </Paper>

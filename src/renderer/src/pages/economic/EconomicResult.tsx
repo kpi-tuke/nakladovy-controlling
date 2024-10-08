@@ -120,7 +120,7 @@ export default function EconomicResult() {
       <Spacer height={40} hideInPrint />
       <SectionTitle>Dashboarding</SectionTitle>
       <LineGraph
-        title="TREND VÝVOJA EKONOMICKÝCH VELIČÍN"
+        title="Vývoj výnosov a nákladov"
         height={420}
         labels={headers.map((h) => h.label)}
         data={[
@@ -171,7 +171,7 @@ export default function EconomicResult() {
             values: costEfficiencyData,
           },
           {
-            name: 'Efektívnosť',
+            name: 'Efektívnosť e',
             values: costEfficiencyData,
           },
           {

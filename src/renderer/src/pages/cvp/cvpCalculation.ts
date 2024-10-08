@@ -25,14 +25,14 @@ export function cvpCalculation(data: CellValue[][], fixCosts) {
     // variabilné náklady jednotkové
     costs[idx] = formatNumber(rowData[2]);
 
-    // fixne náklady
-    fixTotals[idx] = formatNumber(fixCosts);
-
     // minimanly zisk
-    minProfits[idx] = formatNumber(rowData[4]);
+    minProfits[idx] = formatNumber(rowData[3]);
 
     // vyrobná kapacita
-    productionCapacity[idx] = formatNumber(rowData[5]);
+    productionCapacity[idx] = formatNumber(rowData[4]);
+
+    // fixne náklady
+    fixTotals[idx] = formatNumber(fixCosts);
   });
 
   // nulový bod

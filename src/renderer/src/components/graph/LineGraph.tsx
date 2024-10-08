@@ -40,6 +40,8 @@ type Props = {
   referenceLines?: ReferenceLine[];
   yAxisLabel?: string;
   xAxisLabel?: string;
+  yAxisFontSize?: number;
+  xAxisFontSize?: number;
 };
 
 const LineGraph: React.FC<Props> = ({
@@ -50,6 +52,8 @@ const LineGraph: React.FC<Props> = ({
   referenceLines = [],
   yAxisLabel,
   xAxisLabel,
+  yAxisFontSize = 14,
+  xAxisFontSize = 14,
 }) => {
   const {
     palette: {
@@ -82,6 +86,7 @@ const LineGraph: React.FC<Props> = ({
         >
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis
+            fontSize={xAxisFontSize}
             dataKey="name"
             stroke={primaryTextColor}
             label={
@@ -99,6 +104,7 @@ const LineGraph: React.FC<Props> = ({
             fontWeight={'bold'}
           />
           <YAxis
+            fontSize={yAxisFontSize}
             stroke={primaryTextColor}
             label={
               yAxisLabel ? (
