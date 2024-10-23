@@ -33,6 +33,7 @@ type Props = {
   showValueInBar?: boolean;
   yAxisFontSize?: number;
   xAxisFontSize?: number;
+  customColors?: string[];
 };
 
 const BarGraph: React.FC<Props> = ({
@@ -45,6 +46,7 @@ const BarGraph: React.FC<Props> = ({
   showValueInBar = true,
   yAxisFontSize = 12,
   xAxisFontSize = 12,
+  customColors,
 }) => {
   const {
     palette: {
@@ -91,7 +93,14 @@ const BarGraph: React.FC<Props> = ({
           {showLegend && <Legend content={<CustomLegend />} />}
 
           {data.map((d, index) => (
-            <Bar dataKey={d.name} fill={getColorByIndex(index)}>
+            <Bar
+              dataKey={d.name}
+              fill={
+                !!customColors && index <= customColors.length
+                  ? customColors[index]
+                  : getColorByIndex(index)
+              }
+            >
               {showValueInBar && (
                 <LabelList
                   dataKey={d.name}

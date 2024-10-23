@@ -140,15 +140,14 @@ export default function EconomicResult() {
       <BarGraph
         title={'výsledok hospodárenia (ZISK/STRATA)'}
         height={420}
-        labels={headers.map((h) => h.label)}
-        data={[
-          {
-            name: 'Výsledok hospodárenia (VH)',
-            values: profitData,
-          },
-        ]}
-        showLegend={false}
+        labels={['']}
+        data={profitData.map((value, index) => ({
+          name: headers[index].label,
+          values: [value],
+        }))}
+        showLegend={true}
         yAxisLabel="výsledok hospodárenia (€)"
+        customColors={profitData.map((value) => (value >= 0 ? 'blue' : 'red'))}
       />
 
       <Spacer height={40} hideInPrint />
@@ -179,6 +178,7 @@ export default function EconomicResult() {
             values: costIndicatorData,
           },
         ]}
+        showValueInBar={false}
       />
 
       <Spacer height={40} hideInPrint />
@@ -207,6 +207,7 @@ export default function EconomicResult() {
           },
           { name: 'nákladovosť daní h<sub>d</sub>', values: taxesConstData },
         ]}
+        showValueInBar={false}
       />
     </>
   );
