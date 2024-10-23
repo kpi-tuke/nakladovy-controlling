@@ -1,6 +1,11 @@
 import { formatNumber } from '@renderer/utils/formatNumber';
 
-export function trendCalculation(data: number[][]) {
+export function trendCalculation(data: number[][], headers: string[]) {
+  const betweenYears: string[] = [];
+  for (let i = 0; i < headers.length - 1; i++) {
+    betweenYears[i] = headers[i + 1] + '/' + headers[i];
+  }
+
   const absolutnyPrirastok: number[][] = Array.from(
     { length: data.length },
     () => [],
@@ -29,9 +34,11 @@ export function trendCalculation(data: number[][]) {
 
   data.forEach((rowData, rowIndex) => {
     rowData.slice(1).forEach((value, col) => {
-      const res = formatNumber(
-        formatNumber(value) / formatNumber(rowData[col]),
-      );
+      const res =
+        rowData[col] == 0
+          ? 0
+          : formatNumber(formatNumber(value) / formatNumber(rowData[col]));
+
       koeficientRastu[rowIndex].push(res);
       tempoRastu[rowIndex].push(formatNumber(res * 100));
       koeficientPrirastku[rowIndex].push(formatNumber(res - 1));
@@ -40,6 +47,7 @@ export function trendCalculation(data: number[][]) {
   });
 
   return {
+    betweenYears,
     absolutnyPrirastok,
     koeficientRastu,
     tempoRastu,

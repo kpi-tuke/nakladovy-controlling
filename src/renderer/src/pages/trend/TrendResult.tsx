@@ -5,6 +5,7 @@ import Spacer from '@renderer/components/Spacer';
 import SectionTitle from '@renderer/components/SectionTitle';
 import { Paper, Typography } from '@mui/material';
 import TableStatic from '@renderer/components/TableStatic';
+import BarGraph from '@renderer/components/graph/BarGraph';
 
 const TrendResult = () => {
   const data = useAppSelector(selectors.data);
@@ -12,12 +13,16 @@ const TrendResult = () => {
   const headers = useAppSelector(selectors.headers);
 
   const {
+    betweenYears,
     absolutnyPrirastok,
     koeficientRastu,
     tempoRastu,
     koeficientPrirastku,
     tempoPrirastku,
-  } = trendCalculation(data as number[][]);
+  } = trendCalculation(
+    data as number[][],
+    headers.map((h) => h.label),
+  );
 
   return (
     <>
@@ -48,7 +53,7 @@ const TrendResult = () => {
 
             <TableStatic
               corner={'Ekonomické ukazovatele'}
-              header={headers.slice(1).map((h) => h.label)}
+              header={betweenYears}
               inputs={[
                 [
                   '(d<sub>i</sub>) - absolútny prírastok/úbytok (€)',
@@ -79,6 +84,43 @@ const TrendResult = () => {
                 tempoPrirastku[index],
               ]}
               newPageAfter={false}
+            />
+          </Paper>
+        ))}
+      </div>
+
+      <Spacer height={40} />
+
+      <div>
+        {items.filter(Boolean).map((item, index) => (
+          <Paper
+            key={index}
+            sx={{
+              '&:not(:last-child)': {
+                marginBottom: '40px',
+              },
+            }}
+          >
+            <Typography
+              variant="h6"
+              gutterBottom
+              sx={{
+                marginLeft: 2,
+                marginTop: 1,
+                fontSize: '18px',
+              }}
+            >
+              {item}
+            </Typography>
+            <BarGraph
+              title={'Prehľad koeficienta rastu/poklesu v sledovanom obdobi'}
+              labels={['']}
+              data={betweenYears.map((year, yearIndex) => ({
+                name: year,
+                values: [koeficientRastu[index][yearIndex]],
+              }))}
+              height={420}
+              yAxisLabel="koeficient rastu/poklesu"
             />
           </Paper>
         ))}
