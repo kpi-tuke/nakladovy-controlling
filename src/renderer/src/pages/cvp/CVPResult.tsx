@@ -2,10 +2,11 @@ import TableStatic from '../../components/TableStatic';
 import { cvpCalculation } from './cvpCalculation';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { CVPActions, selectCVP, selectors } from './cvpSlice';
-import { Box, Paper, styled, TextField } from '@mui/material';
+import { Box, Paper, styled, TextField, Typography } from '@mui/material';
 import SectionTitle from '@renderer/components/SectionTitle';
 import Spacer from '@renderer/components/Spacer';
 import { transposeMatrix } from '@renderer/helper';
+import BarGraph from '@renderer/components/graph/BarGraph';
 
 const InputWrapper = styled(Box)`
   display: flex;
@@ -18,16 +19,12 @@ const YearLabel = styled(SectionTitle)`
   margin-bottom: 0;
 `;
 
-// type Graph = {
-//   title: string;
-//   labels: string[];
-//   series: { data: number[] }[];
-// };
-
 export default function CVPResult() {
   const dispatch = useAppDispatch();
 
-  const { data, headers } = useAppSelector(selectCVP);
+  const headers = useAppSelector(selectors.headers);
+  const items = useAppSelector(selectors.items);
+  const data = useAppSelector(selectors.data);
 
   // @ts-ignore
   const additionalData = useAppSelector(selectors.getAdditionalData!) as any;
@@ -35,81 +32,14 @@ export default function CVPResult() {
   const fixCosts = additionalData?.fixCosts ?? 0;
 
   const {
-    // volumes,
-    // prices,
     zeroTon,
     zeroProf,
     zeroEur,
-    // costs,
     capacityUsage,
-    // fixTotals,
     totalCosts,
     incomeTotal,
     economicResult,
   } = cvpCalculation(transposeMatrix(data), fixCosts);
-
-  // const graphs = useMemo(() => {
-  //   return headers.map((header, idx) => {
-  //     const costTotal: number[] = [];
-  //     const incomeTotal: number[] = [];
-  //     const osX: number[] = [0];
-
-  //     if (zeroTon[idx] === 0)
-  //       if (volumes[idx] === 0) osX.push(5);
-  //       else osX.push(volumes[idx] * 2);
-  //     else osX.push(zeroTon[idx]);
-
-  //     if (zeroProf[idx] === zeroTon[idx]) {
-  //       if (zeroProf[idx] === 0) osX.push(osX[1] * 2);
-  //       else osX.push(zeroTon[idx] * 2);
-  //     } else osX.push(zeroProf[idx]);
-
-  //     if (volumes[idx] === 0)
-  //       osX.push(Math.max(...osX) + Math.max(...osX) * 0.3);
-  //     else if (volumes[idx] === zeroTon[idx])
-  //       osX.push(Math.round(zeroTon[idx] / 2));
-  //     else osX.push(volumes[idx]);
-
-  //     osX.push(Math.max(...osX) + Math.max(...osX) * 0.3);
-
-  //     osX.map((vol: number) => {
-  //       costTotal.push(
-  //         Math.round((costs[idx] * vol + fixTotals[idx]) * 100) / 100,
-  //       );
-
-  //       incomeTotal.push(Math.round(prices[idx] * vol * 100) / 100);
-  //     });
-
-  //     costTotal.sort(function (a, b) {
-  //       return a - b;
-  //     });
-
-  //     incomeTotal.sort(function (a, b) {
-  //       return a - b;
-  //     });
-
-  //     osX.sort(function (a, b) {
-  //       return a - b;
-  //     });
-
-  //     const series = [
-  //       {
-  //         name: 'Náklady',
-  //         data: costTotal,
-  //       },
-  //       {
-  //         name: 'Výnosy',
-  //         data: incomeTotal,
-  //       },
-  //     ];
-
-  //     return {
-  //       title: header.label,
-  //       series,
-  //       labels: osX.map((value) => value.toString()),
-  //     } as Graph;
-  //   });
-  // }, [headers, volumes, prices, zeroTon, zeroProf, zeroEur, costs]);
 
   const handleTextChange = (value: string) => {
     dispatch(
@@ -187,52 +117,72 @@ export default function CVPResult() {
         />
       </Paper>
 
-      {/* <Spacer height={40} hideInPrint /> */}
+      <Spacer height={40} hideInPrint />
 
-      {/* <SectionTitle>Dashboarding</SectionTitle> */}
+      <SectionTitle>Dashboarding</SectionTitle>
 
-      {/* <Grid container spacing={2}>
-        {graphs.map((graph, index) => {
-          return (
-            <>
-              <Grid
-                item
-                xs={12}
-                key={index}
-                className={index % 2 === 0 && index !== 0 ? 'new-page' : ''}
-              >
-                <LineGraph
-                  title={'NULOVÝ BOD: ' + graph.title.toUpperCase()}
-                  labels={graph.labels}
-                  height={420}
-                  data={[
-                    {
-                      name: 'Náklady',
-                      values: graph.series[0].data,
-                    },
-                    {
-                      name: 'Výnosy',
-                      values: graph.series[1].data,
-                  },
-                  ]}
-                  referenceLines={[
-                    {
-                      x: zeroTon[index].toString(),
-                      stroke: '#FF4e4e',
-                      label: 'Nulový bod',
-                      width: 90,
-                    },
-                  ]}
-                  yAxisLabel="ekonomická veličina (€)"
-                  xAxisLabel={`objem produkcie jednotky ${
-                    data[index][1] ? `(${data[index][1]})` : ''
-                  }`}
-                />
-              </Grid>
-            </>
-          );
-        })}
-      </Grid> */}
+      <BarGraph
+        title={'Prehľad nulových bodov'}
+        height={420}
+        data={headers.map((h, index) => ({
+          name: h.label,
+          values: [zeroTon[index]],
+        }))}
+        labels={['']}
+        yAxisLabel="nulový bod"
+      />
+
+      <Spacer height={40} />
+
+      <div>
+        {headers.filter(Boolean).map((header, index) => (
+          <Paper
+            key={index}
+            sx={{
+              '&:not(:last-child)': {
+                marginBottom: '40px',
+              },
+            }}
+          >
+            <Typography
+              variant="h6"
+              gutterBottom
+              sx={{
+                marginLeft: 2,
+                marginTop: 1,
+                fontSize: '24px',
+                textAlign: 'center',
+              }}
+            >
+              {header.label}
+            </Typography>
+            <BarGraph
+              title={'Prehľad ekonomických ukazovateľov produktu'}
+              height={420}
+              data={[
+                {
+                  name: 'objem produkcie (Q)',
+                  values: [+data[0][index]],
+                },
+                {
+                  name: 'náklady celkové (N<sub>c</sub>)',
+                  values: [+totalCosts[index]],
+                },
+                {
+                  name: 'tržby celkové (T)',
+                  values: [+incomeTotal[index]],
+                },
+                {
+                  name: 'výsledok hospodárenia (VH)',
+                  values: [+incomeTotal[index]],
+                },
+              ]}
+              labels={['']}
+              yAxisLabel="ekonomická veličina (€)"
+            />
+          </Paper>
+        ))}
+      </div>
     </div>
   );
 }

@@ -20,16 +20,16 @@ export function cvpCalculation(data: CellValue[][], fixCosts) {
     volumes[idx] = formatNumber(rowData[0]);
 
     // predajná cena jednotková
-    prices[idx] = formatNumber(rowData[1]);
+    prices[idx] = formatNumber(rowData[2]);
 
     // variabilné náklady jednotkové
-    costs[idx] = formatNumber(rowData[2]);
+    costs[idx] = formatNumber(rowData[3]);
 
     // minimanly zisk
-    minProfits[idx] = formatNumber(rowData[3]);
+    minProfits[idx] = formatNumber(rowData[4]);
 
     // vyrobná kapacita
-    productionCapacity[idx] = formatNumber(rowData[4]);
+    productionCapacity[idx] = formatNumber(rowData[5]);
 
     // fixne náklady
     fixTotals[idx] = formatNumber(fixCosts);

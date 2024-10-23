@@ -43,8 +43,8 @@ const BarGraph: React.FC<Props> = ({
   showLegend = true,
   yAxisLabel,
   showValueInBar = true,
-  yAxisFontSize = 14,
-  xAxisFontSize = 14,
+  yAxisFontSize = 12,
+  xAxisFontSize = 12,
 }) => {
   const {
     palette: {

@@ -52,8 +52,8 @@ const LineGraph: React.FC<Props> = ({
   referenceLines = [],
   yAxisLabel,
   xAxisLabel,
-  yAxisFontSize = 14,
-  xAxisFontSize = 14,
+  yAxisFontSize = 12,
+  xAxisFontSize = 12,
 }) => {
   const {
     palette: {
