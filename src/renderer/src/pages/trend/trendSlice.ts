@@ -76,6 +76,8 @@ export const trendSlice = createSlice({
 export const trendActions = trendSlice.actions;
 export const trendReducer = trendSlice.reducer;
 
+export const selectTrend = (state: RootState) => state.trend;
+
 export const hasTrendChanged = (state: RootState) => {
   return !isEqual(state.trend, initialTrendState);
 };

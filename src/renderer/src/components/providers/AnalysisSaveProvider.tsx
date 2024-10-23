@@ -14,6 +14,9 @@ import { selectSortiment } from '@renderer/pages/sortiment/sortimentSlice';
 import { selectIndex } from '@renderer/pages/index/indexSlice';
 import { selectPareto } from '@renderer/pages/pareto/paretoSlice';
 import { selectEvaluation } from '@renderer/pages/report/evaluationSlice';
+import { selectVariation } from '@renderer/pages/variation/variationSlice';
+import { selectTax } from '@renderer/pages/tax/taxSlice';
+import { selectTrend } from '@renderer/pages/trend/trendSlice';
 
 const SaveContext = createContext<{
   save: VoidFunction;
@@ -34,6 +37,10 @@ const SaveDataProvider: React.FC<Props> = ({ children }) => {
   const sortiment = useAppSelector(selectSortiment);
   const chain = useAppSelector(selectIndex);
   const pareto = useAppSelector(selectPareto);
+  const variation = useAppSelector(selectVariation);
+  const tax = useAppSelector(selectTax);
+  const trend = useAppSelector(selectTrend);
+
   const { tasks } = useAppSelector(selectEvaluation);
 
   const [path, setPath] = useState<string | undefined>(undefined);
@@ -51,6 +58,9 @@ const SaveDataProvider: React.FC<Props> = ({ children }) => {
       chain,
       cvp,
       pareto,
+      variation,
+      tax,
+      trend,
       tasks,
     });
 
@@ -63,7 +73,10 @@ const SaveDataProvider: React.FC<Props> = ({ children }) => {
     chain,
     cvp,
     pareto,
+    variation,
+    tax,
     tasks,
+    trend,
     onceSaved,
   ]);
 
@@ -85,6 +98,9 @@ const SaveDataProvider: React.FC<Props> = ({ children }) => {
       chain,
       cvp,
       pareto,
+      variation,
+      tax,
+      trend,
       tasks,
     };
 

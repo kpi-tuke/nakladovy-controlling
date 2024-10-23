@@ -39,7 +39,8 @@ const items: AnalysisItem[] = [
   {
     to: RouteName.VARIATION_ANALYSIS,
     title: 'Odchýlková analýza nákladov',
-    description: '',
+    description:
+      'Sledovanie odchýlok v nákladoch z hľadiska komparácie plánu a skutočnosti a plnenia plánu',
   },
   {
     to: RouteName.TREND_ANALYSIS,

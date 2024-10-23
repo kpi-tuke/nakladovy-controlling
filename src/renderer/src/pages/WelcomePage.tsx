@@ -14,6 +14,9 @@ import AppVersion from '@renderer/components/AppVersion';
 import Page from '@renderer/components/layout/Page';
 import PageContent from '@renderer/components/layout/PageContent';
 import { RouteName } from '@renderer/routes';
+import { variationActions } from './variation/variationSlice';
+import { taxActions } from './tax/taxSlice';
+import { trendActions } from './trend/trendSlice';
 
 const Wrapper = styled(Box)`
   flex: 1;
@@ -44,6 +47,7 @@ export default function WelcomePage() {
     window.electron.openProject();
     window.electron.onOpen('open', (arg) => {
       const json = JSON.parse(arg);
+
       dispatch(economicActions.openProject(json.economic));
       dispatch(structureActions.openProject(json.structure));
       dispatch(CVPActions.openProject(json.cvp));
@@ -51,6 +55,9 @@ export default function WelcomePage() {
       dispatch(sortimentActions.openProject(json.sortiment));
       dispatch(paretoActions.openProject(json.pareto));
       dispatch(evaluationActions.openProject(json.tasks));
+      dispatch(variationActions.openProject(json.variation));
+      dispatch(taxActions.openProject(json.tax));
+      dispatch(trendActions.openProject(json.trend));
       dispatch(projectActions.setCreated());
       navigate('/taskselect');
     });

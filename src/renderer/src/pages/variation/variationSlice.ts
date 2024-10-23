@@ -23,11 +23,20 @@ const initialVariationState: DefaultState = {
   headers: [
     {
       id: '1',
-      type: CellType.NUMBER,
-      label: '2000',
+      type: CellType.STRING,
+      label: 'Plán',
+    },
+    {
+      id: '2',
+      type: CellType.STRING,
+      label: 'Skutočnosť',
     },
   ],
-  data: [[0], [0], [0]],
+  data: [
+    [0, 0],
+    [0, 0],
+    [0, 0],
+  ],
   items: [costOptions[0].label, profitOptions[0].label, ''],
   values: [
     {
@@ -49,7 +58,7 @@ const initialVariationState: DefaultState = {
   sortable: true,
   hasAnalytic: true,
   dynRows: true,
-  dynCols: true,
+  dynCols: false,
   itemSelectOptions: allOptions,
   newRowType: CellType.NUMBER,
 };
@@ -75,6 +84,8 @@ export const variationSlice = createSlice({
 
 export const variationActions = variationSlice.actions;
 export const variationReducer = variationSlice.reducer;
+
+export const selectVariation = (state: RootState) => state.variation;
 
 export const hasVariationChanged = (state: RootState) => {
   return !isEqual(state.variation, initialVariationState);
@@ -137,4 +148,9 @@ export const selectors: RootSelectors = {
       [(state: RootState) => state.variation.rowTypes],
       (rowTypes) => rowTypes[index],
     ),
+  // @ts-ignore
+  getAdditionalData: createSelector(
+    [(state: RootState) => state.variation],
+    (variationData) => variationData.additionalData,
+  ),
 };

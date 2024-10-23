@@ -1,7 +1,7 @@
 import TableStatic from '../../components/TableStatic';
 import { cvpCalculation } from './cvpCalculation';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { CVPActions, selectCVP, selectors } from './cvpSlice';
+import { CVPActions, selectors } from './cvpSlice';
 import { Box, Paper, styled, TextField, Typography } from '@mui/material';
 import SectionTitle from '@renderer/components/SectionTitle';
 import Spacer from '@renderer/components/Spacer';
@@ -23,7 +23,6 @@ export default function CVPResult() {
   const dispatch = useAppDispatch();
 
   const headers = useAppSelector(selectors.headers);
-  const items = useAppSelector(selectors.items);
   const data = useAppSelector(selectors.data);
 
   // @ts-ignore

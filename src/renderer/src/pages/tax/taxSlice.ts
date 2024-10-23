@@ -76,6 +76,8 @@ export const taxSlice = createSlice({
 export const taxActions = taxSlice.actions;
 export const taxReducer = taxSlice.reducer;
 
+export const selectTax = (state: RootState) => state.tax;
+
 export const hasTaxChanged = (state: RootState) => {
   return !isEqual(state.tax, initialTaxState);
 };
