@@ -209,7 +209,7 @@ export default function IndexResult() {
       <SectionTitle>Dashboarding</SectionTitle>
 
       <Grid container spacing={2}>
-        {data.map((row, index) =>
+        {/* {data.map((row, index) =>
           !!items[index] ? (
             <Grid item xs={12}>
               <BarGraph
@@ -224,7 +224,7 @@ export default function IndexResult() {
               />
             </Grid>
           ) : null,
-        )}
+        )} */}
 
         <Grid item xs={12}>
           <BarGraph
@@ -242,10 +242,22 @@ export default function IndexResult() {
           <BarGraph
             title="REŤAZOVÝ INDEX"
             height={420}
-            labels={betweenYears}
-            data={items.map((item, index) => ({
-              name: item,
-              values: absolutnaDiferencia[index],
+            labels={['']}
+            data={betweenYears.map((year, index) => ({
+              name: year,
+              values: [retazovyIndexNakladov[index]],
+            }))}
+          />
+        </Grid>
+
+        <Grid item xs={12}>
+          <BarGraph
+            title="Koeficient reakcie "
+            height={420}
+            labels={['']}
+            data={betweenYears.map((year, index) => ({
+              name: year,
+              values: [koeficientReakcie[index]],
             }))}
           />
         </Grid>

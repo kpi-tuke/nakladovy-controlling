@@ -28,10 +28,11 @@ type Props = {
   title: string;
   data: BarData[];
   labels: string[];
-  barLabelSize?: number;
   showLegend?: boolean;
   yAxisLabel?: string;
   showValueInBar?: boolean;
+  yAxisFontSize?: number;
+  xAxisFontSize?: number;
 };
 
 const BarGraph: React.FC<Props> = ({
@@ -39,10 +40,11 @@ const BarGraph: React.FC<Props> = ({
   title,
   data,
   labels,
-  barLabelSize = 14,
   showLegend = true,
   yAxisLabel,
   showValueInBar = true,
+  yAxisFontSize = 14,
+  xAxisFontSize = 14,
 }) => {
   const {
     palette: {
@@ -73,7 +75,7 @@ const BarGraph: React.FC<Props> = ({
           <XAxis
             dataKey="name"
             stroke={primaryTextColor}
-            fontSize={barLabelSize}
+            fontSize={xAxisFontSize}
             fontWeight={'bold'}
           />
           <YAxis
@@ -83,6 +85,7 @@ const BarGraph: React.FC<Props> = ({
                 <CustomYAxisLabel value={yAxisLabel} angle={-90} />
               ) : undefined
             }
+            fontSize={yAxisFontSize}
           />
           <Tooltip content={<CustomTooltip />} />
           {showLegend && <Legend content={<CustomLegend />} />}
