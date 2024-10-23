@@ -121,7 +121,7 @@ export default function CVPResult() {
       <SectionTitle>Dashboarding</SectionTitle>
 
       <BarGraph
-        title={'Prehľad nulových bodov'}
+        title={'Prehľad nulových bodov (množstvo)'}
         height={420}
         data={headers.map((h, index) => ({
           name: h.label,
