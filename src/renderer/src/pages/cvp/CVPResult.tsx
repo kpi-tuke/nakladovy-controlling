@@ -172,9 +172,8 @@ export default function CVPResult() {
             ],
             [
               '(VK<sub>krit</sub>) - kritické využitie výrobnej kapacity (%)',
-              `\\(VK_{krit}=\\frac{N_{o}(ton)}{Q * 100}\\)`,
+              `\\(VK_{krit}=\\frac{N_{o}(ton)}{VK} * 100\\)`,
             ],
-            ['Merná jednotka'],
           ]}
           data={[
             totalCosts,
@@ -184,7 +183,6 @@ export default function CVPResult() {
             zeroEur,
             zeroProf,
             capacityUsage,
-            data[5],
           ]}
         />
       </Paper>
@@ -215,7 +213,7 @@ export default function CVPResult() {
                     {
                       name: 'Výnosy',
                       values: graph.series[1].data,
-                    },
+                  },
                   ]}
                   referenceLines={[
                     {

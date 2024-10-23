@@ -65,10 +65,12 @@ export function cvpCalculation(data: CellValue[][], fixCosts) {
   const fixedCosts = divideArrays(fixTotals, volumes);
 
   // kritické využitie výrobnej kapacity
-  const capacityUsage = divideArrays(
-    zeroTon,
-    multiplyArrays(volumes, new Array(volumes.length).fill(100)),
+  const capacityUsage = multiplyArrays(
+    divideArrays(zeroTon, productionCapacity),
+    new Array(volumes.length).fill(100),
   );
+
+  // multiplyArrays(productionCapacity, new Array(volumes.length).fill(100)),
 
   const totalCosts = sumArrays(fixTotals, multiplyArrays(volumes, costs));
 
