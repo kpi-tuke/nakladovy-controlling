@@ -23,11 +23,25 @@ const initialTaxState: DefaultState = {
   headers: [
     {
       id: '1',
-      type: CellType.NUMBER,
-      label: '2000',
+      type: CellType.STRING,
+      label: 'Ďaňovo uznané náklady',
+    },
+    {
+      id: '2',
+      type: CellType.STRING,
+      label: 'Ďaňovo neuznané náklady',
+    },
+    {
+      id: '3',
+      type: CellType.STRING,
+      label: 'Výnosy',
     },
   ],
-  data: [[0], [0], [0]],
+  data: [
+    [0, 0, 0],
+    [0, 0, 0],
+    [0, 0, 0],
+  ],
   items: [costOptions[0].label, profitOptions[0].label, ''],
   values: [
     {
@@ -49,7 +63,7 @@ const initialTaxState: DefaultState = {
   sortable: true,
   hasAnalytic: true,
   dynRows: true,
-  dynCols: true,
+  dynCols: false,
   itemSelectOptions: allOptions,
   newRowType: CellType.NUMBER,
 };
@@ -133,4 +147,9 @@ export const selectors: RootSelectors = {
       [(state: RootState) => state.tax.rowTypes],
       (rowTypes) => rowTypes[index],
     ),
+  // @ts-ignore
+  getAdditionalData: createSelector(
+    [(state: RootState) => state.tax],
+    (taxData) => taxData.additionalData,
+  ),
 };

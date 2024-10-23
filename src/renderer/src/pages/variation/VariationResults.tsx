@@ -43,15 +43,12 @@ const VariationResults = () => {
     );
   };
 
-  console.log('absolutnaDiferencia: ', absolutnaDiferencia);
-  console.log('plneniePlanu: ', plneniePlanu);
-
   return (
     <div>
       <Spacer height={40} hideInPrint />
 
       <InputWrapper>
-        <YearLabel>Rok</YearLabel>
+        <YearLabel>Sledovaný rok</YearLabel>
         <TextField
           sx={{
             background: (theme) => theme.palette.background.paper,

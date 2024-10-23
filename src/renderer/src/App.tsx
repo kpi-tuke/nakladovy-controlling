@@ -57,7 +57,7 @@ import {
 } from './pages/variation/variationSlice';
 import VariationResults from './pages/variation/VariationResults';
 import { taxActions, selectors as taxSelectors } from './pages/tax/taxSlice';
-import TaxResult from './pages/tax/taxResult';
+import TaxResult from './pages/tax/TaxResult';
 
 export default function App() {
   const EconomicAnalysis: () => JSX.Element = withAnalysis(
@@ -120,7 +120,7 @@ export default function App() {
     variationSelectors,
     variationActions,
     ItemSelect,
-    HeaderInput,
+    HeaderValue,
     VariationResults,
     RouteName.VARIATION_ANALYSIS,
   );
@@ -128,7 +128,7 @@ export default function App() {
     taxSelectors,
     taxActions,
     ItemSelect,
-    HeaderInput,
+    HeaderValue,
     TaxResult,
     RouteName.TAX_ANALYSIS,
   );
