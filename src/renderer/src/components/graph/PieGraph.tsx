@@ -11,7 +11,6 @@ import {
 } from 'recharts';
 import { getColorByIndex } from './colors';
 import CustomLegend from './CustomLegend';
-import { useTheme } from '@mui/material';
 
 type PieData = {
   name: string;
@@ -25,36 +24,43 @@ type Props = {
 };
 
 const PieGraph: React.FC<Props> = ({ height, title, data }) => {
-  const {
-    palette: {
-      text: { primary: primaryTextColor },
-    },
-  } = useTheme();
-
   const RADIAN = Math.PI / 180;
+
   const renderCustomizedLabel = ({
     cx,
     cy,
     midAngle,
-    innerRadius,
     outerRadius,
     percent,
   }) => {
-    const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
-    const x = cx + radius * Math.cos(-midAngle * RADIAN);
-    const y = cy + radius * Math.sin(-midAngle * RADIAN);
+    const labelRadius = outerRadius + 20;
+    const x = cx + labelRadius * Math.cos(-midAngle * RADIAN);
+    const y = cy + labelRadius * Math.sin(-midAngle * RADIAN);
+    const lineRadius = outerRadius + 5;
+    const xLine = cx + lineRadius * Math.cos(-midAngle * RADIAN);
+    const yLine = cy + lineRadius * Math.sin(-midAngle * RADIAN);
 
     return (
-      <text
-        x={x}
-        y={y}
-        fill={primaryTextColor}
-        fontWeight={'bold'}
-        textAnchor={x > cx ? 'start' : 'end'}
-        dominantBaseline="central"
-      >
-        {`${(percent * 100).toFixed(0)}%`}
-      </text>
+      <>
+        <line
+          x1={xLine}
+          y1={yLine}
+          x2={x}
+          y2={y}
+          stroke={'#000'}
+          strokeWidth={1}
+        />
+        <text
+          x={x}
+          y={y}
+          fill={'#000'}
+          fontWeight={'bold'}
+          textAnchor={x > cx ? 'start' : 'end'}
+          dominantBaseline="central"
+        >
+          {`${(percent * 100).toFixed(0)}%`}
+        </text>
+      </>
     );
   };
 
