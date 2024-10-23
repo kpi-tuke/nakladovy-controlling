@@ -58,7 +58,7 @@ export default function StructureResult() {
 
   return (
     <div>
-      <Spacer height={40} hideInPrint />
+      <Spacer height={40} />
 
       <InputWrapper>
         <YearLabel>Sledované obdobie</YearLabel>

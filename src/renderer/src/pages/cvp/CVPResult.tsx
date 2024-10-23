@@ -51,7 +51,7 @@ export default function CVPResult() {
 
   return (
     <div>
-      <Spacer height={40} hideInPrint />
+      <Spacer height={40} />
 
       <InputWrapper>
         <YearLabel>Fixné náklady</YearLabel>

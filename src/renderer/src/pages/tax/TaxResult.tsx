@@ -61,7 +61,7 @@ const TaxResult = () => {
 
   return (
     <div>
-      <Spacer height={40} hideInPrint />
+      <Spacer height={40} />
 
       <InputWrapper>
         <YearLabel>Sledovaný rok</YearLabel>
