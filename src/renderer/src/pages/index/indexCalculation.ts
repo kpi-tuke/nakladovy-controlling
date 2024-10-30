@@ -61,9 +61,35 @@ export function indexCalculation(
     return acc;
   }, [] as number[][]);
 
+  const retazovyIndexNakladov: number[][] = [];
+  const absolutnaDiferenciaNakladov: number[][] = [];
+
+  if (headers.length > 2) {
+    data.forEach((rowData, rowIndex) => {
+      for (let i = 2; i < rowData.length; i++) {
+        const n1 = rowData[i];
+        const n0 = rowData[i - 1];
+
+        if (!Array.isArray(retazovyIndexNakladov[rowIndex])) {
+          retazovyIndexNakladov[rowIndex] = [];
+        }
+
+        if (!Array.isArray(absolutnaDiferenciaNakladov[rowIndex])) {
+          absolutnaDiferenciaNakladov[rowIndex] = [];
+        }
+
+        if (n1 == 0 || n0 == 0) {
+          retazovyIndexNakladov[rowIndex].push(0);
+          absolutnaDiferenciaNakladov[rowIndex].push(0);
+        } else {
+          retazovyIndexNakladov[rowIndex].push(formatNumber(n1 / n0));
+          absolutnaDiferenciaNakladov[rowIndex].push(formatNumber(n1 - n0));
+        }
+      }
+    });
+  }
+
   const percentoZmenyNakladov: number[] = [];
-  const retazovyIndexNakladov: number[] = [];
-  const absolutnaDiferenciaNakladov: number[] = [];
 
   if (headers.length > 2) {
     for (let i = 1; i < headers.length - 1; i++) {
@@ -79,8 +105,6 @@ export function indexCalculation(
       }
 
       percentoZmenyNakladov.push(formatNumber(val * 100 - 100));
-      retazovyIndexNakladov.push(formatNumber(val));
-      absolutnaDiferenciaNakladov.push(formatNumber(n1 - n0));
     }
   }
 
