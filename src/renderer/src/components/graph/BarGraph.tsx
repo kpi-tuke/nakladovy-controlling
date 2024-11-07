@@ -109,7 +109,7 @@ const BarGraph: React.FC<Props> = ({
                 <LabelList
                   dataKey={d.name}
                   position="inside"
-                  fill={'#fff'}
+                  fill={primaryTextColor}
                   fontWeight={'bold'}
                 />
               )}

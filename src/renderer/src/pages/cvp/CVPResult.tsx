@@ -156,14 +156,14 @@ export default function CVPResult() {
       <SectionTitle>Dashboarding</SectionTitle>
 
       <BarGraph
-        title={'Prehľad nulových bodov (množstvo)'}
+        title={'Nulový bod pre výrobný sortiment'}
         height={420}
         data={headers.map((h, index) => ({
           name: h.label,
           values: [zeroTon[index]],
         }))}
         labels={['']}
-        yAxisLabel="nulový bod"
+        yAxisLabel="nulový bod (množstvo)"
       />
 
       <Spacer height={40} />
@@ -208,7 +208,7 @@ export default function CVPResult() {
                 },
                 {
                   name: 'výsledok hospodárenia (VH)',
-                  values: [+incomeTotal[index]],
+                  values: [+economicResult[index]],
                 },
               ]}
               labels={['']}
