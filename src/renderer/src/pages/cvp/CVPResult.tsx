@@ -124,6 +124,7 @@ export default function CVPResult() {
             [
               '(N<sub>0</sub>) - nulový bod (množstvo)',
               `\\(N_{0}=\\frac{F_{n}}{P_{cj}-N_{vj}}\\)`,
+              '#9fcdf5',
             ],
             [
               '(N<sub>0</sub>) - nulový bod (€)',

@@ -19,6 +19,7 @@ type Props = {
   data: any[];
   header: string[];
   corner: string;
+  // label / tooltip / background color
   inputs: string[][];
   newPageAfter?: boolean;
   footer?: {
@@ -74,7 +75,12 @@ const TableStatic: React.FC<Props> = ({
           <TableBody>
             {inputs.map((value: string[], row: number) => {
               return (
-                <TableRow key={row}>
+                <TableRow
+                  key={row}
+                  sx={{
+                    backgroundColor: value[2],
+                  }}
+                >
                   <CustomTooltip title={value[1]}>
                     <TableCell
                       key={value[0]}
