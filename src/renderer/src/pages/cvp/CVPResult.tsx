@@ -8,6 +8,12 @@ import Spacer from '@renderer/components/Spacer';
 import { transposeMatrix } from '@renderer/helper';
 import BarGraph from '@renderer/components/graph/BarGraph';
 
+const InputsWrapper = styled(Box)`
+  display: flex;
+  gap: 32px;
+  justify-content: center;
+`;
+
 const InputWrapper = styled(Box)`
   display: flex;
   flex-direction: column;
@@ -29,6 +35,7 @@ export default function CVPResult() {
   const additionalData = useAppSelector(selectors.getAdditionalData!) as any;
 
   const fixCosts = additionalData?.fixCosts ?? 0;
+  const minProfit = additionalData?.minProfit ?? 0;
 
   const {
     zeroTon,
@@ -38,12 +45,21 @@ export default function CVPResult() {
     totalCosts,
     incomeTotal,
     economicResult,
-  } = cvpCalculation(transposeMatrix(data), fixCosts);
+  } = cvpCalculation(transposeMatrix(data), fixCosts, minProfit);
 
-  const handleTextChange = (value: string) => {
+  const handleFixCostChange = (value: string) => {
     dispatch(
       CVPActions.setAdditionalData({
         key: 'fixCosts',
+        value,
+      }),
+    );
+  };
+
+  const handleminProfitChange = (value: string) => {
+    dispatch(
+      CVPActions.setAdditionalData({
+        key: 'minProfit',
         value,
       }),
     );
@@ -53,22 +69,40 @@ export default function CVPResult() {
     <div>
       <Spacer height={40} />
 
-      <InputWrapper>
-        <YearLabel>Fixné náklady</YearLabel>
-        <TextField
-          sx={{
-            background: (theme) => theme.palette.background.paper,
-          }}
-          inputProps={{
-            style: {
-              textAlign: 'center',
-            },
-          }}
-          onChange={(e) => handleTextChange(e.target.value)}
-          value={fixCosts}
-          type="number"
-        />
-      </InputWrapper>
+      <InputsWrapper>
+        <InputWrapper>
+          <YearLabel>Fixné náklady</YearLabel>
+          <TextField
+            sx={{
+              background: (theme) => theme.palette.background.paper,
+            }}
+            inputProps={{
+              style: {
+                textAlign: 'center',
+              },
+            }}
+            onChange={(e) => handleFixCostChange(e.target.value)}
+            value={fixCosts}
+            type="number"
+          />
+        </InputWrapper>
+        <InputWrapper>
+          <YearLabel>Minimálny zisk</YearLabel>
+          <TextField
+            sx={{
+              background: (theme) => theme.palette.background.paper,
+            }}
+            inputProps={{
+              style: {
+                textAlign: 'center',
+              },
+            }}
+            onChange={(e) => handleminProfitChange(e.target.value)}
+            value={minProfit}
+            type="number"
+          />
+        </InputWrapper>
+      </InputsWrapper>
 
       <Spacer height={40} />
 

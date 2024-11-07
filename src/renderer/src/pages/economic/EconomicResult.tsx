@@ -140,14 +140,16 @@ export default function EconomicResult() {
       <BarGraph
         title={'výsledok hospodárenia (ZISK/STRATA)'}
         height={420}
-        labels={['']}
-        data={profitData.map((value, index) => ({
-          name: headers[index].label,
-          values: [value],
-        }))}
-        showLegend={true}
+        labels={headers.map((h) => h.label)}
+        data={[
+          {
+            name: 'Zisk/Strata',
+            values: profitData,
+          },
+        ]}
+        showLegend={false}
         yAxisLabel="výsledok hospodárenia (€)"
-        customColors={profitData.map((value) => (value >= 0 ? 'blue' : 'red'))}
+        showTooltip={false}
       />
 
       <Spacer height={40} hideInPrint />

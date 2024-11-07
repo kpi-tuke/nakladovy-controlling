@@ -7,12 +7,15 @@ import {
 } from '../../helper';
 import { formatNumber } from '@renderer/utils/formatNumber';
 
-export function cvpCalculation(data: CellValue[][], fixCosts) {
+export function cvpCalculation(
+  data: CellValue[][],
+  fixCosts: number,
+  minProfit: number,
+) {
   const volumes: number[] = [];
   const prices: number[] = [];
   const costs: number[] = [];
   const fixTotals: number[] = [];
-  const minProfits: number[] = [];
   const productionCapacity: number[] = [];
 
   data.forEach((rowData, idx) => {
@@ -25,15 +28,19 @@ export function cvpCalculation(data: CellValue[][], fixCosts) {
     // variabilné náklady jednotkové
     costs[idx] = formatNumber(rowData[3]);
 
-    // minimanly zisk
-    minProfits[idx] = formatNumber(rowData[4]);
-
     // vyrobná kapacita
-    productionCapacity[idx] = formatNumber(rowData[5]);
+    productionCapacity[idx] = formatNumber(rowData[4]);
 
     // fixne náklady
     fixTotals[idx] = formatNumber(fixCosts);
   });
+
+  // minimanly zisk
+  const minProfits = Array.from({ length: data.length }, () =>
+    formatNumber(minProfit),
+  );
+
+  console.log('minProfits: ', minProfits);
 
   // nulový bod
   const zeroTon = divideArrays(fixTotals, subtractArrays(prices, costs));

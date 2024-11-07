@@ -29,6 +29,7 @@ type Props = {
   data: BarData[];
   labels: string[];
   showLegend?: boolean;
+  showTooltip?: boolean;
   yAxisLabel?: string;
   showValueInBar?: boolean;
   yAxisFontSize?: number;
@@ -42,6 +43,7 @@ const BarGraph: React.FC<Props> = ({
   data,
   labels,
   showLegend = true,
+  showTooltip = true,
   yAxisLabel,
   showValueInBar = true,
   yAxisFontSize = 12,
@@ -89,7 +91,9 @@ const BarGraph: React.FC<Props> = ({
             }
             fontSize={yAxisFontSize}
           />
-          <Tooltip content={<CustomTooltip />} />
+
+          {showTooltip && <Tooltip content={<CustomTooltip />} />}
+
           {showLegend && <Legend content={<CustomLegend />} />}
 
           {data.map((d, index) => (
@@ -105,7 +109,7 @@ const BarGraph: React.FC<Props> = ({
                 <LabelList
                   dataKey={d.name}
                   position="inside"
-                  fill={primaryTextColor}
+                  fill={'#fff'}
                   fontWeight={'bold'}
                 />
               )}
