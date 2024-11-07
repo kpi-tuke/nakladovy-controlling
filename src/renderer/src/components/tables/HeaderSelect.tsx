@@ -12,9 +12,9 @@ const selectCol = [
   { value: 10, label: 'Výrobná réžia technologická' },
   { value: 11, label: 'Výrobná réžia všeobecná' },
   { value: 12, label: 'Správna réžia' },
-  { value: 13, label: 'Odbytová réžia' },
-  { value: 14, label: 'Zásobovacia réžia' },
   { value: 15, label: 'Dopravná réžia' },
+  { value: 14, label: 'Zásobovacia réžia' },
+  { value: 13, label: 'Odbytová réžia' },
 ];
 
 type HeaderSelectProps = {
