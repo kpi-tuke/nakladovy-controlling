@@ -1,14 +1,16 @@
 import TableStatic from '../../components/TableStatic';
 import { sortimentCalculation } from './sortimentCalculation';
 import { useAppSelector } from '../../store/hooks';
-import { selectSortiment } from './sortimentSlice';
+import { selectors } from './sortimentSlice';
 import SectionTitle from '@renderer/components/SectionTitle';
 import { Grid, Paper } from '@mui/material';
 import Spacer from '@renderer/components/Spacer';
 import BarGraph from '@renderer/components/graph/BarGraph';
 
 export default function SortimentResult() {
-  const { headers, data } = useAppSelector(selectSortiment);
+  const headers = useAppSelector(selectors.headers);
+  const data = useAppSelector(selectors.data);
+
   const {
     marginGross,
     marginProfit,

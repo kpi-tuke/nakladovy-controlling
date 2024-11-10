@@ -1,14 +1,16 @@
 import TableStatic from '../../components/TableStatic';
 import { paretoCalculation } from './paretoCalculation';
 import { useAppSelector } from '../../store/hooks';
-import { selectPareto } from './paretoSlice';
+import { selectors } from './paretoSlice';
 import Spacer from '@renderer/components/Spacer';
 import SectionTitle from '@renderer/components/SectionTitle';
 import { Paper } from '@mui/material';
 import BarWithLineGraph from '@renderer/components/graph/BarWithLineGraph';
 
 export default function ParetoResult() {
-  const { data, items } = useAppSelector(selectPareto);
+  const data = useAppSelector(selectors.data);
+  const items = useAppSelector(selectors.items);
+
   const { values, valuesKumul, percentagesKumul, percentages, causes } =
     paretoCalculation(data as number[][], items);
 
