@@ -6,11 +6,13 @@ import SectionTitle from '@renderer/components/SectionTitle';
 import { Paper, Typography } from '@mui/material';
 import TableStatic from '@renderer/components/TableStatic';
 import BarGraph from '@renderer/components/graph/BarGraph';
+import LineGraph from '@renderer/components/graph/LineGraph';
 
 const TrendResult = () => {
   const data = useAppSelector(selectors.data);
   const items = useAppSelector(selectors.items);
   const headers = useAppSelector(selectors.headers);
+  const values = useAppSelector(selectors.values);
 
   const {
     betweenYears,
@@ -19,9 +21,12 @@ const TrendResult = () => {
     tempoRastu,
     koeficientPrirastku,
     tempoPrirastku,
+    costData,
+    incomeData,
   } = trendCalculation(
     data as number[][],
     headers.map((h) => h.label),
+    values,
   );
 
   return (
@@ -91,7 +96,53 @@ const TrendResult = () => {
 
       <Spacer height={40} />
 
-      <div>
+      <Paper>
+        <TableStatic
+          corner="Ekonomické ukazovatele"
+          header={headers.map((h) => h.label)}
+          inputs={[
+            ['(N<sub>c</sub>) - náklady celkom (€)', `\\(\\sum N\\)`],
+            ['(V<sub>c</sub>) - výnosy celkom (€)', `\\(\\sum V\\)`],
+          ]}
+          data={[costData, incomeData]}
+        />
+      </Paper>
+
+      <Spacer height={40} />
+
+      <SectionTitle>Dashboarding</SectionTitle>
+
+      <LineGraph
+        title="Vývoj nákladov v sledovanom období"
+        height={420}
+        labels={headers.map((h) => h.label)}
+        data={[
+          {
+            name: 'Náklady (N<sub>c</sub>)',
+            values: costData,
+          },
+          {
+            name: 'Výnosy (V<sub>c</sub>)',
+            values: incomeData,
+          },
+        ]}
+        yAxisLabel="ekonomická veličina (€)"
+      />
+
+      <Spacer height={40} hideInPrint />
+
+      <BarGraph
+        title="Prehľad vývoja nákladov v podniku"
+        height={420}
+        labels={headers.map((h) => h.label)}
+        data={items.filter(Boolean).map((item, index) => ({
+          name: item,
+          values: data[index] as number[],
+        }))}
+        yAxisLabel="hodnota nákladov (€)"
+      />
+
+      {/* <div>
         {items.filter(Boolean).map((item, index) => (
           <Paper
             key={index}
@@ -124,10 +175,7 @@ const TrendResult = () => {
             />
           </Paper>
         ))}
-      </div>
-
-      <Spacer height={40} hideInPrint />
-      <SectionTitle>Dashboarding</SectionTitle>
+      </div> */}
     </>
   );
 };
