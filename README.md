@@ -32,3 +32,9 @@ $ npm build:mac
 # For Linux
 $ npm build:linux
 ```
+
+### Check .exe file signature
+
+```bash
+osslsigncode verify -in path/to/yourfile.exe
+```
