@@ -89,8 +89,7 @@ const costs: Omit<ItemSelectOption, 'type'>[] = [
   { value: 549, label: '549 - Manká a škody' },
   {
     value: 551,
-    label:
-      '551 - Odpisy dlhodobého nehmotného majetku a dlhodobého hmotného majetku',
+    label: '551 - Odpisy',
   },
   {
     value: 553,

@@ -7,6 +7,7 @@ import TableStatic from '@renderer/components/TableStatic';
 import { variationCalculation } from './variationCalculation';
 import BarGraph from '@renderer/components/graph/BarGraph';
 import { transposeMatrix } from '@renderer/helper';
+import LineGraph from '@renderer/components/graph/LineGraph';
 
 const InputWrapper = styled(Box)`
   display: flex;
@@ -68,51 +69,25 @@ const VariationResults = () => {
 
       <SectionTitle className="new-page">Analýza ukazovateľov</SectionTitle>
 
-      <div>
-        {items.filter(Boolean).map((item, index) => (
-          <Paper
-            key={index}
-            sx={{
-              '&:not(:last-child)': {
-                marginBottom: '40px',
-              },
-            }}
-          >
-            <Typography
-              variant="h6"
-              gutterBottom
-              sx={{
-                marginLeft: 2,
-                marginTop: 1,
-                fontSize: '18px',
-              }}
-            >
-              {item}
-            </Typography>
-            <TableStatic
-              corner={'Ekonomické ukazovatele'}
-              header={['']}
-              inputs={[
-                [
-                  '(AD) - absolútna diferencia (€)',
-                  `\\(AD = skutočnosť - plán\\)`,
-                ],
-                [
-                  '(I) plnenia plánu (%)',
-                  `\\(I=\\frac{skutočnosť}{plán} * 100\\% \\)`,
-                ],
-              ]}
-              data={[[absolutnaDiferencia[index]], [plneniePlanu[index]]]}
-              newPageAfter={false}
-            />
-          </Paper>
-        ))}
-      </div>
+      <Paper>
+        <TableStatic
+          corner={'Ekonomické ukazovatele'}
+          header={items}
+          inputs={[
+            ['(AD) - absolútna diferencia (€)', `\\(AD = skutočnosť - plán\\)`],
+            [
+              '(I<sub>p</sub>) plnenia plánu (%)',
+              `\\(I_{p}=\\frac{skutočnosť}{plán} * 100\\% \\)`,
+            ],
+          ]}
+          data={[absolutnaDiferencia, plneniePlanu]}
+        />
+      </Paper>
 
       <Spacer height={40} />
 
-      <BarGraph
-        title={'Prehľad ekonomických veličin (plán/skutočnosť)'}
+      <LineGraph
+        title={'Prehľad nákladov v podniku'}
         height={420}
         labels={items.filter(Boolean)}
         data={[
@@ -122,7 +97,23 @@ const VariationResults = () => {
             values: transposeMatrix(data)[1] as number[],
           },
         ]}
-        yAxisLabel="ekonomická veličina (€)"
+        yAxisLabel="náklady v (€)"
+      />
+
+      <Spacer height={40} />
+
+      <BarGraph
+        title="Plnenie rozpočtu nákladov v podniku"
+        height={420}
+        labels={items.filter(Boolean)}
+        data={[
+          {
+            name: 'plnenie plánu',
+            values: plneniePlanu,
+          },
+        ]}
+        yAxisLabel="percento plnenia plánu (%)"
+        showLegend={false}
       />
     </div>
   );
