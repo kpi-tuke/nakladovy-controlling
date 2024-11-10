@@ -10,7 +10,7 @@ const AppVersion = () => {
         color: (theme) => theme.palette.text.primary,
       }}
     >
-      verzia 2.0.5
+      verzia 2.0.6
     </Typography>
   );
 };
