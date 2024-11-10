@@ -31,16 +31,11 @@ const initialTaxState: DefaultState = {
       type: CellType.STRING,
       label: 'Ďaňovo neuznané náklady',
     },
-    {
-      id: '3',
-      type: CellType.STRING,
-      label: 'Výnosy',
-    },
   ],
   data: [
-    [0, 0, 0],
-    [0, 0, 0],
-    [0, 0, 0],
+    [0, 0],
+    [0, 0],
+    [0, 0],
   ],
   items: [costOptions[0].label, profitOptions[0].label, ''],
   values: [

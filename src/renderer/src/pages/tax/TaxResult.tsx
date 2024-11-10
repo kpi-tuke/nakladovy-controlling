@@ -29,17 +29,17 @@ const TaxResult = () => {
 
   const year = additionalData?.year ?? '';
   const tax = additionalData?.tax ?? 0;
+  const income = additionalData?.income ?? 0;
 
   const {
     uznaneNakladySum,
     neuznaneNakladySum,
-    vynosySum,
     nakladyCelkove,
     vysledokHospodareniaUctovny,
     vysledokHospodareniaDanovy,
     rozdielVysledkuHodpodarenia,
     danovaPovinnost,
-  } = taxCalculation(data as number[][], tax);
+  } = taxCalculation(data as number[][], tax, income);
 
   const handleYearChange = (value: string) => {
     dispatch(
@@ -54,6 +54,15 @@ const TaxResult = () => {
     dispatch(
       taxActions.setAdditionalData({
         key: 'tax',
+        value,
+      }),
+    );
+  };
+
+  const handleIncomeChange = (value: string) => {
+    dispatch(
+      taxActions.setAdditionalData({
+        key: 'income',
         value,
       }),
     );
@@ -99,6 +108,25 @@ const TaxResult = () => {
         />
       </InputWrapper>
 
+      <Spacer height={20} />
+
+      <InputWrapper>
+        <YearLabel>Výnosy</YearLabel>
+        <TextField
+          sx={{
+            background: (theme) => theme.palette.background.paper,
+          }}
+          inputProps={{
+            style: {
+              textAlign: 'center',
+            },
+          }}
+          onChange={(e) => handleIncomeChange(e.target.value)}
+          value={income}
+          type="number"
+        />
+      </InputWrapper>
+
       <Spacer height={40} />
 
       <SectionTitle className="new-page">Analýza ukazovateľov</SectionTitle>
@@ -109,25 +137,24 @@ const TaxResult = () => {
           header={['']}
           inputs={[
             [
-              '(N<sub>du</sub>) - Daňovo uznané náklady',
-              `\\(N_{du} = \\sum Ďaňovo.uznané.náklady \\)`,
+              '(N<sub>du</sub>) - daňovo uznané náklady (€)',
+              `\\(N_{du} = \\sum daňovo.uznané.náklady \\)`,
             ],
             [
-              '(N<sub>dn</sub>) - Daňovo neuznané náklady',
-              `\\(N_{dn} = \\sum Ďaňovo.neuznané.náklady \\)`,
+              '(N<sub>dn</sub>) - daňovo neuznané náklady (€)',
+              `\\(N_{dn} = \\sum daňovo.neuznané.náklady \\)`,
             ],
-            ['(V) - Výnosy', `\\(V = \\sum výnosy \\)`],
-            ['(NC) - náklady celkové', `\\(NC = N_{du} + N_{dn} \\)`],
+            ['(NC) - náklady celkové (€)', `\\(NC = N_{du} + N_{dn} \\)`],
             [
-              '(VH<sub>ú</sub>) - výsledok hospodárenia účtovný',
+              '(VH<sub>ú</sub>) - výsledok hospodárenia účtovný (€)',
               `\\(VH_{ú} = V - NC \\)`,
             ],
             [
-              '(VH<sub>d</sub>) - výsledok hospodárenia daňový',
+              '(VH<sub>d</sub>) - výsledok hospodárenia daňový (€)',
               `\\(VH_{d} = V - N_{du} \\)`,
             ],
             [
-              '(AD) - rozdiel výsledku hospodárenia',
+              '(AD) - rozdiel výsledku hospodárenia (€)',
               `\\(AD = VH_{ú} - VH_{d} \\)`,
             ],
             ['(Daň) - daňová povinnosť', `\\(DP = (VH_{d} * DS) / 100 \\)`],
@@ -135,7 +162,6 @@ const TaxResult = () => {
           data={[
             [uznaneNakladySum],
             [neuznaneNakladySum],
-            [vynosySum],
             [nakladyCelkove],
             [vysledokHospodareniaUctovny],
             [vysledokHospodareniaDanovy],
@@ -157,6 +183,7 @@ const TaxResult = () => {
           name: item,
           values: [data[index][0] as number],
         }))}
+        yAxisLabel="náklady v (€)"
       />
 
       <Spacer height={40} />
@@ -169,28 +196,23 @@ const TaxResult = () => {
           name: item,
           values: [data[index][1] as number],
         }))}
+        yAxisLabel="náklady v (€)"
       />
 
       <Spacer height={40} />
 
       <BarGraph
-        title="Výsledok hospodarenia podniku"
+        title="Prehľad výsledku hospodárenia a daňovej povinnosti"
         height={420}
         labels={['']}
         data={[
           {
-            name: 'výsledok hospodárenia účtovný (VH<sub>ú</sub>)',
-            values: [vysledokHospodareniaUctovny],
-          },
-          {
-            name: 'výsledok hospodárenia daňový (VH<sub>d</sub>)',
+            name: 'VH<sub>d</sub> - výsledok hospodárenia daňový',
             values: [vysledokHospodareniaDanovy],
           },
-          {
-            name: 'rozdiel výsledku hospodárenia (AD)',
-            values: [rozdielVysledkuHodpodarenia],
-          },
+          { name: '(Daň) - daňová povinnosť', values: [danovaPovinnost] },
         ]}
+        yAxisLabel="ekonomická veličina (€)"
       />
     </div>
   );
