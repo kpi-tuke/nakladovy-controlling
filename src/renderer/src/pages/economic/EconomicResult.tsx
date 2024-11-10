@@ -150,6 +150,7 @@ export default function EconomicResult() {
         showLegend={false}
         yAxisLabel="výsledok hospodárenia (€)"
         showTooltip={false}
+        barTextColor="#fff"
       />
 
       <Spacer height={40} hideInPrint />

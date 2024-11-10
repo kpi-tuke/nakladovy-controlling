@@ -35,6 +35,7 @@ type Props = {
   yAxisFontSize?: number;
   xAxisFontSize?: number;
   customColors?: string[];
+  barTextColor?: string;
 };
 
 const BarGraph: React.FC<Props> = ({
@@ -49,6 +50,7 @@ const BarGraph: React.FC<Props> = ({
   yAxisFontSize = 12,
   xAxisFontSize = 12,
   customColors,
+  barTextColor,
 }) => {
   const {
     palette: {
@@ -109,7 +111,7 @@ const BarGraph: React.FC<Props> = ({
                 <LabelList
                   dataKey={d.name}
                   position="inside"
-                  fill={primaryTextColor}
+                  fill={barTextColor ?? primaryTextColor}
                   fontWeight={'bold'}
                 />
               )}

@@ -44,7 +44,7 @@ export default function SortimentResult() {
             ['(ÚVNV) - úplné vlastné náklady výkonu (€)', ``],
             [
               '(Z<sub>j</sub>) - zisk jednotkový (€)',
-              `\\(Z_{j} = N_{p} - ÚVNV\\)`,
+              `\\(Z_{j} = P_{c} - ÚVNV\\)`,
             ],
             [
               '(R<sub>n</sub>) - rentabilita nákladov (%)',
@@ -63,14 +63,17 @@ export default function SortimentResult() {
               `\\(P_{ú}=1-\\frac{N_{p}}{P_{cj}}\\)`,
             ],
             ['(T) - tržby celkové (€)', `\\(T = P_{c} * Q\\)`],
-            ['(NC) - náklady celkové (€)', `\\(NC = N_{p} + N_{r}\\)`],
+            ['(NC) - náklady celkové (€)', `\\(NC = ÚVNV * Q\\)`],
             ['(Z<sub>c</sub>) - zisk celkový (€)', `\\(Z_{c} = T - NC\\)`],
-            ['(ZP) - zisková prirážka (€)', `\\(ZP = P_{cj} - ÚVNV\\)`],
+            [
+              '(ZP) - zisková prirážka (%)',
+              `\\(ZP = \\frac{Z_{j}}{P_{c}}\\) * 100`,
+            ],
           ]}
           data={[
             totalDirectCosts,
             totalIndirectCosts,
-            data[3],
+            data[1],
             unitProfit,
             rentCost,
             rentIncome,

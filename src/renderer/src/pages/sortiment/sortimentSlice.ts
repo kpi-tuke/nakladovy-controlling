@@ -19,32 +19,19 @@ const initialSortimentState: DefaultState = {
       label: 'Výrobok A',
     },
   ],
-  data: [[0], [0], [0], [0], [0], [0], [0]],
+  data: [[0], [0], [0], [''], [0], ['']],
   items: [
     '(N<sub>p</sub>) - priame náklady (€)',
-    '(N<sub>pm</sub>) - priamy materiál',
-    '(N<sub>pmz</sub>) - priame mzdy',
-    '(N<sub>opn</sub>) - ostatné priame náklady',
     '(ÚVNV) -  úplné vlastné náklady výkonu (€)',
     '(P<sub>cj</sub>) - predajná cena (jednotková) (€)',
-    '(Q) - objem výroby (množstvo)',
+    'jednotka množstva predajnej ceny',
+    '(Q) - objem výroby',
+    'množstvo objemu výroby',
   ],
   values: [
     {
       id: '1',
       value: '(N<sub>p</sub>) - priame náklady (€)',
-    },
-    {
-      id: '2',
-      value: '(N<sub>pm</sub>) - priamy materiál',
-    },
-    {
-      id: '3',
-      value: '(N<sub>pmz</sub>) - priame mzdy',
-    },
-    {
-      id: '4',
-      value: '(N<sub>opn</sub>) - ostatné priame náklady',
     },
     {
       id: '5',
@@ -55,18 +42,25 @@ const initialSortimentState: DefaultState = {
       value: '(P<sub>cj</sub>) - predajná cena (jednotková) (€)',
     },
     {
+      id: '6',
+      value: 'jednotka množstva predajnej ceny',
+    },
+    {
       id: '7',
       value: '(Q) - objem výroby (množstvo)',
+    },
+    {
+      id: '8',
+      value: 'množstvo objemu výroby',
     },
   ],
   rowTypes: [
     CellType.NUMBER,
     CellType.NUMBER,
     CellType.NUMBER,
+    CellType.STRING,
     CellType.NUMBER,
-    CellType.NUMBER,
-    CellType.NUMBER,
-    CellType.NUMBER,
+    CellType.STRING,
   ],
   text: '',
   accounts: [''],
