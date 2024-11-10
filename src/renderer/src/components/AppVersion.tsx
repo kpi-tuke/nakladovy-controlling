@@ -1,6 +1,18 @@
 import { Typography } from '@mui/material';
+import { useEffect, useState } from 'react';
 
 const AppVersion = () => {
+  const [version, setVersion] = useState('');
+
+  useEffect(() => {
+    const fetchVersion = async () => {
+      const appVersion = await window.electron.getAppVersion();
+      setVersion(appVersion);
+    };
+
+    fetchVersion();
+  }, []);
+
   return (
     <Typography
       sx={{
@@ -10,7 +22,7 @@ const AppVersion = () => {
         color: (theme) => theme.palette.text.primary,
       }}
     >
-      verzia 2.0.6
+      {version}
     </Typography>
   );
 };

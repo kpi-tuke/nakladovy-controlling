@@ -463,6 +463,9 @@ electron.ipcMain.handle("printToPDF", async (_, fileName) => {
   }
   return true;
 });
+electron.ipcMain.handle("getAppVersion", () => {
+  return electron.app.getVersion();
+});
 electron.ipcMain.on("quit", async () => {
   mainWindow?.close();
 });

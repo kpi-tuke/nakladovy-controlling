@@ -1,10 +1,5 @@
 import { formatNumber } from '@renderer/utils/formatNumber';
-import {
-  divideArrays,
-  subtractArrays,
-  sumArrays,
-  multiplyArrays,
-} from '../../helper';
+import { divideArrays, subtractArrays, multiplyArrays } from '../../helper';
 
 export function sortimentCalculation(data: number[][]) {
   // priame náklady

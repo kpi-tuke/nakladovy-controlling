@@ -273,6 +273,10 @@ ipcMain.handle('printToPDF', async (_, fileName: string) => {
   return true;
 });
 
+ipcMain.handle('getAppVersion', () => {
+  return app.getVersion();
+});
+
 ipcMain.on('quit', async () => {
   mainWindow?.close();
 });

@@ -245,10 +245,10 @@ export default function IndexResult() {
           <BarGraph
             title="REŤAZOVÝ INDEX"
             height={420}
-            labels={['']}
-            data={betweenYears.map((year, index) => ({
-              name: year,
-              values: [retazovyIndexNakladov[index]],
+            labels={betweenYears}
+            data={items.filter(Boolean).map((item, index) => ({
+              name: item,
+              values: retazovyIndexNakladov[index],
             }))}
           />
         </Grid>

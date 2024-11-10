@@ -1,4 +1,4 @@
-import { Box, Paper, styled, TextField, Typography } from '@mui/material';
+import { Box, Paper, styled, TextField } from '@mui/material';
 import SectionTitle from '@renderer/components/SectionTitle';
 import { variationActions, selectors } from './variationSlice';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';

@@ -16,5 +16,7 @@ contextBridge.exposeInMainWorld('electron', {
     }
   },
 
+  getAppVersion: () => ipcRenderer.invoke('getAppVersion'),
+
   quit: () => ipcRenderer.send('quit'),
 });
