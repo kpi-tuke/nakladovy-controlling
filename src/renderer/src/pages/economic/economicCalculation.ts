@@ -87,12 +87,17 @@ export function economicCalculation(
     }
   });
 
+  // console.log('values511518indexes: ', values511518indexes);
+
   let servicesConstByYear = values511518indexes.reduce(
     (acc, index) => {
       return sumArrays(acc, data[index] as number[]);
     },
     Array.from({ length: data[0].length }, () => 0),
   );
+
+  console.log('servicesConstByYear: ', servicesConstByYear);
+
   servicesConstByYear = divideArrays(servicesConstByYear, incomeByYear);
 
   // 531 - 538

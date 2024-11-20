@@ -84,9 +84,11 @@ const VariationResults = () => {
         />
       </Paper>
 
-      <Spacer height={40} />
+      <Spacer height={40} hideInPrint />
 
-      <LineGraph
+      <SectionTitle>Dashboarding</SectionTitle>
+
+      <BarGraph
         title={'Prehľad nákladov v podniku'}
         height={420}
         labels={items.filter(Boolean)}
@@ -103,7 +105,7 @@ const VariationResults = () => {
       <Spacer height={40} />
 
       <BarGraph
-        title="Plnenie rozpočtu nákladov v podniku"
+        title="Plnenie plánu nákladov v podniku"
         height={420}
         labels={items.filter(Boolean)}
         data={[

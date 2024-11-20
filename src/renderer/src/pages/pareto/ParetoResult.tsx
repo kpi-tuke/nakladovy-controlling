@@ -35,7 +35,7 @@ export default function ParetoResult() {
               valuesKumul[idx],
               percentages[idx],
               percentagesKumul[idx],
-              percentagesKumul[idx] > 98
+              percentagesKumul[idx] > 95
                 ? 'C'
                 : percentagesKumul[idx] > 80
                   ? 'B'

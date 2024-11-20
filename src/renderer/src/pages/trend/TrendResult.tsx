@@ -113,7 +113,7 @@ const TrendResult = () => {
       <SectionTitle>Dashboarding</SectionTitle>
 
       <LineGraph
-        title="Vývoj nákladov v sledovanom období"
+        title="Trend vývoja ekonomickej veličiny"
         height={420}
         labels={headers.map((h) => h.label)}
         data={[
@@ -139,7 +139,8 @@ const TrendResult = () => {
           name: item,
           values: data[index] as number[],
         }))}
-        yAxisLabel="hodnota nákladov (€)"
+        yAxisLabel="Náklady v (€)"
+        showValueInBar={false}
       />
 
       {/* <div>

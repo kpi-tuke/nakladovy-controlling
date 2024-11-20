@@ -134,7 +134,7 @@ const TaxResult = () => {
       <Paper>
         <TableStatic
           corner={'Ekonomické ukazovatele'}
-          header={['']}
+          header={['Hodnota (€)']}
           inputs={[
             [
               '(N<sub>du</sub>) - daňovo uznané náklady (€)',

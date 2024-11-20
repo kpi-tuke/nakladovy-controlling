@@ -24,12 +24,12 @@ const initialTaxState: DefaultState = {
     {
       id: '1',
       type: CellType.STRING,
-      label: 'Ďaňovo uznané náklady',
+      label: 'Ďaňovo uznané náklady (€)',
     },
     {
       id: '2',
       type: CellType.STRING,
-      label: 'Ďaňovo neuznané náklady',
+      label: 'Ďaňovo neuznané náklady (€)',
     },
   ],
   data: [

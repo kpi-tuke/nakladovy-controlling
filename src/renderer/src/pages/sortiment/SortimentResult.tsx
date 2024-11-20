@@ -64,13 +64,13 @@ export default function SortimentResult() {
               '(Pú) - príspevok na úhradu (€)',
               `\\(P_{ú}=1-\\frac{N_{p}}{P_{cj}}\\)`,
             ],
-            ['(T) - tržby celkové (€)', `\\(T = P_{c} * Q\\)`],
-            ['(NC) - náklady celkové (€)', `\\(NC = ÚVNV * Q\\)`],
-            ['(Z<sub>c</sub>) - zisk celkový (€)', `\\(Z_{c} = T - NC\\)`],
             [
               '(ZP) - zisková prirážka (%)',
               `\\(ZP = \\frac{Z_{j}}{P_{c}}\\) * 100`,
             ],
+            ['(T) - tržby celkové (€)', `\\(T = P_{c} * Q\\)`],
+            ['(NC) - náklady celkové (€)', `\\(NC = ÚVNV * Q\\)`],
+            ['(Z<sub>c</sub>) - zisk celkový (€)', `\\(Z_{c} = T - NC\\)`],
           ]}
           data={[
             totalDirectCosts,
@@ -81,10 +81,10 @@ export default function SortimentResult() {
             rentIncome,
             marginGross,
             allowance,
+            marginProfit,
             income,
             totalCosts,
             totalProfit,
-            marginProfit,
           ]}
         />
       </Paper>

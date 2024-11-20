@@ -11,7 +11,7 @@ import isEqual from 'lodash.isequal';
 const initialSortimentState: DefaultState = {
   id: 5,
   title: 'Sortimentná analýza',
-  corner: 'Ekonomická veličina',
+  corner: 'Ekonomická veličina / Produkt',
   headers: [
     {
       id: '1',

@@ -120,7 +120,10 @@ export default function CVPResult() {
               `\\( N_{c} = N_{f} + (Q * N_{vj})  \\)`,
             ],
             ['(T) tržby celkové (€)', `\\(T=Q * P_{cj}\\)`],
-            ['(VH) výsledok hospodárenia (€)', `\\(VH = T - N_{c}\\)`],
+            [
+              '(VH) výsledok hospodárenia (zisk/strata) (€)',
+              `\\(VH = T - N_{c}\\)`,
+            ],
             [
               '(N<sub>0</sub>) - nulový bod (množstvo)',
               `\\(N_{0}=\\frac{F_{n}}{P_{cj}-N_{vj}}\\)`,
@@ -156,7 +159,7 @@ export default function CVPResult() {
       <SectionTitle>Dashboarding</SectionTitle>
 
       <BarGraph
-        title={'Nulový bod pre výrobný sortiment'}
+        title={'Bod zvratu'}
         height={420}
         data={headers.map((h, index) => ({
           name: h.label,
