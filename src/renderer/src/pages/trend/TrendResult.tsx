@@ -135,48 +135,24 @@ const TrendResult = () => {
         title="Prehľad vývoja nákladov v podniku"
         height={420}
         labels={headers.map((h) => h.label)}
-        data={items.filter(Boolean).map((item, index) => ({
-          name: item,
-          values: data[index] as number[],
-        }))}
+        data={values.reduce<
+          {
+            name: string;
+            values: number[];
+          }[]
+        >((acc, value, index) => {
+          if (!!value.value && +value.value < 600) {
+            acc.push({
+              name: items[index],
+              values: data[index] as number[],
+            });
+          }
+
+          return acc;
+        }, [])}
         yAxisLabel="Náklady v (€)"
         showValueInBar={false}
       />
-
-      {/* <div>
-        {items.filter(Boolean).map((item, index) => (
-          <Paper
-            key={index}
-            sx={{
-              '&:not(:last-child)': {
-                marginBottom: '40px',
-              },
-            }}
-          >
-            <Typography
-              variant="h6"
-              gutterBottom
-              sx={{
-                marginLeft: 2,
-                marginTop: 1,
-                fontSize: '18px',
-              }}
-            >
-              {item}
-            </Typography>
-            <BarGraph
-              title={'Prehľad koeficienta rastu/poklesu v sledovanom obdobi'}
-              labels={['']}
-              data={betweenYears.map((year, yearIndex) => ({
-                name: year,
-                values: [koeficientRastu[index][yearIndex]],
-              }))}
-              height={420}
-              yAxisLabel="koeficient rastu/poklesu"
-            />
-          </Paper>
-        ))}
-      </div> */}
     </>
   );
 };
