@@ -1,5 +1,6 @@
 import { CellValue, Value } from '@renderer/store/rootReducer';
 import { divideArrays, subtractArrays, sumArrays } from '../../helper';
+import { formatNumber } from '@renderer/utils/formatNumber';
 
 export function economicCalculation(
   data: CellValue[][],
@@ -42,7 +43,7 @@ export function economicCalculation(
   const values501index = values.findIndex((value) => value.value === '501');
   let materialCostByYear = Array.from({ length: data[0].length }, () => 0);
   if (values501index !== -1) {
-    const values501 = data[values501index] as number[];
+    const values501 = data[values501index].map((i) => +i);
     materialCostByYear = divideArrays(values501, incomeByYear);
   }
 
@@ -50,7 +51,7 @@ export function economicCalculation(
   const values521index = values.findIndex((value) => value.value === '521');
   let wageCostByYear = Array.from({ length: data[0].length }, () => 0);
   if (values521index !== -1) {
-    const values521 = data[values521index] as number[];
+    const values521 = data[values521index].map((i) => +i);
     wageCostByYear = divideArrays(values521, incomeByYear);
   }
 
@@ -58,7 +59,7 @@ export function economicCalculation(
   const values551index = values.findIndex((value) => value.value === '551');
   let depreciationCostByYear = Array.from({ length: data[0].length }, () => 0);
   if (values551index !== -1) {
-    const values551 = data[values551index] as number[];
+    const values551 = data[values551index].map((i) => +i);
     depreciationCostByYear = divideArrays(values551, incomeByYear);
   }
 
@@ -72,7 +73,10 @@ export function economicCalculation(
 
   let financialConstByYear = values561569indexes.reduce(
     (acc, index) => {
-      return sumArrays(acc, data[index] as number[]);
+      return sumArrays(
+        acc,
+        data[index].map((i) => +i),
+      );
     },
     Array.from({ length: data[0].length }, () => 0),
   );
@@ -87,16 +91,15 @@ export function economicCalculation(
     }
   });
 
-  // console.log('values511518indexes: ', values511518indexes);
-
   let servicesConstByYear = values511518indexes.reduce(
     (acc, index) => {
-      return sumArrays(acc, data[index] as number[]);
+      return sumArrays(
+        acc,
+        data[index].map((i) => +i),
+      );
     },
     Array.from({ length: data[0].length }, () => 0),
   );
-
-  console.log('servicesConstByYear: ', servicesConstByYear);
 
   servicesConstByYear = divideArrays(servicesConstByYear, incomeByYear);
 
@@ -110,37 +113,28 @@ export function economicCalculation(
 
   let taxesConstByYear = values531538indexes.reduce(
     (acc, index) => {
-      return sumArrays(acc, data[index] as number[]);
+      return sumArrays(
+        acc,
+        data[index].map((i) => +i),
+      );
     },
     Array.from({ length: data[0].length }, () => 0),
   );
   taxesConstByYear = divideArrays(taxesConstByYear, incomeByYear);
 
-  const constItemsByYear = values.reduce(
-    (acc, value, index) => {
-      if (+value.value >= 501 && +value.value <= 599) {
-        acc[index] = data[index] as number[];
-      }
-
-      return acc;
-    },
-    [Array.from({ length: values.length }, () => [] as any[])] as any[],
-  );
-
   return {
-    costData: costsByYear,
-    incomeData: incomeByYear,
-    profitData: profitByYear,
-    incomeProfitabilityData: incomeProfitabilityByYear,
-    costProfitabilityData: costProfitabilityByYear,
-    costEfficiencyData: costEfficiencyByYear,
-    costIndicatorData: costIndicatorByYear,
-    materialCostData: materialCostByYear,
-    wageCostData: wageCostByYear,
-    depreciationCostData: depreciationCostByYear,
-    financialConstData: financialConstByYear,
-    servicesConstData: servicesConstByYear,
-    taxesConstData: taxesConstByYear,
-    constItemsByYear,
+    costData: costsByYear.map(formatNumber),
+    incomeData: incomeByYear.map(formatNumber),
+    profitData: profitByYear.map(formatNumber),
+    incomeProfitabilityData: incomeProfitabilityByYear.map(formatNumber),
+    costProfitabilityData: costProfitabilityByYear.map(formatNumber),
+    costEfficiencyData: costEfficiencyByYear.map(formatNumber),
+    costIndicatorData: costIndicatorByYear.map(formatNumber),
+    materialCostData: materialCostByYear.map(formatNumber),
+    wageCostData: wageCostByYear.map(formatNumber),
+    depreciationCostData: depreciationCostByYear.map(formatNumber),
+    financialConstData: financialConstByYear.map(formatNumber),
+    servicesConstData: servicesConstByYear.map(formatNumber),
+    taxesConstData: taxesConstByYear.map(formatNumber),
   };
 }

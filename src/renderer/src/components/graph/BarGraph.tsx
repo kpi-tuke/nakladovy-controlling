@@ -107,14 +107,13 @@ const BarGraph: React.FC<Props> = ({
                   : getColorByIndex(index)
               }
             >
-              {showValueInBar && (
-                <LabelList
-                  dataKey={d.name}
-                  position="inside"
-                  fill={barTextColor ?? primaryTextColor}
-                  fontWeight={'bold'}
-                />
-              )}
+              <LabelList
+                dataKey={d.name}
+                position="inside"
+                fill={barTextColor ?? primaryTextColor}
+                fontWeight={'bold'}
+                className={!showValueInBar ? 'hideInScreen' : undefined}
+              />
             </Bar>
           ))}
         </BarChart>
