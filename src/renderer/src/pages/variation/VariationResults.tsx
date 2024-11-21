@@ -7,7 +7,6 @@ import TableStatic from '@renderer/components/TableStatic';
 import { variationCalculation } from './variationCalculation';
 import BarGraph from '@renderer/components/graph/BarGraph';
 import { transposeMatrix } from '@renderer/helper';
-import LineGraph from '@renderer/components/graph/LineGraph';
 
 const InputWrapper = styled(Box)`
   display: flex;

@@ -77,7 +77,6 @@ export const taxSlice = createSlice({
     },
     ...openProject,
     ...changeAccount,
-    ...sortTableByYear,
     ...sortTableByItemNumber,
   },
 });

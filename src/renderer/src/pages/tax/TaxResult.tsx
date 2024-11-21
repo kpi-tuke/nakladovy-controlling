@@ -72,60 +72,72 @@ const TaxResult = () => {
     <div>
       <Spacer height={40} />
 
-      <InputWrapper>
-        <YearLabel>Sledovaný rok</YearLabel>
-        <TextField
-          sx={{
-            background: (theme) => theme.palette.background.paper,
-          }}
-          inputProps={{
-            style: {
-              textAlign: 'center',
-            },
-          }}
-          onChange={(e) => handleYearChange(e.target.value)}
-          value={year}
-          type="number"
-        />
-      </InputWrapper>
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: {
+            xs: 'column',
+            md: 'row',
+          },
+          alignItems: 'center',
+          justifyContent: {
+            xs: 'center',
+            md: 'space-around',
+          },
+          gap: 2,
+        }}
+      >
+        <InputWrapper>
+          <YearLabel>Sledovaný rok</YearLabel>
+          <TextField
+            sx={{
+              background: (theme) => theme.palette.background.paper,
+            }}
+            inputProps={{
+              style: {
+                textAlign: 'center',
+              },
+            }}
+            onChange={(e) => handleYearChange(e.target.value)}
+            value={year}
+            type="number"
+          />
+        </InputWrapper>
 
-      <Spacer height={20} />
+        <InputWrapper>
+          <YearLabel>Daňová sadzba (%)</YearLabel>
+          <TextField
+            sx={{
+              background: (theme) => theme.palette.background.paper,
+            }}
+            inputProps={{
+              style: {
+                textAlign: 'center',
+              },
+            }}
+            onChange={(e) => handleTaxChange(e.target.value)}
+            value={tax}
+            type="number"
+          />
+        </InputWrapper>
 
-      <InputWrapper>
-        <YearLabel>Daňová sadzba (%)</YearLabel>
-        <TextField
-          sx={{
-            background: (theme) => theme.palette.background.paper,
-          }}
-          inputProps={{
-            style: {
-              textAlign: 'center',
-            },
-          }}
-          onChange={(e) => handleTaxChange(e.target.value)}
-          value={tax}
-          type="number"
-        />
-      </InputWrapper>
-
-      <Spacer height={20} />
-
-      <InputWrapper>
-        <YearLabel>Výnosy</YearLabel>
-        <TextField
-          sx={{
-            background: (theme) => theme.palette.background.paper,
-          }}
-          inputProps={{
-            style: {
-              textAlign: 'center',
-            },
-          }}
-          onChange={(e) => handleIncomeChange(e.target.value)}
-          value={income}
-          type="number"
-        />
-      </InputWrapper>
+        <InputWrapper>
+          <YearLabel>Výnosy</YearLabel>
+          <TextField
+            sx={{
+              background: (theme) => theme.palette.background.paper,
+            }}
+            inputProps={{
+              style: {
+                textAlign: 'center',
+              },
+            }}
+            onChange={(e) => handleIncomeChange(e.target.value)}
+            value={income}
+            type="number"
+          />
+        </InputWrapper>
+      </Box>
 
       <Spacer height={40} />
 

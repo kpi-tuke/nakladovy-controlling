@@ -19,7 +19,9 @@ export const variationCalculation = (data: number[][]) => {
   );
 
   return {
-    absolutnaDiferencia,
-    plneniePlanu,
+    absolutnaDiferencia: absolutnaDiferencia.map(formatNumber),
+    plneniePlanu: plneniePlanu
+      .map(formatNumber)
+      .map((value) => Math.ceil(value)),
   };
 };
