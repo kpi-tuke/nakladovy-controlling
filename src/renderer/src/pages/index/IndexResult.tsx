@@ -212,23 +212,6 @@ export default function IndexResult() {
       <SectionTitle>Dashboarding</SectionTitle>
 
       <Grid container spacing={2}>
-        {/* {data.map((row, index) =>
-          !!items[index] ? (
-            <Grid item xs={12}>
-              <BarGraph
-                title={`VÝVOJ EKONOMICKEJ VELIČINY - ${items[index]}`}
-                height={420}
-                labels={['']}
-                data={headers.slice(1).map((_, index) => ({
-                  name: headers[index + 1].label,
-                  values: [+row.slice(1)[index]],
-                }))}
-                yAxisLabel="ekonomická veličina (€)"
-              />
-            </Grid>
-          ) : null,
-        )} */}
-
         <Grid item xs={12}>
           <BarGraph
             title="BÁZICKÝ INDEX"

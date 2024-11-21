@@ -40,7 +40,7 @@ export function paretoCalculation(data: number[][], items: string[]) {
   }
 
   return {
-    causes: causes.map(formatNumber),
+    causes: causes,
     percentages: percentages.map(formatNumber),
     values: values.map(formatNumber),
     percentagesKumul: percentagesKumul.map(formatNumber),

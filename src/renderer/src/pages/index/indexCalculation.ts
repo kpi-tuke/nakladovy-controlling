@@ -135,13 +135,19 @@ export function indexCalculation(
   return {
     costSumsForYears: costSumsForYears.map(formatNumber),
     incomeSumsForYears: incomeSumsForYears.map(formatNumber),
-    bazickyIndex: bazickyIndex.map(formatNumber),
-    absolutnaDiferencia: absolutnaDiferencia.map(formatNumber),
+    bazickyIndex: bazickyIndex.map((items) => items.map(formatNumber)),
+    absolutnaDiferencia: absolutnaDiferencia.map((items) =>
+      items.map(formatNumber),
+    ),
     percentoZmenyNakladov: percentoZmenyNakladov.map(formatNumber),
     percentoZmenyVynosov: percentoZmenyVynosov.map(formatNumber),
     koeficientReakcie: koeficientReakcie.map(formatNumber),
-    retazovyIndexNakladov: retazovyIndexNakladov.map(formatNumber),
-    absolutnaDiferenciaNakladov: absolutnaDiferenciaNakladov.map(formatNumber),
+    retazovyIndexNakladov: retazovyIndexNakladov.map((items) =>
+      items.map(formatNumber),
+    ),
+    absolutnaDiferenciaNakladov: absolutnaDiferenciaNakladov.map((items) =>
+      items.map(formatNumber),
+    ),
     betweenYears,
   };
 }

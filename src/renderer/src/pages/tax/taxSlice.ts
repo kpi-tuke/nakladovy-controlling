@@ -11,7 +11,6 @@ import {
   openProject,
   rootReducer,
   sortTableByItemNumber,
-  sortTableByYear,
 } from '@renderer/store/rootReducer';
 import { RootSelectors, RootState } from '@renderer/store/store';
 import isEqual from 'lodash.isequal';
