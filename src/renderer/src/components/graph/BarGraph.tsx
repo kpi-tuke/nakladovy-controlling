@@ -3,6 +3,7 @@ import {
   Bar,
   BarChart,
   CartesianGrid,
+  Cell,
   LabelList,
   Legend,
   ResponsiveContainer,
@@ -49,7 +50,7 @@ const BarGraph: React.FC<Props> = ({
   showValueInBar = true,
   yAxisFontSize = 12,
   xAxisFontSize = 12,
-  customColors,
+  customColors = [],
   barTextColor,
 }) => {
   const {
@@ -99,14 +100,7 @@ const BarGraph: React.FC<Props> = ({
           {showLegend && <Legend content={<CustomLegend />} />}
 
           {data.map((d, index) => (
-            <Bar
-              dataKey={d.name}
-              fill={
-                !!customColors && index <= customColors.length
-                  ? customColors[index]
-                  : getColorByIndex(index)
-              }
-            >
+            <Bar dataKey={d.name} fill={getColorByIndex(index)}>
               <LabelList
                 dataKey={d.name}
                 position="inside"
@@ -114,6 +108,11 @@ const BarGraph: React.FC<Props> = ({
                 fontWeight={'bold'}
                 className={!showValueInBar ? 'hideInScreen' : undefined}
               />
+
+              {customColors.length > 0 &&
+                customColors.map((_, index) => (
+                  <Cell key={`cell-${index}`} fill={customColors[index]} />
+                ))}
             </Bar>
           ))}
         </BarChart>

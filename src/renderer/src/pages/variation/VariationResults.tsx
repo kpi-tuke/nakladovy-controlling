@@ -99,6 +99,7 @@ const VariationResults = () => {
           },
         ]}
         yAxisLabel="náklady v (€)"
+        showTooltip={false}
       />
 
       <Spacer height={40} />
@@ -115,6 +116,10 @@ const VariationResults = () => {
         ]}
         yAxisLabel="percento plnenia plánu (%)"
         showLegend={false}
+        customColors={plneniePlanu.map((value) =>
+          value >= 100 ? '#2b56ff' : '#fa0505',
+        )}
+        showTooltip={false}
       />
     </div>
   );

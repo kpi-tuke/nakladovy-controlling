@@ -151,6 +151,7 @@ export default function EconomicResult() {
         yAxisLabel="výsledok hospodárenia (€)"
         showTooltip={false}
         barTextColor="#fff"
+        customColors={profitData.map((p) => (p >= 0 ? '#2b56ff' : '#fa0505'))}
       />
 
       <Spacer height={40} hideInPrint />
