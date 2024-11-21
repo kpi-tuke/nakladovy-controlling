@@ -62,17 +62,17 @@ export function sortimentCalculation(data: number[][]) {
   const totalProfit = subtractArrays(income, totalCosts).map(formatNumber);
 
   return {
-    rentCost,
-    rentIncome,
-    marginProfit,
-    marginGross,
-    allowance,
-    profit,
-    totalDirectCosts,
-    totalIndirectCosts,
-    unitProfit,
-    income,
-    totalCosts,
-    totalProfit,
+    rentCost: rentCost.map(formatNumber),
+    rentIncome: rentIncome.map(formatNumber),
+    marginProfit: marginProfit.map(formatNumber),
+    marginGross: marginGross.map(formatNumber),
+    allowance: allowance.map(formatNumber),
+    profit: profit.map(formatNumber),
+    totalDirectCosts: totalDirectCosts.map(formatNumber),
+    totalIndirectCosts: totalIndirectCosts.map(formatNumber),
+    unitProfit: unitProfit.map(formatNumber),
+    income: income.map(formatNumber),
+    totalCosts: totalCosts.map(formatNumber),
+    totalProfit: totalProfit.map(formatNumber),
   };
 }

@@ -69,13 +69,13 @@ export function trendCalculation(
   });
 
   return {
-    costData: costsByYear,
-    incomeData: incomeByYear,
-    betweenYears,
-    absolutnyPrirastok,
-    koeficientRastu,
-    tempoRastu,
-    koeficientPrirastku,
-    tempoPrirastku,
+    costData: costsByYear.map(formatNumber),
+    incomeData: incomeByYear.map(formatNumber),
+    betweenYears: betweenYears.map(formatNumber),
+    absolutnyPrirastok: absolutnyPrirastok.map(formatNumber),
+    koeficientRastu: koeficientRastu.map(formatNumber),
+    tempoRastu: tempoRastu.map(formatNumber),
+    koeficientPrirastku: koeficientPrirastku.map(formatNumber),
+    tempoPrirastku: tempoPrirastku.map(formatNumber),
   };
 }

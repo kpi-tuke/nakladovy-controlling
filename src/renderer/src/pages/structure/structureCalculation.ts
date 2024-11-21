@@ -1,4 +1,5 @@
 import { CellValue } from '@renderer/store/rootReducer';
+import { formatNumber } from '@renderer/utils/formatNumber';
 
 export function structureCalculation(data: CellValue[][]) {
   let rowSums: number[] = [];
@@ -25,5 +26,9 @@ export function structureCalculation(data: CellValue[][]) {
     (a: number, b: number) => parseFloat((a + b).toFixed(12)),
     0,
   );
-  return { rowSums, colSums, totalCost };
+  return {
+    rowSums: rowSums.map(formatNumber),
+    colSums: colSums.map(formatNumber),
+    totalCost,
+  };
 }
