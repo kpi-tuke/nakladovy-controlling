@@ -19,11 +19,11 @@ const initialCVPState: CVPState = {
       label: 'Výrobok A',
     },
   ],
-  data: [[0], [''], [0], [0], [0]],
+  data: [[0], [''], [0], [0]],
   values: [
     {
       id: '1',
-      value: '(Q) - objem produkcie (množstvo)',
+      value: '(Q) - objem produkcie - výrobná kapacita (množstvo)',
     },
     {
       id: '2',
@@ -41,22 +41,16 @@ const initialCVPState: CVPState = {
       id: '6',
       value: '(Z<sub>min</sub>) minimálny zisk (€)',
     },
-    {
-      id: '7',
-      value: '(VK) výrobná kapacita (množstvo)',
-    },
   ],
   items: [
-    '(Q) - objem produkcie (množstvo)',
+    '(Q) - objem produkcie - výrobná kapacita (množstvo)',
     'merna jednotka produkcie',
     '(Pc) - predajná cena jednotková (€)',
     '(Nvj) - variabilné náklady jednotkové (€)',
-    '(VK) výrobná kapacita (množstvo)',
   ],
   rowTypes: [
     CellType.NUMBER,
     CellType.STRING,
-    CellType.NUMBER,
     CellType.NUMBER,
     CellType.NUMBER,
   ],

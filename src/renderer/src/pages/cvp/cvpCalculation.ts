@@ -16,7 +16,6 @@ export function cvpCalculation(
   const prices: number[] = [];
   const costs: number[] = [];
   const fixTotals: number[] = [];
-  const productionCapacity: number[] = [];
 
   data.forEach((rowData, idx) => {
     // objem produkcie
@@ -28,9 +27,6 @@ export function cvpCalculation(
     // variabilné náklady jednotkové
     costs[idx] = formatNumber(rowData[3]);
 
-    // vyrobná kapacita
-    productionCapacity[idx] = formatNumber(rowData[4]);
-
     // fixne náklady
     fixTotals[idx] = formatNumber(fixCosts);
   });
@@ -40,10 +36,10 @@ export function cvpCalculation(
     formatNumber(minProfit),
   );
 
-  console.log('minProfits: ', minProfits);
-
   // nulový bod
-  const zeroTon = divideArrays(fixTotals, subtractArrays(prices, costs));
+  const zeroTon = divideArrays(fixTotals, subtractArrays(prices, costs)).map(
+    (i) => Math.ceil(i),
+  );
 
   // nulový bod (€)
   const zeroEur = divideArrays(
@@ -60,7 +56,7 @@ export function cvpCalculation(
       parseFloat((fixTotals[index] + minProfits[index]).toFixed(12)),
     ),
     subtractArrays(prices, costs),
-  );
+  ).map((i) => Math.ceil(i));
 
   // pri predajnej cene
   const zeroSellPrice = divideArrays(fixTotals, sumArrays(volumes, costs));
@@ -73,11 +69,9 @@ export function cvpCalculation(
 
   // kritické využitie výrobnej kapacity
   const capacityUsage = multiplyArrays(
-    divideArrays(zeroTon, productionCapacity),
+    divideArrays(zeroTon, volumes),
     new Array(volumes.length).fill(100),
   );
-
-  // multiplyArrays(productionCapacity, new Array(volumes.length).fill(100)),
 
   const totalCosts = sumArrays(fixTotals, multiplyArrays(volumes, costs));
 
@@ -86,20 +80,20 @@ export function cvpCalculation(
   const economicResult = subtractArrays(incomeTotal, totalCosts);
 
   return {
-    volumes,
-    prices,
-    costs,
-    zeroEur,
-    zeroTon,
-    zeroProf,
-    fixTotals,
-    minProfits,
-    zeroSellPrice,
-    paymentMoney,
-    fixedCosts,
-    capacityUsage,
-    totalCosts,
-    incomeTotal,
-    economicResult,
+    volumes: volumes.map(formatNumber),
+    prices: prices.map(formatNumber),
+    costs: costs.map(formatNumber),
+    zeroEur: zeroEur.map(formatNumber),
+    zeroTon: zeroTon.map(formatNumber),
+    zeroProf: zeroProf.map(formatNumber),
+    fixTotals: fixTotals.map(formatNumber),
+    minProfits: minProfits.map(formatNumber),
+    zeroSellPrice: zeroSellPrice.map(formatNumber),
+    paymentMoney: paymentMoney.map(formatNumber),
+    fixedCosts: fixedCosts.map(formatNumber),
+    capacityUsage: capacityUsage.map(formatNumber),
+    totalCosts: totalCosts.map(formatNumber),
+    incomeTotal: incomeTotal.map(formatNumber),
+    economicResult: economicResult.map(formatNumber),
   };
 }

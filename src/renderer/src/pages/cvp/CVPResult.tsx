@@ -139,7 +139,7 @@ export default function CVPResult() {
             ],
             [
               '(VK<sub>krit</sub>) - kritické využitie výrobnej kapacity (%)',
-              `\\(VK_{krit}=\\frac{N_{o}(ton)}{VK} * 100\\)`,
+              `\\(VK_{krit}=\\frac{N_{o}(ton)}{Q} * 100\\)`,
             ],
           ]}
           data={[
