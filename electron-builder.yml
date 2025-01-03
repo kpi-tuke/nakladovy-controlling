@@ -1,5 +1,5 @@
 appId: org.erb.CostControlling
-productName: Nákladový controlling
+productName: cost-controlling
 directories:
   buildResources: build
 files:
@@ -18,7 +18,7 @@ win:
     - target: nsis
       arch: x64
 nsis:
-  artifactName: ${name}-${version}-setup.${ext}
+  artifactName: ${name}-v${version}.${ext}
   shortcutName: ${productName}
   uninstallDisplayName: ${productName}
   createDesktopShortcut: always
