@@ -38,3 +38,9 @@ $ npm build:linux
 ```bash
 osslsigncode verify -in path/to/yourfile.exe
 ```
+
+## Release New App Version
+
+- upper version in `package.json`
+- add new tag `git tag vx.x.x`
+- publish tag `git push origin vx.x.x`

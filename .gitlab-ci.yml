@@ -1,0 +1,77 @@
+stages:
+  - build
+  - upload
+  - release
+
+variables:
+  ELECTRON_CACHE: /usr/local/.cache/electron
+  ELECTRON_BUILDER_CACHE: /usr/local/.cache/electron-builder
+  PROJECT_NAME: cost-controlling
+
+cache:
+  paths:
+    - /usr/local/.cache/electron/
+    - /usr/local/.cache/electron-builder/
+    - node_modules/
+
+build_windows:
+  stage: build
+  image: electronuserland/builder:wine
+  script:
+    - npm install
+    - npm run build:win
+  artifacts:
+    paths:
+      - dist/
+    expire_in: 1 day
+  only:
+    - tags
+
+upload_file:
+  stage: upload
+  image: curlimages/curl:latest
+  needs:
+    - build_windows
+  script:
+    - |
+      PACKAGE_REGISTRY_URL="${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/generic/${PROJECT_NAME}-${CI_COMMIT_TAG}/${CI_COMMIT_TAG}"
+      APP_NAME="${PROJECT_NAME}-${CI_COMMIT_TAG}.exe"
+
+      curl --fail --show-error --header "JOB-TOKEN: ${CI_JOB_TOKEN}" --upload-file dist/${APP_NAME} ${PACKAGE_REGISTRY_URL}/${APP_NAME}
+      echo 'Package uploaded!'
+  only:
+    - tags
+
+create_release:
+  stage: release
+  image: curlimages/curl:latest
+  needs:
+    - upload_file
+  script:
+    - |
+      PACKAGE_REGISTRY_URL="${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/generic/${PROJECT_NAME}-${CI_COMMIT_TAG}/${CI_COMMIT_TAG}"
+      APP_NAME="${PROJECT_NAME}-${CI_COMMIT_TAG}.exe"
+
+      echo "Creating a GitLab release for tag: ${CI_COMMIT_TAG}"
+      curl --fail --show-error --request POST \
+        --header "PRIVATE-TOKEN: ${GITLAB_ACCESS_TOKEN}" \
+        --header "Content-Type: application/json" \
+        --data "{
+          \"name\": \"Release ${CI_COMMIT_TAG}\",
+          \"tag_name\": \"${CI_COMMIT_TAG}\",
+          \"ref\": \"${CI_COMMIT_TAG}\",
+          \"description\": \"This release includes updated application.\",
+          \"assets\": {
+            \"links\": [
+              {
+                \"name\": \"${APP_NAME}\",
+                \"url\": \"${PACKAGE_REGISTRY_URL}/${APP_NAME}\"
+              }
+            ]
+          }
+        }" \
+        "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/releases"
+
+      echo "GitLab release created!"
+  only:
+    - tags
