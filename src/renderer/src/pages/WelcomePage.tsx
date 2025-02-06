@@ -1,22 +1,13 @@
 import HeaderBar from '../components/HeaderBar';
 import { useNavigate } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '../store/hooks';
-import { projectActions, selectProject } from '../store/projectSlice';
-import { CVPActions } from './cvp/cvpSlice';
-import { economicActions } from './economic/economicSlice';
-import { indexActions } from './index/indexSlice';
-import { paretoActions } from './pareto/paretoSlice';
-import { sortimentActions } from './sortiment/sortimentSlice';
-import { structureActions } from './structure/structureSlice';
-import { evaluationActions } from './report/evaluationSlice';
+import { useAppSelector } from '../store/hooks';
+import { selectProject } from '../store/projectSlice';
 import { Box, Button, Grid, Paper, styled, Typography } from '@mui/material';
 import AppVersion from '@renderer/components/AppVersion';
 import Page from '@renderer/components/layout/Page';
 import PageContent from '@renderer/components/layout/PageContent';
 import { RouteName } from '@renderer/routes';
-import { variationActions } from './variation/variationSlice';
-import { taxActions } from './tax/taxSlice';
-import { trendActions } from './trend/trendSlice';
+import { useProject } from '@renderer/components/providers/ProjectProvider';
 
 const Wrapper = styled(Box)`
   flex: 1;
@@ -29,53 +20,20 @@ const Wrapper = styled(Box)`
 
 export default function WelcomePage() {
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
-
-  function newProject() {
-    dispatch(economicActions.reset());
-    dispatch(structureActions.reset());
-    dispatch(CVPActions.reset());
-    dispatch(indexActions.reset());
-    dispatch(sortimentActions.reset());
-    dispatch(paretoActions.reset());
-    dispatch(evaluationActions.reset());
-    dispatch(projectActions.setCreated());
-    navigate('/taskselect');
-  }
-
-  function openProject() {
-    window.electron.openProject();
-    window.electron.onOpen('open', (arg) => {
-      const json = JSON.parse(arg);
-
-      dispatch(economicActions.openProject(json.economic));
-      dispatch(structureActions.openProject(json.structure));
-      dispatch(CVPActions.openProject(json.cvp));
-      dispatch(indexActions.openProject(json.chain));
-      dispatch(sortimentActions.openProject(json.sortiment));
-      dispatch(paretoActions.openProject(json.pareto));
-      dispatch(evaluationActions.openProject(json.tasks));
-      dispatch(variationActions.openProject(json.variation));
-      dispatch(taxActions.openProject(json.tax));
-      dispatch(trendActions.openProject(json.trend));
-      dispatch(projectActions.setCreated());
-      navigate('/taskselect');
-    });
-  }
-
   const { created } = useAppSelector(selectProject);
+  const { newProject, openProject } = useProject();
 
-  function continueProject() {
+  const continueProject = () => {
     navigate('/taskselect');
-  }
+  };
 
   const openReport = () => {
     navigate(RouteName.EVALUATION);
   };
 
-  function quit() {
+  const quit = () => {
     window.electron.quit();
-  }
+  };
 
   return (
     <Page>

@@ -1,11 +1,12 @@
 appId: org.erb.CostControlling
-productName: cost-controlling
+productName: 'Nakladovy kontroling'
 directories:
-  buildResources: build
+  buildResources: assets
 win:
   target:
     - target: nsis
       arch: x64
+  icon: icon.png
 nsis:
   artifactName: ${name}-v${version}-win.${ext}
   shortcutName: ${productName}
@@ -13,3 +14,4 @@ nsis:
   createDesktopShortcut: always
 mac:
   artifactName: ${name}-v${version}-mac.${ext}
+  icon: icon.icns

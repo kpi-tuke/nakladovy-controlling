@@ -100,6 +100,15 @@ app.on('window-all-closed', () => {
 app.whenReady().then(() => {
   electronApp.setAppUserModelId('com.electron');
 
+  app.setAboutPanelOptions({
+    applicationName: 'Nákladový kontroling',
+    applicationVersion: app.getVersion(),
+    copyright: 'Copyright © 2025 TUKE',
+    website:
+      'https://git.kpi.fei.tuke.sk/kpi-zp/2025/dp.filip.katusin/diplomovka',
+    credits: 'Aurel Holotňák and Filip Katušin',
+  });
+
   createWindow();
 
   app.on('browser-window-created', (_, window) => {

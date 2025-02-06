@@ -11,8 +11,8 @@ import { routes, RouteName } from '@renderer/routes';
 import React from 'react';
 import { ArrowBack, Print, Save } from '@mui/icons-material';
 import { useDataSave } from './providers/AnalysisSaveProvider';
-import { useSnackbar } from './providers/SnackbarProvider';
 import ColorModeButton from './ColorModeButton';
+import { useProject } from './providers/ProjectProvider';
 
 const Wrapper = styled(Box)`
   height: ${({ theme }) => theme.pageHeader.height}px;
@@ -29,19 +29,9 @@ const HeaderBar = () => {
   const { save, saveButtonDisabled } = useDataSave();
   const navigate = useNavigate();
   const { pathname } = useLocation();
-  const { open } = useSnackbar();
+  const { printAnalysis } = useProject();
 
   const routeDetails = routes[pathname as RouteName];
-
-  const printToPDF = async (defaultFileName: string) => {
-    const isGenerated = await window.electron.printToPdf(defaultFileName);
-
-    if (isGenerated) {
-      open('PDF sa úspešne vygenerovalo');
-    } else {
-      open('PDF sa nepodarilo vygenerovať');
-    }
-  };
 
   function goBack() {
     navigate(-1);
@@ -127,7 +117,7 @@ const HeaderBar = () => {
               <ResponsiveButton
                 text="Tlačiť"
                 icon={<Print />}
-                onClick={() => printToPDF(routeDetails?.title ?? '')}
+                onClick={printAnalysis}
               />
             )}
 

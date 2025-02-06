@@ -10,6 +10,14 @@ declare global {
       onOpen: (channel: string, func: (data: any) => void) => void;
       getAppVersion: () => string;
       quit: () => void;
+      ipcRenderer: {
+        on: (channel: string, listener: (...args: any[]) => void) => void;
+        removeListener: (
+          channel: string,
+          listener: (...args: any[]) => void,
+        ) => void;
+        removeAllListeners: (channel: string) => void;
+      };
     };
   }
 }

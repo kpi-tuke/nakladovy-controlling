@@ -1,15 +1,4 @@
-import {
-  app,
-  BrowserWindow,
-  Menu,
-  MenuItemConstructorOptions,
-  shell,
-} from 'electron';
-
-interface DarwinMenuItemConstructorOptions extends MenuItemConstructorOptions {
-  selector?: string;
-  submenu?: DarwinMenuItemConstructorOptions[] | Menu;
-}
+import { app, BrowserWindow, Menu, shell } from 'electron';
 
 export default class MenuBuilder {
   mainWindow: BrowserWindow;
@@ -19,270 +8,130 @@ export default class MenuBuilder {
   }
 
   buildMenu(): Menu {
-    if (
-      process.env.NODE_ENV === 'development' ||
-      process.env.DEBUG_PROD === 'true'
-    ) {
-      this.setupDevelopmentEnvironment();
-    }
+    const template: any = [
+      ...(process.platform === 'darwin'
+        ? [
+            {
+              label: app.name,
+              submenu: [
+                {
+                  label: 'O Nákladovom kontrolingu',
+                  click: () => app.showAboutPanel(),
+                },
+                { type: 'separator' },
+                { label: 'Služby', role: 'services', submenu: [] },
+                { type: 'separator' },
+                {
+                  label: 'Skryť Nákladový kontroling',
+                  accelerator: 'Cmd+H',
+                  role: 'hide',
+                },
+                {
+                  label: 'Skryť ostatné',
+                  accelerator: 'Cmd+Alt+H',
+                  role: 'hideOthers',
+                },
+                { label: 'Zobraziť všetky', role: 'unhide' },
+                { type: 'separator' },
+                { label: 'Zavrieť', accelerator: 'Cmd+Q', role: 'quit' },
+              ],
+            },
+          ]
+        : []),
 
-    const template =
-      process.platform === 'darwin'
-        ? this.buildDarwinTemplate()
-        : this.buildDefaultTemplate();
+      // File Menu
+      {
+        label: 'Súbor',
+        submenu: [
+          {
+            label: 'Nový',
+            accelerator: 'CmdOrCtrl+N',
+            click: () => this.mainWindow.webContents.send('menu-new-project'),
+          },
+          {
+            label: 'Otvoriť',
+            accelerator: 'CmdOrCtrl+O',
+            click: () => this.mainWindow.webContents.send('menu-open-project'),
+          },
+          {
+            label: 'Uložiť',
+            accelerator: 'CmdOrCtrl+S',
+            click: () => this.mainWindow.webContents.send('menu-save-project'),
+          },
+          {
+            label: 'Tlačiť',
+            accelerator: 'CmdOrCtrl+P',
+            click: () => this.mainWindow.webContents.send('menu-print-project'),
+          },
+          { type: 'separator' },
+          {
+            label: 'Zobraziť report',
+            accelerator: 'CmdOrCtrl+R',
+            click: () => this.mainWindow.webContents.send('menu-open-report'),
+          },
+
+          {
+            label: 'Zavrieť',
+            role: process.platform === 'darwin' ? 'close' : 'quit',
+          },
+        ],
+      },
+
+      // Edit Menu
+      {
+        label: 'Upraviť',
+        submenu: [
+          { label: 'Späť', accelerator: 'CmdOrCtrl+Z', role: 'undo' },
+          { label: 'Znova', accelerator: 'CmdOrCtrl+Shift+Z', role: 'redo' },
+          { type: 'separator' },
+          { label: 'Vystrihnúť', accelerator: 'CmdOrCtrl+X', role: 'cut' },
+          { label: 'Kopírovať', accelerator: 'CmdOrCtrl+C', role: 'copy' },
+          { label: 'Vložiť', accelerator: 'CmdOrCtrl+V', role: 'paste' },
+          {
+            label: 'Vybrať všetko',
+            accelerator: 'CmdOrCtrl+A',
+            role: 'selectAll',
+          },
+        ],
+      },
+
+      // Window Menu (macOS only)
+      ...(process.platform === 'darwin'
+        ? [
+            {
+              label: 'Okno',
+              submenu: [
+                {
+                  label: 'Minimalizovať',
+                  accelerator: 'Cmd+M',
+                  role: 'minimize',
+                },
+                { label: 'Priblížiť', role: 'zoom' },
+                { type: 'separator' },
+                { label: 'Presunúť všetko dopredu', role: 'front' },
+              ],
+            },
+          ]
+        : []),
+
+      // Help Menu
+      {
+        label: 'Pomoc',
+        submenu: [
+          {
+            label: 'Dokumentácia',
+            click: () =>
+              shell.openExternal(
+                'https://git.kpi.fei.tuke.sk/kpi-zp/2025/dp.filip.katusin/diplomovka',
+              ),
+          },
+        ],
+      },
+    ];
 
     const menu = Menu.buildFromTemplate(template);
     Menu.setApplicationMenu(menu);
 
     return menu;
-  }
-
-  setupDevelopmentEnvironment(): void {
-    this.mainWindow.webContents.on('context-menu', (_, props) => {
-      const { x, y } = props;
-
-      Menu.buildFromTemplate([
-        {
-          label: 'Inspect element',
-          click: () => {
-            this.mainWindow.webContents.inspectElement(x, y);
-          },
-        },
-      ]).popup({ window: this.mainWindow });
-    });
-  }
-
-  buildDarwinTemplate(): MenuItemConstructorOptions[] {
-    const subMenuAbout: DarwinMenuItemConstructorOptions = {
-      label: 'Electron',
-      submenu: [
-        {
-          label: 'About ElectronReact',
-          selector: 'orderFrontStandardAboutPanel:',
-        },
-        { type: 'separator' },
-        { label: 'Services', submenu: [] },
-        { type: 'separator' },
-        {
-          label: 'Hide ElectronReact',
-          accelerator: 'Command+H',
-          selector: 'hide:',
-        },
-        {
-          label: 'Hide Others',
-          accelerator: 'Command+Shift+H',
-          selector: 'hideOtherApplications:',
-        },
-        { label: 'Show All', selector: 'unhideAllApplications:' },
-        { type: 'separator' },
-        {
-          label: 'Quit',
-          accelerator: 'Command+Q',
-          click: () => {
-            app.quit();
-          },
-        },
-      ],
-    };
-    const subMenuEdit: DarwinMenuItemConstructorOptions = {
-      label: 'Edit',
-      submenu: [
-        { label: 'Undo', accelerator: 'Command+Z', selector: 'undo:' },
-        { label: 'Redo', accelerator: 'Shift+Command+Z', selector: 'redo:' },
-        { type: 'separator' },
-        { label: 'Cut', accelerator: 'Command+X', selector: 'cut:' },
-        { label: 'Copy', accelerator: 'Command+C', selector: 'copy:' },
-        { label: 'Paste', accelerator: 'Command+V', selector: 'paste:' },
-        {
-          label: 'Select All',
-          accelerator: 'Command+A',
-          selector: 'selectAll:',
-        },
-      ],
-    };
-    const subMenuViewDev: MenuItemConstructorOptions = {
-      label: 'View',
-      submenu: [
-        {
-          label: 'Reload',
-          accelerator: 'Command+R',
-          click: () => {
-            this.mainWindow.webContents.reload();
-          },
-        },
-        {
-          label: 'Toggle Full Screen',
-          accelerator: 'Ctrl+Command+F',
-          click: () => {
-            this.mainWindow.setFullScreen(!this.mainWindow.isFullScreen());
-          },
-        },
-        {
-          label: 'Toggle Developer Tools',
-          accelerator: 'Alt+Command+I',
-          click: () => {
-            this.mainWindow.webContents.toggleDevTools();
-          },
-        },
-      ],
-    };
-    const subMenuViewProd: MenuItemConstructorOptions = {
-      label: 'View',
-      submenu: [
-        {
-          label: 'Toggle Full Screen',
-          accelerator: 'Ctrl+Command+F',
-          click: () => {
-            this.mainWindow.setFullScreen(!this.mainWindow.isFullScreen());
-          },
-        },
-      ],
-    };
-    const subMenuWindow: DarwinMenuItemConstructorOptions = {
-      label: 'Window',
-      submenu: [
-        {
-          label: 'Minimize',
-          accelerator: 'Command+M',
-          selector: 'performMiniaturize:',
-        },
-        { label: 'Close', accelerator: 'Command+W', selector: 'performClose:' },
-        { type: 'separator' },
-        { label: 'Bring All to Front', selector: 'arrangeInFront:' },
-      ],
-    };
-    const subMenuHelp: MenuItemConstructorOptions = {
-      label: 'Help',
-      submenu: [
-        {
-          label: 'Learn More',
-          click() {
-            shell.openExternal('https://electronjs.org');
-          },
-        },
-        {
-          label: 'Documentation',
-          click() {
-            shell.openExternal(
-              'https://github.com/electron/electron/tree/main/docs#readme',
-            );
-          },
-        },
-        {
-          label: 'Community Discussions',
-          click() {
-            shell.openExternal('https://www.electronjs.org/community');
-          },
-        },
-        {
-          label: 'Search Issues',
-          click() {
-            shell.openExternal('https://github.com/electron/electron/issues');
-          },
-        },
-      ],
-    };
-
-    const subMenuView =
-      process.env.NODE_ENV === 'development' ||
-      process.env.DEBUG_PROD === 'true'
-        ? subMenuViewDev
-        : subMenuViewProd;
-
-    return [subMenuAbout, subMenuEdit, subMenuView, subMenuWindow, subMenuHelp];
-  }
-
-  buildDefaultTemplate() {
-    return [
-      {
-        label: '&File',
-        submenu: [
-          {
-            label: '&Open',
-            accelerator: 'Ctrl+O',
-          },
-          {
-            label: '&Close',
-            accelerator: 'Ctrl+W',
-            click: () => {
-              this.mainWindow.close();
-            },
-          },
-        ],
-      },
-      {
-        label: '&View',
-        submenu:
-          process.env.NODE_ENV === 'development' ||
-          process.env.DEBUG_PROD === 'true'
-            ? [
-                {
-                  label: '&Reload',
-                  accelerator: 'Ctrl+R',
-                  click: () => {
-                    this.mainWindow.webContents.reload();
-                  },
-                },
-                {
-                  label: 'Toggle &Full Screen',
-                  accelerator: 'F11',
-                  click: () => {
-                    this.mainWindow.setFullScreen(
-                      !this.mainWindow.isFullScreen(),
-                    );
-                  },
-                },
-                {
-                  label: 'Toggle &Developer Tools',
-                  accelerator: 'Alt+Ctrl+I',
-                  click: () => {
-                    this.mainWindow.webContents.toggleDevTools();
-                  },
-                },
-              ]
-            : [
-                {
-                  label: 'Toggle &Full Screen',
-                  accelerator: 'F11',
-                  click: () => {
-                    this.mainWindow.setFullScreen(
-                      !this.mainWindow.isFullScreen(),
-                    );
-                  },
-                },
-              ],
-      },
-      {
-        label: 'Help',
-        submenu: [
-          {
-            label: 'Learn More',
-            click() {
-              shell.openExternal('https://electronjs.org');
-            },
-          },
-          {
-            label: 'Documentation',
-            click() {
-              shell.openExternal(
-                'https://github.com/electron/electron/tree/main/docs#readme',
-              );
-            },
-          },
-          {
-            label: 'Community Discussions',
-            click() {
-              shell.openExternal('https://www.electronjs.org/community');
-            },
-          },
-          {
-            label: 'Search Issues',
-            click() {
-              shell.openExternal('https://github.com/electron/electron/issues');
-            },
-          },
-        ],
-      },
-    ];
   }
 }

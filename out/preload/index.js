@@ -12,5 +12,16 @@ electron.contextBridge.exposeInMainWorld("electron", {
     }
   },
   getAppVersion: () => electron.ipcRenderer.invoke("getAppVersion"),
-  quit: () => electron.ipcRenderer.send("quit")
+  quit: () => electron.ipcRenderer.send("quit"),
+  ipcRenderer: {
+    on: (channel, listener) => {
+      electron.ipcRenderer.on(channel, listener);
+    },
+    removeListener: (channel, listener) => {
+      electron.ipcRenderer.removeListener(channel, listener);
+    },
+    removeAllListeners: (channel) => {
+      electron.ipcRenderer.removeAllListeners(channel);
+    }
+  }
 });

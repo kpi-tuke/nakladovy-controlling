@@ -21,7 +21,7 @@ export enum RouteName {
 
 export const routes: { [key in RouteName]: Route } = {
   [RouteName.HOME]: {
-    title: 'Nákladový controling',
+    title: 'Nákladový kontroling',
     printToPDF: false,
     save: false,
   },
