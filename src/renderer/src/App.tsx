@@ -58,6 +58,7 @@ import {
 import VariationResults from './pages/variation/VariationResults';
 import { taxActions, selectors as taxSelectors } from './pages/tax/taxSlice';
 import TaxResult from './pages/tax/TaxResult';
+import ProjectProvider from './components/providers/ProjectProvider';
 
 export default function App() {
   const EconomicAnalysis: () => JSX.Element = withAnalysis(
@@ -141,67 +142,69 @@ export default function App() {
             <SnackbarProvider>
               <SaveDataProvider>
                 <Router>
-                  <HeaderBar />
-                  <Routes>
-                    <Route path={RouteName.HOME} element={<WelcomePage />} />
-                    <Route
-                      path={RouteName.SELECT}
-                      element={<TaskSelection />}
-                    />
-                    <Route
-                      path={RouteName.ECONOMIC_ANALYSIS}
-                      element={<EconomicAnalysis />}
-                    />
-                    <Route
-                      path={RouteName.STRUCTURE_ANALYSIS}
-                      element={<StructureAnalysis />}
-                    />
-                    <Route
-                      path={RouteName.CVP_ANALYSIS}
-                      element={<CVPAnalysis />}
-                    />
-                    <Route
-                      path={RouteName.SORTIMENT_ANALYSIS}
-                      element={<SortimentAnalysis />}
-                    />
-                    <Route
-                      path={RouteName.INDEX_ANALYSIS}
-                      element={<IndexAnalysis />}
-                    />
-                    <Route
-                      path={RouteName.PERETO_ANALYSIS}
-                      element={<ParetoAnalysis />}
-                    />
-                    <Route
-                      path={RouteName.TREND_ANALYSIS}
-                      element={<TrendAnalysis />}
-                    />
-                    <Route
-                      path={RouteName.VARIATION_ANALYSIS}
-                      element={<VariationAnalysis />}
-                    />
-                    <Route
-                      path={RouteName.TAX_ANALYSIS}
-                      element={<TaxAnalysis />}
-                    />
+                  <ProjectProvider>
+                    <HeaderBar />
+                    <Routes>
+                      <Route path={RouteName.HOME} element={<WelcomePage />} />
+                      <Route
+                        path={RouteName.SELECT}
+                        element={<TaskSelection />}
+                      />
+                      <Route
+                        path={RouteName.ECONOMIC_ANALYSIS}
+                        element={<EconomicAnalysis />}
+                      />
+                      <Route
+                        path={RouteName.STRUCTURE_ANALYSIS}
+                        element={<StructureAnalysis />}
+                      />
+                      <Route
+                        path={RouteName.CVP_ANALYSIS}
+                        element={<CVPAnalysis />}
+                      />
+                      <Route
+                        path={RouteName.SORTIMENT_ANALYSIS}
+                        element={<SortimentAnalysis />}
+                      />
+                      <Route
+                        path={RouteName.INDEX_ANALYSIS}
+                        element={<IndexAnalysis />}
+                      />
+                      <Route
+                        path={RouteName.PERETO_ANALYSIS}
+                        element={<ParetoAnalysis />}
+                      />
+                      <Route
+                        path={RouteName.TREND_ANALYSIS}
+                        element={<TrendAnalysis />}
+                      />
+                      <Route
+                        path={RouteName.VARIATION_ANALYSIS}
+                        element={<VariationAnalysis />}
+                      />
+                      <Route
+                        path={RouteName.TAX_ANALYSIS}
+                        element={<TaxAnalysis />}
+                      />
 
-                    <Route
-                      path={RouteName.EVALUATION}
-                      element={
-                        <Report
-                          EconomicAnalysisPage={EconomicAnalysis}
-                          StructureAnalysisPage={StructureAnalysis}
-                          IndexAnalysisPage={IndexAnalysis}
-                          CVPAnalysisPage={CVPAnalysis}
-                          SortimentAnalysisPage={SortimentAnalysis}
-                          ParetoAnalysisPage={ParetoAnalysis}
-                          TrendAnalysisPage={TrendAnalysis}
-                          VariationAnalysisPage={VariationAnalysis}
-                          TaxAnalysisPage={TaxAnalysis}
-                        />
-                      }
-                    />
-                  </Routes>
+                      <Route
+                        path={RouteName.EVALUATION}
+                        element={
+                          <Report
+                            EconomicAnalysisPage={EconomicAnalysis}
+                            StructureAnalysisPage={StructureAnalysis}
+                            IndexAnalysisPage={IndexAnalysis}
+                            CVPAnalysisPage={CVPAnalysis}
+                            SortimentAnalysisPage={SortimentAnalysis}
+                            ParetoAnalysisPage={ParetoAnalysis}
+                            TrendAnalysisPage={TrendAnalysis}
+                            VariationAnalysisPage={VariationAnalysis}
+                            TaxAnalysisPage={TaxAnalysis}
+                          />
+                        }
+                      />
+                    </Routes>
+                  </ProjectProvider>
                 </Router>
               </SaveDataProvider>
             </SnackbarProvider>

@@ -1,6 +1,6 @@
 import React, {
   createContext,
-  ReactNode,
+  PropsWithChildren,
   useContext,
   useMemo,
   useState,
@@ -18,17 +18,15 @@ import { selectVariation } from '@renderer/pages/variation/variationSlice';
 import { selectTax } from '@renderer/pages/tax/taxSlice';
 import { selectTrend } from '@renderer/pages/trend/trendSlice';
 
-const SaveContext = createContext<{
+type SaveContextProps = {
   save: VoidFunction;
   saveButtonDisabled: boolean;
-}>({
-  save: () => {},
-  saveButtonDisabled: false,
-});
-
-type Props = {
-  children: ReactNode;
+  resetPath: VoidFunction;
 };
+
+const SaveContext = createContext<SaveContextProps | null>(null);
+
+type Props = PropsWithChildren;
 
 const SaveDataProvider: React.FC<Props> = ({ children }) => {
   const economic = useAppSelector(selectEconomic);
@@ -118,11 +116,16 @@ const SaveDataProvider: React.FC<Props> = ({ children }) => {
     }
   };
 
+  const resetPath = () => {
+    setPath(undefined);
+  };
+
   return (
     <SaveContext.Provider
       value={{
         save,
         saveButtonDisabled: !onceSaved ? false : !dataChanged,
+        resetPath,
       }}
     >
       {children}
@@ -132,4 +135,10 @@ const SaveDataProvider: React.FC<Props> = ({ children }) => {
 
 export default SaveDataProvider;
 
-export const useDataSave = () => useContext(SaveContext);
+export const useDataSave = () => {
+  const context = useContext(SaveContext);
+  if (!context) {
+    throw new Error('useDataSave must be used within a SaveDataProvider');
+  }
+  return context;
+};

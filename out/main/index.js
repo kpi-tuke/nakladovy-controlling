@@ -3,8 +3,6 @@ const electron = require("electron");
 const path = require("path");
 const utils = require("@electron-toolkit/utils");
 const fs = require("fs");
-const electronUpdater = require("electron-updater");
-const log = require("electron-log");
 const icon = path.join(__dirname, "./chunks/icon-D6bAUhBQ.png");
 class MenuBuilder {
   mainWindow;
@@ -12,254 +10,121 @@ class MenuBuilder {
     this.mainWindow = mainWindow2;
   }
   buildMenu() {
-    if (process.env.NODE_ENV === "development" || process.env.DEBUG_PROD === "true") {
-      this.setupDevelopmentEnvironment();
-    }
-    const template = process.platform === "darwin" ? this.buildDarwinTemplate() : this.buildDefaultTemplate();
-    const menu = electron.Menu.buildFromTemplate(template);
-    electron.Menu.setApplicationMenu(menu);
-    return menu;
-  }
-  setupDevelopmentEnvironment() {
-    this.mainWindow.webContents.on("context-menu", (_, props) => {
-      const { x, y } = props;
-      electron.Menu.buildFromTemplate([
+    const template = [
+      ...process.platform === "darwin" ? [
         {
-          label: "Inspect element",
-          click: () => {
-            this.mainWindow.webContents.inspectElement(x, y);
-          }
+          label: electron.app.name,
+          submenu: [
+            {
+              label: "O Nákladovom kontrolingu",
+              click: () => electron.app.showAboutPanel()
+            },
+            { type: "separator" },
+            { label: "Služby", role: "services", submenu: [] },
+            { type: "separator" },
+            {
+              label: "Skryť Nákladový kontroling",
+              accelerator: "Cmd+H",
+              role: "hide"
+            },
+            {
+              label: "Skryť ostatné",
+              accelerator: "Cmd+Alt+H",
+              role: "hideOthers"
+            },
+            { label: "Zobraziť všetky", role: "unhide" },
+            { type: "separator" },
+            { label: "Zavrieť", accelerator: "Cmd+Q", role: "quit" }
+          ]
         }
-      ]).popup({ window: this.mainWindow });
-    });
-  }
-  buildDarwinTemplate() {
-    const subMenuAbout = {
-      label: "Electron",
-      submenu: [
-        {
-          label: "About ElectronReact",
-          selector: "orderFrontStandardAboutPanel:"
-        },
-        { type: "separator" },
-        { label: "Services", submenu: [] },
-        { type: "separator" },
-        {
-          label: "Hide ElectronReact",
-          accelerator: "Command+H",
-          selector: "hide:"
-        },
-        {
-          label: "Hide Others",
-          accelerator: "Command+Shift+H",
-          selector: "hideOtherApplications:"
-        },
-        { label: "Show All", selector: "unhideAllApplications:" },
-        { type: "separator" },
-        {
-          label: "Quit",
-          accelerator: "Command+Q",
-          click: () => {
-            electron.app.quit();
-          }
-        }
-      ]
-    };
-    const subMenuEdit = {
-      label: "Edit",
-      submenu: [
-        { label: "Undo", accelerator: "Command+Z", selector: "undo:" },
-        { label: "Redo", accelerator: "Shift+Command+Z", selector: "redo:" },
-        { type: "separator" },
-        { label: "Cut", accelerator: "Command+X", selector: "cut:" },
-        { label: "Copy", accelerator: "Command+C", selector: "copy:" },
-        { label: "Paste", accelerator: "Command+V", selector: "paste:" },
-        {
-          label: "Select All",
-          accelerator: "Command+A",
-          selector: "selectAll:"
-        }
-      ]
-    };
-    const subMenuViewDev = {
-      label: "View",
-      submenu: [
-        {
-          label: "Reload",
-          accelerator: "Command+R",
-          click: () => {
-            this.mainWindow.webContents.reload();
-          }
-        },
-        {
-          label: "Toggle Full Screen",
-          accelerator: "Ctrl+Command+F",
-          click: () => {
-            this.mainWindow.setFullScreen(!this.mainWindow.isFullScreen());
-          }
-        },
-        {
-          label: "Toggle Developer Tools",
-          accelerator: "Alt+Command+I",
-          click: () => {
-            this.mainWindow.webContents.toggleDevTools();
-          }
-        }
-      ]
-    };
-    const subMenuViewProd = {
-      label: "View",
-      submenu: [
-        {
-          label: "Toggle Full Screen",
-          accelerator: "Ctrl+Command+F",
-          click: () => {
-            this.mainWindow.setFullScreen(!this.mainWindow.isFullScreen());
-          }
-        }
-      ]
-    };
-    const subMenuWindow = {
-      label: "Window",
-      submenu: [
-        {
-          label: "Minimize",
-          accelerator: "Command+M",
-          selector: "performMiniaturize:"
-        },
-        { label: "Close", accelerator: "Command+W", selector: "performClose:" },
-        { type: "separator" },
-        { label: "Bring All to Front", selector: "arrangeInFront:" }
-      ]
-    };
-    const subMenuHelp = {
-      label: "Help",
-      submenu: [
-        {
-          label: "Learn More",
-          click() {
-            electron.shell.openExternal("https://electronjs.org");
-          }
-        },
-        {
-          label: "Documentation",
-          click() {
-            electron.shell.openExternal(
-              "https://github.com/electron/electron/tree/main/docs#readme"
-            );
-          }
-        },
-        {
-          label: "Community Discussions",
-          click() {
-            electron.shell.openExternal("https://www.electronjs.org/community");
-          }
-        },
-        {
-          label: "Search Issues",
-          click() {
-            electron.shell.openExternal("https://github.com/electron/electron/issues");
-          }
-        }
-      ]
-    };
-    const subMenuView = process.env.NODE_ENV === "development" || process.env.DEBUG_PROD === "true" ? subMenuViewDev : subMenuViewProd;
-    return [subMenuAbout, subMenuEdit, subMenuView, subMenuWindow, subMenuHelp];
-  }
-  buildDefaultTemplate() {
-    return [
+      ] : [],
+      // File Menu
       {
-        label: "&File",
+        label: "Súbor",
         submenu: [
           {
-            label: "&Open",
-            accelerator: "Ctrl+O"
+            label: "Nový",
+            accelerator: "CmdOrCtrl+N",
+            click: () => this.mainWindow.webContents.send("menu-new-project")
           },
           {
-            label: "&Close",
-            accelerator: "Ctrl+W",
-            click: () => {
-              this.mainWindow.close();
-            }
+            label: "Otvoriť",
+            accelerator: "CmdOrCtrl+O",
+            click: () => this.mainWindow.webContents.send("menu-open-project")
+          },
+          {
+            label: "Uložiť",
+            accelerator: "CmdOrCtrl+S",
+            click: () => this.mainWindow.webContents.send("menu-save-project")
+          },
+          {
+            label: "Tlačiť",
+            accelerator: "CmdOrCtrl+P",
+            click: () => this.mainWindow.webContents.send("menu-print-project")
+          },
+          { type: "separator" },
+          {
+            label: "Zobraziť report",
+            accelerator: "CmdOrCtrl+R",
+            click: () => this.mainWindow.webContents.send("menu-open-report")
+          },
+          {
+            label: "Zavrieť",
+            role: process.platform === "darwin" ? "close" : "quit"
           }
         ]
       },
+      // Edit Menu
       {
-        label: "&View",
-        submenu: process.env.NODE_ENV === "development" || process.env.DEBUG_PROD === "true" ? [
+        label: "Upraviť",
+        submenu: [
+          { label: "Späť", accelerator: "CmdOrCtrl+Z", role: "undo" },
+          { label: "Znova", accelerator: "CmdOrCtrl+Shift+Z", role: "redo" },
+          { type: "separator" },
+          { label: "Vystrihnúť", accelerator: "CmdOrCtrl+X", role: "cut" },
+          { label: "Kopírovať", accelerator: "CmdOrCtrl+C", role: "copy" },
+          { label: "Vložiť", accelerator: "CmdOrCtrl+V", role: "paste" },
           {
-            label: "&Reload",
-            accelerator: "Ctrl+R",
-            click: () => {
-              this.mainWindow.webContents.reload();
-            }
-          },
-          {
-            label: "Toggle &Full Screen",
-            accelerator: "F11",
-            click: () => {
-              this.mainWindow.setFullScreen(
-                !this.mainWindow.isFullScreen()
-              );
-            }
-          },
-          {
-            label: "Toggle &Developer Tools",
-            accelerator: "Alt+Ctrl+I",
-            click: () => {
-              this.mainWindow.webContents.toggleDevTools();
-            }
-          }
-        ] : [
-          {
-            label: "Toggle &Full Screen",
-            accelerator: "F11",
-            click: () => {
-              this.mainWindow.setFullScreen(
-                !this.mainWindow.isFullScreen()
-              );
-            }
+            label: "Vybrať všetko",
+            accelerator: "CmdOrCtrl+A",
+            role: "selectAll"
           }
         ]
       },
+      // Window Menu (macOS only)
+      ...process.platform === "darwin" ? [
+        {
+          label: "Okno",
+          submenu: [
+            {
+              label: "Minimalizovať",
+              accelerator: "Cmd+M",
+              role: "minimize"
+            },
+            { label: "Priblížiť", role: "zoom" },
+            { type: "separator" },
+            { label: "Presunúť všetko dopredu", role: "front" }
+          ]
+        }
+      ] : [],
+      // Help Menu
       {
-        label: "Help",
+        label: "Pomoc",
         submenu: [
           {
-            label: "Learn More",
-            click() {
-              electron.shell.openExternal("https://electronjs.org");
-            }
-          },
-          {
-            label: "Documentation",
-            click() {
-              electron.shell.openExternal(
-                "https://github.com/electron/electron/tree/main/docs#readme"
-              );
-            }
-          },
-          {
-            label: "Community Discussions",
-            click() {
-              electron.shell.openExternal("https://www.electronjs.org/community");
-            }
-          },
-          {
-            label: "Search Issues",
-            click() {
-              electron.shell.openExternal("https://github.com/electron/electron/issues");
-            }
+            label: "Dokumentácia",
+            click: () => electron.shell.openExternal(
+              "https://git.kpi.fei.tuke.sk/kpi-zp/2025/dp.filip.katusin/diplomovka"
+            )
           }
         ]
       }
     ];
+    const menu = electron.Menu.buildFromTemplate(template);
+    electron.Menu.setApplicationMenu(menu);
+    return menu;
   }
 }
-electronUpdater.autoUpdater.forceDevUpdateConfig = true;
-electronUpdater.autoUpdater.autoDownload = false;
-electronUpdater.autoUpdater.logger = log;
-log.transports.file.level = "debug";
 let mainWindow;
 const installExtensions = async () => {
   const installer = require("electron-devtools-installer");
@@ -325,6 +190,13 @@ electron.app.on("window-all-closed", () => {
 });
 electron.app.whenReady().then(() => {
   utils.electronApp.setAppUserModelId("com.electron");
+  electron.app.setAboutPanelOptions({
+    applicationName: "Nákladový kontroling",
+    applicationVersion: electron.app.getVersion(),
+    copyright: "Copyright © 2025 TUKE",
+    website: "https://git.kpi.fei.tuke.sk/kpi-zp/2025/dp.filip.katusin/diplomovka",
+    credits: "Aurel Holotňák and Filip Katušin"
+  });
   createWindow();
   electron.app.on("browser-window-created", (_, window) => {
     utils.optimizer.watchWindowShortcuts(window);
