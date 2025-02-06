@@ -7,6 +7,7 @@ import {
   PrintToPDFOptions,
 } from 'electron';
 import { join } from 'path';
+
 import { optimizer, is, electronApp } from '@electron-toolkit/utils';
 import icon from '../../assets/icon.png?asset';
 import MenuBuilder from './menu';
@@ -28,11 +29,8 @@ const installExtensions = async () => {
     .catch(console.log);
 };
 
-const isDevelopment =
-  process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true';
-
 const createWindow = async () => {
-  if (isDevelopment) {
+  if (import.meta.env.DEV) {
     await installExtensions();
   }
 

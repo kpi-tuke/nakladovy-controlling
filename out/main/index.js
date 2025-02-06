@@ -3,6 +3,8 @@ const electron = require("electron");
 const path = require("path");
 const utils = require("@electron-toolkit/utils");
 const fs = require("fs");
+const electronUpdater = require("electron-updater");
+const log = require("electron-log");
 const icon = path.join(__dirname, "./chunks/icon-D6bAUhBQ.png");
 class MenuBuilder {
   mainWindow;
@@ -254,6 +256,10 @@ class MenuBuilder {
     ];
   }
 }
+electronUpdater.autoUpdater.forceDevUpdateConfig = true;
+electronUpdater.autoUpdater.autoDownload = false;
+electronUpdater.autoUpdater.logger = log;
+log.transports.file.level = "debug";
 let mainWindow;
 const installExtensions = async () => {
   const installer = require("electron-devtools-installer");
@@ -264,9 +270,8 @@ const installExtensions = async () => {
     forceDownload
   ).catch(console.log);
 };
-const isDevelopment = process.env.NODE_ENV === "development" || process.env.DEBUG_PROD === "true";
 const createWindow = async () => {
-  if (isDevelopment) {
+  {
     await installExtensions();
   }
   const RESOURCES_PATH = electron.app.isPackaged ? path.join(process.resourcesPath, "assets") : path.join(__dirname, "../../assets");
