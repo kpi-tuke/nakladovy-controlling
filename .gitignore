@@ -1,3 +1,5 @@
+gh-token
+
 # Logs
 logs
 *.log
@@ -32,3 +34,4 @@ npm-debug.log.*
 out
 dist
 dist.zip
+.env

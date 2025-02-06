@@ -1,4 +1,5 @@
 stages:
+  - install
   - build
   - upload
   - release
@@ -14,64 +15,105 @@ cache:
     - /usr/local/.cache/electron-builder/
     - node_modules/
 
+install_dependencies:
+  stage: install
+  image: node:18-alpine
+  script:
+    - npm install
+  artifacts:
+    paths:
+      - node_modules/
+    expire_in: 1 hour
+  only:
+    - tags
+
 build_windows:
   stage: build
   image: electronuserland/builder:wine
+  needs:
+    - install_dependencies
   script:
-    - npm install
     - npm run build:win
   artifacts:
     paths:
       - dist/
-    expire_in: 1 day
+    expire_in: 1 hour
   only:
     - tags
 
+# build_mac:
+#   stage: build
+#   tags:
+#     - macos
+#   script:
+#     - npm run build:mac
+#   artifacts:
+#     paths:
+#       - dist/
+#     expire_in: 1 hour
+#   only:
+#     - tags
+
+# build_linux:
+#   stage: build
+#   image: electronuserland/builder
+#   script:
+#     - npm run build:linux
+#   artifacts:
+#     paths:
+#       - dist/
+#     expire_in: 1 hour
+#   only:
+#     - tags
+
 upload_file:
   stage: upload
-  image: curlimages/curl:latest
+  image: curlimages/curl
   needs:
     - build_windows
+    # - build_mac
+    # - build_linux
   script:
     - |
       PACKAGE_REGISTRY_URL="${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/generic/${PROJECT_NAME}-${CI_COMMIT_TAG}/${CI_COMMIT_TAG}"
-      APP_NAME="${PROJECT_NAME}-${CI_COMMIT_TAG}.exe"
+      APP_NAME="${PROJECT_NAME}-${CI_COMMIT_TAG}-win.exe"
 
-      curl --fail --show-error --header "JOB-TOKEN: ${CI_JOB_TOKEN}" --upload-file dist/${APP_NAME} ${PACKAGE_REGISTRY_URL}/${APP_NAME}
+      curl --fail --show-error --header "JOB-TOKEN: ${CI_JOB_TOKEN}" --upload-file ./dist/${APP_NAME} ${PACKAGE_REGISTRY_URL}/${APP_NAME}
       echo 'Package uploaded!'
+  # script:
+  #   - |
+  #     PACKAGE_REGISTRY_URL="${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/generic/${PROJECT_NAME}-${CI_COMMIT_TAG}/${CI_COMMIT_TAG}"
+  #     APP_NAME="${PROJECT_NAME}-${CI_COMMIT_TAG}-win.exe"
+
+  #     curl --fail --show-error --header "JOB-TOKEN: ${CI_JOB_TOKEN}" --upload-file ./dist/${APP_NAME} ${PACKAGE_REGISTRY_URL}/${APP_NAME}
+  #     curl --fail --show-error --header "JOB-TOKEN: ${CI_JOB_TOKEN}" --upload-file ./dist/latest.yml ${PACKAGE_REGISTRY_URL}/latest.yml
+  #     echo 'Package uploaded!'
   only:
     - tags
 
 create_release:
   stage: release
-  image: curlimages/curl:latest
+  image: registry.gitlab.com/gitlab-org/release-cli
   needs:
     - upload_file
   script:
+    - echo "Release $VERSION"
     - |
       PACKAGE_REGISTRY_URL="${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/generic/${PROJECT_NAME}-${CI_COMMIT_TAG}/${CI_COMMIT_TAG}"
-      APP_NAME="${PROJECT_NAME}-${CI_COMMIT_TAG}.exe"
+      APP_NAME="${PROJECT_NAME}-${CI_COMMIT_TAG}-win.exe"
 
-      echo "Creating a GitLab release for tag: ${CI_COMMIT_TAG}"
-      curl --fail --show-error --request POST \
-        --header "PRIVATE-TOKEN: ${GITLAB_ACCESS_TOKEN}" \
-        --header "Content-Type: application/json" \
-        --data "{
-          \"name\": \"Release ${CI_COMMIT_TAG}\",
-          \"tag_name\": \"${CI_COMMIT_TAG}\",
-          \"ref\": \"${CI_COMMIT_TAG}\",
-          \"description\": \"This release includes updated application.\",
-          \"assets\": {
-            \"links\": [
-              {
-                \"name\": \"${APP_NAME}\",
-                \"url\": \"${PACKAGE_REGISTRY_URL}/${APP_NAME}\"
-              }
-            ]
-          }
-        }" \
-        "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/releases"
+      release-cli create --name "Release ${CI_COMMIT_TAG}" --tag-name ${CI_COMMIT_TAG} \
+      --description 'This release includes updated application.' --ref $CI_COMMIT_SHA \
+      --assets-link "{\"name\":\"${APP_NAME}\",\"url\":\"${PACKAGE_REGISTRY_URL}/${APP_NAME}\"}" \
+  # script:
+  #   - echo "Release $VERSION"
+  #   - |
+  #     PACKAGE_REGISTRY_URL="${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/generic/${PROJECT_NAME}-${CI_COMMIT_TAG}/${CI_COMMIT_TAG}"
+  #     APP_NAME="${PROJECT_NAME}-${CI_COMMIT_TAG}.exe"
 
-      echo "GitLab release created!"
+  #     release-cli create --name "Release ${CI_COMMIT_TAG}" --tag-name ${CI_COMMIT_TAG} \
+  #     --description 'This release includes updated application.' --ref $CI_COMMIT_SHA \
+  #     --assets-link "{\"name\":\"${APP_NAME}\",\"url\":\"${PACKAGE_REGISTRY_URL}/${APP_NAME}\"}" \
+  #     --assets-link "{\"name\":\"latest.yml\",\"url\":\"${PACKAGE_REGISTRY_URL}/latest.yml\"}"
   only:
     - tags
