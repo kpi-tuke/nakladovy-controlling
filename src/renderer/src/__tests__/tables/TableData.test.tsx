@@ -1,5 +1,4 @@
 import '@testing-library/jest-dom';
-import 'jest-styled-components';
 import { TableData } from '@renderer/components/tables/TableData';
 import { render } from '@testing-library/react';
 import { matchers } from '@emotion/jest';
