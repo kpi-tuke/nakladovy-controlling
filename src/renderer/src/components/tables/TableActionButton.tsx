@@ -2,7 +2,9 @@ import { Add, Remove } from '@mui/icons-material';
 import { Button, styled } from '@mui/material';
 import React from 'react';
 
-const ButtonStyled = styled(Button)<{ $type: 'add' | 'delete' }>`
+const ButtonStyled = styled(Button, {
+  shouldForwardProp: (prop) => prop !== '$type',
+})<{ $type: 'add' | 'delete' }>`
   background-color: ${({ theme, $type }) =>
     theme.palette.mode === 'light'
       ? '#fff'
