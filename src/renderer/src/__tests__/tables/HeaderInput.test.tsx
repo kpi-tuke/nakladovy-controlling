@@ -1,5 +1,5 @@
 import { render, waitFor, screen, fireEvent } from '@testing-library/react';
-import { useAppDispatch, useAppSelector } from '../store/hooks';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import HeaderInput from '@renderer/components/tables/HeaderInput';
 import { CellType, Header } from '@renderer/store/rootReducer';
 import '@testing-library/jest-dom';
@@ -16,7 +16,7 @@ const actions = {
   setHeaderOnIndex: jest.fn((payload) => ({ type: 'SET_HEADER', payload })),
 };
 
-jest.mock('../store/hooks', () => ({
+jest.mock('@renderer/store/hooks', () => ({
   useAppDispatch: jest.fn(),
   useAppSelector: jest.fn(),
 }));
