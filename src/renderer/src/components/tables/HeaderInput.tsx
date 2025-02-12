@@ -1,5 +1,5 @@
 import { RootSelectors } from '@renderer/store/store';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { useAppDispatch, useAppSelector } from '@renderer/store/hooks';
 import { ActionCellRight, TableCell, TableHead, TableRow } from './Table';
 import TableActionButton from './TableActionButton';
 import TableInput from './TableInput';
