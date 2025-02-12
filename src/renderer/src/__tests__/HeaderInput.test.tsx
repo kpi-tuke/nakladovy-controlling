@@ -1,8 +1,7 @@
-import { fireEvent, render, waitFor } from '@testing-library/react';
+import { render, waitFor, screen, fireEvent } from '@testing-library/react';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import HeaderInput from '@renderer/components/tables/HeaderInput';
 import { CellType, Header } from '@renderer/store/rootReducer';
-import { screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { Table } from '@renderer/components/tables/Table';
 
@@ -35,22 +34,24 @@ const defaultHeaders: Header[] = [
   { id: '2', label: 'Header 2', type: CellType.STRING },
 ];
 
+const mockUseAppSelector = (headers: Header[], dynCols: boolean) => {
+  (useAppSelector as jest.Mock).mockImplementation((selector) => {
+    if (selector === selectors.headers) return headers;
+    if (selector === selectors.dynCols) return dynCols;
+    if (typeof selector === 'function') return selector({ headers });
+
+    return undefined;
+  });
+};
+
 const renderComponent = ({
   headers,
   dynCols,
 }: {
   headers: Header[];
-  dynCols?: boolean;
+  dynCols: boolean;
 }) => {
-  (useAppSelector as jest.Mock).mockImplementation((selector) => {
-    if (selector === selectors.headers) return headers;
-    if (selector === selectors.dynCols) return dynCols;
-    if (typeof selector === 'function') {
-      return selector({ headers });
-    }
-
-    return undefined;
-  });
+  mockUseAppSelector(headers, dynCols);
 
   return render(
     <Table>
@@ -107,7 +108,7 @@ describe('HeaderInput', () => {
       expect(button).toBeDisabled();
     });
 
-    it('addColumn action should be called', () => {
+    it('addColumn action should be called', async () => {
       renderComponent({
         headers: defaultHeaders,
         dynCols: true,
@@ -120,7 +121,7 @@ describe('HeaderInput', () => {
       expect(mockDispatch).toHaveBeenCalledWith(actions.addColumn());
     });
 
-    it('dispatches setHeaderOnIndex action when input value changes', () => {
+    it('dispatches setHeaderOnIndex action when input value changes', async () => {
       renderComponent({
         headers: defaultHeaders,
         dynCols: true,
@@ -148,13 +149,7 @@ describe('HeaderInput', () => {
         { id: '3', label: '', type: CellType.STRING },
       ];
 
-      (useAppSelector as jest.Mock).mockImplementation((selector) => {
-        if (selector === selectors.headers) return updatedHeaders;
-        if (selector === selectors.dynCols) return true;
-        if (typeof selector === 'function')
-          return selector({ headers: updatedHeaders });
-        return undefined;
-      });
+      mockUseAppSelector(updatedHeaders, true);
 
       rerender(
         <Table>
@@ -176,15 +171,7 @@ describe('HeaderInput', () => {
         dynCols: true,
       });
 
-      const updatedHeaders = [];
-
-      (useAppSelector as jest.Mock).mockImplementation((selector) => {
-        if (selector === selectors.headers) return updatedHeaders;
-        if (selector === selectors.dynCols) return true;
-        if (typeof selector === 'function')
-          return selector({ headers: updatedHeaders });
-        return undefined;
-      });
+      mockUseAppSelector([], true);
 
       rerender(
         <Table>
