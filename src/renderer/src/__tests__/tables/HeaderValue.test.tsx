@@ -1,8 +1,8 @@
+import '@testing-library/jest-dom';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { useAppDispatch, useAppSelector } from '@renderer/store/hooks';
 import { CellType, Header } from '@renderer/store/rootReducer';
 import HeaderValue from '@renderer/components/tables/HeaderValue';
-import '@testing-library/jest-dom';
 import { Table } from '@renderer/components/tables/Table';
 
 jest.mock('@renderer/store/hooks', () => ({
