@@ -4,8 +4,10 @@ import withTable from '../components/tables/HOCTable';
 import Page from '@renderer/components/layout/Page';
 import PageContent from '@renderer/components/layout/PageContent';
 import Spacer from '@renderer/components/Spacer';
-import { styled, Typography } from '@mui/material';
+import { Paper, styled, Typography } from '@mui/material';
 import { routes } from '@renderer/routes';
+import { useAppSelector } from '@renderer/store/hooks';
+import SectionTitle from '@renderer/components/SectionTitle';
 
 const PrintPageTitle = styled(Typography)`
   font-weight: 700;
@@ -32,18 +34,36 @@ export default function withAnalysis(
     );
 
     const title = routes[routeName].title;
+    const text = useAppSelector(selectors.text);
 
     return (
       <Page id={routeName.replace('/', '')}>
         <PageContent>
-          <PrintPageTitle className="hideInScreen page-print-title">
-            {title}
-          </PrintPageTitle>
+          <PrintPageTitle className="hideInScreen">{title}</PrintPageTitle>
           <Table />
           <Result />
           <Spacer height={20} hideInPrint />
           <div className="new-page"></div>
-          <TextArea selectors={selectors} actions={actions} />
+
+          <SectionTitle>Záver a zhodnotenie analýzy</SectionTitle>
+
+          <TextArea
+            selectors={selectors}
+            actions={actions}
+            className="hideInPrint"
+          />
+
+          <Paper>
+            <Typography
+              sx={{
+                whiteSpace: 'pre-line',
+                p: 2,
+              }}
+              className="hideInScreen"
+            >
+              {text}
+            </Typography>
+          </Paper>
         </PageContent>
       </Page>
     );
