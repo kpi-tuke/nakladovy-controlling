@@ -109,7 +109,7 @@ export default function withTable(
                           <ActionCellBottom key={col}>
                             {dynCols && (
                               <TableActionButton
-                                date-testid="delete-button"
+                                data-testid="delete-column-button"
                                 buttonType="delete"
                                 onClick={() => deleteColumn(col)}
                               />
@@ -164,6 +164,7 @@ const Row: React.FC<RowProps> = React.memo(
         {dynRows && (
           <ActionCellRight>
             <TableActionButton
+              data-testid="delete-row-button"
               buttonType="delete"
               onClick={() => deleteRow(row)}
             />

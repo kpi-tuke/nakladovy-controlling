@@ -34,6 +34,7 @@ const config = {
   transform: {
     '^.+\\.tsx?$': 'ts-jest',
   },
+  testMatch: ['<rootDir>/src/renderer/src/**/__tests__/**/*.{js,jsx,ts,tsx}'],
 };
 
 export default config;
