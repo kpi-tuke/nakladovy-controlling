@@ -55,7 +55,7 @@ import {
   variationActions,
   selectors as variationSelectors,
 } from './pages/variation/variationSlice';
-import VariationResults from './pages/variation/VariationResults';
+import VariationResults from './pages/variation/VariationResult';
 import { taxActions, selectors as taxSelectors } from './pages/tax/taxSlice';
 import TaxResult from './pages/tax/TaxResult';
 import ProjectProvider from './components/providers/ProjectProvider';
