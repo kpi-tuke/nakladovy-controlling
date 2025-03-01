@@ -29,6 +29,8 @@ const VariationResults = () => {
     data as number[][],
   );
 
+  console.log(variationCalculation(data as number[][]));
+
   // @ts-ignore
   const additionalData = useAppSelector(selectors.getAdditionalData!) as any;
 
