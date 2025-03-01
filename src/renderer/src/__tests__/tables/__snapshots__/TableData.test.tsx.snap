@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TableData styled component matches the snapshot 1`] = `
+<div
+  class="MuiBox-root css-9be8zc"
+>
+  Content
+</div>
+`;

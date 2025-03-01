@@ -7,14 +7,14 @@ import {
   styled,
 } from '@mui/material';
 
-export const Table: any = styled(MuiTable)`
+export const Table = styled(MuiTable)`
   @media print {
     border-top: ${({ theme }) => `1px solid ${theme.palette.divider}`};
     border-left: ${({ theme }) => `1px solid ${theme.palette.divider}`};
   }
 `;
 
-export const TableHead: any = styled(MuiTableHead)`
+export const TableHead = styled(MuiTableHead)`
   background-color: #e6f7ff;
 
   background-color: ${({ theme }) =>
@@ -23,11 +23,11 @@ export const TableHead: any = styled(MuiTableHead)`
       : theme.palette.primary.dark};
 `;
 
-export const TableBody: any = styled(MuiTableBody)``;
+export const TableBody = styled(MuiTableBody)``;
 
-export const TableRow: any = styled(MuiTableRow)``;
+export const TableRow = styled(MuiTableRow)``;
 
-export const TableCell: any = styled(MuiTableCell)`
+export const TableCell = styled(MuiTableCell)`
   padding: 0;
   height: 48px;
   width: 12vw;
@@ -55,7 +55,9 @@ export const DataTable = styled(Table)`
   width: unset;
 `;
 
-export const ActionCellRight = styled(TableCell)<{ $topBorder?: boolean }>`
+export const ActionCellRight = styled(TableCell, {
+  shouldForwardProp: (prop) => prop !== '$topBorder',
+})<{ $topBorder?: boolean }>`
   width: 20px;
   min-width: 20px;
   max-width: 20px;

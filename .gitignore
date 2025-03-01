@@ -32,3 +32,4 @@ out
 dist
 dist.zip
 .env
+coverage

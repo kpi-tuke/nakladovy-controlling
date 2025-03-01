@@ -109,6 +109,7 @@ export default function withTable(
                           <ActionCellBottom key={col}>
                             {dynCols && (
                               <TableActionButton
+                                data-testid="delete-column-button"
                                 buttonType="delete"
                                 onClick={() => deleteColumn(col)}
                               />
@@ -163,6 +164,7 @@ const Row: React.FC<RowProps> = React.memo(
         {dynRows && (
           <ActionCellRight>
             <TableActionButton
+              data-testid="delete-row-button"
               buttonType="delete"
               onClick={() => deleteRow(row)}
             />
@@ -250,43 +252,6 @@ const Cell: React.FC<CellProps> = React.memo(
             },
           }}
         />
-        {/* Toto sa odstranovalo ale nechavam to tu, keby sa to chcelo v buducnosti pridat */}
-        {/* {rowType === CellType.NUMBER || rowType === CellType.STRING ? (
-          
-        ) : (
-          <Autocomplete
-            value={header.options?.find(
-              (option) => option.value === value.toString(),
-            )}
-            options={header.options ?? []}
-            getOptionLabel={(option) => option.label}
-            renderInput={(params) => <TextField {...params} />}
-            clearIcon={false}
-            onChange={(_, value) => {
-              handleChangeData(value?.value ?? '');
-            }}
-            sx={{
-              position: 'absolute',
-              inset: 0,
-
-              '.MuiOutlinedInput-root': {
-                borderRadius: '0',
-                height: '48px',
-                paddingRight: '36px !important',
-
-                fieldset: {
-                  border: 'none',
-                  height: '48px',
-                },
-              },
-
-              input: {
-                height: `${48 - 18}px !important`,
-                padding: '0px !important',
-              },
-            }}
-          />
-        )} */}
       </TableCell>
     );
   },
