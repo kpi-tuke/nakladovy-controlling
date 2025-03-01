@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom';
-import React, { act } from 'react';
+import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { useAppDispatch, useAppSelector } from '@renderer/store/hooks';
 import { SortDirection } from '@mui/material';
@@ -151,41 +151,6 @@ describe('withTable HOC component', () => {
     // Also, check that dispatch was called with these actions.
     expect(mockDispatch).toHaveBeenCalled();
   });
-
-  // it('updates scroll position when data length increases', () => {
-  //   // To test the scroll effect in the useEffect, we simulate a change in the data length.
-  //   // First, render the component and capture the TableWrapper element (the scrolling container).
-  //   const { container, rerender } = render(<TableComponent />);
-  //   const tableWrapper = container.querySelector('div');
-  //   // Fake scroll properties on the container.
-  //   if (tableWrapper) {
-  //     // @ts-ignore
-  //     tableWrapper.scrollWidth = 500;
-  //     tableWrapper.scrollLeft = 0;
-  //   }
-  //   // Now, update dummyState.data to have an increased length in the first row.
-  //   dummyState.data = [
-  //     ['1', '2', '3'],
-  //     ['3', '4', '5'],
-  //   ];
-  //   (useAppSelector as jest.Mock).mockImplementation((selector) => {
-  //     if (selector === selectors.data) return dummyState.data;
-  //     if (selector === selectors.dynCols) return dummyState.dynCols;
-  //     if (selector === selectors.values) return dummyState.values;
-  //     if (selector === selectors.dynRows) return dummyState.dynRows;
-  //     if (selector === selectors.headers) return dummyState.headers;
-  //     if (selector === selectors.corner) return dummyState.corner;
-  //     if (typeof selector === 'function') return selector(dummyState);
-  //     return undefined;
-  //   });
-  //   // Use act() to flush useEffect.
-  //   act(() => {
-  //     rerender(<TableComponent />);
-  //   });
-  //   if (tableWrapper) {
-  //     expect(tableWrapper.scrollLeft).toBe(tableWrapper.scrollWidth);
-  //   }
-  // });
 
   it('calls setDataOnIndex when a cell TextField changes', () => {
     render(<TableComponent />);
