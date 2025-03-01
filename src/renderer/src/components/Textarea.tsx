@@ -4,7 +4,6 @@ import {
   TextareaAutosize,
   useTheme as useMuiTheme,
 } from '@mui/material';
-import SectionTitle from './SectionTitle';
 import { useTheme } from './providers/ThemeProvider';
 import { RootSelectors } from '@renderer/store/store';
 import { useAppDispatch, useAppSelector } from '@renderer/store/hooks';
@@ -20,9 +19,10 @@ const StyledTextareaAutosize = styled(TextareaAutosize)`
 type Props = {
   selectors: RootSelectors;
   actions: any;
+  className?: string;
 };
 
-const Textarea: React.FC<Props> = ({ selectors, actions }) => {
+const Textarea: React.FC<Props> = ({ selectors, actions, className }) => {
   const theme = useMuiTheme();
   const { mode } = useTheme();
   const dispatch = useAppDispatch();
@@ -40,30 +40,27 @@ const Textarea: React.FC<Props> = ({ selectors, actions }) => {
   };
 
   return (
-    <div>
-      <SectionTitle>Záver a zhodnotenie analýzy</SectionTitle>
-
-      <StyledTextareaAutosize
-        defaultValue={text}
-        onChange={(e) => {
-          handleChange(e);
-        }}
-        placeholder="Sem napíšte záver a zhodnotenie analýzy..."
-        minRows={6}
-        style={{
-          fontSize: '16px',
-          outline: 'none',
-          borderRadius: '8px',
-          padding: '8px',
-          backgroundColor: theme.palette.background.paper,
-          ...(mode === 'dark' && {
-            border: 'none',
-            backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.05))`,
-            color: theme.palette.text.primary,
-          }),
-        }}
-      />
-    </div>
+    <StyledTextareaAutosize
+      className={className}
+      defaultValue={text}
+      onChange={(e) => {
+        handleChange(e);
+      }}
+      placeholder="Sem napíšte záver a zhodnotenie analýzy..."
+      minRows={6}
+      style={{
+        fontSize: '16px',
+        outline: 'none',
+        borderRadius: '8px',
+        padding: '8px',
+        backgroundColor: theme.palette.background.paper,
+        ...(mode === 'dark' && {
+          border: 'none',
+          backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.05))`,
+          color: theme.palette.text.primary,
+        }),
+      }}
+    />
   );
 };
 
