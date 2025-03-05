@@ -27,11 +27,11 @@ jest.mock('@renderer/components/Title', () => (props) => (
   </div>
 ));
 
-const DummyTableInput: React.FC<any> = (props) => (
+const DummyTableInput: React.FC<any> = () => (
   <div data-testid="table-input">TableInput</div>
 );
 
-const DummyTableDataHeader: React.FC<any> = (props) => (
+const DummyTableDataHeader: React.FC<any> = () => (
   <thead data-testid="table-data-header">
     <tr>
       <th>TableDataHeader</th>

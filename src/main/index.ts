@@ -46,7 +46,7 @@ const createWindow = async () => {
     width: 1600,
     height: 900,
     show: false,
-    autoHideMenuBar: true,
+    autoHideMenuBar: false,
     ...(process.platform === 'linux' ? { icon } : {}),
     icon: getAssetPath('icon.png'),
     webPreferences: {
@@ -58,6 +58,9 @@ const createWindow = async () => {
     },
   });
 
+  const menuBuilder = new MenuBuilder(mainWindow);
+  menuBuilder.buildMenu();
+
   mainWindow.on('ready-to-show', () => {
     if (mainWindow) {
       mainWindow.show();
@@ -68,9 +71,6 @@ const createWindow = async () => {
   mainWindow.on('closed', () => {
     mainWindow = null;
   });
-
-  const menuBuilder = new MenuBuilder(mainWindow);
-  menuBuilder.buildMenu();
 
   mainWindow.webContents.setWindowOpenHandler((details) => {
     shell.openExternal(details.url);
