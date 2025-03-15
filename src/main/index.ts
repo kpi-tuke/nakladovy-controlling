@@ -13,8 +13,68 @@ import icon from '../../assets/icon.png?asset';
 import MenuBuilder from './menu';
 import path from 'path';
 import fs from 'fs';
+import { autoUpdater } from 'electron-updater';
 
 let mainWindow: BrowserWindow | null;
+
+const setupUpdater = () => {
+  autoUpdater.autoDownload = false;
+  autoUpdater.autoInstallOnAppQuit = false;
+
+  autoUpdater.on('update-available', () => {
+    dialog
+      .showMessageBox(mainWindow!, {
+        type: 'info',
+        title: 'Dostupná aktualizácia',
+        message: 'Našla sa nová verzia aplikácie. Chcete ju stiahnuť?',
+        buttons: ['Stiahnuť', 'Zrušiť'],
+      })
+      .then((result) => {
+        if (result.response === 0) {
+          autoUpdater.downloadUpdate();
+          mainWindow?.webContents.send('update-start');
+        }
+      });
+  });
+
+  autoUpdater.on('download-progress', (progressObj) => {
+    mainWindow?.webContents.send('update-progress', progressObj.percent);
+  });
+
+  autoUpdater.on('update-downloaded', () => {
+    mainWindow?.webContents.send('update-end');
+
+    dialog
+      .showMessageBox(mainWindow!, {
+        type: 'info',
+        title: 'Aktualizácia pripravená',
+        message:
+          'Aktualizácia bola úspešne stiahnutá. Chcete ju nainštalovať teraz?',
+        buttons: ['Nainštalovať teraz', 'Neskôr'],
+      })
+      .then((result) => {
+        if (result.response === 0) {
+          setImmediate(() => autoUpdater.quitAndInstall());
+        }
+      });
+  });
+
+  // autoUpdater.on('error', () => {
+  //   dialog.showErrorBox(
+  //     'Chyba aktualizácie',
+  //     'Pri aktualizácii nastala chyba. Skontrolujte pripojenie na internet a skúste to znova.',
+  //   );
+  // });
+
+  autoUpdater.on('error', (error) => {
+    console.error('Update error:', error);
+
+    dialog.showErrorBox(
+      'Update Error',
+      `An error occurred while updating the application:\n\n${error.message || error.toString()}`,
+    );
+  });
+};
 
 const installExtensions = async () => {
   const installer = require('electron-devtools-installer');
@@ -118,6 +178,10 @@ app.whenReady().then(() => {
   app.on('activate', function () {
     if (BrowserWindow.getAllWindows().length === 0) createWindow();
   });
+
+  setupUpdater();
+
+  autoUpdater.checkForUpdates();
 });
 
 // ---- IPC ---

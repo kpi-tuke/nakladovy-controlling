@@ -15,6 +15,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { useDataSave } from './AnalysisSaveProvider';
 import { RouteName, routes } from '@renderer/routes';
 import { useSnackbar } from './SnackbarProvider';
+import { useUpdateSnackbar } from './UpdateSnackbarProvider';
 
 type ProjectContextProps = {
   newProject: () => void;
@@ -32,6 +33,11 @@ const ProjectProvider: React.FC<Props> = ({ children }) => {
   const { save, saveButtonDisabled, resetPath } = useDataSave();
   const { pathname } = useLocation();
   const { open } = useSnackbar();
+  const {
+    open: openUpdate,
+    close: closeUpdate,
+    updateProgress,
+  } = useUpdateSnackbar();
 
   const newProject = () => {
     dispatch(economicActions.reset());
@@ -137,7 +143,36 @@ const ProjectProvider: React.FC<Props> = ({ children }) => {
     return () => {
       window.electron.ipcRenderer.removeAllListeners('menu-open-report');
     };
-  }, [navigate]);
+  }, [openReport]);
+
+  useEffect(() => {
+    window.electron.ipcRenderer.removeAllListeners('update-start');
+    window.electron.ipcRenderer.on('update-start', openUpdate);
+
+    return () => {
+      window.electron.ipcRenderer.removeAllListeners('update-start');
+    };
+  }, [openUpdate]);
+
+  useEffect(() => {
+    window.electron.ipcRenderer.removeAllListeners('update-end');
+    window.electron.ipcRenderer.on('update-end', closeUpdate);
+
+    return () => {
+      window.electron.ipcRenderer.removeAllListeners('update-end');
+    };
+  }, [closeUpdate]);
+
+  useEffect(() => {
+    window.electron.ipcRenderer.removeAllListeners('update-progress');
+    window.electron.ipcRenderer.on('update-progress', (_, progress) => {
+      updateProgress(progress);
+    });
+
+    return () => {
+      window.electron.ipcRenderer.removeAllListeners('update-progress');
+    };
+  }, [updateProgress]);
 
   return (
     <ProjectContext.Provider

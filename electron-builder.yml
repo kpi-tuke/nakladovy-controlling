@@ -2,6 +2,7 @@ appId: org.erb.CostControlling
 productName: 'Nakladovy kontroling'
 directories:
   buildResources: assets
+  output: dist
 win:
   target:
     - target: nsis
@@ -15,3 +16,19 @@ nsis:
 mac:
   artifactName: ${name}-v${version}-mac.${ext}
   icon: icon.icns
+linux:
+  target:
+    - AppImage
+    - deb
+  icon: icon.png
+  artifactName: ${name}-v${version}-linux.${ext}
+  category: Utility
+  desktop:
+    Name: 'Nákladový kontroling'
+    Comment: 'Aplikácia pre nákladový kontroling'
+  maintainer: 'Filip Katušin <filip.katusin@student.tuke.sk>'
+publish:
+  - provider: github
+    owner: filip65
+    repo: diplomovka
+    releaseType: release
