@@ -19,8 +19,8 @@ const items = [
     title: 'Automatizované vzorce',
     description:
       'Zabudni na manuálne výpočty! Naša aplikácia automaticky spracuje nákladové vzorce, čím ušetríš čas a minimalizuješ chyby.',
-    imageLight: `url("/vzorce_light.png")`,
-    imageDark: `url("/vzorce_dark.png")`,
+    imageLight: `url("vzorce_light.png")`,
+    imageDark: `url("vzorce_dark.png")`,
   },
   {
     icon: <EdgesensorHighRoundedIcon />,
@@ -35,7 +35,7 @@ const items = [
     title: 'Dostupné na všetkých platformách',
     description:
       'Pracuj bez obmedzení na akejkoľvek platforme, kedykoľvek a kdekoľvek. Aplikácia funguje na Windows, macOS aj Linux bez kompromisov.',
-    imageLight: `url("/systems.png")`,
+    imageLight: `url("systems.png")`,
     imageDark: `url("systems.png")`,
   },
 ];

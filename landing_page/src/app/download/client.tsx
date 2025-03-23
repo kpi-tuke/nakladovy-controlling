@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import Releases from "@/components/Releases";
-import { Box, Stack, styled, Typography, useTheme } from "@mui/material";
-import Link from "next/link";
-import React from "react";
+import Releases from '@/components/Releases';
+import { Box, Stack, styled, Typography, useTheme } from '@mui/material';
+import Link from 'next/link';
+import React from 'react';
 
 type ItemProps = {
   img: string;
@@ -15,24 +15,24 @@ const Item: React.FC<ItemProps> = ({ img, name, url }) => {
   const theme = useTheme();
 
   return (
-    <Link href={url} style={{ textDecoration: "none" }}>
+    <Link href={url} style={{ textDecoration: 'none' }}>
       <Box
         sx={[
           {
             width: 240,
             height: 240,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "space-between",
-            textAlign: "left",
-            textTransform: "none",
-            color: "text.primary",
-            bgcolor: "action.selected",
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            textAlign: 'left',
+            textTransform: 'none',
+            color: 'text.primary',
+            bgcolor: 'action.selected',
             borderRadius: 2,
             padding: 3,
 
-            "&:hover": {
+            '&:hover': {
               backgroundColor: theme.palette.action.hover,
             },
           },
@@ -56,12 +56,12 @@ const Item: React.FC<ItemProps> = ({ img, name, url }) => {
 };
 
 const StyledStack = styled(Stack)(({ theme }) => ({
-  backgroundRepeat: "no-repeat",
+  backgroundRepeat: 'no-repeat',
   backgroundImage:
-    "radial-gradient(ellipse 80% 50% at 50% -20%, hsl(210, 100%, 90%), transparent)",
-  ...theme.applyStyles("dark", {
+    'radial-gradient(ellipse 80% 50% at 50% -20%, hsl(210, 100%, 90%), transparent)',
+  ...theme.applyStyles('dark', {
     backgroundImage:
-      "radial-gradient(ellipse 80% 50% at 50% -20%, hsl(210, 100%, 16%), transparent)",
+      'radial-gradient(ellipse 80% 50% at 50% -20%, hsl(210, 100%, 16%), transparent)',
   }),
 }));
 
@@ -79,7 +79,7 @@ const DownloadPageClient: React.FC<Props> = ({ metadata }) => {
   return (
     <StyledStack
       sx={{
-        minHeight: "100vh",
+        minHeight: '100vh',
         pt: {
           xs: 16,
           md: 20,
@@ -89,7 +89,7 @@ const DownloadPageClient: React.FC<Props> = ({ metadata }) => {
       <Typography
         variant="h1"
         sx={{
-          textAlign: "center",
+          textAlign: 'center',
           fontSize: {
             xs: 32,
             sm: 40,
@@ -107,28 +107,28 @@ const DownloadPageClient: React.FC<Props> = ({ metadata }) => {
 
       <Box
         sx={{
-          alignItems: "center",
-          justifyContent: "center",
-          display: "flex",
+          alignItems: 'center',
+          justifyContent: 'center',
+          display: 'flex',
           flexDirection: {
-            xs: "column",
-            md: "row",
+            xs: 'column',
+            md: 'row',
           },
           gap: 2,
           height: {
-            md: "50vh",
+            md: '50vh',
           },
         }}
       >
         {latestRelease?.windowsUrl && (
           <Item
-            img={"/windows.png"}
+            img={'windows.png'}
             name="Windows"
             url={latestRelease.windowsUrl}
           />
         )}
         {latestRelease?.linuxUrl && (
-          <Item img="/linux.png" name="Linux" url={latestRelease.linuxUrl} />
+          <Item img="linux.png" name="Linux" url={latestRelease.linuxUrl} />
         )}
       </Box>
 
