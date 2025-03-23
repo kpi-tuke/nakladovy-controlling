@@ -103,13 +103,13 @@ export function MobileLayout({
           sx={(theme) => ({
             mb: 2,
             backgroundSize: 'contain',
-            backgroundPosition: 'center',
             minHeight: 280,
+            backgroundRepeat: 'no-repeat',
+            backgroundPosition: 'center',
             backgroundImage: 'var(--items-imageLight)',
             ...theme.applyStyles('dark', {
               backgroundImage: 'var(--items-imageDark)',
             }),
-            background: 'green',
           })}
           style={
             items[selectedItemIndex]
@@ -253,6 +253,8 @@ export default function Features() {
                 width: 420,
                 height: 500,
                 backgroundSize: 'contain',
+                backgroundRepeat: 'no-repeat',
+                backgroundPosition: 'center',
                 backgroundImage: 'var(--items-imageLight)',
                 ...theme.applyStyles('dark', {
                   backgroundImage: 'var(--items-imageDark)',
