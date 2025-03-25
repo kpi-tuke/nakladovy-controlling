@@ -9,7 +9,7 @@ type Props = {
 const SitemarkIcon: React.FC<Props> = ({ size }) => {
   return (
     <Stack direction={'row'} alignItems={'center'} gap={4}>
-      <Image src={'logo.png'} alt="Logo" width={size} height={size} />
+      <Image src={'/logo.png'} alt="Logo" width={size} height={size} />
     </Stack>
   );
 };
