@@ -110,11 +110,7 @@ export default function AppAppBar() {
                   </IconButton>
                 </Stack>
 
-                <Link
-                  href={'/#features'}
-                  onClick={toggleDrawer(false)}
-                  style={{ textDecoration: 'none' }}
-                >
+                <Link href={'/#features'} onClick={toggleDrawer(false)}>
                   <MenuItem
                     sx={{
                       color: 'text.primary',
@@ -125,11 +121,13 @@ export default function AppAppBar() {
                   </MenuItem>
                 </Link>
                 <Divider sx={{ my: 3 }} />
-                <MenuItem>
-                  <Button color="primary" variant="contained" fullWidth>
-                    Stiahnuť
-                  </Button>
-                </MenuItem>
+                <Link href={'/download'} onClick={toggleDrawer(false)}>
+                  <MenuItem>
+                    <Button color="primary" variant="contained" fullWidth>
+                      Stiahnuť
+                    </Button>
+                  </MenuItem>
+                </Link>
               </Box>
             </Drawer>
           </Box>

@@ -6,13 +6,11 @@ import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import { styled } from '@mui/material/styles';
+import { styled, useTheme } from '@mui/material/styles';
 import Link from 'next/link';
 
 const StyledBox = styled('div')(({ theme }) => ({
-  alignSelf: 'center',
-  width: '100%',
-  height: 400,
+  overflow: 'hidden',
   marginTop: theme.spacing(8),
   borderRadius: (theme.vars || theme).shape.borderRadius,
   outline: '6px solid',
@@ -20,21 +18,23 @@ const StyledBox = styled('div')(({ theme }) => ({
   border: '1px solid',
   borderColor: (theme.vars || theme).palette.grey[200],
   boxShadow: '0 0 12px 8px hsla(220, 25%, 80%, 0.2)',
-  backgroundImage: `url(app_light.png)`,
-  backgroundSize: 'cover',
   [theme.breakpoints.up('sm')]: {
     marginTop: theme.spacing(10),
-    height: 700,
   },
   ...theme.applyStyles('dark', {
     boxShadow: '0 0 24px 12px hsla(210, 100%, 25%, 0.2)',
-    backgroundImage: `url(app_dark.png)`,
     outlineColor: 'hsla(220, 20%, 42%, 0.1)',
     borderColor: (theme.vars || theme).palette.grey[700],
   }),
 }));
 
-export default function Hero() {
+const StyledImage = styled('img')`
+  width: 100%;
+`;
+
+const Hero = () => {
+  const theme = useTheme();
+
   return (
     <Box
       id="hero"
@@ -55,7 +55,7 @@ export default function Hero() {
           flexDirection: 'column',
           alignItems: 'center',
           pt: { xs: 14, sm: 20 },
-          pb: { xs: 8, sm: 12 },
+          pb: { xs: 2, sm: 4 },
         }}
       >
         <Stack
@@ -95,8 +95,18 @@ export default function Hero() {
             </Button>
           </Link>
         </Stack>
-        <StyledBox id="image" />
+
+        <StyledBox id="image">
+          <StyledImage
+            src={
+              theme.palette.mode === 'light' ? 'app_light.png' : 'app_dark.png'
+            }
+            alt=""
+          />
+        </StyledBox>
       </Container>
     </Box>
   );
-}
+};
+
+export default Hero;
