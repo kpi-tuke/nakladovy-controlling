@@ -2,7 +2,7 @@
 const nextConfig = {
   output: 'export',
   basePath: `/diplomovka`,
-  // assetPrefix: `/diplomovka/`,
+  assetPrefix: `/diplomovka/`,
 };
 
 export default nextConfig;
