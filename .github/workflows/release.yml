@@ -91,6 +91,9 @@ jobs:
   deploy_pages:
     needs: [release]
     runs-on: ubuntu-latest
+    environment: GH_TOKEN
+    permissions:
+      contents: write
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
