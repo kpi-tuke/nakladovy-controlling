@@ -172,7 +172,9 @@ app.whenReady().then(() => {
 
   setupUpdater();
 
-  autoUpdater.checkForUpdates();
+  if (process.platform !== 'darwin') {
+    autoUpdater.checkForUpdates();
+  }
 });
 
 // ---- IPC ---
