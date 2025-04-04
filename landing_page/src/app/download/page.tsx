@@ -3,7 +3,7 @@ import DownloadPageClient from "./client";
 
 const DownloadPage = async () => {
   const res = await fetch(
-    "https://api.github.com/repos/filip65/diplomovka/releases"
+    "https://api.github.com/repos/kpi-tuke/nakladovy-controlling/releases"
   );
 
   const data = (await res.json()) ?? [];

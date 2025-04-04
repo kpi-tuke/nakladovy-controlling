@@ -1,3 +1,3 @@
 # Simple landing page for app - Nákladový kontroling
 
-Page url: https://filip65.github.io/diplomovka/
+Page url: https://kpi-tuke.github.io/nakladovy-controlling/
