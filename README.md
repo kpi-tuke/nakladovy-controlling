@@ -1,6 +1,4 @@
-# Aplikácia
-
-Zdrojový kód aplikácie pre nákladový kontroling
+Source code for app - Nákladový kontroling
 
 ## Recommended IDE Setup
 
