@@ -29,6 +29,6 @@ linux:
   maintainer: 'Filip Katušin <filip.katusin@student.tuke.sk>'
 publish:
   - provider: github
-    owner: filip65
-    repo: diplomovka
+    owner: kpi-tuke
+    repo: nakladovy-controlling
     releaseType: release

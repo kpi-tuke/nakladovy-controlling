@@ -1,8 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: 'export',
-  basePath: `/diplomovka`,
-  assetPrefix: `/diplomovka/`,
+  basePath: `/nakladovy-controlling`,
+  assetPrefix: `/nakladovy-controlling/`,
 };
 
 export default nextConfig;

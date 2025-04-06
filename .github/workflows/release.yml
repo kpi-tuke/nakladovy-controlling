@@ -104,7 +104,7 @@ jobs:
           token: ${{ secrets.GH_TOKEN }}
 
   deploy_pages:
-    needs: [release]
+    needs: release
     runs-on: ubuntu-latest
     permissions:
       contents: write

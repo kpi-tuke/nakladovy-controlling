@@ -122,7 +122,7 @@ export default class MenuBuilder {
             label: 'Dokumentácia',
             click: () =>
               shell.openExternal(
-                'https://git.kpi.fei.tuke.sk/kpi-zp/2025/dp.filip.katusin/diplomovka',
+                'https://github.com/kpi-tuke/nakladovy-controlling',
               ),
           },
         ],

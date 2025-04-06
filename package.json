@@ -19,7 +19,7 @@
     }
   ],
   "homepage": "https://github.com/AurelHolotnak/Cost-Controlling#readme",
-  "repository": "https://git.kpi.fei.tuke.sk/kpi-zp/2025/dp.filip.katusin/diplomovka",
+  "repository": "https://github.com/kpi-tuke/nakladovy-controlling",
   "scripts": {
     "start": "electron-vite preview",
     "dev": "NODE_ENV=development electron-vite dev",
