@@ -2,7 +2,7 @@
   "name": "cost-controlling",
   "productName": "cost-controlling",
   "description": "Aplikácia pre nákladový controlling",
-  "version": "3.0.0",
+  "version": "3.0.2",
   "license": "ISC",
   "main": "./out/main/index.js",
   "author": {
